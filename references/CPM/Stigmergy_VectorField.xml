@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Details>Cells move in  a persistent way and modify their einvironment according to their moving direction.
+This orientational information is stored in a VectorField, which decays over time.
+Cells also tend to follow this orientational information, which can lead to the spontaneous formation of local swirls that continuously self-reenforce.</Details>
+        <Title>VectorField-Stigmergy</Title>
+    </Description>
+    <Space>
+        <Lattice class="square">
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+            <Size symbol="size" value="300,300,0"/>
+            <!--    <Disabled>
+        <BoundaryConditions>
+            <Condition type="noflux" boundary="x"/>
+            <Condition type="noflux" boundary="y"/>
+            <Condition type="noflux" boundary="-x"/>
+            <Condition type="noflux" boundary="-y"/>
+        </BoundaryConditions>
+    </Disabled>
+-->
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <Global>
+        <VectorField symbol="v" value="0.0, 0.0, 0.0"/>
+        <Constant symbol="cell" value="0.0"/>
+        <ConstantVector symbol="velocity" value="0.0, 0.0, 0.0"/>
+        <System time-step="1.0" solver="Runge-Kutta [fixed, O(4)]">
+            <VectorRule symbol-ref="v">
+                <Expression>if(cell, v.x+alpha*velocity.x, v.x-delta*v.x),
+if(cell, v.y+alpha*velocity.y, v.y-delta*v.y),
+0</Expression>
+            </VectorRule>
+            <Constant symbol="delta" value="0.002"/>
+            <Constant symbol="alpha" value="0.1"/>
+        </System>
+    </Global>
+    <CellTypes>
+        <CellType name="cell" class="biological">
+            <Property symbol="cell" value="1"/>
+            <PropertyVector symbol="velocity" value="0.0, 0.0, 0.0"/>
+            <MotilityReporter time-step="1" name="report movement">
+                <Velocity symbol-ref="velocity"/>
+            </MotilityReporter>
+            <VolumeConstraint target="100" strength="1"/>
+            <SurfaceConstraint target="1" strength="1" mode="aspherity"/>
+            <PersistentMotion decay-time="30" strength="2.0"/>
+            <DirectedMotion strength="2" direction="v"/>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population type="cell" size="1">
+            <InitRectangle random-offset="20" mode="regular" number-of-cells="20">
+                <Dimensions origin="size/10" size="9*size/10"/>
+            </InitRectangle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="50" decorate="false">
+            <Plot>
+                <VectorField style="8" color="black" coarsening="6" value="3*v"/>
+                <Cells opacity="0.5" value="cell.id"/>
+            </Plot>
+            <Terminal name="png"/>
+        </Gnuplotter>
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+    <CPM>
+        <Interaction>
+            <Contact type2="cell" type1="cell" value="10"/>
+        </Interaction>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>3</Order>
+            </Neighborhood>
+        </ShapeSurface>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <MetropolisKinetics temperature="10"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </MonteCarloSampler>
+    </CPM>
+</MorpheusModel>

@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>BIOMD0000000010</Title>
+        <Details>Imported SBML model: http://www.ebi.ac.uk/biomodels-main/BIOMD0000000010
+        
+Kholodenko BN, Negative feedback and ultrasensitivity can bring about oscillations in the mitogen-activated protein kinase cascades.</Details>
+    </Description>
+    <Global/>
+    <Space>
+        <Lattice class="linear">
+            <Size value="1, 0, 0" symbol="size"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="1.0" symbol="stop"/>
+        <TimeSymbol name="time" symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="sbml_ct">
+            <System time-scaling="4000" time-step="stop" solver="Dormand-Prince [adaptive, O(5)]">
+                <Constant value="2.5" symbol="V1"/>
+                <Constant value="9" symbol="Ki"/>
+                <Constant value="1" symbol="n"/>
+                <Constant value="10" symbol="K1"/>
+                <DiffEqn name="gained from reactions" symbol-ref="MKKK">
+                    <Expression> - V1 * MKKK / ((1 + pow(MAPK_PP / Ki, n)) * (K1 + MKKK)) + V2 * MKKK_P / (KK2 + MKKK_P)</Expression>
+                </DiffEqn>
+                <DiffEqn name="gained from reactions" symbol-ref="MKKK_P">
+                    <Expression>V1 * MKKK / ((1 + pow(MAPK_PP / Ki, n)) * (K1 + MKKK)) - V2 * MKKK_P / (KK2 + MKKK_P)</Expression>
+                </DiffEqn>
+                <Constant value="0.25" symbol="V2"/>
+                <Constant value="8" symbol="KK2"/>
+                <Constant value="0.025" symbol="k3"/>
+                <Constant value="15" symbol="KK3"/>
+                <DiffEqn name="gained from reactions" symbol-ref="MKK">
+                    <Expression> - k3 * MKKK_P * MKK / (KK3 + MKK) + V6 * MKK_P / (KK6 + MKK_P)</Expression>
+                </DiffEqn>
+                <DiffEqn name="gained from reactions" symbol-ref="MKK_P">
+                    <Expression>k3 * MKKK_P * MKK / (KK3 + MKK) - uVol * k4 * MKKK_P * MKK_P / (KK4 + MKK_P) + uVol * V5 * MKK_PP / (KK5 + MKK_PP) - V6 * MKK_P / (KK6 + MKK_P)</Expression>
+                </DiffEqn>
+                <Constant value="0.025" symbol="k4"/>
+                <Constant value="15" symbol="KK4"/>
+                <DiffEqn name="gained from reactions" symbol-ref="MKK_PP">
+                    <Expression>k4 * MKKK_P * MKK_P / (KK4 + MKK_P) - V5 * MKK_PP / (KK5 + MKK_PP)</Expression>
+                </DiffEqn>
+                <Constant value="0.75" symbol="V5"/>
+                <Constant value="15" symbol="KK5"/>
+                <Constant value="0.75" symbol="V6"/>
+                <Constant value="15" symbol="KK6"/>
+                <Constant value="0.025" symbol="k7"/>
+                <Constant value="15" symbol="KK7"/>
+                <DiffEqn name="gained from reactions" symbol-ref="MAPK">
+                    <Expression> - k7 * MKK_PP * MAPK / (KK7 + MAPK) + V10 * MAPK_P / (KK10 + MAPK_P)</Expression>
+                </DiffEqn>
+                <DiffEqn name="gained from reactions" symbol-ref="MAPK_P">
+                    <Expression> k7 * MKK_PP * MAPK / (KK7 + MAPK) - k8 * MKK_PP * MAPK_P / (KK8 + MAPK_P) + uVol * V9 * MAPK_PP / (KK9 + MAPK_PP) - V10 * MAPK_P / (KK10 + MAPK_P)</Expression>
+                </DiffEqn>
+                <Constant value="0.025" symbol="k8"/>
+                <Constant value="15" symbol="KK8"/>
+                <DiffEqn name="gained from reactions" symbol-ref="MAPK_PP">
+                    <Expression>k8 * MKK_PP * MAPK_P / (KK8 + MAPK_P) - V9 * MAPK_PP / (KK9 + MAPK_PP)</Expression>
+                </DiffEqn>
+                <Constant value="0.5" symbol="V9"/>
+                <Constant value="15" symbol="KK9"/>
+                <Constant value="0.5" symbol="V10"/>
+                <Constant value="15" symbol="KK10"/>
+            </System>
+            <Constant name="compartment size" value="1" symbol="uVol"/>
+            <Property name="Mos" value="90" symbol="MKKK"/>
+            <Property name="Mos-P" value="10" symbol="MKKK_P"/>
+            <Property name="Mek1" value="280" symbol="MKK"/>
+            <Property name="Mek1-P" value="10" symbol="MKK_P"/>
+            <Property name="Mek1-PP" value="10" symbol="MKK_PP"/>
+            <Property name="Erk2" value="280" symbol="MAPK"/>
+            <Property name="Erk2-P" value="10" symbol="MAPK_P"/>
+            <Property name="Erk2-PP" value="10" symbol="MAPK_PP"/>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="1" type="sbml_ct"/>
+    </CellPopulations>
+    <Analysis>
+        <Logger time-step="stop/200">
+            <Restriction>
+                <Celltype celltype="sbml_ct"/>
+            </Restriction>
+            <Input>
+                <Symbol symbol-ref="MAPK"/>
+                <Symbol symbol-ref="MAPK_P"/>
+                <Symbol symbol-ref="MAPK_PP"/>
+                <Symbol symbol-ref="MKK"/>
+                <Symbol symbol-ref="MKK_P"/>
+                <Symbol symbol-ref="MKK_PP"/>
+                <Symbol symbol-ref="MKKK"/>
+                <Symbol symbol-ref="MKKK_P"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="-1">
+                    <Style grid="true" style="lines" line-width="3.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="MAPK"/>
+                        <Symbol symbol-ref="MAPK_P"/>
+                        <Symbol symbol-ref="MAPK_PP"/>
+                        <Symbol symbol-ref="MKK"/>
+                        <Symbol symbol-ref="MKK_P"/>
+                        <Symbol symbol-ref="MKK_PP"/>
+                        <Symbol symbol-ref="MKKK"/>
+                        <Symbol symbol-ref="MKKK_P"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

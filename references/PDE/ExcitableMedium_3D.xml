@@ -1,0 +1,70 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-ExcitableMedium-3D</Title>
+        <Details>Simulates the Barkley model of an excitable medium, see: http://www.scholarpedia.org/article/Barkley_model
+Derived from FitzHugh-Nagumo model and Hogdkin-Huxley model.
+
+TIFF images can be viewed with external tools such as Fiji / ImageJ (http://fiji.sc/Fiji) or BioView3D (http://www.dimin.net/software/bioview3d/). The latter also reads the OME header for 3D, 4D and 5D images.
+VTK filed can be viewed with external tools such as ParaView  (https://www.paraview.org/).</Details>
+    </Description>
+    <Global>
+        <Field value="if( l.x>=s.x/2-5 and l.x&lt;=s.x/2+5 and l.z>=s.z/2-5 and l.z&lt;=s.z/2+5 and l.y&lt;=s.y/4 , 1, 0 )" symbol="u">
+            <Diffusion rate="0.5"/>
+        </Field>
+        <Field value="if(l.x&lt;=s.x/2 and l.z&lt;=(3*s.z)/4, 1, 0)" symbol="v">
+            <Diffusion rate="0.5"/>
+        </Field>
+        <System time-step="0.05" solver="Runge-Kutta [fixed, O(4)]">
+            <DiffEqn symbol-ref="u">
+                <Expression>(1/e)*u*(1-u)*(u-((v+b)/a))</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="v">
+                <Expression>u-v</Expression>
+            </DiffEqn>
+            <Constant value="0.02" symbol="e"/>
+            <Constant value="0.8" symbol="a"/>
+            <Constant value="0.01" symbol="b"/>
+        </System>
+    </Global>
+    <Space>
+        <Lattice class="cubic">
+            <Size value="50, 50, 50" symbol="s"/>
+            <BoundaryConditions>
+                <Condition type="noflux" boundary="x"/>
+                <Condition type="noflux" boundary="y"/>
+                <Condition type="noflux" boundary="z"/>
+                <Condition type="noflux" boundary="-x"/>
+                <Condition type="noflux" boundary="-y"/>
+                <Condition type="noflux" boundary="-z"/>
+            </BoundaryConditions>
+            <NodeLength value="1.0"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="l" name="position in space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="25"/>
+        <SaveInterval value="0"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <Analysis>
+        <Gnuplotter time-step="5">
+            <Terminal size="600 600 0" name="png"/>
+            <Plot slice="25">
+                <Field symbol-ref="u"/>
+            </Plot>
+        </Gnuplotter>
+        <TiffPlotter compression="false" time-step="0.5" OME-header="true" format="32bit" timelapse="true">
+            <Channel symbol-ref="u"/>
+            <Channel symbol-ref="v"/>
+        </TiffPlotter>
+        <ModelGraph reduced="false" include-tags="#untagged" format="svg"/>
+        <VtkPlotter mode="binary" time-step="0.5">
+            <Channel symbol-ref="u"/>
+            <Channel symbol-ref="v"/>
+        </VtkPlotter>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,93 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-PredatorPrey</Title>
+        <Details>Example showing oscillatory cell cycle model by Ferrell et al.
+
+The related Example "CellCycle" uses this same model in each cell (with cell-specific values) but here the model exists uniformly just once for the whole space.
+
+Reference:
+James Ferrell, Tony Yu-Chen Tsai and Qiong Yang (2011) Modeling the Cell Cycle: Why Do Certain Circuits Oscillate?, Cell 144, p874-885. http://dx.doi.org/10.1016/j.cell.2011.03.006
+
+Illustrates how to 
+- create a simple ODE model
+- log and plot data as time course</Details>
+    </Description>
+    <Global>
+        <Variable value="0" symbol="CDK1"/>
+        <Variable value="0" symbol="Plk1"/>
+        <Variable value="0" symbol="APC"/>
+        <System time-scaling="1" time-step="1e-2" solver="Runge-Kutta [fixed, O(4)]">
+            <Constant value="8" symbol="n"/>
+            <Constant value="0.5" symbol="K"/>
+            <Constant value="0.1" symbol="α1"/>
+            <Constant value="3.0" symbol="α2"/>
+            <Constant value="3.0" symbol="α3"/>
+            <Constant value="3.0" symbol="β1"/>
+            <Constant value="1.0" symbol="β2"/>
+            <Constant value="1.0" symbol="β3"/>
+            <DiffEqn symbol-ref="CDK1">
+                <Expression>α1 - β1 * CDK1 * (APC^n) / (K^n + APC^n)</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="Plk1">
+                <Expression>α2*(1-Plk1) * ((CDK1^n) / (K^n + CDK1^n)) - β2*Plk1</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="APC">
+                <Expression>α3*(1- APC) * ((Plk1^n) / (K^n + Plk1^n)) - β3*APC</Expression>
+            </DiffEqn>
+        </System>
+    </Global>
+    <Space>
+        <Lattice class="linear">
+            <Size value="1, 0, 0" symbol="size"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="25"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <Analysis>
+        <Logger time-step="1e-2">
+            <Input>
+                <Symbol symbol-ref="APC"/>
+                <Symbol symbol-ref="CDK1"/>
+                <Symbol symbol-ref="Plk1"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="-1">
+                    <Style style="lines" line-width="4.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="APC"/>
+                        <Symbol symbol-ref="CDK1"/>
+                        <Symbol symbol-ref="Plk1"/>
+                    </Y-axis>
+                </Plot>
+                <Plot time-step="-1">
+                    <Style style="lines" line-width="4.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="CDK1"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="APC"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="Plk1"/>
+                    </Color-bar>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph include-tags="#untagged" format="png" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

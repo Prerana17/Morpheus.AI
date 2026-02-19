@@ -1,0 +1,135 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-Convergence-Extension</Title>
+        <Details>Illustrates the plugins MembraneProperty and HomophilicAdhesion
+        
+        - each cell is polarized through a pattern of concentration c (e.g. of adhesion molecules) along its surface as defined by the plugin MembraneProperty under CellTypes and visualised as black (low c) to yellow (high c) coloration of cell membranes in the plots
+
+        - here the pattern c is predefined as function of direction (angle m.phi of the MembraneLattice defined as m under Space) while PDE-dynamics for c along m on the deforming cell surface is also supported by Morpheus
+
+        - HomophilicAdhesion as Interaction under CPM favors longer contacts between neighboring cells exactly where both adjacent membranes have high values of c, i.e. adhesion is polarised downstream of c
+        
+        - as emergent behavior, the rectangular tissue gets narrower and higher        
+        </Details>
+    </Description>
+    <Global/>
+    <Space>
+        <Lattice class="square">
+            <Size value="500,500,0" symbol="size"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <MembraneLattice>
+            <Resolution value="20" symbol="memsize"/>
+            <SpaceSymbol symbol="m"/>
+        </MembraneLattice>
+        <SpaceSymbol symbol="l"/>
+    </Space>
+    <Time>
+        <TimeSymbol symbol="TIME"/>
+        <StartTime value="0"/>
+        <StopTime value="40000"/>
+        <!--    <Disabled>
+        <RandomSeed value="4"/>
+    </Disabled>
+-->
+        <!--    <Disabled>
+        <SaveInterval value="100"/>
+    </Disabled>
+-->
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="ct1">
+            <PropertyVector value="0.0, 0.0, 0.0" symbol="d"/>
+            <VolumeConstraint strength="1" target="2750"/>
+            <SurfaceConstraint strength="5" target="1" mode="aspherity"/>
+            <MembraneProperty value="sin( (m.phi - 0.75*pi) * 2 ) + 1.0" symbol="c">
+                <Diffusion rate="0.0"/>
+            </MembraneProperty>
+            <Property value="0.0" symbol="pos"/>
+            <PersistentMotion strength="1" decay-time="10"/>
+        </CellType>
+        <CellType class="medium" name="medium">
+            <Constant value="0.0" symbol="c"/>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction>
+            <Contact type2="medium" value="500" type1="ct1"/>
+            <Contact type2="ct1" value="0" type1="ct1">
+                <HomophilicAdhesion strength="-500" adhesive="c"/>
+            </Contact>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="250"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>2</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population type="ct1" size="0">
+            <InitProperty symbol-ref="pos">
+                <Expression>rint(cell.center.x / 50)</Expression>
+            </InitProperty>
+            <InitCellObjects mode="distance">
+                <Arrangement displacements="64,80,0" repetitions="6,4,0">
+                    <Sphere radius="32" center="82,82,0"/>
+                </Arrangement>
+                <Arrangement displacements="64,80,0" repetitions="6,4,0">
+                    <Sphere radius="32" center="114,122,0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        <BoundaryValue value="medium" boundary="x"/>
+        <BoundaryValue value="medium" boundary="-x"/>
+        <BoundaryValue value="medium" boundary="y"/>
+        <BoundaryValue value="medium" boundary="-y"/>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="500" decorate="false">
+            <Terminal size="1000,1000,0" name="png"/>
+            <Plot>
+                <Cells value="c"/>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="250">
+            <Input>
+                <Symbol symbol-ref="cell.center.x"/>
+                <Symbol symbol-ref="cell.center.y"/>
+            </Input>
+            <Output>
+                <TextOutput file-separation="cell"/>
+            </Output>
+            <Plots>
+                <Plot time-step="2500">
+                    <Style style="lines" point-size="0.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis maximum="size.x" minimum="0">
+                        <Symbol symbol-ref="cell.center.x"/>
+                    </X-axis>
+                    <Y-axis maximum="size.y" minimum="0">
+                        <Symbol symbol-ref="cell.center.y"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="cell.id"/>
+                    </Color-bar>
+                    <!--    <Disabled>
+        <Color-bar>
+            <Symbol symbol-ref="TIME"/>
+        </Color-bar>
+    </Disabled>
+-->
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="1">
+    <Description>
+        <Details></Details>
+        <Title></Title>
+    </Description>
+    <Global>
+        <Constant symbol="yellow" value="0"/>
+        <Constant symbol="black" value="0"/>
+        <ConstantVector symbol="direction" value="0.0, 0.0, 0.0"/>
+        <Field symbol="c" value="0" name="chemoattractant">
+            <Diffusion rate="20"/>
+        </Field>
+        <System solver="runge-kutta" time-step="2">
+            <DiffEqn symbol-ref="c">
+                <Expression>black - c</Expression>
+            </DiffEqn>
+        </System>
+        <Field symbol="act" value="0" name="activity">
+            <Diffusion rate="0"/>
+        </Field>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size value="300, 300, 0"/>
+            <!--    <Disabled>
+        <BoundaryConditions>
+            <Condition boundary="x" type="noflux"/>
+            <Condition boundary="y" type="noflux"/>
+            <Condition boundary="-x" type="noflux"/>
+            <Condition boundary="-y" type="noflux"/>
+        </BoundaryConditions>
+    </Disabled>
+-->
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <MembraneLattice>
+            <Resolution value="40"/>
+        </MembraneLattice>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="1000"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="yellow">
+            <VolumeConstraint target="500" strength="1"/>
+            <SurfaceConstraint target="1.5" strength="1"/>
+            <Property symbol="yellow" value="1"/>
+            <PropertyVector symbol="direction" value="0,0,0"/>
+            <CellReporter name="sense chemoattractant">
+                <Input value="c"/>
+                <Polarity symbol-ref="direction"/>
+            </CellReporter>
+            <DirectedMotion direction="direction" strength="0.25" name="&quot;whole-cell chemotaxis&quot;"/>
+        </CellType>
+        <CellType class="biological" name="black">
+            <Property symbol="black" value="1"/>
+            <VolumeConstraint target="2500" strength="1"/>
+            <SurfaceConstraint target="1" strength="1"/>
+            <MembraneProperty symbol="contact" value="0">
+                <Diffusion rate="0.0"/>
+            </MembraneProperty>
+            <NeighborhoodReporter name="record contact to yellow cell">
+                <Input scaling="length" value="yellow"/>
+                <Output symbol-ref="contact" mapping="average"/>
+            </NeighborhoodReporter>
+            <CellReporter name="compute vector to contact">
+                <Input value="contact"/>
+                <Polarity symbol-ref="direction"/>
+            </CellReporter>
+            <PropertyVector symbol="direction" value="0,0,0"/>
+            <DirectedMotion direction="-direction" strength="1" name="move away from contact"/>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0.0"/>
+        <MCSDuration value="1"/>
+        <MetropolisKinetics temperature="1" stepper="edgelist">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </MetropolisKinetics>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="yellow">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="1, 1, 1" displacements="1, 1, 1">
+                    <Object>
+                        <Sphere radius="15" center="50,150,0"/>
+                    </Object>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        <Population size="0" type="black">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="1, 1, 1" displacements="1, 1, 1">
+                    <Object>
+                        <Sphere radius="30" center="160,150,0"/>
+                    </Object>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter clean="true" time-step="25">
+            <Plot>
+                <Cells value="cell.id">
+                    <!--    <Disabled>
+        <ColorMap>
+            <Color value="2" color="black"/>
+            <Color value="0" color="yellow"/>
+        </ColorMap>
+    </Disabled>
+-->
+                </Cells>
+                <!--    <Disabled>
+        <CellArrows orientation="-direction*100"/>
+    </Disabled>
+-->
+                <Field resolution="50" symbol-ref="c"/>
+            </Plot>
+            <!--    <Disabled>
+        <Plot>
+            <Cells value="contact">
+                <Disabled>
+                    <ColorMap>
+                        <Color value="1" color="black"/>
+                        <Color value="0" color="yellow"/>
+                    </ColorMap>
+                </Disabled>
+            </Cells>
+            <CellLabels symbol-ref="cell.type" fontcolor="red"/>
+            <Disabled>
+                <Field resolution="50" symbol-ref="act"/>
+            </Disabled>
+        </Plot>
+    </Disabled>
+-->
+            <Terminal opacity="0.75" name="png"/>
+        </Gnuplotter>
+    </Analysis>
+</MorpheusModel>

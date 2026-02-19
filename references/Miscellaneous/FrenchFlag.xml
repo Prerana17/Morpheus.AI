@@ -1,0 +1,98 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-FrenchFlag</Title>
+        <Details>Wolpert L (1969). "Positional information and the spatial pattern of cellular differentiation". J. Theor. Biol. 25 (1): 1–47.</Details>
+    </Description>
+    <Global>
+        <Field value="c_0*exp(-k/D*(l.x/size.x))" name="morphogen gradient" symbol="m">
+            <Diffusion rate="0.0"/>
+        </Field>
+        <Constant value="1.0" symbol="c_0"/>
+        <Constant value="0.75" symbol="D"/>
+        <Constant value="1" symbol="k"/>
+        <Constant value="0.0" symbol="celltype"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size value="20, 20, 0" symbol="size"/>
+            <NodeLength value="1"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="constant"/>
+                <Condition boundary="y" type="constant"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol name="location" symbol="l"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="0"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType name="cells" class="biological">
+            <Property value="0.0" name="p" symbol="p"/>
+            <Property value="0.0" name="cell type" symbol="celltype"/>
+            <Constant value="0.7" symbol="t1"/>
+            <Constant value="0.4" symbol="t2"/>
+            <Equation symbol-ref="celltype">
+                <Expression>if(p>t1,3, if(p>t2, 2, 1))</Expression>
+            </Equation>
+            <Mapper name="report morphogen concentration">
+                <Input value="m"/>
+                <Output mapping="average" symbol-ref="p"/>
+            </Mapper>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="0" type="cells">
+            <InitCellLattice/>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="0">
+            <Terminal name="png" persist="true"/>
+            <Plot>
+                <Cells value="celltype" opacity="0.5">
+                    <ColorMap>
+                        <Color value="3" color="blue"/>
+                        <Color value="2" color="white"/>
+                        <Color value="1" color="red"/>
+                    </ColorMap>
+                </Cells>
+                <!--    <Disabled>
+        <Field symbol-ref="m"/>
+    </Disabled>
+-->
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="0.0">
+            <Input>
+                <Symbol symbol-ref="m"/>
+                <Symbol symbol-ref="celltype"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Restriction>
+                <Slice value="size.y/2" axis="y"/>
+            </Restriction>
+            <Plots>
+                <Plot>
+                    <Style style="linespoints"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="l.x"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="m"/>
+                        <Symbol symbol-ref="celltype"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph format="svg" reduced="false" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

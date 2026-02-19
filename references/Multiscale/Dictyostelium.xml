@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-Dictyostelium</Title>
+        <Details>Aggregation of dictyostelium by chemotactic amoeba as excitable medium mediated by diffusive cAMP signal.
+
+Original reference:
+- Nicholas Savill and Paulien Hogeweg, Modelling morphogenesis: from single cells to crawling slugs, J. Theo. Biol., 1997.
+
+Morpeus implementation by ECMI 2012 summer course:
+- A. Quintero, M. Myllykoski, A. Igolkina, A. Freltoft, N. Dixit, F. Rost, Morphogenesis and Dynamics of Multicellular Systems, ECMI Newletter 52, 2012.</Details>
+    </Description>
+    <Global>
+        <Field value="0" symbol="cAMP" name="cAMP" tags="signal">
+            <Diffusion rate="1"/>
+            <BoundaryValue boundary="x" value="0"/>
+            <BoundaryValue boundary="-x" value="0"/>
+            <BoundaryValue boundary="y" value="0"/>
+            <BoundaryValue boundary="-y" value="0"/>
+        </Field>
+        <Field value="0" symbol="r" name="refractoriness">
+            <Diffusion rate="0"/>
+            <BoundaryValue boundary="x" value="0"/>
+            <BoundaryValue boundary="-x" value="0"/>
+            <BoundaryValue boundary="y" value="0"/>
+            <BoundaryValue boundary="-y" value="0"/>
+        </Field>
+        <System time-step="0.1" solver="Heun [fixed, O(2)]" tags="signal">
+            <Constant value="0.006" symbol="c1"/>
+            <Constant value="0.841" symbol="c2"/>
+            <DiffEqn symbol-ref="cAMP">
+                <Expression>is_amoeba*(-f() -r)</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="r">
+                <Expression>is_amoeba*epsilon()*(3.5*cAMP-b-r)</Expression>
+            </DiffEqn>
+            <Function symbol="epsilon">
+                <Expression>if(cAMP &lt; c1, 0.5,
+ if(cAMP &lt; c2, 0.0589,
+  0.5))</Expression>
+            </Function>
+            <Function symbol="f">
+                <Expression>if(cAMP &lt; c1, 20*cAMP, 
+ if(cAMP &lt; c2, -3*cAMP+0.15,
+  15*(cAMP-1)))</Expression>
+            </Function>
+        </System>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size value="150, 150, 0" symbol="l"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="constant"/>
+                <Condition boundary="-x" type="constant"/>
+                <Condition boundary="y" type="constant"/>
+                <Condition boundary="-y" type="constant"/>
+            </BoundaryConditions>
+            <NodeLength value="0.37"/>
+            <Neighborhood>
+                <Distance>1.5</Distance>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="750" symbol="end"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="1357906713"/>
+    </Time>
+    <CellTypes>
+        <CellType name="medium" class="medium">
+            <Property value="0" symbol="b"/>
+            <Property value="0" symbol="max_c"/>
+            <Property value="0" symbol="phase"/>
+            <Property value="0" symbol="is_amoeba"/>
+        </CellType>
+        <CellType name="amoeba" class="biological">
+            <VolumeConstraint strength="1" target="40"/>
+            <Chemotaxis field="cAMP" strength="if(phase == 2, 10, 0)" tags="response"/>
+            <Property value="1.0" symbol="is_amoeba"/>
+            <Property value="0" symbol="b"/>
+            <Property value="0" symbol="max_c"/>
+            <Property value="1" symbol="phase"/>
+            <Property value="0" symbol="phaseTime"/>
+            <Property value="0.1" symbol="phase2duration"/>
+            <Function symbol="mu">
+                <Expression>if(phase == 2, 10, 0)</Expression>
+            </Function>
+            <System time-step="1.0" solver="Euler [fixed, O(1)]" tags="response">
+                <Rule symbol-ref="phaseTime">
+                    <Expression>if(phase == 2, phaseTime+MCStime, 0)</Expression>
+                </Rule>
+                <Rule symbol-ref="phase" name="Rule_2_3">
+                    <Expression>if(phase == 1 and max_c > 0.1, 2,
+if(phase == 2 and phaseTime>phase2duration, 3,
+if(phase == 3 and max_c &lt; 0.05, 1, 
+phase
+))) </Expression>
+                </Rule>
+            </System>
+            <Mapper tags="response">
+                <Input value="cAMP"/>
+                <Output symbol-ref="max_c" mapping="maximum"/>
+            </Mapper>
+        </CellType>
+        <CellType name="autoAmoeba" class="biological">
+            <VolumeConstraint strength="1" target="40"/>
+            <Property value="0.5" symbol="b"/>
+            <Property value="0" symbol="max_c"/>
+            <Property value="0" symbol="phase"/>
+            <Property value="1.0" symbol="is_amoeba"/>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction>
+            <Contact type2="amoeba" value="4" type1="amoeba"/>
+            <Contact type2="medium" value="2" type1="amoeba"/>
+            <Contact type2="autoAmoeba" value="4" type1="amoeba"/>
+            <Contact type2="medium" value="3" type1="autoAmoeba"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="0.5" symbol="MCStime"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics yield="0.1" temperature="1.0"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>1.5</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population size="1" type="autoAmoeba">
+            <InitRectangle number-of-cells="1" mode="regular">
+                <Dimensions size="10, 10, 0" origin="l.x/2, l.y/2, 0"/>
+            </InitRectangle>
+        </Population>
+        <Population size="1" type="amoeba">
+            <InitRectangle number-of-cells="250" mode="regular">
+                <Dimensions size="l.x-6,l.y-6,1" origin="3,3,0"/>
+            </InitRectangle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="5" decorate="false">
+            <Terminal size="400 400 0" name="png"/>
+            <Plot>
+                <Field symbol-ref="cAMP" min="0" max="1.0">
+                    <ColorMap>
+                        <Color color="white" value="0"/>
+                        <Color color="yellow" value="0.5"/>
+                        <Color color="red" value="1.0"/>
+                    </ColorMap>
+                </Field>
+                <Cells opacity="0.65" min="0" value="phase" max="3">
+                    <ColorMap>
+                        <Color color="black" value="0"/>
+                        <Color color="yellow" value="1"/>
+                        <Color color="green" value="2"/>
+                        <Color color="red" value="3"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <ModelGraph include-tags="signal" reduced="true" format="svg" exclude-symbols="is_amoeba"/>
+    </Analysis>
+</MorpheusModel>

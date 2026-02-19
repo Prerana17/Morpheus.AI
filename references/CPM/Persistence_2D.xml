@@ -1,0 +1,134 @@
+<MorpheusModel version="3">
+    <Description>
+        <Title>Example-Persistence</Title>
+        <Details>Illustrates the Plugin PersistentMotion and shows
+
+        - 400 cells confined to a circular domain (defined in Space) and forced to move with persistence
+        
+        - rectangular obstacle without dynamics since FreezeMotion is set of this cell type
+
+        - alignment of motion directions emerges from the random initial state as a collective effect
+        </Details>
+    </Description>
+    <Global>
+        <VariableVector symbol="d" value="0.0, 0.0, 0.0" name="Moving direction"/>
+        <Constant symbol="density" value="0.012"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="200, 200, 0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <Domain boundary-type="constant">
+                <Circle diameter="200"/>
+            </Domain>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <TimeSymbol symbol="time"/>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <RandomSeed value="4"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="obstacle">
+            <FreezeMotion>
+                <Condition>1</Condition>
+            </FreezeMotion>
+        </CellType>
+        <CellType class="biological" name="ct1">
+            <PropertyVector symbol="d" value="0.0, 0.0, 0.0" name="Moving direction"/>
+            <Property symbol="s" value="5"/>
+            <VolumeConstraint target="100" strength="1"/>
+            <SurfaceConstraint target="0.9" mode="aspherity" strength="1"/>
+            <PersistentMotion protrusion="true" decay-time="50" strength="s"/>
+            <MotilityReporter time-step="50">
+                <Velocity symbol-ref="d"/>
+            </MotilityReporter>
+        </CellType>
+        <CellType class="medium" name="medium"/>
+    </CellTypes>
+    <CPM>
+        <Interaction>
+            <Contact type1="ct1" type2="medium" value="16"/>
+            <Contact type1="ct1" type2="ct1" value="1"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="10"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>3</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population size="1" type="obstacle">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="1, 1, 1" displacements="1, 1, 1">
+                    <Box size="20,30,0" origin="130,100,0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        <Population size="0" type="ct1">
+            <InitCircle mode="regular" number-of-cells="400">
+                <Dimensions radius="100" center="100, 100, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="100">
+            <Terminal size="1000 600 0" name="png"/>
+            <Plot>
+                <Cells value="cell.id"/>
+                <!--    <Disabled>
+        <CellArrows style="1" orientation="3 * d / d.abs"/>
+    </Disabled>
+-->
+            </Plot>
+            <Plot>
+                <Cells value="d.phi" min="0.0" max="6.28">
+                    <ColorMap>
+                        <Color value="6.28" color="red"/>
+                        <Color value="3.14" color="blue"/>
+                        <Color value="0.0" color="red"/>
+                    </ColorMap>
+                </Cells>
+                <CellArrows style="1" orientation="3 * d / d.abs"/>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="cell.center.x"/>
+                <Symbol symbol-ref="cell.center.y"/>
+            </Input>
+            <Output>
+                <TextOutput file-separation="cell"/>
+            </Output>
+            <Plots>
+                <Plot time-step="50">
+                    <Style style="lines" line-width="2.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis minimum="0.0" maximum="size.x">
+                        <Symbol symbol-ref="cell.center.x"/>
+                    </X-axis>
+                    <Y-axis minimum="0.0" maximum="size.y">
+                        <Symbol symbol-ref="cell.center.y"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="time"/>
+                    </Color-bar>
+                    <Range>
+                        <Time mode="history" history="50"/>
+                    </Range>
+                </Plot>
+            </Plots>
+        </Logger>
+    </Analysis>
+</MorpheusModel>

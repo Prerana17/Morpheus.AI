@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="3">
+    <Description>
+        <Title>Example-Crypt</Title>
+        <Details>Illustrative model of stem cells in intestinal crypt
+
+Shows the following features of Morpheus:
+
+- Asymmetric cell division (Proliferation)
+
+- Conditionally change cell type (ChangeCellType)
+
+- Loading simulation domain from image (Lattice/Domain)</Details>
+    </Description>
+    <Global>
+        <Variable symbol="w_d" value="3000" name="wait time division"/>
+        <Variable symbol="num_A" value="0.0" name="Clone A"/>
+        <Variable symbol="num_B" value="0.0" name="Clone B"/>
+        <Variable symbol="num_C" value="0.0" name="Clone C"/>
+        <Variable symbol="num_D" value="0.0" name="Clone D"/>
+        <Variable symbol="num_E" value="0.0" name="Clone E"/>
+        <Constant symbol="s" value="0.0"/>
+        <Constant symbol="clone" value="0.0"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="600 600 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <Domain boundary-type="noflux">
+                <Image path="crypt.tif"/>
+            </Domain>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="50000"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="stem_cells">
+            <Property symbol="clone" value="0.0"/>
+            <Property symbol="t_d" value="0.0" name="time of division"/>
+            <Property symbol="s" value="1" name="stemness"/>
+            <VolumeConstraint target="800" strength="1"/>
+            <SurfaceConstraint target="1" mode="aspherity" strength="1"/>
+            <ChangeCellType newCellType="TA_cells">
+                <Condition>s==0</Condition>
+                <Triggers/>
+            </ChangeCellType>
+            <DirectedMotion direction="0, -1,  0" strength="0.5"/>
+            <CellDivision daughterID="daughter" division-plane="random">
+                <Condition>time > t_d</Condition>
+                <Triggers>
+                    <Rule symbol-ref="s">
+                        <Expression>if( daughter == 1, 1, 0 )</Expression>
+                    </Rule>
+                    <Rule symbol-ref="t_d">
+                        <Expression>time + rand_norm(w_d,200)</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+        </CellType>
+        <CellType class="biological" name="TA_cells">
+            <Property symbol="clone" value="0.0"/>
+            <Property symbol="t_d" value="0" name="time of division"/>
+            <Property symbol="d" value="0" name="divisions"/>
+            <VolumeConstraint target="600 " strength="1"/>
+            <SurfaceConstraint target="0.9" mode="aspherity" strength="1"/>
+            <CellDivision daughterID="daughter" division-plane="random">
+                <Condition>time > t_d</Condition>
+                <Triggers>
+                    <Rule symbol-ref="d">
+                        <Expression>d+0.5</Expression>
+                    </Rule>
+                    <Rule symbol-ref="t_d">
+                        <Expression>time + rand_norm(w_d,500)</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            <CellDeath>
+                <Condition>if( cell.center.y > size.y - 20, 1, 0)</Condition>
+            </CellDeath>
+            <Mapper name="Count Clone A">
+                <Input value="clone==1"/>
+                <Output symbol-ref="num_A" mapping="sum"/>
+            </Mapper>
+            <Mapper name="Count Clone B">
+                <Input value=" clone==2"/>
+                <Output symbol-ref="num_B" mapping="sum"/>
+            </Mapper>
+            <Mapper name="Count Clone C">
+                <Input value="clone==3"/>
+                <Output symbol-ref="num_C" mapping="sum"/>
+            </Mapper>
+            <Mapper name="Count Clone D">
+                <Input value="clone==4"/>
+                <Output symbol-ref="num_D" mapping="sum"/>
+            </Mapper>
+            <Mapper name="Count Clone E">
+                <Input value="clone==5"/>
+                <Output symbol-ref="num_E" mapping="sum"/>
+            </Mapper>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="stem_cells" type2="stem_cells" value="-10"/>
+            <Contact type1="stem_cells" type2="TA_cells" value="10"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="3" yield="0.1"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>2.5</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="stem_cells">
+            <InitRectangle mode="regular" number-of-cells="5">
+                <Dimensions size="100,30,0" origin="250.0, 75.0, 0.0"/>
+            </InitRectangle>
+            <InitProperty symbol-ref="clone">
+                <Expression>cell.id</Expression>
+            </InitProperty>
+            <InitProperty symbol-ref="t_d">
+                <Expression>rand_uni(0,w_d)</Expression>
+            </InitProperty>
+        </Population>
+        <Population size="0" type="TA_cells">
+            <InitRectangle mode="regular" number-of-cells="500">
+                <Dimensions size="600, 490, 0" origin="0,80, 0"/>
+            </InitRectangle>
+            <InitProperty symbol-ref="t_d">
+                <Expression>rand_uni(0,w_d)</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="250" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="clone">
+                    <ColorMap>
+                        <Color value="20" color="gold"/>
+                        <Color value="19" color="dark-pink"/>
+                        <Color value="18" color="dark-khaki"/>
+                        <Color value="17" color="dark-goldenrod"/>
+                        <Color value="16" color="cyan"/>
+                        <Color value="15" color="coral"/>
+                        <Color value="14" color="chartreuse"/>
+                        <Color value="13" color="brown4"/>
+                        <Color value="12" color="bisque"/>
+                        <Color value="11" color="beige"/>
+                        <Color value="10" color="light-red"/>
+                        <Color value="9" color="light-green"/>
+                        <Color value="8" color="light-blue"/>
+                        <Color value="7" color="gray"/>
+                        <Color value="6" color="black"/>
+                        <Color value="5" color="yellow"/>
+                        <Color value="4" color="blue"/>
+                        <Color value="3" color="green"/>
+                        <Color value="2" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="100">
+            <Input>
+                <Symbol symbol-ref="num_A"/>
+                <Symbol symbol-ref="num_B"/>
+                <Symbol symbol-ref="num_C"/>
+                <Symbol symbol-ref="num_D"/>
+                <Symbol symbol-ref="num_E"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot title="Clone numbers" time-step="5000">
+                    <Style point-size="1" grid="true" style="linespoints" line-width="3.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="num_A"/>
+                        <Symbol symbol-ref="num_B"/>
+                        <Symbol symbol-ref="num_C"/>
+                        <Symbol symbol-ref="num_D"/>
+                        <Symbol symbol-ref="num_E"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph format="svg" reduced="true" />
+    </Analysis>
+</MorpheusModel>

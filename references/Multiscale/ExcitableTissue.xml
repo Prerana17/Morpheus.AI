@@ -1,0 +1,127 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-ExcitableTissue</Title>
+        <Details>Barkley model of excitable tissue, with intercellular diffusive coupling. CPM model is coupled to intracellular model via adhesion and target volume. 
+
+</Details>
+    </Description>
+    <Global>
+        <Constant value="0.0" symbol="u"/>
+        <Constant value="0.0" symbol="v"/>
+        <Constant value="25" name="width" symbol="w"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size value="400,400,0" symbol="size"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <NodeLength value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol name="position in space" symbol="l"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="100"/>
+        <SaveInterval value="0"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <Analysis>
+        <Gnuplotter decorate="false" time-step="1">
+            <Terminal name="png"/>
+            <!--    <Disabled>
+        <Plot>
+            <Cells value="u">
+                <ColorMap>
+                    <Color value="0" color="white"/>
+                    <Color value="0.5" color="yellow"/>
+                    <Color value="1" color="red"/>
+                </ColorMap>
+            </Cells>
+        </Plot>
+    </Disabled>
+-->
+            <Plot>
+                <Cells value="v">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="1" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <ModelGraph format="svg" reduced="false" include-tags="#untagged"/>
+    </Analysis>
+    <CellTypes>
+        <CellType name="cells" class="biological">
+            <Property value="0.0" symbol="u"/>
+            <Property value="0.0" symbol="v"/>
+            <Property value="0.0" symbol="u_n"/>
+            <Property value="1.1" symbol="Du"/>
+            <NeighborhoodReporter>
+                <Input value="u" scaling="length"/>
+                <Output mapping="average" symbol-ref="u_n"/>
+            </NeighborhoodReporter>
+            <System solver="Dormand-Prince [adaptive, O(5)]">
+                <DiffEqn symbol-ref="u">
+                    <Expression>(1/e)*u*(1-u)*(u-((v+b)/a)) + Du*(0.5*u_n - 0.5*u)</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="v">
+                    <Expression>u-v</Expression>
+                </DiffEqn>
+                <Constant value="0.02" symbol="e"/>
+                <Constant value="0.8" symbol="a"/>
+                <Constant value="0.01" symbol="b"/>
+            </System>
+            <!--    <Disabled>
+        <VolumeConstraint target="50" strength="1"/>
+    </Disabled>
+-->
+            <VolumeConstraint target="100 - 80*v" strength="1"/>
+            <SurfaceConstraint target="1" mode="aspherity" strength="1"/>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="0" type="cells">
+            <InitProperty symbol-ref="u">
+                <Expression>if(cell.center.x > size.x/2-w and 
+   cell.center.x &lt; size.x/2+w and 
+   cell.center.y > size.y/2-w and 
+   cell.center.y &lt; size.y/2+w, 1, 0)</Expression>
+            </InitProperty>
+            <InitProperty symbol-ref="v">
+                <Expression>if(cell.center.x > size.x/2 and 
+   cell.center.y > size.y/2, 1, 0)</Expression>
+            </InitProperty>
+            <InitCellObjects mode="distance">
+                <Arrangement displacements="9,9,1" repetitions="35,35,1">
+                    <Sphere radius="8" center="50.0, 50.0, 0.0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+    </CellPopulations>
+    <CPM>
+        <Interaction>
+            <Contact value="-5" type1="cells" type2="cells">
+                <HomophilicAdhesion adhesive="u" strength="-10"/>
+            </Contact>
+        </Interaction>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </ShapeSurface>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="0.05"/>
+            <MetropolisKinetics temperature="5"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </MonteCarloSampler>
+    </CPM>
+</MorpheusModel>

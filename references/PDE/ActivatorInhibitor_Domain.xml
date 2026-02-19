@@ -1,0 +1,58 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-ActivatorInhibitor-2D-Domain</Title>
+        <Details>Meinhardt-Gierer (activator-inhibitor) model solved in a nonregular domain with constant boundaries.</Details>
+    </Description>
+    <Global>
+        <Field name="activator" value="rand_norm(0.5,0.1)" symbol="a">
+            <Diffusion rate="0.02"/>
+            <BoundaryValue boundary="domain" value="0.01"/>
+        </Field>
+        <Field name="inhibitor" value="0.1" symbol="i">
+            <Diffusion rate="0.22"/>
+            <BoundaryValue boundary="domain" value="0"/>
+        </Field>
+        <System name="Meinhardt" time-step="5" solver="Runge-Kutta [fixed, O(4)]">
+            <Constant value="0.001" symbol="rho"/>
+            <Constant value="0.001" symbol="rho_a"/>
+            <Constant value="0.02" symbol="mu_i"/>
+            <Constant value="0.04" symbol="mu_a"/>
+            <Constant value="0.10" symbol="kappa"/>
+            <DiffEqn symbol-ref="a">
+                <Expression>(rho/i)*((a^2)/(1 + kappa*a^2)) - mu_a * a + rho_a</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="i">
+                <Expression>rho*((a^2)/(1+kappa*a^2)) - mu_i *i</Expression>
+            </DiffEqn>
+        </System>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size value="100, 100, 0" symbol="size"/>
+            <NodeLength value="1"/>
+            <Domain boundary-type="constant">
+                <Image path=":/examples/PDE/domain.tif"/>
+            </Domain>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="10000"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="2"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <Analysis>
+        <Gnuplotter decorate="false" time-step="200">
+            <Terminal size="400 400 0" name="png"/>
+            <Plot>
+                <Field min="0" symbol-ref="a"/>
+            </Plot>
+        </Gnuplotter>
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

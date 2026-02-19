@@ -1,0 +1,133 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-VascularPatterning</Title>
+        <Details>Reference:
+- A Köhn-Luque, W de Back, Y Yamaguchi, K Yoshimura, M A Herrero, T Miura (2013) Dynamics of VEGF matrix-retention in vascular network patterning, Physical Biology, 10(6) : 066007
+http://dx.doi.org/10.1088/1478-3975/10/6/066007
+
+Related to:
+- Köhn-Luque A, de Back W, Starruß J, Mattiotti A, Deutsch A, Perez-Pomares JM, Herrero MA (2011) Early Embryonic Vascular Patterning by Matrix-Mediated Paracrine Signalling: A Mathematical Model Study. PLoS ONE 6(9): e24175. 
+http://dx.doi.org/10.1371/journal.pone.0024175
+
+</Details>
+    </Description>
+    <Global>
+        <Field value="1.5e-6" name="VEGF" symbol="u">
+            <Diffusion rate="58.7"/>
+        </Field>
+        <Field value="0" name="Free ECM" symbol="s">
+            <Diffusion rate="0.001"/>
+        </Field>
+        <Field value="0" name="VEGF_b" symbol="b">
+            <Diffusion rate="0"/>
+        </Field>
+        <Field value="0" name="VEGF_s + VEGF_b" symbol="VEGF_all">
+            <Diffusion rate="0"/>
+        </Field>
+        <System solver="Heun [fixed, O(2)]" time-step="5.0">
+            <Constant value="5e-3" name="Production ECM" symbol="gamma"/>
+            <Constant value="8.5e-4" name="Binding rate VEGF/ECM" symbol="k_on"/>
+            <Constant value="3.6e-3" name="Unbinding rate VEGF/ECM" symbol="k_off"/>
+            <Constant value="2.6e-6" name="Decay VEGF " symbol="delta"/>
+            <DiffEqn symbol-ref="u">
+                <Expression>- k_on*u*s + k_off*b - delta*u</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="s">
+                <Expression>gamma*cell - k_on*u*s+k_off*b</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="b">
+                <Expression>k_on*u*s - k_off*b</Expression>
+            </DiffEqn>
+            <Rule symbol-ref="VEGF_all">
+                <Expression>u+b</Expression>
+            </Rule>
+        </System>
+        <Constant value="0.0" symbol="cell"/>
+        <Constant value="0.0045" symbol="cell_density"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size value="200, 200, 0" symbol="size"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <NodeLength value="2"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="3600"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="1"/>
+        <TimeSymbol symbol="t"/>
+    </Time>
+    <CellTypes>
+        <CellType name="HUVEC" class="biological">
+            <Property value="1.0" name="cell" symbol="cell"/>
+            <Property value="3e7" name="chemotactic strength" symbol="str"/>
+            <VolumeConstraint target="90" strength="1"/>
+            <Chemotaxis contact-inhibition="false" field="b" retraction="false" strength="str"/>
+            <!--    <Disabled>
+        <AddCell overwrite="false">
+            <Triggers/>
+            <Distribution>l.x / size.x</Distribution>
+            <Count>randuni(0,1) &lt; 0.24 + 0.0*t</Count>
+        </AddCell>
+    </Disabled>
+-->
+        </CellType>
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0">
+            <Contact value="3.2" type1="medium" type2="HUVEC"/>
+            <Contact value="6.4" type1="HUVEC" type2="HUVEC"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="1"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="HUVEC">
+            <InitRectangle number-of-cells="cell_density * size.x * size.y" mode="regular">
+                <Dimensions size="200,200,0" origin="0,0,0"/>
+            </InitRectangle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter decorate="false" time-step="250">
+            <Terminal name="png"/>
+            <Plot>
+                <Field symbol-ref="b"/>
+                <Cells value="cell" opacity="0.65">
+                    <ColorMap>
+                        <Color value="1" color="gray"/>
+                        <Color value="0.0" color="gray"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <!--    <Disabled>
+        <HistogramLogger normalized="false" time-step="100" number-of-bins="10">
+            <Plot terminal="png" minimum="0" maximum="1.0"/>
+            <Column symbol-ref="cell.id" celltype="Angioblasts"/>
+        </HistogramLogger>
+    </Disabled>
+-->
+        <ModelGraph format="svg" reduced="true" exclude-symbols="cell,cell.center" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

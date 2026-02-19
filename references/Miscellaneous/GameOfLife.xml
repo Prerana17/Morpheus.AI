@@ -1,0 +1,84 @@
+<MorpheusModel version="4">
+    <Description>Conway's Game of Life
+---------------------
+
+Classical Cellular Automaton with synchronized updates.
+
+
+Rules:
+- If alive, die when less than 2 live neighbors
+- If alive, survive when 2 or 3 live neighbors (no change)
+- If alive, die when more than 3 live neighbors
+- If dead, become alive when exactly 3 live neighbors
+
+<Title>Example-GameOfLife</Title>
+        <Details>Simulates Conway's cellular automata model "Game of Life" by
+
+1. summing the states of neighboring cells with NeighborhoodReporter
+2. based on this sum, setting the cell state using a System of (synchronously updated) Rules.</Details>
+    </Description>
+    <Global>
+        <Constant value="0" symbol="s"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size value="50, 50, 0" symbol="size"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="500"/>
+        <SaveInterval value="0"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType name="cell" class="biological">
+            <Property value="0.0" name="State_Living" symbol="s"/>
+            <Property value="0.0" name="Sum_Neighbors" symbol="sum"/>
+            <System name="Rules of life" solver="Euler [fixed, O(1)]" time-step="1.0">
+                <Rule symbol-ref="s">
+                    <Expression>if((s == 1 and sum &lt;  2), 0,
+  if((s == 1 and sum >  3), 0,
+    if((s == 0 and sum == 3), 1, s)
+  )
+)
+                    </Expression>
+                </Rule>
+            </System>
+            <NeighborhoodReporter>
+                <Input value="s" scaling="cell"/>
+                <Output mapping="sum" symbol-ref="sum"/>
+            </NeighborhoodReporter>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="0" type="cell">
+            <InitProperty symbol-ref="s">
+                <Expression>if(rand_uni(0,1) > 0.75, 1, 0)</Expression>
+            </InitProperty>
+            <InitCellLattice/>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter decorate="false" time-step="20">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="s">
+                    <ColorMap>
+                        <Color value="1" color="black"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <ModelGraph format="svg" reduced="false" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

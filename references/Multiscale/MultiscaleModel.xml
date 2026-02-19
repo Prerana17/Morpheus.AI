@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="1">
+    <Description>
+        <Title>Example-CellCycle-MultiScale</Title>
+        <Details>- NOTE: cell Property 'dist' does not give correct values (see Logger): values are identical for all cells!
+
+
+ODE model of Xenopus oocyte cell cycle adopted from:
+
+James Ferrell, Tony Yu-Chen Tsai and Qiong Yang (2011) Modeling the Cell Cycle: Why Do Certain Circuits Oscillate?, Cell 144, p874-885. http://dx.doi.org/10.1016/j.cell.2011.03.006</Details>
+    </Description>
+    <Global>
+        <Field symbol="g" value="0">
+            <Diffusion rate="100"/>
+        </Field>
+        <System solver="runge-kutta" time-step="0.1">
+            <DiffEqn symbol-ref="g">
+                <Expression>APC - 0.05*g</Expression>
+            </DiffEqn>
+        </System>
+        <Constant symbol="CDK1" value="0.0"/>
+        <Constant symbol="APC" value="0.0"/>
+        <Constant symbol="Plk1" value="0.0"/>
+        <Constant symbol="dist" value="0.0"/>
+        <Constant symbol="posx" value="0.0"/>
+    </Global>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size symbol="size" value="250 250 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>3</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="2"/>
+        <TimeSymbol symbol="t"/>
+        <RandomSeed value="3445"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="cells">
+            <Property symbol="CDK1" value="0" name="Cyclin-dependent kinase 1"/>
+            <Property symbol="Plk1" value="0" name="Polo-like kinase 1"/>
+            <Property symbol="APC" value="0" name="Anaphase-promoting complex"/>
+            <System solver="runge-kutta" time-scaling="15" time-step="4e-2">
+                <DiffEqn symbol-ref="CDK1">
+                    <Expression>α1+(g_l) - β1 * CDK1 * (APC^n / (K^n + APC^n))</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="Plk1">
+                    <Expression>α2*(1-Plk1) * ((CDK1^n) / (K^n + CDK1^n)) - β2*Plk1</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="APC">
+                    <Expression>α3*(1- APC) * ((Plk1^n) / (K^n + Plk1^n)) - β3*APC</Expression>
+                </DiffEqn>
+                <Constant symbol="n" value="8" name="Hill coefficient"/>
+                <Constant symbol="K" value="0.5" name="Michaelis constant"/>
+                <Constant symbol="α1" value="0.1"/>
+                <Constant symbol="α2" value="3.0"/>
+                <Constant symbol="α3" value="3.0"/>
+                <Constant symbol="β1" value="3.0"/>
+                <Constant symbol="β2" value="1.0"/>
+                <Constant symbol="β3" value="1.0"/>
+            </System>
+            <Property symbol="d" value="0" name="divisions"/>
+            <Property symbol="c" value="0" name="division timeout"/>
+            <Property symbol="Vt" value="25000" name="Target volume"/>
+            <VolumeConstraint target="Vt" strength="1"/>
+            <SurfaceConstraint target="0.95" strength="0.5"/>
+            <Event trigger="on change" name="reset timeout">
+                <Condition>CDK1&lt;0.25</Condition>
+                <Rule symbol-ref="c">
+                    <Expression>0</Expression>
+                </Rule>
+            </Event>
+            <Property symbol="g_l" value="0.0"/>
+            <CellDivision division-plane="minor">
+                <Condition>CDK1 > 0.5 and c == 0 and cell.volume > 100</Condition>
+                <Triggers>
+                    <Rule symbol-ref="d">
+                        <Expression>d+0.5</Expression>
+                    </Rule>
+                    <Rule symbol-ref="c">
+                        <Expression>1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="Vt">
+                        <Expression>Vt/2</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            <CellReporter name="report field">
+                <Input value="g"/>
+                <Output symbol-ref="g_l" mapping="average"/>
+            </CellReporter>
+            <Property symbol="dist" value="sqrt( (cell.center.x-size.x/2)^2 + (cell.center.y-size.y/2)^2 )  "/>
+        </CellType>
+        <CellType class="medium" name="Medium">
+            <Property symbol="APC" value="0" name="Anaphase-promoting complex"/>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="cells" type2="cells" value="-12"/>
+            <Contact type1="cells" type2="Medium" value="0"/>
+        </Interaction>
+        <MCSDuration value="1e-4"/>
+        <MetropolisKinetics temperature="2" yield="0.1" stepper="edgelist">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </MetropolisKinetics>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="cells">
+            <InitCellObjects mode="order">
+                <Arrangement repetitions="1, 1, 1" displacements="1, 1, 1">
+                    <Object>
+                        <Sphere radius="25" center="0, 150, 0"/>
+                    </Object>
+                </Arrangement>
+            </InitCellObjects>
+            <InitProperty symbol-ref="CDK1">
+                <Expression>0.25</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter clean="true" time-step="0.1" timename="false">
+            <Terminal opacity="0.5" size="400 400 0" name="png"/>
+            <Plot>
+                <Cells value="APC">
+                    <ColorMap>
+                        <Color value="0.5" color="blue"/>
+                        <Color value="0.25" color="white"/>
+                    </ColorMap>
+                </Cells>
+                <Field resolution="100" symbol-ref="g" isolines="5" min="0.0">
+                    <ColorMap>
+                        <Color value="1.0" color="red"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="0.002">
+            <Input>
+                <!--    <Disabled>
+        <Symbol symbol-ref="APC"/>
+    </Disabled>
+-->
+                <!--    <Disabled>
+        <Symbol symbol-ref="CDK1"/>
+    </Disabled>
+-->
+                <!--    <Disabled>
+        <Symbol symbol-ref="Plk1"/>
+    </Disabled>
+-->
+                <Symbol symbol-ref="dist"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <!--    <Disabled>
+        <Plots>
+            <Plot time-step="0.25">
+                <Style style="points"/>
+                <Terminal terminal="png"/>
+                <X-axis>
+                    <Symbol symbol-ref="t"/>
+                </X-axis>
+                <Y-axis>
+                    <Symbol symbol-ref="APC"/>
+                </Y-axis>
+                <Color-bar>
+                    <Symbol symbol-ref="dist"/>
+                </Color-bar>
+            </Plot>
+        </Plots>
+    </Disabled>
+-->
+        </Logger>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="3">
+    <Description>
+        <Details>CPM model with "Game of Life" rules.
+
+1. Cells adhere to each other
+2. Cells divide if &lt; 3 neighbors
+3. Cells die if > 6 neighbors
+
+These rules results in complex network formation. </Details>
+        <Title>Example-CPM-GameofLife</Title>
+    </Description>
+    <Space>
+        <Lattice class="square">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <Size symbol="size" value="500, 500, 0"/>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="50000"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="cell">
+            <VolumeConstraint target="100" strength="1"/>
+            <SurfaceConstraint target="1" mode="aspherity" strength="1"/>
+            <Property symbol="n_neighbors" value="0" name="Number of neighboring cells"/>
+            <NeighborhoodReporter name="Count neighbors">
+                <Input scaling="cell" value="cell.type == 0"/>
+                <Output symbol-ref="n_neighbors" mapping="sum"/>
+            </NeighborhoodReporter>
+            <CellDivision name="Divide if less than 3 neighbors" division-plane="minor">
+                <Condition>n_neighbors &lt; 3 and  rand_uni(0,1) &lt; 0.015</Condition>
+                <Triggers/>
+            </CellDivision>
+            <CellDeath name="Die if more than 6 neighbors">
+                <Condition>n_neighbors > 6</Condition>
+            </CellDeath>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction>
+            <Contact type1="cell" type2="cell" value="-10"/>
+        </Interaction>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </ShapeSurface>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <MetropolisKinetics temperature="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </MonteCarloSampler>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="cell">
+            <Cell id="1">
+                <Nodes>250,250,0</Nodes>
+            </Cell>
+            <!--    <Disabled>
+        <InitRectangle mode="random" number-of-cells="5">
+            <Dimensions size="size" origin="0.0, 0.0, 0.0"/>
+        </InitRectangle>
+    </Disabled>
+-->
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="50">
+            <Plot>
+                <Cells value="n_neighbors"/>
+                <!--    <Disabled>
+        <CellLabels value="n_neighbors"/>
+    </Disabled>
+-->
+            </Plot>
+            <Terminal name="png"/>
+        </Gnuplotter>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-RunAndTumble</Title>
+        <Details>Models a Levy walk - a random walk strategy that is superior for searching due to it's high spatial coverage.
+
+Shows how to manipulate PropertyVectors (x,z,y) using the VectorRule. An expression for each of the three coordinates must be given, separated by a comma ",".</Details>
+    </Description>
+    <Global>
+        <Constant symbol="tumble.run_duration" value="0"/>
+    </Global>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size symbol="size" value="300, 300, 0"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="10000"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="amoeba">
+            <VolumeConstraint target="200" strength="1"/>
+            <ConnectivityConstraint/>
+            <PropertyVector symbol="move_dir" value="0.0, 0.0, 0.0"/>
+            <Property symbol="tumble.run_duration" value="0.0" name="run duration"/>
+            <Property symbol="tumble.last" value="0" name="last tumble event"/>
+            <Function symbol="tumble.time_left" name="time left">
+                <Expression>tumble.last + tumble.run_duration - time</Expression>
+            </Function>
+            <DirectedMotion direction="move_dir" strength="0.1"/>
+            <Event time-step="5" trigger="when true">
+                <Condition>time >= tumble.last + tumble.run_duration</Condition>
+                <Rule symbol-ref="tumble.last">
+                    <Expression>time</Expression>
+                </Rule>
+                <Rule name="new update time" symbol-ref="tumble.run_duration">
+                    <Expression>20 * rand_gamma(0.5, 5)</Expression>
+                </Rule>
+                <Intermediate symbol="angle" value="rand_uni(0, 2*pi)"/>
+                <VectorRule notation="r,φ,θ" symbol-ref="move_dir">
+                    <Expression>1, angle, 0</Expression>
+                </VectorRule>
+            </Event>
+            <Event time-step="100">
+                <Condition>time == 0</Condition>
+                <VectorRule symbol-ref="cell.center.initial">
+                    <Expression>cell.center</Expression>
+                </VectorRule>
+            </Event>
+            <PropertyVector symbol="cell.center.initial" value="0.0, 0.0, 0.0"/>
+            <PropertyVector symbol="cell.center.relative" value="0.0, 0.0, 0.0"/>
+            <VectorEquation symbol-ref="cell.center.relative">
+                <Expression>cell.center - cell.center.initial</Expression>
+            </VectorEquation>
+        </CellType>
+        <CellType class="medium" name="medium"/>
+    </CellTypes>
+    <CPM>
+        <Interaction>
+            <Contact type1="amoeba" type2="medium" value="4"/>
+            <Contact type1="amoeba" type2="amoeba" value="6.0"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="0.6"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>2.5</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population type="amoeba" size="1">
+            <Cell name="1" id="1">
+                <Nodes>50,100,0</Nodes>
+            </Cell>
+            <Cell name="2" id="2">
+                <Nodes>150, 50,0</Nodes>
+            </Cell>
+            <Cell name="3" id="3">
+                <Nodes>100,50,0</Nodes>
+            </Cell>
+            <Cell name="4" id="4">
+                <Nodes>100,100,0</Nodes>
+            </Cell>
+            <Cell name="5" id="5">
+                <Nodes>50, 150,0</Nodes>
+            </Cell>
+            <Cell name="6" id="6">
+                <Nodes>100, 150,0</Nodes>
+            </Cell>
+            <Cell name="7" id="7">
+                <Nodes>150, 100,0</Nodes>
+            </Cell>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="200" decorate="true">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="cell.id"/>
+                <CellArrows orientation="5 * move_dir"/>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="20">
+            <Input>
+                <Symbol symbol-ref="cell.center.relative.x"/>
+                <Symbol symbol-ref="cell.center.relative.y"/>
+            </Input>
+            <Output>
+                <TextOutput file-separation="cell"/>
+            </Output>
+            <Plots>
+                <Plot time-step="5000">
+                    <Style line-width="2.0" style="lines"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="cell.center.relative.x"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="cell.center.relative.y"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="cell.id"/>
+                    </Color-bar>
+                </Plot>
+            </Plots>
+            <Restriction/>
+        </Logger>
+        <ModelGraph format="svg" include-tags="#untagged" reduced="true"/>
+    </Analysis>
+</MorpheusModel>

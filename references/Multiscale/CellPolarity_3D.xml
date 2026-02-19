@@ -1,0 +1,183 @@
+<MorpheusModel version="5">
+    <Description>
+        <Title>Example-CellPolarity</Title>
+        <Details>Chemotaxis of polarized cell
+----------------------------
+Show feedback between cell motility, cell polarization and external gradient.
+ 
+Two simple polarization models can be enabled/disabled:
+- Substrate-depletion model: no repolarization
+- Wave-pinning model: repolarization
+ 
+PDE Equation:
+- Switch on/off and change gradients </Details>
+    </Description>
+    <Global>
+        <Field value="l.x / lattice.x + rand_norm(0,0.2)" symbol="U"/>
+        <!--    <Disabled>
+        <Equation symbol-ref="U">
+            <Expression>l.x / lattice.x +
+0*if( t > 500 and t &lt; 1500, l.x / lattice.x, 0)</Expression>
+        </Equation>
+    </Disabled>
+-->
+        <Constant value="0.0" symbol="c"/>
+        <!--    <Disabled>
+        <Constant value="0.0" symbol="A"/>
+    </Disabled>
+-->
+    </Global>
+    <Space>
+        <Lattice class="cubic">
+            <Size value="150, 75, 50" symbol="lattice"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <NodeLength value="1.0"/>
+            <Neighborhood>
+                <Distance>2.0</Distance>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+        <MembraneLattice>
+            <Resolution value="50" symbol="memsize"/>
+            <SpaceSymbol symbol="m"/>
+        </MembraneLattice>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="2000"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="0"/>
+        <TimeSymbol symbol="t"/>
+    </Time>
+    <CellTypes>
+        <CellType name="cells" class="biological">
+            <VolumeConstraint target="5000" strength="0.1"/>
+            <SurfaceConstraint mode="aspherity" target="1" strength="0.05"/>
+            <MembraneProperty name="A" value="0.5" symbol="A"/>
+            <MembraneProperty name="B" value="0.5" symbol="B"/>
+            <MembraneProperty name="chemotactic strength" value="0" symbol="c"/>
+            <MembraneProperty name="signal" value="0" symbol="s"/>
+            <Property value="0" symbol="l_U"/>
+            <!--    <Disabled>
+        <System solver="Dormand-Prince [adaptive, O(5)]" name="Substrate-Depletion">
+            <Rule symbol-ref="c">
+                <Expression>A^2*5e1</Expression>
+            </Rule>
+            <DiffEqn symbol-ref="A">
+                <Reaction>(rho*A^2) / B - mu_a * A + rho_a + 0.01*s
+</Reaction>
+                <Diffusion>0.05</Diffusion>
+            </DiffEqn>
+            <DiffEqn symbol-ref="B">
+                <Reaction>(rho*A^2) - mu_i * B
+</Reaction>
+                <Diffusion>0.2</Diffusion>
+            </DiffEqn>
+            <Constant value="0.01" symbol="rho_a"/>
+            <Constant value="0.03" symbol="mu_i"/>
+            <Constant value="0.02" symbol="mu_a"/>
+            <Constant value="0.001" symbol="rho"/>
+        </System>
+    </Disabled>
+-->
+            <System solver="Dormand-Prince [adaptive, O(5)]" name="WavePinning">
+                <Constant value="0.067" symbol="k_0"/>
+                <Constant value="1" symbol="gamma"/>
+                <Constant value="0.25" symbol="delta"/>
+                <Constant value="1" symbol="K"/>
+                <Constant name="spatial-length-signal" value="5.0" symbol="sigma"/>
+                <Constant name="Hill coefficient" value="4" symbol="n"/>
+                <Intermediate value="B*(k_0+ s + (gamma*A^n) / (K^n + A^n) ) - delta*A" symbol="F"/>
+                <DiffEqn symbol-ref="A">
+                    <Reaction>F</Reaction>
+                    <Diffusion>0.05</Diffusion>
+                </DiffEqn>
+                <DiffEqn symbol-ref="B">
+                    <Reaction>-F</Reaction>
+                    <Diffusion>1</Diffusion>
+                </DiffEqn>
+                <Rule symbol-ref="c">
+                    <Expression>A^2*1000</Expression>
+                </Rule>
+            </System>
+            <Mapper>
+                <Input value="U"/>
+                <Output mapping="average" symbol-ref="s"/>
+            </Mapper>
+            <PropertyVector value="0.0, 0.0, 0.0" symbol="dir"/>
+            <Mapper>
+                <Input value="A"/>
+                <Polarity symbol-ref="dir"/>
+            </Mapper>
+            <DirectedMotion direction="dir" strength="0.5 * dir.abs / (1+dir.abs)"/>
+        </CellType>
+        <CellType name="medium" class="medium">
+            <Property value="0" symbol="l_U"/>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0.0">
+            <Contact type2="medium" type1="cells" value="-10"/>
+            <Contact type2="cells" type1="cells" value="-20"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="1" yield="0.05"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="cells">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="1, 1, 1" displacements="1, 1, 1">
+                    <Sphere center="25, 37, 25" radius="10.0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="50">
+            <Terminal name="png"/>
+            <Plot slice="25">
+                <Field symbol-ref="U"/>
+                <Cells value="A"/>
+                <CellArrows orientation="dir * 100"/>
+            </Plot>
+        </Gnuplotter>
+        <TiffPlotter format="8bit" OME-header="false" time-step="100">
+            <Channel celltype="cells" symbol-ref="cell.id"/>
+            <Channel celltype="cells" symbol-ref="c"/>
+            <Channel symbol-ref="U"/>
+        </TiffPlotter>
+        <Logger time-step="50">
+            <Input>
+                <Symbol symbol-ref="A"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="matrix"/>
+            </Output>
+            <Plots>
+                <SurfacePlot time-step="50">
+                    <Color-bar>
+                        <Symbol symbol-ref="A"/>
+                    </Color-bar>
+                    <Terminal terminal="png"/>
+                </SurfacePlot>
+            </Plots>
+            <Restriction>
+                <Celltype celltype="cells"/>
+            </Restriction>
+        </Logger>
+        <ModelGraph format="svg" reduced="false" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

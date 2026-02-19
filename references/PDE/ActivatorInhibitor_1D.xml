@@ -1,0 +1,90 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-ActivatorInhibitor1D</Title>
+        <Details></Details>
+    </Description>
+    <Global>
+        <Field name="activator" value="rand_norm(0.5,0.1)" symbol="a">
+            <Diffusion rate="0.02"/>
+        </Field>
+        <Field name="inhibitor" value="0.1" symbol="i">
+            <Diffusion rate="1"/>
+        </Field>
+        <System time-step="1" solver="Runge-Kutta [fixed, O(4)]">
+            <DiffEqn symbol-ref="a">
+                <Expression>(rho*a^2) / i - mu_a * a + rho_a</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="i">
+                <Expression>(rho*a^2) - mu_i * i</Expression>
+            </DiffEqn>
+            <Constant value="0.01" symbol="rho_a"/>
+            <Constant value="0.03" symbol="mu_i"/>
+            <Constant value="0.02" symbol="mu_a"/>
+            <Constant value="0.001" symbol="rho"/>
+        </System>
+    </Global>
+    <Space>
+        <Lattice class="linear">
+            <Size value="100, 0, 0" symbol="size"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+            </BoundaryConditions>
+            <NodeLength value="0.25"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="4000"/>
+        <SaveInterval value="0"/>
+        <!--    <Disabled>
+        <RandomSeed value="1"/>
+    </Disabled>
+-->
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <Analysis>
+        <Logger time-step="25">
+            <Input>
+                <Symbol symbol-ref="a"/>
+                <Symbol symbol-ref="i"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot title="space plot" time-step="250">
+                    <Style style="lines" line-width="3.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="space.x"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="3.5">
+                        <Symbol symbol-ref="a"/>
+                        <Symbol symbol-ref="i"/>
+                    </Y-axis>
+                    <Range>
+                        <Time mode="current"/>
+                    </Range>
+                </Plot>
+                <Plot title="time-space plot" time-step="-1">
+                    <Style style="points"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="space.x"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="a"/>
+                    </Color-bar>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

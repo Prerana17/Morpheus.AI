@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-Protrusion</Title>
+        <Details>Model for cell protrusions using the Act model. 
+
+The Act model defines a local positive feedback mechanism, insprired by actin dynamics, that promotes protrusions in recently active areas.
+
+Reference:
+Ioana Niculescu, Johannes Textor, Rob J. de Boer, Crawling and Gliding: A Computational Model for Shape-Driven Cell Migration, PLoS Comp Biol, 2015.
+http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004280</Details>
+    </Description>
+    <Global>
+        <Field symbol="act" value="0" name="actin activity">
+            <Diffusion rate="0"/>
+        </Field>
+    </Global>
+    <Space>
+        <Lattice class="cubic">
+            <Size symbol="size" value="200, 200, 200"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="amoeba">
+            <VolumeConstraint target="25000" strength="50"/>
+            <SurfaceConstraint target="1.5" strength="5" mode="aspherity"/>
+            <Protrusion field="act" strength="80" maximum="150"/>
+            <!--    <Disabled>
+        <ConnectivityConstraint/>
+    </Disabled>
+-->
+        </CellType>
+        <CellType class="medium" name="medium"/>
+    </CellTypes>
+    <CPM>
+        <Interaction>
+            <Contact type1="amoeba" type2="medium" value="140"/>
+            <Contact type1="medium" type2="medium" value="0"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="20"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population type="amoeba" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement displacements="1, 1, 1" repetitions="1, 1, 1">
+                    <Sphere radius="10" center="100,100,100"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="false">
+            <Terminal name="png"/>
+            <Plot slice="100">
+                <Cells value="cell.id" opacity="0.2">
+                    <!--    <Disabled>
+        <ColorMap>
+            <Color color="gray20" value="1"/>
+            <Color color="gray50" value="0.0"/>
+        </ColorMap>
+    </Disabled>
+-->
+                </Cells>
+                <Field symbol-ref="act"/>
+            </Plot>
+        </Gnuplotter>
+        <TiffPlotter time-step="100" format="guess" compression="false" timelapse="true" OME-header="true">
+            <Channel exclude-medium="true" no-outline="true" symbol-ref="cell.id"/>
+            <Channel symbol-ref="act"/>
+        </TiffPlotter>
+        <ModelGraph format="svg" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

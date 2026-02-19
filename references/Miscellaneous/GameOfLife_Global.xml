@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Details>This model shows:
+- how to implement a simple cellular automata using a Global/Field.
+- how to use NeighborhoodReporter to report on neighboring lattice sites within Fields.
+</Details>
+        <Title>Example-Game-of-Life-Field</Title>
+    </Description>
+    <Global>
+        <Field value="if(rand_uni(0,1) > 0.75, 1, 0)" symbol="s">
+            <Diffusion rate="0"/>
+        </Field>
+        <Field value="0" symbol="sum">
+            <Diffusion rate="0.0"/>
+        </Field>
+        <System name="Rules of life" solver="Euler [fixed, O(1)]" time-step="1.0">
+            <Rule symbol-ref="s">
+                <Expression>if((s == 1 and sum >= w and sum &lt;= x ), 1,
+if((s == 0 and sum >= y and sum &lt;= z ), 1, 0))
+                    </Expression>
+            </Rule>
+            <Constant value="2" symbol="w"/>
+            <Constant value="3" symbol="x"/>
+            <Constant value="3" symbol="y"/>
+            <Constant value="3" symbol="z"/>
+        </System>
+        <NeighborhoodReporter>
+            <Input value="s"/>
+            <Output mapping="sum" symbol-ref="sum"/>
+        </NeighborhoodReporter>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <Size value="200,200,0" symbol="size"/>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="1000"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <Analysis>
+        <Gnuplotter decorate="false" time-step="1">
+            <Terminal name="png"/>
+            <Plot>
+                <Field symbol-ref="s">
+                    <ColorMap>
+                        <Color value="1" color="black"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        <ModelGraph format="svg" reduced="true" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

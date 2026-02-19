@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-LateralSignaling</Title>
+        <Details>Reference:
+
+Walter de Back, Joseph X. Zhou, Lutz Brusch, On the Role of Lateral Stabilization during Early Patterning in the Pancreas, Roy. Soc. Interface 10(79): 20120766, 2012.
+
+http://dx.doi.org/10.1098/rsif.2012.0766
+</Details>
+    </Description>
+    <Global>
+        <Constant value="0" symbol="X"/>
+        <Constant value="0" symbol="Y"/>
+    </Global>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size value="20, 20, 0" symbol="size"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="30"/>
+        <TimeSymbol symbol="t"/>
+        <!--    <Disabled>
+        <RandomSeed value="2"/>
+    </Disabled>
+-->
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="cells">
+            <Property name="Ngn3" value="0.0" symbol="X"/>
+            <Property name="Ngn3-Neighbors" value="0.0" symbol="Xn"/>
+            <Property name="Ptf1a" value="0" symbol="Y"/>
+            <Property name="Ptf1a-neighbors" value="0" symbol="Yn"/>
+            <System time-step="0.02" solver="Euler-Maruyama [stochastic, O(1)]">
+                <Constant value="1" symbol="a"/>
+                <Constant value="20" symbol="b"/>
+                <Constant value="1" symbol="c"/>
+                <DiffEqn symbol-ref="X">
+                    <Expression>((th / (th + a*Xn^n)) - X) + rand_norm(0.0,noise)</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="Y">
+                    <Expression>(((th + b*(Y * Yn)^n) / (th + c*X^n + b*(Y * Yn)^n))  - Y ) + rand_norm(0.0,noise)</Expression>
+                </DiffEqn>
+                <Constant value="4" symbol="n"/>
+                <Constant value="1e-4" symbol="th"/>
+                <Constant value="1e-4" symbol="noise"/>
+            </System>
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="X"/>
+                <Output mapping="average" symbol-ref="Xn"/>
+            </NeighborhoodReporter>
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="Y"/>
+                <Output mapping="average" symbol-ref="Yn"/>
+            </NeighborhoodReporter>
+            <Event trigger="on change">
+                <Condition>tau == -1 and (X-Xn) > 0.05</Condition>
+                <Rule symbol-ref="tau">
+                    <Expression>t</Expression>
+                </Rule>
+            </Event>
+            <Property name="time to cell fate decision" value="-1" symbol="tau"/>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="0" type="cells">
+            <InitCellLattice/>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="5">
+            <Terminal persist="true" size="800 400 0" name="png"/>
+            <Plot>
+                <Cells max="1" min="0.0" value="X">
+                    <ColorMap>
+                        <Color color="blue" value="1.0"/>
+                        <Color color="light-blue" value="0.5"/>
+                        <Color color="white" value="0.0"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot>
+                <Cells max="1" min="0.0" value="Y">
+                    <ColorMap>
+                        <Color color="red" value="1.0"/>
+                        <Color color="light-red" value="0.5"/>
+                        <Color color="white" value="0.0"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="0.1">
+            <Input>
+                <Symbol symbol-ref="X"/>
+                <Symbol symbol-ref="Y"/>
+            </Input>
+            <Output>
+                <TextOutput file-separation="cell"/>
+            </Output>
+            <Plots>
+                <Plot time-step="-1">
+                    <Style style="lines" line-width="2"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="t"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="X"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="Y"/>
+                    </Color-bar>
+                    <Range>
+                        <Data increment="3"/>
+                    </Range>
+                </Plot>
+            </Plots>
+        </Logger>
+        <HistogramLogger minimum="-0.1" number-of-bins="20" normalized="true" maximum="1.1" time-step="5">
+            <Plot minimum="0" maximum="1.0" terminal="png"/>
+            <Column celltype="cells" symbol-ref="X"/>
+            <Column celltype="cells" symbol-ref="Y"/>
+        </HistogramLogger>
+        <HistogramLogger minimum="0.0" number-of-bins="30" normalized="true" maximum="30" time-step="-1">
+            <Plot minimum="0" maximum="1.0" terminal="png"/>
+            <Column celltype="cells" symbol-ref="tau"/>
+        </HistogramLogger>
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,149 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-PCP</Title>
+        <Details>Planar Cell Polarity (PCP) example
+The tissue size is adaptive and can be controlled via the global parameters cols, rows and R.
+The random initial conditions give rise to a variety of patterning dynamics.
+
+All dynamics are mediated through the membrane contacts of the cells.</Details>
+    </Description>
+    <Global>
+        <Field symbol="x" value="0">
+            <Diffusion rate="0.0"/>
+        </Field>
+        <Constant symbol="A" value="0.0"/>
+        <Constant symbol="C" value="0.0"/>
+        <ConstantVector symbol="polC" value="0.0, 0.0, 0.0"/>
+        <Constant symbol="orientation" value="0.25"/>
+        <Constant symbol="R" name="Cell radius" value="8.0"/>
+        <Constant symbol="rows" name="Number of tissue rows" value="12.0"/>
+        <Constant symbol="cols" name="Number of tissue columns" value="12.0"/>
+        <Constant symbol="d_rows" name="Number of double rows" value="rint(rows/2)"/>
+    </Global>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size symbol="size" value="2*R*cols, 4*R*d_rows, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <NodeLength value="2"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+            <Annotation>Lattice size for square must be
+   2*R*cols, 4*sin(pi/3)*R*d_rows, 0
+and for hexagonal 
+   2*R*cols, 4*R*d_rows, 0
+, since these are given in nodes, not orthogonal extends.</Annotation>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+        <MembraneLattice>
+            <Resolution symbol="memsize" value="24"/>
+            <SpaceSymbol symbol="m"/>
+        </MembraneLattice>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="2500"/>
+        <!--    <Disabled>
+        <RandomSeed value="0"/>
+    </Disabled>
+-->
+        <TimeSymbol symbol="t"/>
+    </Time>
+    <CellTypes>
+        <CellType name="cells" class="biological">
+            <MembraneProperty symbol="A" value="0.8">
+                <!--    <Disabled>
+        <Diffusion rate="100"/>
+    </Disabled>
+-->
+                <Diffusion well-mixed="true" rate="0"/>
+            </MembraneProperty>
+            <MembraneProperty symbol="C" value="rand_norm(0.2,0.1)">
+                <Diffusion rate="10"/>
+            </MembraneProperty>
+            <MembraneProperty symbol="c" name="C_nb" value="0">
+                <Diffusion rate="0"/>
+            </MembraneProperty>
+            <System time-step="0.1" solver="Bogacki-Shampine [adaptive, O(3)]">
+                <Constant symbol="dt" name="copy (repeat) value from System here" value="0.1"/>
+                <Constant symbol="d" name="decay" value="0.1"/>
+                <Constant symbol="h" name="cell-cell coupling" value="10"/>
+                <Constant symbol="b" name="base activation" value="0.01"/>
+                <Intermediate symbol="F" name="bistable, wave-pinning mechanism" value="A*(&#xa;  (1.5*(C/(1+C)) / (1+h*c^2)) &#xa;  + b&#xa;) &#xa;- d*C"/>
+                <DiffEqn symbol-ref="A">
+                    <Expression>-F</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="C">
+                    <Expression>F</Expression>
+                </DiffEqn>
+            </System>
+            <PropertyVector symbol="polC" value="0.0, 0.0, 0.0"/>
+            <NeighborhoodReporter time-step="1.0">
+                <Input scaling="length" value="C"/>
+                <Output symbol-ref="c" mapping="average"/>
+            </NeighborhoodReporter>
+            <Property symbol="orientation" value="0.2"/>
+            <Property symbol="sumC" value="0"/>
+            <Mapper>
+                <Input value="C"/>
+                <Polarity symbol-ref="polC"/>
+            </Mapper>
+            <Mapper>
+                <Input value="C"/>
+                <Output symbol-ref="sumC" mapping="sum"/>
+            </Mapper>
+        </CellType>
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    <CellPopulations>
+        <Population type="cells" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="cols, d_rows, 1" displacements="2*R, 2*sin(pi/3)*2*R, 1">
+                    <Sphere center="R, R, 0.0" radius="1.2*R"/>
+                </Arrangement>
+                <Arrangement repetitions="cols, d_rows, 1" displacements="2*R, 2*sin(pi/3)*2*R, 1">
+                    <Sphere center="0, R+sin(pi/3)*2*R, 0.0" radius="1.2*R"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="C">
+                    <ColorMap>
+                        <Color color="red" value="8"/>
+                        <Color color="yellow" value="2"/>
+                        <Color color="white" value="0.0"/>
+                    </ColorMap>
+                </Cells>
+                <CellArrows orientation="polC * 20.0"/>
+            </Plot>
+        </Gnuplotter>
+        <Gnuplotter time-step="100" decorate="true">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells max="6.28" min="0.0" value="polC.phi">
+                    <ColorMap>
+                        <Color color="red" value="5.4"/>
+                        <Color color="magenta" value="4.5"/>
+                        <Color color="blue" value="3.6"/>
+                        <Color color="cyan" value="2.7"/>
+                        <Color color="green" value="1.8"/>
+                        <Color color="yellow" value="0.9"/>
+                        <Color color="red" value="0.0"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <HistogramLogger minimum="0.0" time-step="100" maximum="6.28" normalized="false" number-of-bins="36">
+            <Column symbol-ref="polC.phi" celltype="cells"/>
+            <Plot minimum="0.0" terminal="png"/>
+        </HistogramLogger>
+        <ModelGraph include-tags="#untagged" reduced="false" format="svg"/>
+    </Analysis>
+</MorpheusModel>

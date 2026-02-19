@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-CellCycle</Title>
+        <Details>ODE model of Xenopus oocyte cell cycle adopted from:
+
+James Ferrell, Tony Yu-Chen Tsai and Qiong Yang (2011) Modeling the Cell Cycle: Why Do Certain Circuits Oscillate?, Cell 144, p874-885. http://dx.doi.org/10.1016/j.cell.2011.03.006</Details>
+    </Description>
+    <Global/>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size value="250, 250, 0" symbol="size"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="1"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="3445"/>
+    </Time>
+    <CellTypes>
+        <CellType name="cells" class="biological">
+            <Property value="0" name="Cyclin-dependent kinase 1" symbol="CDK1"/>
+            <Property value="0" name="Polo-like kinase 1" symbol="Plk1"/>
+            <Property value="0" name="Anaphase-promoting complex" symbol="APC"/>
+            <System time-step="4e-2" solver="Runge-Kutta [fixed, O(4)]" time-scaling="20">
+                <DiffEqn symbol-ref="CDK1">
+                    <Expression>α1 - β1 * CDK1 * (APC^n / (K^n + APC^n))</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="Plk1">
+                    <Expression>α2*(1-Plk1) * ((CDK1^n) / (K^n + CDK1^n)) - β2*Plk1</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="APC">
+                    <Expression>α3*(1- APC) * ((Plk1^n) / (K^n + Plk1^n)) - β3*APC</Expression>
+                </DiffEqn>
+                <Constant value="8" name="Hill coefficient" symbol="n"/>
+                <Constant value="0.5" name="Michaelis constant" symbol="K"/>
+                <Constant value="0.1" symbol="α1"/>
+                <Constant value="3.0" symbol="α2"/>
+                <Constant value="3.0" symbol="α3"/>
+                <Constant value="3.0" symbol="β1"/>
+                <Constant value="1.0" symbol="β2"/>
+                <Constant value="1.0" symbol="β3"/>
+            </System>
+            <Property value="0" name="portion" symbol="p"/>
+            <Property value="0" name="divisions" symbol="d"/>
+            <Property value="0" name="division timeout" symbol="c"/>
+            <Property value="1" name="cellcount" symbol="cc"/>
+            <Property value="25000" name="Target volume" symbol="Vt"/>
+            <VolumeConstraint target="Vt" strength="1"/>
+            <SurfaceConstraint mode="aspherity" target="1.0" strength="1"/>
+            <Event>
+                <Condition>CDK1&lt;0.2</Condition>
+                <Rule symbol-ref="c">
+                    <Expression>0</Expression>
+                </Rule>
+            </Event>
+            <CellDivision division-plane="minor">
+                <Condition>if(CDK1 > 0.5 and c == 0, 1, 0)</Condition>
+                <Triggers>
+                    <Rule symbol-ref="d">
+                        <Expression>d+0.5</Expression>
+                    </Rule>
+                    <Rule symbol-ref="c">
+                        <Expression>1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="Vt">
+                        <Expression>Vt/2</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0">
+            <Contact value="-20" type1="cells" type2="cells"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="5e-5"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="10" yield="0.1"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>3</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="cells">
+            <InitCellObjects mode="order">
+                <Arrangement displacements="1, 1, 1" repetitions="1, 1, 1">
+                    <Sphere radius="40" center="125,100,0"/>
+                </Arrangement>
+            </InitCellObjects>
+            <InitProperty symbol-ref="CDK1">
+                <Expression>0.25</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="0.05" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="CDK1">
+                    <ColorMap>
+                        <Color value="0.5" color="red"/>
+                        <Color value="0.2" color="yellow"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="2e-3">
+            <Input>
+                <Symbol symbol-ref="APC"/>
+                <Symbol symbol-ref="CDK1"/>
+                <Symbol symbol-ref="Plk1"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="-1">
+                    <Style line-width="4.0" style="points"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="APC"/>
+                        <Symbol symbol-ref="CDK1"/>
+                        <Symbol symbol-ref="Plk1"/>
+                    </Y-axis>
+                </Plot>
+                <Plot time-step="-1">
+                    <Style line-width="4.0" style="points"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="CDK1"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="APC"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="Plk1"/>
+                    </Color-bar>
+                </Plot>
+            </Plots>
+            <Restriction>
+                <Celltype celltype="cells"/>
+            </Restriction>
+        </Logger>
+        <ModelGraph include-tags="#untagged" reduced="false" format="svg"/>
+    </Analysis>
+</MorpheusModel>

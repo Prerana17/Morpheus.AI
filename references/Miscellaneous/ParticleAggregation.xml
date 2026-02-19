@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="3">
+    <Description>
+        <Title>Example-ParticleAggregation</Title>
+        <Details>Shows new FlipCells plugin
+</Details>
+    </Description>
+    <Global>
+        <Variable symbol="sn" value="0" name="Sum of non-isolated cells"/>
+        <Constant symbol="s" value="0"/>
+    </Global>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size symbol="size" value="40, 40, 0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <!--    <Disabled>
+        <RandomSeed value="1415712648"/>
+    </Disabled>
+-->
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="spins">
+            <Property symbol="s" value="0.0" name="state"/>
+            <DelayProperty symbol="s_n" value="0.0" delay="1" name="state_neighbors"/>
+            <Property symbol="p" value="2.25" name="probability"/>
+            <Function symbol="ni" name="non-isolated">
+                <Expression>if(s==1 and s_n > 1, 1, 0)</Expression>
+            </Function>
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="s"/>
+                <Output symbol-ref="s_n" mapping="sum"/>
+            </NeighborhoodReporter>
+            <FlipCellMotion neighborhood="2" time-step="1">
+                <Condition>s > 0 and rand_uni(0,1) &lt; (1-(s_n/12)*p)</Condition>
+            </FlipCellMotion>
+            <Mapper>
+                <Input value="ni"/>
+                <Output symbol-ref="sn" mapping="sum"/>
+            </Mapper>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="0" type="spins">
+            <InitProperty symbol-ref="s">
+                <Expression>if(rand_uni(0,1) &lt; 0.10, 1, 0)</Expression>
+            </InitProperty>
+            <InitCellLattice/>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="s">
+                    <ColorMap>
+                        <Color value="1" color="black"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="25">
+            <Input>
+                <Symbol symbol-ref="sn"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="250">
+                    <Style style="lines" line-width="3.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="sn"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Example-CellCycleDelay</Title>
+        <Details>Example of delay differential equations.
+
+Implements equation 23 and 24 and reproduces figure 7 from:
+
+James Ferrell, Tony Yu-Chen Tsai and Qiong Yang (2011) Modeling the Cell Cycle: Why Do Certain Circuits Oscillate?, Cell 144, p874-885. http://dx.doi.org/10.1016/j.cell.2011.03.006</Details>
+    </Description>
+    <Global/>
+    <Space>
+        <Lattice class="linear">
+            <Size value="1, 0, 0" symbol="size"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="25"/>
+        <SaveInterval value="0"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="cells">
+            <Property value="0" symbol="APC"/>
+            <Property value="0" symbol="CDK1"/>
+            <DelayProperty delay="0.5" value="0" symbol="APC_d"/>
+            <DelayProperty delay="0.5" value="0" symbol="CDK1_d"/>
+            <Equation symbol-ref="APC_d">
+                <Expression>APC</Expression>
+            </Equation>
+            <Equation symbol-ref="CDK1_d">
+                <Expression>CDK1</Expression>
+            </Equation>
+            <System time-scaling="1" time-step="1e-2" solver="Runge-Kutta [fixed, O(4)]">
+                <Constant value="8" symbol="n"/>
+                <Constant value="0.5" symbol="K"/>
+                <Constant value="0.1" symbol="α1"/>
+                <Constant value="3.0" symbol="α2"/>
+                <Constant value="3.0" symbol="β1"/>
+                <Constant value="1.0" symbol="β2"/>
+                <DiffEqn symbol-ref="CDK1">
+                    <Expression>α1 - β1 * CDK1 * (APC_d^n) / (K^n + APC_d^n)</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="APC">
+                    <Expression>α2*(1- APC) * ((CDK1_d^n) / (K^n + CDK1_d^n)) - β2*APC</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="1" type="cells"/>
+    </CellPopulations>
+    <Analysis>
+        <Logger time-step="1e-2">
+            <Restriction>
+                <Celltype celltype="cells"/>
+            </Restriction>
+            <Input>
+                <Symbol symbol-ref="APC"/>
+                <Symbol symbol-ref="APC_d"/>
+                <Symbol symbol-ref="CDK1"/>
+                <Symbol symbol-ref="CDK1_d"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="-1">
+                    <Style style="lines" line-width="3.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="CDK1"/>
+                        <Symbol symbol-ref="CDK1_d"/>
+                        <Symbol symbol-ref="APC"/>
+                        <Symbol symbol-ref="APC_d"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>
