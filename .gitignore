@@ -1,0 +1,24 @@
+# Python
+.venv/
+.venv1/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+*.code-workspace
+
+# Other local projects (do NOT push)
+fastapi_app/
+openai-integration/
+server-setup/
+MWE/
+
+# Local files
+correction.json
+
+morpheus_results/
+*.csv.zip
