@@ -1,0 +1,15 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Gnuplotter_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter" ]
+Logger_0_0[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>-1</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger" ]
+}
+}

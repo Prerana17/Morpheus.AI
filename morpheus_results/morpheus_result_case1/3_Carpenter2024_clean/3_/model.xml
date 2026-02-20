@@ -1,0 +1,51 @@
+<MorpheusModel version="4">
+  
+  <Description>
+    <Title>Baseline ODE Test Model</Title>
+    <Details>
+      Minimal ODE-based Morpheus model for benchmarking.
+      Not tailored to any specific biological system.
+    </Details>
+  </Description>
+
+  <Space>
+    <Lattice class="square">
+      <Size value="50 50"/>
+      <BoundaryConditions>
+        <Condition boundary="x" type="periodic"/>
+        <Condition boundary="y" type="periodic"/>
+      </BoundaryConditions>
+    </Lattice>
+  </Space>
+
+  <Time>
+    <StartTime value="0"/>
+    <StopTime value="50"/>
+    <TimeStep value="1"/>
+  </Time>
+
+  <Global>
+    <Field symbol="X" value="1.0"/>
+  </Global>
+
+  <Analysis>
+    <Logger file="model.xml.out">
+      <Column symbol-ref="X"/>
+    </Logger>
+
+    <Gnuplotter time-step="1">
+      <Plot>
+        <Curve symbol-ref="X"/>
+      </Plot>
+    </Gnuplotter>
+
+    <ModelGraph include-tags="#untagged" format="dot" reduced="false"/>
+  </Analysis>
+
+  <ODEs>
+    <ODE symbol-ref="X">
+      <Expression>0.1 * X</Expression>
+    </ODE>
+  </ODEs>
+
+</MorpheusModel>

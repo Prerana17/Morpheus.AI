@@ -1,0 +1,278 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Gnuplotter_0_50[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>50</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter" ]
+CPM_0_1 [shape=record, label="{CPM|1}", URL="morph://MorpheusModel/CPM" ]
+Logger_0_10[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>10</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger" ]
+BCR_affinity_0[label="BCR_affinity", fillcolor="#d3d247",peripheries=2]
+CXCL12_0[label="CXCL12", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[0]"]
+CXCL13_0[label="CXCL13", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[1]"]
+MYC_0[label="MYC", fillcolor="#d3d247",peripheries=2]
+cell_center_0[label="cell.center", fillcolor="#b5b426",peripheries=2]
+cell_type_0[label="cell.type", fillcolor="#d3d247",peripheries=2]
+celltype_FDC_id_0[label="celltype.FDC.id", fillcolor="#d3d247"]
+celltype_Tfh_id_0[label="celltype.Tfh.id", fillcolor="#d3d247"]
+time_0[label="time", fillcolor="#d3d247", URL="morph://MorpheusModel/Time/TimeSymbol"]
+subgraph cluster_1 {
+label="";
+System_1_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/Global/System" ]
+CRC_production_1[label="CRC_production", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[0]"]
+FDC_production_1[label="FDC_production", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[1]"]
+}
+subgraph cluster_2 {
+label="CellType[medium]";
+}
+subgraph cluster_3 {
+label="CellType[CRC]";
+cell_center_3[label="cell.center", fillcolor="#b5b426"]
+cell_type_3[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+}
+subgraph cluster_4 {
+label="CellType[FDC]";
+cell_center_4[label="cell.center", fillcolor="#b5b426"]
+cell_type_4[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+}
+subgraph cluster_5 {
+label="CellType[Tfh]";
+cell_center_5[label="cell.center", fillcolor="#b5b426"]
+cell_type_5[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]"]
+}
+subgraph cluster_6 {
+label="CellType[Bcell]";
+NeighborhoodReporter_6_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>NeighborhoodReporter</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/NeighborhoodReporter[0]" ]
+NeighborhoodReporter_6_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>NeighborhoodReporter</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/NeighborhoodReporter[1]" ]
+CellDivision_6_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>CellDivision</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/CellDivision" ]
+subgraph cluster_cpm6 {
+label="CPM components";
+VolumeConstraint_6[ shape=Mrecord, label=" VolumeConstraint", URL="morph://MorpheusModel/CellTypes/CellType[4]/VolumeConstraint"];
+Chemotaxis_6[ shape=Mrecord, label=" Chemotaxis", URL="morph://MorpheusModel/CellTypes/CellType[4]/Chemotaxis[0]"];
+}
+AP4_6[label="AP4", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[5]"]
+BCR_affinity_6[label="BCR_affinity", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[0]"]
+BCR_signal_6[label="BCR_signal", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[8]"]
+BLIMP1_6[label="BLIMP1", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[7]"]
+CD40_signal_6[label="CD40_signal", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[9]"]
+CXCR4_6[label="CXCR4", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[6]"]
+FOXO1_6[label="FOXO1", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[1]"]
+MYC_6[label="MYC", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[4]"]
+RelA_6[label="RelA", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[3]"]
+Vt_6[label="Vt", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[14]"]
+cRel_6[label="cRel", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[2]"]
+cell_center_6[label="cell.center", fillcolor="#b5b426"]
+cell_center_x_6[label="cell.center.x", fillcolor="#d3d247"]
+cell_type_6[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]"]
+cell_volume_6[label="cell.volume", fillcolor="#d3d247"]
+death_timer_6[label="death_timer", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[13]"]
+division_count_6[label="division_count", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[12]"]
+in_cycle_6[label="in_cycle", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[11]"]
+zone_6[label="zone", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[10]"]
+subgraph cluster_8 {
+label="";
+System_8_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.5</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/System" ]
+}
+subgraph cluster_9 {
+label="";
+}
+subgraph cluster_10 {
+label="";
+Event_10_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Event</td></tr>
+<hr/>
+<tr><td>0.5</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/Event[0]" ]
+}
+subgraph cluster_11 {
+label="";
+Event_11_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Event</td></tr>
+<hr/>
+<tr><td>0.5</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/Event[1]" ]
+}
+subgraph cluster_12 {
+label="";
+Event_12_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Event</td></tr>
+<hr/>
+<tr><td>0.5</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/Event[2]" ]
+}
+subgraph cluster_13 {
+label="";
+Event_13_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Event</td></tr>
+<hr/>
+<tr><td>0.5</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/Event[3]" ]
+}
+}
+subgraph cluster_7 {
+label="CellType[PlasmaCell]";
+cell_center_7[label="cell.center", fillcolor="#b5b426"]
+cell_type_7[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[5]"]
+}
+}
+BCR_affinity_0 -> Gnuplotter_0_50 [penwidth=2, color="#112c5f"] 
+
+BCR_affinity_6 -> BCR_affinity_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+BCR_affinity_6 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+BCR_affinity_6 -> System_8_0_5 [penwidth=2, color="#112c5f"] 
+
+BCR_signal_6 -> System_8_0_5 [penwidth=2, color="#112c5f"] 
+
+BLIMP1_6 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+CD40_signal_6 -> System_8_0_5 [penwidth=2, color="#112c5f"] 
+
+CPM_0_1 -> VolumeConstraint_6 [dir=none, style="dashed", penwidth=1, color="#38568c",lhead=cluster_cpm6] 
+
+CPM_0_1 -> cell_center_0 [penwidth=3, color="#8f100d"] 
+
+CPM_0_1 -> cell_type_0 [penwidth=3, color="#8f100d"] 
+
+CRC_production_1 -> System_1_1 [penwidth=2, color="#112c5f"] 
+
+CXCL12_0 -> Chemotaxis_6 [penwidth=2, color="#112c5f"] 
+
+CXCL12_0 -> Gnuplotter_0_50 [penwidth=2, color="#112c5f"] 
+
+CXCL13_0 -> Chemotaxis_6 [penwidth=2, color="#112c5f"] 
+
+CXCR4_6 -> Chemotaxis_6 [penwidth=2, color="#112c5f"] 
+
+CXCR4_6 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+CellDivision_6_1 -> BCR_affinity_6 [penwidth=3, color="#8f100d"] 
+
+CellDivision_6_1 -> Vt_6 [penwidth=3, color="#8f100d"] 
+
+CellDivision_6_1 -> cell_center_6 [penwidth=3, color="#8f100d"] 
+
+CellDivision_6_1 -> division_count_6 [penwidth=3, color="#8f100d"] 
+
+CellDivision_6_1 -> in_cycle_6 [penwidth=3, color="#8f100d"] 
+
+Event_10_0_5 -> in_cycle_6 [penwidth=3, color="#8f100d"] 
+
+Event_11_0_5 -> death_timer_6 [penwidth=3, color="#8f100d"] 
+
+Event_12_0_5 -> zone_6 [penwidth=3, color="#8f100d"] 
+
+Event_13_0_5 -> zone_6 [penwidth=3, color="#8f100d"] 
+
+FDC_production_1 -> System_1_1 [penwidth=2, color="#112c5f"] 
+
+FOXO1_6 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+MYC_0 -> Gnuplotter_0_50 [penwidth=2, color="#112c5f"] 
+
+MYC_6 -> CellDivision_6_1 [penwidth=2, color="#112c5f"] 
+
+MYC_6 -> Event_10_0_5 [penwidth=2, color="#112c5f"] 
+
+MYC_6 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+MYC_6 -> MYC_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+NeighborhoodReporter_6_1 -> BCR_signal_6 [penwidth=3, color="#8f100d"] 
+
+NeighborhoodReporter_6_1 -> CD40_signal_6 [penwidth=3, color="#8f100d"] 
+
+System_1_1 -> CXCL12_0 [penwidth=3, color="#8f100d"] 
+
+System_1_1 -> CXCL13_0 [penwidth=3, color="#8f100d"] 
+
+System_8_0_5 -> AP4_6 [penwidth=3, color="#8f100d"] 
+
+System_8_0_5 -> BLIMP1_6 [penwidth=3, color="#8f100d"] 
+
+System_8_0_5 -> CXCR4_6 [penwidth=3, color="#8f100d"] 
+
+System_8_0_5 -> FOXO1_6 [penwidth=3, color="#8f100d"] 
+
+System_8_0_5 -> MYC_6 [penwidth=3, color="#8f100d"] 
+
+System_8_0_5 -> RelA_6 [penwidth=3, color="#8f100d"] 
+
+System_8_0_5 -> cRel_6 [penwidth=3, color="#8f100d"] 
+
+Vt_6 -> VolumeConstraint_6 [penwidth=2, color="#112c5f"] 
+
+cRel_6 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+cell_center_3 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_4 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_5 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_6 -> NeighborhoodReporter_6_1 [penwidth=2, color="#112c5f"] 
+
+cell_center_6 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_6 -> cell_center_x_6 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_7 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_x_6 -> Event_12_0_5 [penwidth=2, color="#112c5f"] 
+
+cell_center_x_6 -> Event_13_0_5 [penwidth=2, color="#112c5f"] 
+
+cell_type_0 -> Gnuplotter_0_50 [penwidth=2, color="#112c5f"] 
+
+cell_type_0 -> NeighborhoodReporter_6_1 [penwidth=2, color="#112c5f"] 
+
+cell_type_3 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_4 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_5 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_6 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_7 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_volume_6 -> CellDivision_6_1 [penwidth=2, color="#112c5f"] 
+
+celltype_FDC_id_0 -> NeighborhoodReporter_6_1 [penwidth=2, color="#112c5f"] 
+
+celltype_Tfh_id_0 -> NeighborhoodReporter_6_1 [penwidth=2, color="#112c5f"] 
+
+division_count_6 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+in_cycle_6 -> CellDivision_6_1 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Event_10_0_5 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Event_11_0_5 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Event_12_0_5 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Event_13_0_5 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+zone_6 -> Event_11_0_5 [penwidth=2, color="#112c5f"] 
+
+}

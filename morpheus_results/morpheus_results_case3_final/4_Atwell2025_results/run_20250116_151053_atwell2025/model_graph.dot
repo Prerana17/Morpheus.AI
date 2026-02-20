@@ -1,0 +1,245 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Logger_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger[0]" ]
+Logger_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger[1]" ]
+Gnuplotter_0_10[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>10</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[0]" ]
+Gnuplotter_0_50[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>50</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[1]" ]
+CPM_0_1 [shape=record, label="{CPM|1}", URL="morph://MorpheusModel/CPM" ]
+N_0[label="N", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[1]"]
+cell_center_0[label="cell.center", fillcolor="#b5b426",peripheries=2]
+cell_type_0[label="cell.type", fillcolor="#d3d247",peripheries=2]
+celltype_meiotic_entry_size_0[label="celltype.meiotic_entry.size", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]"]
+celltype_meiotic_progression_size_0[label="celltype.meiotic_progression.size", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]"]
+celltype_stem_cell_size_0[label="celltype.stem_cell.size", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+dtc_0[label="dtc", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[0]"]
+time_0[label="time", fillcolor="#d3d247", URL="morph://MorpheusModel/Time/TimeSymbol"]
+subgraph cluster_1 {
+label="";
+System_1_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.1</td></tr></table></font>>, URL="morph://MorpheusModel/Global/System" ]
+}
+subgraph cluster_2 {
+label="CellType[medium]";
+}
+subgraph cluster_3 {
+label="CellType[DTC]";
+cell_center_3[label="cell.center", fillcolor="#b5b426"]
+cell_type_3[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+dtc_production_3[label="dtc_production", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[1]"]
+subgraph cluster_7 {
+label="";
+System_7_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[1]/System" ]
+}
+}
+subgraph cluster_4 {
+label="CellType[stem_cell]";
+CellDivision_4_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>CellDivision</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[2]/CellDivision" ]
+ChangeCellType_4_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>ChangeCellType</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[2]/ChangeCellType" ]
+subgraph cluster_cpm4 {
+label="CPM components";
+VolumeConstraint_4[ shape=Mrecord, label=" VolumeConstraint", URL="morph://MorpheusModel/CellTypes/CellType[2]/VolumeConstraint"];
+}
+GLD1_4[label="GLD1", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[0]"]
+Vt_4[label="Vt", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[3]"]
+cell_center_4[label="cell.center", fillcolor="#b5b426"]
+cell_center_x_4[label="cell.center.x", fillcolor="#d3d247"]
+cell_center_y_4[label="cell.center.y", fillcolor="#d3d247"]
+cell_center_z_4[label="cell.center.z", fillcolor="#d3d247"]
+cell_type_4[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+cell_volume_4[label="cell.volume", fillcolor="#d3d247"]
+cell_cycle_phase_4[label="cell_cycle_phase", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[1]"]
+distance_from_DTC_4[label="distance_from_DTC", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[2]"]
+subgraph cluster_8 {
+label="";
+System_8_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[2]/System" ]
+K_dtc_8[label="K_dtc", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/System/Constant[2]"]
+d_gld_8[label="d_gld", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/System/Constant[1]"]
+k_cycle_8[label="k_cycle", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/System/Constant[4]"]
+k_gld_8[label="k_gld", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/System/Constant[0]"]
+}
+subgraph cluster_9 {
+label="";
+}
+}
+subgraph cluster_5 {
+label="CellType[meiotic_entry]";
+ChangeCellType_5_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>ChangeCellType</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[3]/ChangeCellType" ]
+subgraph cluster_cpm5 {
+label="CPM components";
+VolumeConstraint_5[ shape=Mrecord, label=" VolumeConstraint", URL="morph://MorpheusModel/CellTypes/CellType[3]/VolumeConstraint"];
+}
+GLD1_5[label="GLD1", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[0]"]
+Vt_5[label="Vt", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[2]"]
+cell_center_5[label="cell.center", fillcolor="#b5b426"]
+cell_type_5[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]"]
+meiotic_timer_5[label="meiotic_timer", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[1]"]
+subgraph cluster_10 {
+label="";
+System_10_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[3]/System" ]
+}
+}
+subgraph cluster_6 {
+label="CellType[meiotic_progression]";
+subgraph cluster_cpm6 {
+label="CPM components";
+VolumeConstraint_6[ shape=Mrecord, label=" VolumeConstraint", URL="morph://MorpheusModel/CellTypes/CellType[4]/VolumeConstraint"];
+}
+Vt_6[label="Vt", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[1]"]
+cell_center_6[label="cell.center", fillcolor="#b5b426"]
+cell_type_6[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]"]
+maturation_6[label="maturation", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[2]"]
+subgraph cluster_11 {
+label="";
+System_11_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/System" ]
+}
+}
+}
+CPM_0_1 -> VolumeConstraint_4 [dir=none, style="dashed", penwidth=1, color="#38568c",lhead=cluster_cpm4] 
+
+CPM_0_1 -> VolumeConstraint_5 [dir=none, style="dashed", penwidth=1, color="#38568c",lhead=cluster_cpm5] 
+
+CPM_0_1 -> VolumeConstraint_6 [dir=none, style="dashed", penwidth=1, color="#38568c",lhead=cluster_cpm6] 
+
+CPM_0_1 -> cell_center_0 [penwidth=3, color="#8f100d"] 
+
+CPM_0_1 -> cell_type_0 [penwidth=3, color="#8f100d"] 
+
+CellDivision_4_1 -> cell_center_4 [penwidth=3, color="#8f100d"] 
+
+CellDivision_4_1 -> cell_cycle_phase_4 [penwidth=3, color="#8f100d"] 
+
+GLD1_4 -> CellDivision_4_1 [penwidth=2, color="#112c5f"] 
+
+GLD1_4 -> ChangeCellType_4_1 [penwidth=2, color="#112c5f"] 
+
+GLD1_4 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+K_dtc_8 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+N_0 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+System_10_0_1 -> GLD1_5 [penwidth=3, color="#8f100d"] 
+
+System_10_0_1 -> meiotic_timer_5 [penwidth=3, color="#8f100d"] 
+
+System_11_0_1 -> maturation_6 [penwidth=3, color="#8f100d"] 
+
+System_1_0_1 -> N_0 [penwidth=3, color="#8f100d"] 
+
+System_1_0_1 -> dtc_0 [penwidth=3, color="#8f100d"] 
+
+System_7_0_1 -> dtc_0 [penwidth=3, color="#8f100d"] 
+
+System_8_0_1 -> GLD1_4 [penwidth=3, color="#8f100d"] 
+
+System_8_0_1 -> cell_cycle_phase_4 [penwidth=3, color="#8f100d"] 
+
+System_8_0_1 -> distance_from_DTC_4 [penwidth=3, color="#8f100d"] 
+
+Vt_4 -> CellDivision_4_1 [penwidth=2, color="#112c5f"] 
+
+Vt_4 -> VolumeConstraint_4 [penwidth=2, color="#112c5f"] 
+
+Vt_5 -> VolumeConstraint_5 [penwidth=2, color="#112c5f"] 
+
+Vt_6 -> VolumeConstraint_6 [penwidth=2, color="#112c5f"] 
+
+cell_center_3 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_4 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_4 -> cell_center_x_4 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_4 -> cell_center_y_4 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_4 -> cell_center_z_4 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_5 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_6 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_x_4 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+cell_center_y_4 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+cell_center_z_4 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+cell_cycle_phase_4 -> CellDivision_4_1 [penwidth=2, color="#112c5f"] 
+
+cell_cycle_phase_4 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+cell_type_0 -> Gnuplotter_0_10 [penwidth=2, color="#112c5f"] 
+
+cell_type_3 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_4 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_5 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_6 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_volume_4 -> CellDivision_4_1 [penwidth=2, color="#112c5f"] 
+
+celltype_meiotic_entry_size_0 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+celltype_meiotic_progression_size_0 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+celltype_stem_cell_size_0 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+d_gld_8 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+distance_from_DTC_4 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+dtc_0 -> Gnuplotter_0_50 [penwidth=2, color="#112c5f"] 
+
+dtc_0 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+dtc_production_3 -> System_7_0_1 [penwidth=2, color="#112c5f"] 
+
+k_cycle_8 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+k_gld_8 -> System_8_0_1 [penwidth=2, color="#112c5f"] 
+
+meiotic_timer_5 -> ChangeCellType_5_1 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+}

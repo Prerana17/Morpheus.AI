@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>C. elegans Germ Line Development Model</Title>
+        <Details>3D Cellular Potts Model of C. elegans germ line with proliferative zone, meiotic entry, and cell differentiation.
+        
+Based on Atwell et al. 2015, Development 142:3902-3911</Details>
+    </Description>
+    <Global>
+        <Variable symbol="total_germ_cells" value="0" name="Total germ cell count"/>
+        <Variable symbol="proliferative_cells" value="0" name="Proliferative cell count"/>
+        <Variable symbol="meiotic_cells" value="0" name="Meiotic cell count"/>
+    </Global>
+    <Space>
+        <SpaceSymbol symbol="space"/>
+        <Lattice class="cubic">
+            <Size symbol="size" value="100, 40, 40"/>
+            <BoundaryConditions>
+                <Condition type="noflux" boundary="x"/>
+                <Condition type="noflux" boundary="-x"/>
+                <Condition type="periodic" boundary="y"/>
+                <Condition type="periodic" boundary="z"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="3000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123456"/>
+    </Time>
+    <CellTypes>
+        <CellType class="medium" name="medium"/>
+        
+        <CellType class="biological" name="DTC">
+            <VolumeConstraint target="350" strength="1"/>
+            <SurfaceConstraint target="1.0" mode="aspherity" strength="0.5"/>
+        </CellType>
+        
+        <CellType class="biological" name="proliferative_germ">
+            <Property symbol="distance_from_DTC" value="0.0"/>
+            
+            <VolumeConstraint target="200" strength="1"/>
+            <SurfaceConstraint target="1.0" mode="aspherity" strength="1"/>
+            
+            <CellDivision division-plane="random">
+                <Condition>rand_uni(0,1) &lt; 0.005 and cell.volume > 180</Condition>
+            </CellDivision>
+            
+            <Mapper name="count_proliferative">
+                <Input value="1"/>
+                <Output symbol-ref="proliferative_cells" mapping="sum"/>
+            </Mapper>
+        </CellType>
+        
+        <CellType class="biological" name="meiotic_germ">
+            <VolumeConstraint target="250" strength="1"/>
+            <SurfaceConstraint target="1.1" mode="aspherity" strength="0.8"/>
+            
+            <Mapper name="count_meiotic">
+                <Input value="1"/>
+                <Output symbol-ref="meiotic_cells" mapping="sum"/>
+            </Mapper>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="DTC" type2="medium" value="8"/>
+            <Contact type1="DTC" type2="proliferative_germ" value="-5"/>
+            <Contact type1="proliferative_germ" type2="medium" value="10"/>
+            <Contact type1="proliferative_germ" type2="proliferative_germ" value="-2"/>
+            <Contact type1="proliferative_germ" type2="meiotic_germ" value="2"/>
+            <Contact type1="meiotic_germ" type2="medium" value="12"/>
+            <Contact type1="meiotic_germ" type2="meiotic_germ" value="0"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2.5"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>2.5</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="DTC" size="1">
+            <InitCellObjects mode="distance">
+                <Arrangement displacements="1,1,1" repetitions="1,1,1">
+                    <Sphere radius="4.5" center="10,20,20"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <Population type="proliferative_germ" size="0">
+            <InitCircle mode="random" number-of-cells="20">
+                <Dimensions radius="10" center="18,20,20"/>
+            </InitCircle>
+        </Population>
+        
+        <Population type="meiotic_germ" size="0">
+            <InitCircle mode="random" number-of-cells="5">
+                <Dimensions radius="8" center="35,20,20"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="30" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Germ Line Development (slice z=20)" slice="20">
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="1" color="gray"/>
+                        <Color value="2" color="blue"/>
+                        <Color value="3" color="yellow"/>
+                        <Color value="4" color="green"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="30">
+            <Input>
+                <Symbol symbol-ref="time"/>
+                <Symbol symbol-ref="proliferative_cells"/>
+                <Symbol symbol-ref="meiotic_cells"/>
+                <Symbol symbol-ref="celltype.proliferative_germ.size"/>
+                <Symbol symbol-ref="celltype.meiotic_germ.size"/>
+                <Symbol symbol-ref="celltype.DTC.size"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot title="Cell Type Populations Over Time">
+                    <Style style="linespoints" line-width="2" grid="true"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="celltype.proliferative_germ.size"/>
+                        <Symbol symbol-ref="celltype.meiotic_germ.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="dot" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

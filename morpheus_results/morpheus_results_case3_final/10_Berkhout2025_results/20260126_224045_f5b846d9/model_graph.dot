@@ -1,0 +1,273 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Gnuplotter_0_60[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>60</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter" ]
+Logger_0_30[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>30</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger[0]" ]
+CPM_0_1 [shape=record, label="{CPM|1}", URL="morph://MorpheusModel/CPM" ]
+apical_constriction_0[label="apical_constriction", fillcolor="#d3d247",peripheries=2]
+bmp4_0[label="bmp4", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[1]"]
+cell_center_0[label="cell.center", fillcolor="#b5b426",peripheries=2]
+cell_center_x_0[label="cell.center.x", fillcolor="#d3d247"]
+cell_center_y_0[label="cell.center.y", fillcolor="#d3d247"]
+cell_type_0[label="cell.type", fillcolor="#d3d247",peripheries=2]
+cell_count_0[label="cell_count", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Variable"]
+cell_fate_0[label="cell_fate", fillcolor="#d3d247",peripheries=2]
+fgf8_0[label="fgf8", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[2]"]
+shh_0[label="shh", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[0]"]
+signal_strength_0[label="signal_strength", fillcolor="#d3d247",peripheries=2]
+time_0[label="time", fillcolor="#d3d247", URL="morph://MorpheusModel/Time/TimeSymbol"]
+wnt_0[label="wnt", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[3]"]
+subgraph cluster_1 {
+label="";
+System_1_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Global/System" ]
+k_decay_1[label="k_decay", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[1]"]
+k_prod_1[label="k_prod", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[0]"]
+}
+subgraph cluster_2 {
+label="CellType[notochord]";
+cell_center_2[label="cell.center", fillcolor="#b5b426"]
+cell_type_2[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]"]
+cell_fate_2[label="cell_fate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[1]"]
+shh_production_2[label="shh_production", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[0]"]
+signal_strength_2[label="signal_strength", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[2]"]
+subgraph cluster_8 {
+label="";
+System_8_3[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>3</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[0]/System" ]
+}
+}
+subgraph cluster_3 {
+label="CellType[neuroectoderm]";
+apical_constriction_3[label="apical_constriction", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[1]"]
+cell_center_3[label="cell.center", fillcolor="#b5b426"]
+cell_type_3[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+cell_fate_3[label="cell_fate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[2]"]
+ptch1_response_3[label="ptch1_response", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[0]"]
+signal_strength_3[label="signal_strength", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[3]"]
+subgraph cluster_9 {
+label="";
+System_9_4[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>4</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[1]/System" ]
+}
+}
+subgraph cluster_4 {
+label="CellType[surface_ectoderm]";
+bmp4_production_4[label="bmp4_production", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[0]"]
+cell_center_4[label="cell.center", fillcolor="#b5b426"]
+cell_type_4[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+cell_fate_4[label="cell_fate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[2]"]
+signal_strength_4[label="signal_strength", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[3]"]
+wnt_production_4[label="wnt_production", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[1]"]
+subgraph cluster_10 {
+label="";
+System_10_3[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>3</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[2]/System" ]
+}
+}
+subgraph cluster_5 {
+label="CellType[mesoderm]";
+bmpr_activity_5[label="bmpr_activity", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[0]"]
+cell_center_5[label="cell.center", fillcolor="#b5b426"]
+cell_type_5[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]"]
+cell_fate_5[label="cell_fate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[1]"]
+signal_strength_5[label="signal_strength", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[2]"]
+subgraph cluster_11 {
+label="";
+System_11_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[3]/System" ]
+}
+}
+subgraph cluster_6 {
+label="CellType[neural_crest]";
+PersistentMotion_6_0[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>PersistentMotion</td></tr>
+<hr/>
+<tr><td>-1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/PersistentMotion" ]
+subgraph cluster_cpm6 {
+label="CPM components";
+PersistentMotion_6_0[ shape=Mrecord, label=" PersistentMotion", URL="morph://MorpheusModel/CellTypes/CellType[4]/PersistentMotion"];
+}
+cell_center_6[label="cell.center", fillcolor="#b5b426"]
+cell_type_6[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]"]
+cell_fate_6[label="cell_fate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[2]"]
+migration_signal_6[label="migration_signal", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[1]"]
+signal_strength_6[label="signal_strength", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[3]"]
+stored_center_6[label="stored_center", fillcolor="#b5b426"]
+stored_direction_6[label="stored_direction", fillcolor="#b5b426"]
+wnt_response_6[label="wnt_response", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[4]/Property[0]"]
+subgraph cluster_12 {
+label="";
+System_12_6[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>6</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[4]/System" ]
+}
+}
+subgraph cluster_7 {
+label="CellType[medium]";
+}
+}
+CPM_0_1 -> PersistentMotion_6_0 [dir=none, style="dashed", penwidth=1, color="#38568c",lhead=cluster_cpm6] 
+
+CPM_0_1 -> cell_center_0 [penwidth=3, color="#8f100d"] 
+
+CPM_0_1 -> cell_type_0 [penwidth=3, color="#8f100d"] 
+
+PersistentMotion_6_0 -> stored_center_6 [penwidth=3, color="#8f100d"] 
+
+PersistentMotion_6_0 -> stored_direction_6 [penwidth=3, color="#8f100d"] 
+
+System_10_3 -> signal_strength_4 [penwidth=3, color="#8f100d"] 
+
+System_11_5 -> bmpr_activity_5 [penwidth=3, color="#8f100d"] 
+
+System_11_5 -> signal_strength_5 [penwidth=3, color="#8f100d"] 
+
+System_12_6 -> migration_signal_6 [penwidth=3, color="#8f100d"] 
+
+System_12_6 -> signal_strength_6 [penwidth=3, color="#8f100d"] 
+
+System_12_6 -> wnt_response_6 [penwidth=3, color="#8f100d"] 
+
+System_1_2 -> bmp4_0 [penwidth=3, color="#8f100d"] 
+
+System_1_2 -> fgf8_0 [penwidth=3, color="#8f100d"] 
+
+System_1_2 -> shh_0 [penwidth=3, color="#8f100d"] 
+
+System_1_2 -> wnt_0 [penwidth=3, color="#8f100d"] 
+
+System_8_3 -> signal_strength_2 [penwidth=3, color="#8f100d"] 
+
+System_9_4 -> apical_constriction_3 [penwidth=3, color="#8f100d"] 
+
+System_9_4 -> ptch1_response_3 [penwidth=3, color="#8f100d"] 
+
+System_9_4 -> signal_strength_3 [penwidth=3, color="#8f100d"] 
+
+apical_constriction_0 -> Gnuplotter_0_60 [penwidth=2, color="#112c5f"] 
+
+apical_constriction_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+apical_constriction_3 -> apical_constriction_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+bmp4_0 -> Gnuplotter_0_60 [penwidth=2, color="#112c5f"] 
+
+bmp4_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+bmp4_0 -> System_11_5 [penwidth=2, color="#112c5f"] 
+
+bmp4_production_4 -> System_10_3 [penwidth=2, color="#112c5f"] 
+
+cell_center_0 -> cell_center_x_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_0 -> cell_center_y_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_2 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_3 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_4 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_5 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_6 -> PersistentMotion_6_0 [penwidth=2, color="#112c5f"] 
+
+cell_center_6 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_x_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+cell_center_y_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+cell_count_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+cell_fate_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+cell_fate_2 -> cell_fate_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_fate_3 -> cell_fate_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_fate_4 -> cell_fate_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_fate_5 -> cell_fate_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_fate_6 -> cell_fate_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_0 -> Gnuplotter_0_60 [penwidth=2, color="#112c5f"] 
+
+cell_type_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+cell_type_2 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_3 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_4 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_5 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_6 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+fgf8_0 -> Gnuplotter_0_60 [penwidth=2, color="#112c5f"] 
+
+fgf8_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+fgf8_0 -> System_12_6 [penwidth=2, color="#112c5f"] 
+
+k_decay_1 -> System_1_2 [penwidth=2, color="#112c5f"] 
+
+k_prod_1 -> System_1_2 [penwidth=2, color="#112c5f"] 
+
+shh_0 -> Gnuplotter_0_60 [penwidth=2, color="#112c5f"] 
+
+shh_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+shh_0 -> System_9_4 [penwidth=2, color="#112c5f"] 
+
+shh_production_2 -> System_8_3 [penwidth=2, color="#112c5f"] 
+
+signal_strength_0 -> Gnuplotter_0_60 [penwidth=2, color="#112c5f"] 
+
+signal_strength_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+signal_strength_2 -> signal_strength_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+signal_strength_3 -> signal_strength_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+signal_strength_4 -> signal_strength_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+signal_strength_5 -> signal_strength_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+signal_strength_6 -> signal_strength_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+stored_center_6 -> PersistentMotion_6_0 [penwidth=2, color="#112c5f"] 
+
+stored_direction_6 -> PersistentMotion_6_0 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+wnt_0 -> Logger_0_30 [penwidth=2, color="#112c5f"] 
+
+wnt_0 -> System_12_6 [penwidth=2, color="#112c5f"] 
+
+wnt_production_4 -> System_10_3 [penwidth=2, color="#112c5f"] 
+
+}

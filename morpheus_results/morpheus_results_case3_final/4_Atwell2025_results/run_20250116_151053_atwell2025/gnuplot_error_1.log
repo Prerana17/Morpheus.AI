@@ -1,0 +1,14 @@
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 0: unrecognized option - see 'help set'.
+
+           line 1: array index out of range
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 0: unrecognized option - see 'help set'.
+
+           line 1: array index out of range
+

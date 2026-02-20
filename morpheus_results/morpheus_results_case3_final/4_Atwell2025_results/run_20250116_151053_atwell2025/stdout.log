@@ -1,0 +1,691 @@
+Setting output directory /Users/prerana/Desktop/morpheus/run_20250116_151053_atwell2025
+Initializing from file model.xml
+AutoFix: Moved 1 element(s)  matching /MorpheusModel/Global/System/DiffEqn/Expression to /MorpheusModel/Global/System/DiffEqn/Reaction
+AutoFix: Moved 2 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion[@rate!=~0(?:\.0+)?]/@rate to /MorpheusModel/Global/System/DiffEqn[@symbol-ref=%1]/Diffusion/@text
+AutoFix: Moved 2 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion to 
+AutoFix: Moved 6 element(s)  matching /MorpheusModel/CellTypes/CellType/System/DiffEqn/Expression to /MorpheusModel/CellTypes/CellType/System/DiffEqn/Reaction
+Applied 11 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 0 with seed 1769525204
+Intitalize Thread Intitalize Thread 5 with seed 3541175462
+8Intitalize Thread  with seed 2259741729
+3 with seed 1401452634
+Intitalize Thread 4 with seed 3396888371
+Intitalize Thread 1 with seed 4009535266
+Intitalize Thread 6 with seed Intitalize Thread 2 with seed 1771178431
+Intitalize Thread 1684116653
+Intitalize Thread 9 with seed 500314775
+7 with seed 190251800
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread Intitalize Thread 8 with seed 1823276240 with seed 
+Intitalize Thread Intitalize Thread 9Intitalize Thread Intitalize Thread 7 with seed 731583164
+Intitalize Thread 4 with seed 1478800323 with seed 1Intitalize Thread 123456
+Intitalize Thread 11392288
+5 with seed 
+Intitalize Thread 2 with seed 32382037503437831566
+
+ with seed 64101907064
+ with seed 1377427627
+3 with seed 569136865
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: cubic
+getXMLAttribute: seeking for Size->value: 200, 50, 50
+getXMLAttribute: seeking for Size->symbol: size
+Loading [4] Global Plugins
+getXMLAttribute: seeking for Field->symbol: dtc
+Registering Symbol dtc of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: N
+Registering Symbol N of linktype FieldLink in Scope root
+getXMLAttribute: seeking for System->time-step: 0.1
+Creating subscope System in scope root
+getXMLAttribute: seeking for System->solver: Runge-Kutta [fixed, O(4)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: dtc
+getXMLAttribute: seeking for Reaction->text: -0.05 * dtc
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 5.0
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: N
+getXMLAttribute: seeking for Reaction->text .. not found
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.1
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+Skipping ODE for N
+getXMLAttribute: seeking for Constant->name: max_distance
+getXMLAttribute: seeking for Constant->symbol: d_max
+getXMLAttribute: seeking for Constant->value: 150
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol d_max of linktype ConstantLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[DTC] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[DTC]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[DTC]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[DTC]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[DTC]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[DTC]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[DTC]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[DTC]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[DTC]
+Registering Symbol celltype.DTC.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.DTC.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[stem_cell] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[stem_cell]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[stem_cell]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[stem_cell]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[stem_cell]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[stem_cell]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[stem_cell]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[stem_cell]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[stem_cell]
+Registering Symbol celltype.stem_cell.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.stem_cell.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[meiotic_entry] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[meiotic_entry]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[meiotic_entry]
+Registering Symbol celltype.meiotic_entry.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.meiotic_entry.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[meiotic_progression] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[meiotic_progression]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[meiotic_progression]
+Registering Symbol celltype.meiotic_progression.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.meiotic_progression.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: signal_strength
+getXMLAttribute: seeking for Property->value: 100.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol signal_strength of linktype CellPropertyLink in Scope CellType[DTC]
+Registering Symbol signal_strength of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: 50
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: dtc_production
+getXMLAttribute: seeking for Property->value: 10.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol dtc_production of linktype CellPropertyLink in Scope CellType[DTC]
+Registering Symbol dtc_production of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for System->time-step: 0.1
+Creating subscope System in scope CellType[DTC]
+getXMLAttribute: seeking for System->solver: Runge-Kutta [fixed, O(4)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: dtc
+getXMLAttribute: seeking for Reaction->text: dtc_production
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Property->name: GLD-1 level
+getXMLAttribute: seeking for Property->symbol: GLD1
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol GLD1 of linktype CellPropertyLink in Scope CellType[stem_cell]
+Registering Symbol GLD1 of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: cell_cycle_phase
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cell_cycle_phase of linktype CellPropertyLink in Scope CellType[stem_cell]
+Registering Symbol cell_cycle_phase of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: distance_from_DTC
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol distance_from_DTC of linktype CellPropertyLink in Scope CellType[stem_cell]
+Registering Symbol distance_from_DTC of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Target Volume
+getXMLAttribute: seeking for Property->symbol: Vt
+getXMLAttribute: seeking for Property->value: 30
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol Vt of linktype CellPropertyLink in Scope CellType[stem_cell]
+Registering Symbol Vt of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: Vt
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.5
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for System->time-step: 0.1
+Creating subscope System in scope CellType[stem_cell]
+getXMLAttribute: seeking for System->solver: Runge-Kutta [fixed, O(4)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: k_gld
+getXMLAttribute: seeking for Constant->value: 0.02
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol k_gld of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: d_gld
+getXMLAttribute: seeking for Constant->value: 0.01
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol d_gld of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: K_dtc
+getXMLAttribute: seeking for Constant->value: 5.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol K_dtc of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: n_hill
+getXMLAttribute: seeking for Constant->value: 2
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol n_hill of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: k_cycle
+getXMLAttribute: seeking for Constant->value: 0.05
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol k_cycle of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for DiffEqn->symbol-ref: GLD1
+getXMLAttribute: seeking for Reaction->text: k_gld * (1.0 - dtc/(K_dtc + dtc)) - d_gld * GLD1
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: cell_cycle_phase
+getXMLAttribute: seeking for Reaction->text: k_cycle * (1.0 + 0.5 * N)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: distance_from_DTC
+getXMLAttribute: seeking for Expression->text: sqrt((cell.center.x - 10)^2 + (cell.center.y - 25)^2 + (cell.center.z - 25)^2)
+getXMLAttribute: seeking for Condition->text: cell_cycle_phase > 6.28 and cell.volume > Vt*0.9 and GLD1 < 0.8
+getXMLAttribute: seeking for CellDivision->division-plane: major
+getXMLAttribute: seeking for CellDivision->orientation .. not found
+getXMLAttribute: seeking for CellDivision->write-log .. not found
+getXMLAttribute: seeking for CellDivision->trigger .. not found
+Creating subscope System in scope CellType[stem_cell]
+getXMLAttribute: seeking for Rule->symbol-ref: cell_cycle_phase
+getXMLAttribute: seeking for Expression->text: 0.0
+Registering Symbol __daughterID of linktype PrimitiveVariable in Scope System
+getXMLAttribute: seeking for Condition->text: GLD1 > 1.5
+getXMLAttribute: seeking for ChangeCellType->newCellType: meiotic_entry
+getXMLAttribute: seeking for ChangeCellType->time-step: 1.0
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: GLD1
+getXMLAttribute: seeking for Property->value: 2.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol GLD1 of linktype CellPropertyLink in Scope CellType[meiotic_entry]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: meiotic_timer
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol meiotic_timer of linktype CellPropertyLink in Scope CellType[meiotic_entry]
+Registering Symbol meiotic_timer of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: Vt
+getXMLAttribute: seeking for Property->value: 25
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol Vt of linktype CellPropertyLink in Scope CellType[meiotic_entry]
+getXMLAttribute: seeking for VolumeConstraint->target: Vt
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.5
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for System->time-step: 0.1
+Creating subscope System in scope CellType[meiotic_entry]
+getXMLAttribute: seeking for System->solver: Runge-Kutta [fixed, O(4)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: meiotic_timer
+getXMLAttribute: seeking for Reaction->text: 0.02
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: GLD1
+getXMLAttribute: seeking for Reaction->text: 0.01 * (3.0 - GLD1)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Condition->text: meiotic_timer > 10.0
+getXMLAttribute: seeking for ChangeCellType->newCellType: meiotic_progression
+getXMLAttribute: seeking for ChangeCellType->time-step: 1.0
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: GLD1
+getXMLAttribute: seeking for Property->value: 3.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol GLD1 of linktype CellPropertyLink in Scope CellType[meiotic_progression]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: Vt
+getXMLAttribute: seeking for Property->value: 20
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol Vt of linktype CellPropertyLink in Scope CellType[meiotic_progression]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: maturation
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol maturation of linktype CellPropertyLink in Scope CellType[meiotic_progression]
+Registering Symbol maturation of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: Vt
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.5
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for System->time-step: 0.1
+Creating subscope System in scope CellType[meiotic_progression]
+getXMLAttribute: seeking for System->solver: Runge-Kutta [fixed, O(4)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: maturation
+getXMLAttribute: seeking for Reaction->text: 0.01
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+CellTypes defined: 'DTC' 'medium' 'meiotic_entry' 'meiotic_progression' 'stem_cell' 
+getXMLAttribute: seeking for MonteCarloSampler/MCSDuration->value: 1
+getXMLAttribute: seeking for MonteCarloSampler->stepper: edgelist
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->temperature: 2.0
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->yield .. not found
+getXMLAttribute: seeking for Contact->value: -5
+getXMLAttribute: seeking for Contact->value: -4
+getXMLAttribute: seeking for Contact->value: -3
+getXMLAttribute: seeking for Contact->value: -5
+getXMLAttribute: seeking for Contact->value: -4
+getXMLAttribute: seeking for Contact->value: -5
+getXMLAttribute: seeking for Contact->value: -8
+getXMLAttribute: seeking for Contact->value: 0
+getXMLAttribute: seeking for Contact->value: 0
+getXMLAttribute: seeking for Contact->value: 0
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 2
+Assigning Shape Neighborhood of size 2.44949 -> 80 neighbors.
+Setting boundary neighborhood to order 6
+Creating cell layer of size 2.46387 MB
+with initial state set to CellType 'medium'
+Initializing celltype 'medium'
+Initializing celltype 'DTC'
+Scope: Creating Accessor for symbol 'dtc' from Scope root
+Scope: Creating Accessor for symbol 'dtc_production' from Scope CellType[DTC]
+System::init: Reordering Initializers ...
+Initializing celltype 'stem_cell'
+Scope: Creating Accessor for symbol 'Vt' from Scope CellType[stem_cell]
+Plugin VolumeConstraint: Registered input symbol dependencies Vt [CellType[stem_cell]] ,
+Scope: Creating Accessor for symbol 'GLD1' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'cell_cycle_phase' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'distance_from_DTC' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'k_gld' from Scope System
+Scope: Creating Accessor for symbol 'dtc' from Scope root
+Scope: Creating Accessor for symbol 'K_dtc' from Scope System
+Scope: Creating Accessor for symbol 'd_gld' from Scope System
+Scope: Creating Accessor for symbol 'k_cycle' from Scope System
+Scope: Creating Accessor for symbol 'N' from Scope root
+Scope: Creating Accessor for symbol 'cell.center.x' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'cell.center.y' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'cell.center.z' from Scope CellType[stem_cell]
+System::init: Reordering Initializers ...
+Scope: Creating Accessor for symbol 'cell_cycle_phase' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'cell.volume' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'Vt' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'GLD1' from Scope CellType[stem_cell]
+Plugin CellDivision: Registered input symbol dependencies cell.volume [CellType[stem_cell]] ,GLD1 [CellType[stem_cell]] ,cell_cycle_phase [CellType[stem_cell]] ,Vt [CellType[stem_cell]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'cell_cycle_phase' from Scope CellType[stem_cell]
+System::init: Reordering Initializers ...
+Scope: Creating Accessor for symbol '__daughterID' from Scope System
+Scope: Creating Accessor for symbol 'GLD1' from Scope CellType[stem_cell]
+Plugin ChangeCellType: Registered input symbol dependencies GLD1 [CellType[stem_cell]] ,
+Initializing celltype 'meiotic_entry'
+Scope: Creating Accessor for symbol 'Vt' from Scope CellType[meiotic_entry]
+Plugin VolumeConstraint: Registered input symbol dependencies Vt [CellType[meiotic_entry]] ,
+Scope: Creating Accessor for symbol 'meiotic_timer' from Scope CellType[meiotic_entry]
+Scope: Creating Accessor for symbol 'GLD1' from Scope CellType[meiotic_entry]
+System::init: Reordering Initializers ...
+Scope: Creating Accessor for symbol 'meiotic_timer' from Scope CellType[meiotic_entry]
+Plugin ChangeCellType: Registered input symbol dependencies meiotic_timer [CellType[meiotic_entry]] ,
+Initializing celltype 'meiotic_progression'
+Scope: Creating Accessor for symbol 'Vt' from Scope CellType[meiotic_progression]
+Plugin VolumeConstraint: Registered input symbol dependencies Vt [CellType[meiotic_progression]] ,
+Scope: Creating Accessor for symbol 'maturation' from Scope CellType[meiotic_progression]
+System::init: Reordering Initializers ...
+Scope: Creating Accessor for symbol 'cell.center' from Scope root
+Scope: Creating Accessor for symbol 'cell.volume' from Scope root
+Scope: Creating Accessor for symbol 'cell.surface' from Scope root
+Scope: Creating Accessor for symbol 'cell.length' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+CPM: InteractionEnergy has 80 neighbors
+CPM: InteractionEnergy was initialized with  IA_COLLAPSE 
+Scope: Creating Accessor for symbol 'dtc' from Scope root
+Scope: Creating Accessor for symbol 'dtc' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'N' from Scope root
+Creating FwdEulerADSolver
+System::init: Reordering Initializers ...
+Loading Analysis tools [4]
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size: 800, 400, 0
+getXMLAttribute: seeking for Gnuplotter->time-step: 10
+getXMLAttribute: seeking for Cells->value: cell.type
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size: 600, 400, 0
+getXMLAttribute: seeking for Gnuplotter->time-step: 50
+getXMLAttribute: seeking for Field->symbol-ref: dtc
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min: 0
+getXMLAttribute: seeking for Field->max: 20
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: celltype.stem_cell.size
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: celltype.meiotic_entry.size
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: celltype.meiotic_progression.size
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format: csv
+getXMLAttribute: seeking for Plots/Plot[0]->time-step: 10
+getXMLAttribute: seeking for Plots/Plot[0]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->style: lines
+getXMLAttribute: seeking for Plots/Plot[0]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->line-width: 3.0
+getXMLAttribute: seeking for Plots/Plot[0]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[0]->symbol-ref: celltype.stem_cell.size
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[1]->symbol-ref: celltype.meiotic_entry.size
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[2]->symbol-ref: celltype.meiotic_progression.size
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Logger->time-step: 5
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: GLD1
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: cell_cycle_phase
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: distance_from_DTC
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype: stem_cell
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format: csv
+getXMLAttribute: seeking for Plots/Plot[0]->time-step: 50
+getXMLAttribute: seeking for Plots/Plot[0]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->mode: current
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->style: points
+getXMLAttribute: seeking for Plots/Plot[0]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->point-size: 0.5
+getXMLAttribute: seeking for Plots/Plot[0]/Style->line-width .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis/Symbol->symbol-ref: distance_from_DTC
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[0]->symbol-ref: GLD1
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[1]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[2]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Logger->time-step: 5
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'dtc' from Scope root
+Scope: Creating Accessor for symbol 'celltype.stem_cell.size' from Scope root
+Scope: Creating Accessor for symbol 'celltype.meiotic_entry.size' from Scope root
+Scope: Creating Accessor for symbol 'celltype.meiotic_progression.size' from Scope root
+Plugin Logger: Registered input symbol dependencies celltype.stem_cell.size [root] ,celltype.meiotic_entry.size [root] ,celltype.meiotic_progression.size [root] ,
+Scope: Creating Accessor for symbol 'celltype.stem_cell.size' from Scope root
+Scope: Creating Accessor for symbol 'celltype.meiotic_entry.size' from Scope root
+Scope: Creating Accessor for symbol 'celltype.meiotic_progression.size' from Scope root
+Logger range:
+-> size 1
+-> dataAxes 
+-> data.sizes: 1, 
+-> file separation: None
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'GLD1' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'cell_cycle_phase' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'distance_from_DTC' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'GLD1' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'cell_cycle_phase' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'distance_from_DTC' from Scope CellType[stem_cell]
+Plugin Logger: Registered input symbol dependencies GLD1 [CellType[stem_cell]] ,cell_cycle_phase [CellType[stem_cell]] ,distance_from_DTC [CellType[stem_cell]] ,
+Scope: Creating Accessor for symbol 'GLD1' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'cell_cycle_phase' from Scope CellType[stem_cell]
+Scope: Creating Accessor for symbol 'distance_from_DTC' from Scope CellType[stem_cell]
+Logger range:
+-> size 0
+-> dataAxes CELL, 
+-> data.sizes: 1, 
+-> file separation: None
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'cell.id' from Scope CellType[stem_cell]
+System
+System
+CellDivision
+ChangeCellType
+System
+ChangeCellType
+System
+CPM
+System
+Gnuplotter
+Gnuplotter
+Logger
+Logger
+
+ TimeStepListener "System" propagates its time step 0.1
+
+ TimeStepListener "System" propagates its time step 0.1
+
+ TimeStepListener "CellDivision" propagates its time step 1
+
+ TimeStepListener "ChangeCellType" propagates its time step 1
+
+ TimeStepListener "System" propagates its time step 0.1
+
+ TimeStepListener "ChangeCellType" propagates its time step 1
+
+ TimeStepListener "System" propagates its time step 0.1
+
+ TimeStepListener "CPM" propagates its time step 1
+
+ TimeStepListener "System" propagates its time step 0.1
+
+ TimeStepListener "Gnuplotter" propagates its time step 10
+
+ TimeStepListener "Gnuplotter" propagates its time step 50
+
+ TimeStepListener "Logger" propagates its time step 5
+
+ TimeStepListener "Logger" propagates its time step 5
+TimeScheduler::init: Ordering instantaneous processes for sequential update ...
+Trying to remove unregistered symbol "cell.center" from unresolved_symbols. 
+======================================================
+ Time Schedule
+======================================================
+ Time precision patch is 0.0001
+
+=====|    Phase I     |===============================
+-----. CPM .------------------------------------
+  + 1 => CPM [Vt] -> [cell.center,cell.length,cell.surface,cell.type,cell.volume]
+-----. Reactions .------------------------------------
+  + 0.1 => System [dtc_production] -> [dtc]
+  + 0.1 => System [K_dtc,N,cell.center.x,cell.center.y,cell.center.z,d_gld,dtc,k_cycle,k_gld] -> [GLD1,cell_cycle_phase,distance_from_DTC]
+  + 0.1 => System [] -> [GLD1,meiotic_timer]
+  + 0.1 => System [] -> [maturation]
+  + 0.1 => System [] -> [N,dtc]
+
+=====|    Phase II    |===============================
+-----. Reporters and Instantaneous Processes.---------
+  + 1 => CellDivision [GLD1,Vt,cell.volume,cell_cycle_phase] -> [cell.center,cell_cycle_phase]
+  + 1 => ChangeCellType [GLD1] -> []
+  + 1 => ChangeCellType [meiotic_timer] -> []
+
+=====|    Phase III   |===============================
+-----. Analysis .-------------------------------------
+  + 10 => Gnuplotter [cell.type] 
+  + 50 => Gnuplotter [dtc] 
+  + 5 => Logger [celltype.meiotic_entry.size,celltype.meiotic_progression.size,celltype.stem_cell.size,time] 
+  + 5 => Logger [GLD1,cell_cycle_phase,distance_from_DTC] 
+------------------------------------------------------
+======================================================
+
+model is up
+getXMLAttribute: seeking for ModelGraph->format .. not found
+getXMLAttribute: seeking for ModelGraph->reduced .. not found
+getXMLAttribute: seeking for ModelGraph->exclude-symbols .. not found
+getXMLAttribute: seeking for ModelGraph->include-tags .. not found
+No support for graph rendering. Falling back to dot output.
+Generated symbol dependency graph. Exiting.

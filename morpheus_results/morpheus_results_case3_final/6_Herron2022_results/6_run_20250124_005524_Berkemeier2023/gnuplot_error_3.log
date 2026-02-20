@@ -1,0 +1,10 @@
+
+multiplot> set cbtics; set palette defined (0 'white' , 1 'darkblue' , 2 'darkred' );
+                                                          ^
+           line 0: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 0: unrecognized option - see 'help set'.
+

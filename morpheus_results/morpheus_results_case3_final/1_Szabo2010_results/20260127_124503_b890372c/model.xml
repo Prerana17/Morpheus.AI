@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Neural Tube Cell Sorting</Title>
+        <Details>Model of neural tube cell sorting dynamics.</Details>
+    </Description>
+    
+    <Global>
+        <Variable symbol="boundary_length" value="0.0"/>
+    </Global>
+    
+    <Space>
+        <SpaceSymbol symbol="space"/>
+        <Lattice class="square">
+            <Size symbol="size" value="200, 200, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <RandomSeed value="42"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="neural" class="biological">
+            <VolumeConstraint target="200" strength="1"/>
+            <NeighborhoodReporter>
+                <Input scaling="length" value="cell.type == celltype.mesenchyme.id"/>
+                <Output symbol-ref="boundary_length" mapping="sum"/>
+            </NeighborhoodReporter>
+        </CellType>
+        
+        <CellType name="mesenchyme" class="biological">
+            <VolumeConstraint target="200" strength="1"/>
+        </CellType>
+        
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="neural" type2="medium" value="12"/>
+            <Contact type1="mesenchyme" type2="medium" value="6"/>
+            <Contact type1="neural" type2="neural" value="6"/>
+            <Contact type1="mesenchyme" type2="mesenchyme" value="6"/>
+            <Contact type1="neural" type2="mesenchyme" value="16"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population size="0" type="neural">
+            <InitCircle mode="random" number-of-cells="40">
+                <Dimensions radius="66" center="100, 100, 0"/>
+            </InitCircle>
+        </Population>
+        
+        <Population size="0" type="mesenchyme">
+            <InitCircle mode="random" number-of-cells="40">
+                <Dimensions radius="66" center="100, 100, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="250" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells flooding="true" value="cell.type"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="100">
+            <Input>
+                <Symbol symbol-ref="celltype.neural.size"/>
+                <Symbol symbol-ref="celltype.mesenchyme.size"/>
+                <Symbol symbol-ref="boundary_length"/>
+            </Input>
+            <o>
+                <TextOutput/>
+            </o>
+            <Plots>
+                <Plot time-step="1000">
+                    <Style style="linespoints"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="boundary_length"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+    </Analysis>
+</MorpheusModel>

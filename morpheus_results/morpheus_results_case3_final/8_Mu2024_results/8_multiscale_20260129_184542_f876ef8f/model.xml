@@ -1,0 +1,382 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Multiscale Germinal Center Response Model</Title>
+        <Details>Multiscale spatial model of germinal center B cell dynamics integrating:
+- Molecular networks: NF-kB (cRel, RelA), FOXO1, MYC, AP4, CXCR4, BLIMP1
+- Cell types: B cells, FDCs (light zone), CRCs (dark zone), Tfh cells
+- Spatial zones: Dark zone (DZ) and Light zone (LZ)
+- B cell behaviors: proliferative bursts, somatic hypermutation, apoptosis, differentiation
+- Chemotaxis: CXCL12 (DZ) and CXCL13 (LZ) gradients
+- Affinity maturation and clonal selection
+
+Based on: Mu et al. (2024) Front. Immunol. 15:1377303
+</Details>
+    </Description>
+    <Global>
+        <Field symbol="CXCL12" value="0" name="Chemokine in dark zone">
+            <Diffusion rate="10.0"/>
+        </Field>
+        <Field symbol="CXCL13" value="0" name="Chemokine in light zone">
+            <Diffusion rate="10.0"/>
+        </Field>
+        <System solver="Euler [fixed, O(1)]" time-step="1.0">
+            <DiffEqn symbol-ref="CXCL12">
+                <Expression>CRC_production - 0.01*CXCL12</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="CXCL13">
+                <Expression>FDC_production - 0.01*CXCL13</Expression>
+            </DiffEqn>
+            <Constant symbol="CRC_production" value="0.0"/>
+            <Constant symbol="FDC_production" value="0.0"/>
+        </System>
+        <Variable symbol="total_B_cells" value="0" name="Total B cell count"/>
+        <Variable symbol="avg_affinity" value="0" name="Average BCR affinity"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="200, 200, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="123"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType class="medium" name="medium">
+            <Constant symbol="CRC_production" value="0.0"/>
+            <Constant symbol="FDC_production" value="0.0"/>
+        </CellType>
+        
+        <!-- CRCs: Stationary cells in dark zone producing CXCL12 -->
+        <CellType class="biological" name="CRC">
+            <VolumeConstraint target="150" strength="2"/>
+            <SurfaceConstraint target="0.8" mode="aspherity" strength="1"/>
+            <Property symbol="CRC_production" value="0.5" name="CXCL12 production"/>
+            <Constant symbol="FDC_production" value="0.0"/>
+        </CellType>
+        
+        <!-- FDCs: Stationary cells in light zone producing CXCL13 -->
+        <CellType class="biological" name="FDC">
+            <VolumeConstraint target="150" strength="2"/>
+            <SurfaceConstraint target="0.8" mode="aspherity" strength="1"/>
+            <Property symbol="FDC_production" value="0.5" name="CXCL13 production"/>
+            <Property symbol="antigen_density" value="1.0" name="Antigen presentation"/>
+            <Constant symbol="CRC_production" value="0.0"/>
+        </CellType>
+        
+        <!-- Tfh cells: Helper T cells in light zone -->
+        <CellType class="biological" name="Tfh">
+            <VolumeConstraint target="100" strength="1"/>
+            <SurfaceConstraint target="0.85" mode="aspherity" strength="1"/>
+            <Property symbol="CD40L" value="1.0" name="CD40 ligand expression"/>
+            <Constant symbol="CRC_production" value="0.0"/>
+            <Constant symbol="FDC_production" value="0.0"/>
+        </CellType>
+        
+        <!-- B cells: Dynamic cells with molecular network -->
+        <CellType class="biological" name="Bcell">
+            <!-- Molecular network properties -->
+            <Property symbol="BCR_affinity" value="0.1" name="BCR affinity for antigen"/>
+            <Property symbol="FOXO1" value="1.0" name="FOXO1 transcription factor"/>
+            <Property symbol="cRel" value="0.0" name="NF-kB cRel subtype"/>
+            <Property symbol="RelA" value="0.0" name="NF-kB RelA subtype"/>
+            <Property symbol="MYC" value="0.0" name="MYC proto-oncogene"/>
+            <Property symbol="AP4" value="0.0" name="AP4 transcription factor"/>
+            <Property symbol="CXCR4" value="0.5" name="CXCR4 chemokine receptor"/>
+            <Property symbol="BLIMP1" value="0.0" name="BLIMP1 differentiation factor"/>
+            
+            <!-- Signaling inputs from environment -->
+            <Property symbol="BCR_signal" value="0.0" name="BCR signaling from FDC"/>
+            <Property symbol="CD40_signal" value="0.0" name="CD40 signaling from Tfh"/>
+            
+            <!-- Cell state properties -->
+            <Property symbol="zone" value="0" name="0=DZ, 1=LZ"/>
+            <Property symbol="in_cycle" value="0" name="Cell cycle state"/>
+            <Property symbol="division_count" value="0" name="Number of divisions"/>
+            <Property symbol="death_timer" value="0" name="Time in LZ without selection"/>
+            <Property symbol="Vt" value="120" name="Target volume"/>
+            
+            <!-- Molecular network ODEs -->
+            <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.5" time-scaling="1.0">
+                <!-- FOXO1 dynamics: downregulated by BCR signaling -->
+                <DiffEqn symbol-ref="FOXO1">
+                    <Expression>0.1*(1.0 - FOXO1) - 2.0*BCR_signal*FOXO1</Expression>
+                </DiffEqn>
+                
+                <!-- cRel (NF-kB): activated by CD40 signaling from Tfh -->
+                <DiffEqn symbol-ref="cRel">
+                    <Expression>5.0*CD40_signal*(1.0 - cRel) - 0.5*cRel</Expression>
+                </DiffEqn>
+                
+                <!-- RelA (NF-kB): activated by strong BCR signaling -->
+                <DiffEqn symbol-ref="RelA">
+                    <Expression>if(BCR_affinity > 0.5, 3.0*(1.0 - RelA), -0.5*RelA)</Expression>
+                </DiffEqn>
+                
+                <!-- MYC: activated by cRel when FOXO1 is low -->
+                <DiffEqn symbol-ref="MYC">
+                    <Expression>2.0*cRel*(1.0 - FOXO1)*(1.0 - MYC) - 1.0*MYC</Expression>
+                </DiffEqn>
+                
+                <!-- AP4: activated by MYC, sustains proliferation -->
+                <DiffEqn symbol-ref="AP4">
+                    <Expression>3.0*MYC*(1.0 - AP4) - 0.3*AP4</Expression>
+                </DiffEqn>
+                
+                <!-- CXCR4: induced by FOXO1 for DZ migration -->
+                <DiffEqn symbol-ref="CXCR4">
+                    <Expression>1.5*FOXO1*(1.0 - CXCR4) - 0.5*CXCR4</Expression>
+                </DiffEqn>
+                
+                <!-- BLIMP1: induced by RelA for PC differentiation -->
+                <DiffEqn symbol-ref="BLIMP1">
+                    <Expression>2.0*RelA*(1.0 - BLIMP1) - 0.2*BLIMP1</Expression>
+                </DiffEqn>
+            </System>
+            
+            <!-- Volume and surface constraints -->
+            <VolumeConstraint target="Vt" strength="1"/>
+            <SurfaceConstraint target="0.9" mode="aspherity" strength="1"/>
+            
+            <!-- Chemotaxis based on zone and CXCR4/CXCR5 expression -->
+            <Chemotaxis field="CXCL12" strength="50*CXCR4" contact-inhibition="false"/>
+            <Chemotaxis field="CXCL13" strength="30*(1.0 - CXCR4)" contact-inhibition="false"/>
+            
+            <!-- BCR signaling reporter (contact with FDC) -->
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="cell.type == celltype.FDC.id"/>
+                <Output mapping="average" symbol-ref="BCR_signal"/>
+            </NeighborhoodReporter>
+            
+            <!-- CD40 signaling reporter (contact with Tfh) -->
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="cell.type == celltype.Tfh.id"/>
+                <Output mapping="average" symbol-ref="CD40_signal"/>
+            </NeighborhoodReporter>
+            
+            <!-- Cell division with proliferative burst -->
+            <CellDivision division-plane="minor">
+                <Condition>MYC > 0.6 and in_cycle == 0 and cell.volume > 100</Condition>
+                <Triggers>
+                    <Rule symbol-ref="in_cycle">
+                        <Expression>1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="division_count">
+                        <Expression>division_count + 0.5</Expression>
+                    </Rule>
+                    <Rule symbol-ref="Vt">
+                        <Expression>Vt/2</Expression>
+                    </Rule>
+                    <!-- Somatic hypermutation: random affinity change -->
+                    <Rule symbol-ref="BCR_affinity">
+                        <Expression>max(0.01, min(1.0, BCR_affinity + rand_norm(0, 0.15)))</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <!-- Reset cell cycle state when MYC drops -->
+            <Event>
+                <Condition>MYC &lt; 0.3</Condition>
+                <Rule symbol-ref="in_cycle">
+                    <Expression>0</Expression>
+                </Rule>
+            </Event>
+            
+            <!-- Death timer in LZ -->
+            <Event trigger="on change">
+                <Condition>zone == 1</Condition>
+                <Rule symbol-ref="death_timer">
+                    <Expression>death_timer + 1</Expression>
+                </Rule>
+            </Event>
+            
+            <!-- Update zone based on position -->
+            <Event>
+                <Condition>cell.center.x &lt; 100</Condition>
+                <Rule symbol-ref="zone">
+                    <Expression>0</Expression>
+                </Rule>
+            </Event>
+            <Event>
+                <Condition>cell.center.x >= 100</Condition>
+                <Rule symbol-ref="zone">
+                    <Expression>1</Expression>
+                </Rule>
+            </Event>
+            
+            <Constant symbol="CRC_production" value="0.0"/>
+            <Constant symbol="FDC_production" value="0.0"/>
+        </CellType>
+        
+        <!-- Plasma cells: Terminally differentiated B cells -->
+        <CellType class="biological" name="PlasmaCell">
+            <VolumeConstraint target="150" strength="1"/>
+            <SurfaceConstraint target="0.7" mode="aspherity" strength="1"/>
+            <Property symbol="antibody_secretion" value="1.0"/>
+            <Constant symbol="CRC_production" value="0.0"/>
+            <Constant symbol="FDC_production" value="0.0"/>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0.0">
+            <!-- Cell-cell adhesion -->
+            <Contact type1="Bcell" type2="Bcell" value="8"/>
+            <Contact type1="Bcell" type2="medium" value="12"/>
+            <Contact type1="Bcell" type2="FDC" value="6"/>
+            <Contact type1="Bcell" type2="Tfh" value="6"/>
+            <Contact type1="Bcell" type2="CRC" value="10"/>
+            <Contact type1="FDC" type2="medium" value="15"/>
+            <Contact type1="FDC" type2="FDC" value="5"/>
+            <Contact type1="Tfh" type2="medium" value="12"/>
+            <Contact type1="Tfh" type2="Tfh" value="8"/>
+            <Contact type1="CRC" type2="medium" value="15"/>
+            <Contact type1="CRC" type2="CRC" value="5"/>
+            <Contact type1="PlasmaCell" type2="medium" value="10"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="5"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <!-- CRCs in dark zone (left side) -->
+        <Population size="0" type="CRC">
+            <InitRectangle mode="regular" number-of-cells="10">
+                <Dimensions origin="10, 10, 0" size="80, 180, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <!-- FDCs in light zone (right side) -->
+        <Population size="0" type="FDC">
+            <InitRectangle mode="regular" number-of-cells="10">
+                <Dimensions origin="110, 10, 0" size="80, 180, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <!-- Tfh cells in light zone -->
+        <Population size="0" type="Tfh">
+            <InitRectangle mode="random" number-of-cells="15">
+                <Dimensions origin="110, 20, 0" size="80, 160, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <!-- Initial B cell population -->
+        <Population size="0" type="Bcell">
+            <InitCircle mode="random" number-of-cells="20">
+                <Dimensions center="50, 100, 0" radius="30"/>
+            </InitCircle>
+            <InitProperty symbol-ref="BCR_affinity">
+                <Expression>rand_uni(0.05, 0.25)</Expression>
+            </InitProperty>
+            <InitProperty symbol-ref="CXCR4">
+                <Expression>0.7</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Germinal Center - Cell Types">
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="1" color="blue"/>
+                        <Color value="2" color="green"/>
+                        <Color value="3" color="orange"/>
+                        <Color value="4" color="red"/>
+                        <Color value="5" color="purple"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="B Cell BCR Affinity">
+                <Cells value="BCR_affinity" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="1.0" color="red"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="0.0" color="blue"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="B Cell MYC Expression">
+                <Cells value="MYC" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="1.0" color="red"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="CXCL12 Gradient (Dark Zone)">
+                <Field symbol-ref="CXCL12" isolines="5" min="0.0"/>
+                <Cells opacity="0.3" value="cell.type"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="time"/>
+                <Symbol symbol-ref="BCR_affinity"/>
+                <Symbol symbol-ref="MYC"/>
+                <Symbol symbol-ref="FOXO1"/>
+                <Symbol symbol-ref="cRel"/>
+                <Symbol symbol-ref="CXCR4"/>
+                <Symbol symbol-ref="BLIMP1"/>
+                <Symbol symbol-ref="division_count"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="-1">
+                    <Style style="lines" line-width="2.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="BCR_affinity"/>
+                    </Y-axis>
+                </Plot>
+                <Plot time-step="-1">
+                    <Style style="lines" line-width="2.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="MYC"/>
+                        <Symbol symbol-ref="FOXO1"/>
+                        <Symbol symbol-ref="cRel"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+            <Restriction>
+                <Celltype celltype="Bcell"/>
+            </Restriction>
+        </Logger>
+        
+        <ModelGraph format="dot" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

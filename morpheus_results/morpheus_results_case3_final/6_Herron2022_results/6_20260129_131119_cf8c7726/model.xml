@@ -1,0 +1,148 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>WPGAP Model - Phagocytosis Rosette Formation</Title>
+        <Details>Wave-Pinning GTPase Activating Protein (WPGAP) model for podosome rosette formation during frustrated phagocytosis.
+        
+Based on Herron et al. (2022) "Spatial models of pattern formation during phagocytosis" PLoS Comp Bio.
+
+Model includes:
+- u: active GTPase (membrane-bound, slow diffusion)
+- v: inactive GTPase (cytosolic, fast diffusion)  
+- G: active GAP (cytosolic, fast diffusion)
+- g: inactive GAP (cytosolic, fast diffusion)
+
+Features positive feedback through GTPase autoactivation and negative feedback through GAP activation.</Details>
+    </Description>
+    <Global>
+        <Field name="active_GTPase" symbol="u" value="rand_norm(0.1, 0.05)">
+            <Diffusion rate="0.04"/>
+        </Field>
+        <Field name="inactive_GTPase" symbol="v" value="2.9">
+            <Diffusion rate="4.0"/>
+        </Field>
+        <Field name="active_GAP" symbol="G" value="0.01">
+            <Diffusion rate="4.0"/>
+        </Field>
+        <Field name="inactive_GAP" symbol="g" value="0.99">
+            <Diffusion rate="4.0"/>
+        </Field>
+        <System name="WPGAP" solver="Runge-Kutta [fixed, O(4)]" time-step="0.1">
+            <Constant symbol="b" value="0.001" name="basal GTPase activation rate"/>
+            <Constant symbol="gamma" value="0.05" name="max self-positive feedback rate"/>
+            <Constant symbol="K" value="0.2" name="half-maximal GTPase concentration"/>
+            <Constant symbol="n" value="3" name="Hill coefficient"/>
+            <Constant symbol="sigma" value="1.0" name="basal GTPase inactivation rate"/>
+            <Constant symbol="e" value="5.0" name="GAP-mediated negative feedback rate"/>
+            <Constant symbol="c" value="0.1" name="GAP activation rate"/>
+            <Constant symbol="d" value="0.5" name="GAP inactivation rate"/>
+            <DiffEqn symbol-ref="u">
+                <Expression>b*v + gamma*v*(u^n)/(K^n + u^n) - sigma*u - e*G*u</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="v">
+                <Expression>-b*v - gamma*v*(u^n)/(K^n + u^n) + sigma*u + e*G*u</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="G">
+                <Expression>c*u*g - d*G</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="g">
+                <Expression>-c*u*g + d*G</Expression>
+            </DiffEqn>
+        </System>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="200, 200, 0"/>
+            <NodeLength value="0.1"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="12345"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <Analysis>
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png" size="600 600 0"/>
+            <Plot title="Active GTPase (u) - Rosette Pattern">
+                <Field symbol-ref="u" min="0" max="1.0">
+                    <ColorMap>
+                        <Color value="1.0" color="red"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="0.1" color="white"/>
+                        <Color value="0.0" color="blue"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+            <Plot title="Active GAP (G)">
+                <Field symbol-ref="G" min="0" max="0.5">
+                    <ColorMap>
+                        <Color value="0.5" color="green"/>
+                        <Color value="0.25" color="cyan"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+            <Plot title="Inactive GTPase (v)">
+                <Field symbol-ref="v" min="0" max="3.0">
+                    <ColorMap>
+                        <Color value="3.0" color="purple"/>
+                        <Color value="1.5" color="magenta"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="50">
+            <Input>
+                <Symbol symbol-ref="u"/>
+                <Symbol symbol-ref="v"/>
+                <Symbol symbol-ref="G"/>
+                <Symbol symbol-ref="g"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="500">
+                    <Style style="lines" line-width="2.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="3.0">
+                        <Symbol symbol-ref="u"/>
+                    </Y-axis>
+                </Plot>
+                <Plot time-step="500">
+                    <Style style="lines" line-width="2.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="1.0">
+                        <Symbol symbol-ref="G"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <Logger time-step="100">
+            <Input>
+                <Symbol symbol-ref="u"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="matrix"/>
+            </Output>
+        </Logger>
+        <ModelGraph format="dot" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

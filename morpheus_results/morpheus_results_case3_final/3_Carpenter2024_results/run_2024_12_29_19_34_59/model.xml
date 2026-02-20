@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Cooperative Membrane Binding Model (Carpenter et al. 2024)</Title>
+        <Details>Models cooperative binding of Cph1 proteins to the cell membrane in C. crescentus.
+        Includes diffusion of cytoplasmic Cph1 (Cc), membrane binding (Cm), and bistable behavior.
+        Based on the reaction-diffusion system with cooperative binding kinetics.</Details>
+    </Description>
+    
+    <Global>
+        <Constant symbol="k_on" value="0.01" name="Membrane binding rate"/>
+        <Constant symbol="k_off" value="0.1" name="Membrane unbinding rate"/>
+        <Constant symbol="D_c" value="1.0" name="Cytoplasmic diffusion coefficient"/>
+        <Constant symbol="n" value="2" name="Hill coefficient (cooperativity)"/>
+        <Constant symbol="K" value="5.0" name="Half-saturation constant"/>
+        
+        <Field symbol="Cc" value="50.0" name="Cytoplasmic Cph1 concentration">
+            <Diffusion rate="D_c"/>
+        </Field>
+        
+        <Variable symbol="total_Cc" value="0.0" name="Total cytoplasmic Cph1"/>
+        <Variable symbol="total_Cm" value="0.0" name="Total membrane Cph1"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="lattice_size" value="100 100 0"/>
+            <BoundaryConditions>
+                <Condition type="noflux" boundary="x"/>
+                <Condition type="noflux" boundary="y"/>
+            </BoundaryConditions>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="500"/>
+        <TimeSymbol symbol="time"/>
+        <SaveInterval value="0"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="bacterium" class="biological">
+            <Property symbol="Cm" value="0.0" name="Membrane-bound Cph1 concentration"/>
+            
+            <!-- Cooperative membrane binding reaction -->
+            <System solver="Euler" time-step="0.1" name="Cph1 binding dynamics">
+                <DiffEqn symbol-ref="Cm">
+                    <Expression>k_on * Cc * (Cm^n / (K^n + Cm^n)) - k_off * Cm</Expression>
+                </DiffEqn>
+            </System>
+            
+            <!-- Reaction in the Field: consumption of Cc when it binds to membrane -->
+            <System solver="Euler" time-step="0.1" name="Cytoplasmic consumption">
+                <DiffEqn symbol-ref="Cc">
+                    <Expression>-k_on * Cc * (Cm^n / (K^n + Cm^n)) + k_off * Cm</Expression>
+                </DiffEqn>
+            </System>
+            
+            <!-- Map cell properties to global variables -->
+            <Mapper name="Sum membrane Cph1">
+                <Input value="Cm"/>
+                <Output symbol-ref="total_Cm" mapping="sum"/>
+            </Mapper>
+            
+            <!-- Cell shape constraints -->
+            <VolumeConstraint target="500" strength="1.0"/>
+            <SurfaceConstraint target="0.8" strength="1.0" mode="aspherity"/>
+        </CellType>
+        
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0.0">
+            <Contact type1="bacterium" type2="bacterium" value="10"/>
+            <Contact type1="bacterium" type2="medium" value="5"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <MetropolisKinetics temperature="2" yield="0.1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>2.0</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population size="0" type="bacterium">
+            <InitCellObjects mode="distance">
+                <Arrangement displacements="1, 1, 0" repetitions="3, 3, 1">
+                    <Sphere radius="12" center="25, 25, 0"/>
+                </Arrangement>
+            </InitCellObjects>
+            
+            <!-- Small initial membrane binding to seed cooperativity -->
+            <InitProperty symbol-ref="Cm">
+                <Expression>rand_uni(0, 2)</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <!-- Field visualization for cytoplasmic Cph1 -->
+        <Gnuplotter time-step="10" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cytoplasmic Cph1 Field (Cc)">
+                <Field symbol-ref="Cc" max="100" min="0"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Cell visualization with membrane-bound Cph1 -->
+        <Gnuplotter time-step="10" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Membrane-bound Cph1 (Cm)">
+                <Cells value="Cm">
+                    <ColorMap>
+                        <Color value="0" color="blue"/>
+                        <Color value="50" color="yellow"/>
+                        <Color value="100" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Time series logging -->
+        <Logger time-step="1">
+            <Input>
+                <Symbol symbol-ref="total_Cm"/>
+                <Symbol symbol-ref="time"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot title="Total Membrane Cph1 Over Time" time-step="50">
+                    <Style style="lines" line-width="2" grid="true"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="total_Cm"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" reduced="false" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,15 @@
+{
+  "reference_inference": {
+    "scores": {
+      "CPM": 1,
+      "PDE": 2,
+      "ODE": 2,
+      "Multiscale": 0
+    },
+    "selected_categories": [
+      "CPM",
+      "PDE",
+      "ODE"
+    ]
+  }
+}

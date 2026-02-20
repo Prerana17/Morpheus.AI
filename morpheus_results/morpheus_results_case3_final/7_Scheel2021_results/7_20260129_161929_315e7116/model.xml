@@ -1,0 +1,156 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Planarian Regeneration - Scheel 2021</Title>
+        <Details>Reaction-diffusion model for planarian regeneration based on signaling gradients in surface dynamics. Models stem cells (s), head cells (h), tail cells (d), head signal (uh), tail signal (ud), and wnt-related signal (w) in 1D spatial domain.</Details>
+    </Description>
+    
+    <Global>
+        <Field name="s" symbol="s" value="100">
+            <Diffusion rate="1"/>
+        </Field>
+        <Field name="h" symbol="h" value="0">
+            <Diffusion rate="0.001"/>
+        </Field>
+        <Field name="d" symbol="d" value="0">
+            <Diffusion rate="0.001"/>
+        </Field>
+        <Field name="uh" symbol="uh" value="0">
+            <Diffusion rate="0.01"/>
+        </Field>
+        <Field name="ud" symbol="ud" value="0">
+            <Diffusion rate="0.01"/>
+        </Field>
+        <Field name="w" symbol="w" value="0.5">
+            <Diffusion rate="1"/>
+        </Field>
+        
+        <System name="PlanarianRegeneration" time-step="0.01" solver="Runge-Kutta [fixed, O(4)]">
+            <Constant symbol="ps" value="200"/>
+            <Constant symbol="eta_s" value="100"/>
+            <Constant symbol="ph" value="1"/>
+            <Constant symbol="pd" value="1"/>
+            <Constant symbol="eta_h" value="1"/>
+            <Constant symbol="eta_d" value="1"/>
+            <Constant symbol="r0" value="18"/>
+            <Constant symbol="r1" value="12"/>
+            <Constant symbol="r2" value="6"/>
+            <Constant symbol="r3" value="6"/>
+            <Constant symbol="pw" value="10"/>
+            
+            <DiffEqn symbol-ref="s">
+                <Expression>ps*s/(1+s) - eta_s*s - ph*uh*s - pd*ud*s</Expression>
+            </DiffEqn>
+            
+            <DiffEqn symbol-ref="h">
+                <Expression>ph*uh*s - eta_h*h</Expression>
+            </DiffEqn>
+            
+            <DiffEqn symbol-ref="d">
+                <Expression>pd*ud*s - eta_d*d</Expression>
+            </DiffEqn>
+            
+            <DiffEqn symbol-ref="uh">
+                <Expression>h*h*(r0 - r1*uh) - r2*uh*d - r3*uh</Expression>
+            </DiffEqn>
+            
+            <DiffEqn symbol-ref="ud">
+                <Expression>d*d*(r0 - r1*ud) - r2*ud*h - r3*ud</Expression>
+            </DiffEqn>
+            
+            <DiffEqn symbol-ref="w">
+                <Expression>-pw*h*w + pw*d*(1-w)</Expression>
+            </DiffEqn>
+        </System>
+    </Global>
+    
+    <Space>
+        <Lattice class="linear">
+            <Size symbol="size" value="200, 1, 0"/>
+            <NodeLength value="0.1"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="100"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="1"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <Analysis>
+        <Gnuplotter time-step="2" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Stem Cells (s)">
+                <Field symbol-ref="s" min="0" max="150"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <Gnuplotter time-step="2" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Head Cells (h)">
+                <Field symbol-ref="h" min="0" max="1"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <Gnuplotter time-step="2" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Tail Cells (d)">
+                <Field symbol-ref="d" min="0" max="1"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <Gnuplotter time-step="2" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Wnt Signal (w)">
+                <Field symbol-ref="w" min="0" max="1"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="1">
+            <Input>
+                <Symbol symbol-ref="s"/>
+                <Symbol symbol-ref="h"/>
+                <Symbol symbol-ref="d"/>
+                <Symbol symbol-ref="w"/>
+                <Symbol symbol-ref="uh"/>
+                <Symbol symbol-ref="ud"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+        </Logger>
+        
+        <Logger time-step="2">
+            <Input>
+                <Symbol symbol-ref="h"/>
+                <Symbol symbol-ref="d"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="10">
+                    <Style style="lines" line-width="2.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="space.x"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="1">
+                        <Symbol symbol-ref="h"/>
+                        <Symbol symbol-ref="d"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph include-tags="#untagged" format="dot" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

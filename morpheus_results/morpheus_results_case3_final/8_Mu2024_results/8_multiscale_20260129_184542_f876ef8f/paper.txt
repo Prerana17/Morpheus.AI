@@ -1,0 +1,503 @@
+A multiscale spatial modeling
+framework for the germinal
+center response
+Derek P.Mu1, Christopher D.Scharer2, Norbert E.Kaminski3
+and QiangZhang4*
+1Montgomery Blair High School, Silver Spring, MD, United States,2Department of Microbiology and
+Immunology, School of Medicine, Emory University, Atlanta, GA, United States,3Department of
+Pharmacology & Toxicology, Institute for Integrative Toxicology, Center for Research on Ingredient
+Safety, Michigan State University, East Lansing, MI, United States,4Gangarosa Department of
+Environmental Health, Rollins School of Public Health, Emory University, Atlanta, GA, United States
+The germinal center response or reaction (GCR) is a hallmark event of adaptive
+humoral immunity. Unfolding in the B cell follicles of the secondary lymphoid
+organs, a GC culminates in the production of high-afﬁnity antibody-secreting
+plasma cells along with memory B cells. By interacting with follicular dendritic
+cells (FDC) and T follicular helper (Tfh) cells, GC B cells exhibit complex
+spatiotemporal dynamics. Driving the B cell dynamics are the intracellular
+signal transduction and gene regulatory network that responds to cell surface
+signaling molecules, cytokines, and chemokines. As our knowledge of the GC
+continues to expand in depth and in scope, mathematical modeling has become
+an important tool to help disentangle the intricacy of the GCR and inform novel
+mechanistic and clinical insights. While the GC has been modeled at different
+granularities, a multiscale spatial simulation framework– integrating molecular,
+cellular, and tissue-level responses– is still rare. Here, we report our recent
+progress toward this end with a hybrid stochastic GC framework developed on
+the Cellular Potts Model-based CompuCell3D platform. Tellurium is used to
+simulate the B cell intracellular molecular network comprising NF-kB, FOXO1,
+MYC, AP4, CXCR4, and BLIMP1 that responds to B cell receptor (BCR) and CD40-
+mediated signaling. The molecular outputs of the network drive the
+spatiotemporal behaviors of B cells, including cyclic migration between the
+dark zone (DZ) and light zone (LZ) via chemotaxis; clonal proliferative bursts,
+somatic hypermutation, and DNA damage-induced apoptosis in the DZ; and
+positive selection, apoptosis via a death timer, and emergence of plasma cells in
+the LZ. Our simulations are able to recapitulate key molecular, cellular, and
+morphological GC events, including B cell population growth, afﬁnity maturation,
+and clonal dominance. This novel modeling framework provides an open-
+source, customizable, and multiscal e virtual GC simulation platform that
+enables qualitative and quantitative in silico investigations of a range of
+mechanistic and applied research questions on the adaptive humoral immune
+response in the future.
+KEYWORDS
+B cells, germinal center, dark zone, light zone, af ﬁnity maturation, proliferative
+burst, chemotaxis
+Frontiers inImmunology frontiersin.org01
+OPEN ACCESS
+EDITED BY
+Ciriyam Jayaprakash,
+The Ohio State University, United States
+REVIEWED BY
+Juan Carlos Yam-Puc,
+University of Cambridge, United Kingdom
+Alexander Thomas Stewart,
+University of Surrey, United Kingdom
+*CORRESPONDENCE
+Qiang Zhang
+qiang.zhang@emory.edu
+RECEIVED 27 January 2024
+ACCEPTED 14 May 2024
+PUBLISHED 30 May 2024
+CITATION
+Mu DP,Scharer CD,Kaminski NE and
+Zhang Q (2024) A multiscale spatial modeling
+framework for the germinal center response.
+Front. Immunol. 15:1377303.
+doi: 10.3389/fimmu.2024.1377303
+COPYRIGHT
+© 2024 Mu, Scharer, Kaminski and Zhang. This
+is an open-access article distributed under the
+terms of theCreative Commons Attribution
+License (CC BY).The use, distribution or
+reproduction in other forums is permitted,
+provided the original author(s) and the
+copyright owner(s) are credited and that the
+original publication in this journal is cited, in
+accordance with accepted academic
+practice. No use, distribution or reproduction
+is permitted which does not comply with
+these terms.
+TYPE Original Research
+PUBLISHED 30 May 2024
+DOI 10.3389/fimmu.2024.1377303
+
+1 Introduction
+The adaptive humoral immune response is a vital component of
+host defense, where B cells terminally differentiate into plasma cells
+(PCs) that secrete antibodies speci ﬁcally recognizing and
+neutralizing the invading foreign antigens. The B cell responses
+can be broadly classiﬁed into two types: T cell-dependent and
+independent, depending on whether helper T (Th) cells are
+involved (1). In the T cell-independent response, naive B cells are
+activated directly via toll-like receptors (TLR) recognizing pathogen
+components such as lipopolysaccharide (LPS) or CpG DNA or via B
+cell receptors (BCR), without the assistance of Th cells (2, 3). The
+response is launched quickly and can occur within a few days of
+initial infection. Upon activation, B cells undergo clonal
+proliferation and differentiate into PCs, which secrete pentameric
+IgM molecules. While these antibodies provide initial protection,
+they are often polyclonal, not highly speciﬁc, and the IgM-secreting
+PCs are short-lived, thus unable to provide long-term immunity. In
+contrast, the T cell-dependent B cell response takes longer to
+develop, but through af ﬁnity maturation and class switch
+recombination (CSR) it can produce long-lived PCs that can
+provide life-long immunity with high-afﬁnity IgG or other non-
+IgM antibody classes ( 4). Additionally, memory B cells are
+generated during the primary response, which can quickly launch
+a secondary antibody response upon subsequent exposure to the
+same antigens (5).
+T cell-dependent B cell activation can take place either
+extrafollicularly, e.g., at the T-B border (6), or intrafollicularly in
+the germinal centers (GC), which are specialized, often transient,
+microstructures formed in the B cell follicles of secondary lymphoid
+tissues such as lymph nodes and spleen in response to infection or
+immunization (7– 10). GC B cells exhibit unique spatiotemporal
+dynamics (11, 12). A GC is polarized, containing two distinct,
+physically separated zones: the dark zone (DZ) and the light zone
+(LZ). In the DZ, B cells undergo clonal proliferative bursts, during
+which somatic hypermutation (SHM) occurs. During SHM, the
+hypervariable regions of the genes encoding the immunoglobulin
+heavy chains and light chains are point-mutated by activation-
+induced cytidine deaminase (AID) at a high rate (13). As a result,
+the BCR afﬁnities of the participating B cell clones for the invading
+antigen are modiﬁed and diversiﬁed. During SHM those B cells
+incurring damaging mutations that prevent normal assembly of
+surface BCRs are killed via apoptosis in the DZ (14, 15). After
+exiting the cell cycle following a proliferative burst, B cells migrate
+from the DZ to LZ under the chemoattractant force by CXCL13
+secreted by follicular dendritic cells (FDCs) in the LZ (16, 17).
+In the LZ, two main cell types participate in the positive
+selection of B cell clones harboring immunoglobulin (Ig) gene
+variants encoding relatively high-af ﬁnity antibodies: the
+residential FDCs and CD4
++ T follicular helper (Tfh) cells. These
+two cell types coordinate to provide key molecular signals for B cell
+activation, survival, DZ re-entry, proliferation, and differentiation
+(18– 20). FDCs are antigen-presenting cells (APCs), which
+previously encountered and engulfed pathogens and present the
+antigen epitopes on their cell surface. When B cellsﬁrst encounter
+FDCs, their BCRs are activated by the surface antigens of FDCs.
+B cells then internalize the antigen-BCR complex and present the
+antigen epitopes on their own surface through major
+histocompatibility complex (MHC) II molecules to form peptide-
+MHCII complex (pMHCII). The density of pMHCII on the cell
+surface is proportional to the BCR afﬁnity. Stronger BCR signaling
+also leads to higher PI3K-AKT-FOXO1 signal transduction (18, 21,
+22). When the B cells subsequently encounter Tfh cells, a complex
+mutual interaction occurs between the two cell types (19, 23, 24).
+Tfh cells are activated via T cell receptors (TCR) liganded by
+pMHCII of the B cells, as well as by other cell surface signaling
+molecules such as inducible co-stimulator ligand (ICOSL) (25).
+Activated Tfh cells in turn express surface CD40L which
+reciprocally activates B cells together with several secretory
+cytokines including interleukins (IL) 4, 10, and 21 (26– 28). CD40
+signaling leads to NF- kB activation, increasing the chance of
+survival of B cells. In the presence of downregulated FOXO1, NF-
+kB elicits transient MYC activation that initiates the cell cycle (18).
+Only a small fraction of B cells is positively selected, which express
+CXCR4, the receptor for chemokine CXCL12, and migrate back to
+DZ where they undergo further proliferative bursts and SHM
+(16, 22). Those B cells with weaker BCR afﬁnity are more likely to
+undergo apoptosis in the LZ, as well as B cells that do not have a
+chance to encounter Tfh cells in the LZ. As a result of combined
+action of proliferation and SHM in the DZ and positive selection in
+the LZ, the overall BCR afﬁnity of the GC B cell population for the
+antigen continues to improve. After many rounds of DZ-LZ cycles,
+a small fraction of B cells are afﬁnity-matured and exit the GC as
+either long-lived antibody-secreting PCs or memory B cells.
+The GC plays a critical role in the generation of long-term
+protective immunity, and this is relevant in both the context of
+natural infection and vaccination for infectious diseases such as
+COVID-19 (29). If the GC is compromised or cannot be sufﬁciently
+induced due to genetic alterations, increased susceptibility to
+b a c t e r i a la n dv i r a li n f e c t i o n sw i l lr e s u l t .O nt h eo t h e rh a n d ,
+unintentional recognition of self-antigens and induction of GC
+can lead to autoimmune diseases such as systemic lupus
+erythematosus (30). Dysregulated B cell proliferation in GC can
+lead to lymphoma or other B cells-related leukemia (31). The GC
+also plays a role in antibody-mediated rejection of transplanted
+organs (32). In addition, many environmental contaminants are
+immunotoxicants, some of which can suppress B cell activation and
+the humoral immune response, leading to increased susceptibility to
+infectious disease and cancer (33). Therefore, a full mechanistic
+understanding of the complexity of GC is crucially important for
+sustaining immune integrity and preventing or alleviating many
+pathological conditions.
+Computational modeling has played a long-standing role in
+dissecting and understanding the complex dynamics of GC immune
+responses (34, 35). The GC involves an elaborate interplay between
+many cell types, signaling molecules, transcription factors, and
+actuator genes (36). Key signal transduction and gene regulatory
+networks underpin the spatiotemporal dynamics of GC B cells and
+are crucial for the positive selection and ultimate formation of high-
+afﬁnity PCs. Although there have been many efforts simulating the
+cellular dynamics and af ﬁnity maturation of GCs, cross-scale
+modeling that integrates molecu lar, cellular, and tissue-level
+Mu et al. 10.3389/fimmu.2024.1377303
+Frontiers inImmunology frontiersin.org02
+
+actions in a spatial context has only begun to emerge recently and
+thus is still rare (37– 39). In this study, we presented a novel
+multiscale mathematical modeling framework of the GC
+developed in the CompuCell3D simulation environment that
+integrates the molecular network and spatiotemporal behaviors of
+GC B cells. The modeling framework provides an open-source,
+customizable, multiscale virtual GC platform that enables futurein
+silico investigations of a range of questions both qualitatively and
+quantitatively, including B cell population turnover, BCR mutation
+rate, death timer, proliferative burst size, availability of Tfh cells,
+and effects of genetic and chemical perturbations.
+2 Methods
+2.1 Model structure
+2.1.1 Cell types, cellular events, and
+interactions modeled
+Four major cell types involved in GCR are modeled in the
+framework: CXCL12-expressing reticular cells (CRCs) located in
+the DZ, FDCs and Tfh cells in the LZ, and B cells cycling between
+the DZ and LZ (7– 10). For simplicity, CRC, FDC, and Tfh cells are
+treated as stationary. Key cellular events of B cells captured in the
+model include: (i) B cell volume growth, division, SHM, and
+apoptosis in the DZ; (ii) DZ-to-LZ B cell migration and
+simultaneous initiation of a cell death timer; (iii) interaction of B
+cells with FDCs in the LZ to determine BCR antigen afﬁnity,
+interaction of B cells with Tfh cells in the LZ to make
+probabilistic decisions based on pMHCII density on positive
+selection, survival, initiation of cell growth, and DZ re-entry of
+positively selected B cells, and death timer-triggered apoptosis of LZ
+B cells not positively selected.
+2.1.2 Molecular events in B cells
+The above cellular events are driven by an intracellular
+molecular network in B cells that responds to diffusive
+chemoattractants and signaling molecules from FDCs and Tfh
+cells. For simplicity, the following molecular species and
+regulatory events are included in the model (Figure 1). A DZ-to-
+LZ descending gradient of chemoattractant CXCL12 is established
+by CRCs in the DZ ( 40, 41), and an opposite gradient of
+chemoattractant CXCL13 is established by FDCs in the LZ (17,
+42). In the LZ, the contact of a B cell with an FDC will trigger BCR-
+mediated signal transduction, which leads to several signaling
+events in the modeled B cell: (i) re-expression on B cell surface of
+pMHCII, the density of which depends on BCR afﬁnity for the
+antigen, (ii) transient activation of AKT and downregulation of
+FOXO1, the extent of which depends on BCR afﬁnity (18, 21, 22),
+(iii) once the BCR af ﬁnity reaches a threshold, a switch-like
+activation of NF-kB subtype RelA is triggered (43– 45), which in
+turn induces BLIMP1 ( 46, 47), leading to terminal B cell
+differentiation into antibody-secreting PCs.
+If a B cell expressing pMHCII encounters a Tfh cell, the B cell is
+stimulated via CD40 signaling which activates another NF- kB
+subtype, cRel. cRel activation leads to at least two molecular
+signaling events. It activates Bcl-xL which inhibits apoptosis, thus
+terminating the death timer (48). With FOXO1 still downregulated,
+cRel also induces the expression of MYC (18). Upregulation of
+MYC triggers a commitment to cell growth and initiates the cell
+FIGURE 1
+Schematic illustration of a simpliﬁed intracellular molecular network of GC B cells and different B cell outcomes driven by key molecules as
+indicated. Pointed arrowhead: stimulation/activation, blunted arrowhead: inhibition, and dotted arrow head: regulation in either direction.
+Mu et al. 10.3389/fimmu.2024.1377303
+Frontiers inImmunology frontiersin.org03
+
+cycle (49). MYC also activates AP4, which sustains B cell growth
+and division burst (50). With the B cell committed to growth and
+proliferation, as FOXO1 is re-expressed, CXCR4 is induced (22, 51).
+As a result, the B cell migrates towards the DZ in response to the
+CXCL12 gradient. In the DZ, shortly after each cell division, each of
+the two daughter cells incurs an independent point mutation of the
+BCR, which alters its afﬁnity for the antigen with some probabilities
+(52– 54). The probability of a damaging mutation is encoded such
+that a fraction of B cell progeny dies by apoptosis in the DZ (14, 15).
+The surviving B cells will continue to grow and divide as long as
+AP4 remains above a threshold (50). When AP4 drops below the
+threshold, the B cells exit the c ell cycle, followed shortly by
+downregulation of CXCR4 ( 55). With CXCR5 constitutively
+expressed (12, 16), the B cells will be pulled by the CXCL13
+gradient ﬁeld into the LZ, repeating the DZ-LZ cycle.
+2.1.3 Model assumptions and simpliﬁcation
+The molecular and cellular events involved in the GC are
+complex. Here, for the purpose of modeling, several assumptions
+and simpliﬁcations are made.
+i. The mutual activation between B cells and Tfh cells is
+simpli ﬁed to pMHCII density-dependent CD40-cRel
+activation, as described above.
+ii. Many factors involved in GC, including BCL6, BACH2,
+and IRF4, are not explicitly considered.
+iii. Initial migration of B cells from the T/B cell border
+towards the LZ is not considered and neither is the Tfh
+cell migration into the LZ. CSR is thus not included as it is
+believed to occur primarily during pre-GC formation (56).
+iv. The initial clonal expansion of GC seeder B cells without
+SHM and positive selection is not considered for the lack
+of clear known mechanisms that terminate this initial
+proliferative burst phase and start the subsequent
+competitive selection phase.
+v. For B cells returning to the DZ, a delay variable is
+introduced before the cell growth for theﬁrst cell cycle
+is initiated to reduce the chance of cell division in the LZ.
+vi. The GC exit of PCs is modelled as deleting these cells from
+the simulation once they emerge.
+vii. Formation of memory B cells is not considered.
+2.2 Construction of the computational
+model in CompuCell3D
+The GC model was constructed and simulated as a hybrid,
+agent-based stochastic model i n CompuCell3D. CompuCell3D
+provides a ﬂexible and customizable platform for simulating
+multi-cellular behaviors and interactions based on the Glazier-
+Graner-Hogeweg approach ( 57). The Cellular Potts Model
+module in CompuCell3D was employed to simulate the physical
+properties and movements of individual B cells (58), while the
+molecular network operating in each individual B cell, as depicted
+in Figure 1, was simulated by using the Gillespie ’ss t o c h a s t i c
+algorithm implemented in Te llurium conforming to the
+Antimony notation (59, 60). The CompuCell3D model consists of
+four ﬁles: an XML ﬁle, a Potts initialization ﬁle (PIF), and two
+Python script ﬁles. The XML ﬁle contains various “Plugins” and
+“Steppables” that deﬁne some default Potts model parameter values.
+The Chemotaxis plugin de ﬁnes CXCL12 and CXCL13 as the
+chemoattractants, and the DiffusionSolverFE steppable designates
+that CXCL12 and CXCL13 are secreted by CRC and FDC,
+respectively and speci ﬁes the parameter values for secretion,
+diffusion, and decay in the Medium. The PIF ﬁle contains the
+initial coordinates of medium and cells where applicable. The
+steppable Python ﬁle contains the script that de ﬁnes several
+steppable classes, including GCR_Steppable , MitosisSteppable ,
+BCell_GRNSteppable ,a n d VisualizationSteppable ,a n dt h e
+Tellurium model. The model is initialized in the“start” section of
+GCR_Steppable, including the generation of CRCs, FDCs, Tfh cells,
+and seeding B cells. Each B cell is assigned a Tellurium molecular
+network model named asBcellNetwork.
+2.2.1 Cell-cell contact and probabilistic
+decision-making
+To capture the physical contact between B cells, FDCs, and Tfh
+cells, theNeighborTracker and PixelTracker plugins are employed to
+identify the neighboring cells of each B cell. Once a contact with an
+FDC is identiﬁed, the pMHCII level of the B cell is set proportional
+to its antigen-speciﬁc BCR afﬁnity. Upon subsequent contact with a
+Tfh cell, the B cell can be positively selected based on a probability
+that is proportional to the pMHCII level. For the positively selected
+cell, the running death timer is terminated, cell cycle is committed,
+and DZ re-entry is initiated.
+2.2.2 SHM and probability of BCR
+afﬁnity alteration
+Each of the two daughter cells of a dividing B cell has a
+probability of 0.3 to produce a damaging mutation that will result
+in cell death in the DZ. For the daughter cell that does not incur a
+damaging mutation, an SHM can either increase, decrease, or does
+not change the BCR afﬁnity, each with a probability of 1/3. The
+increment or decrement of the afﬁnity alteration can be either 0.25
+or 0.5 with equal probability. In general, the BCR afﬁnity ranges
+between 0– 10, but can be higher.
+2.3 Simulation data collection, storage,
+analysis, and model sharing
+Variables of each B cell are saved in a plain textﬁle which is
+updated every 15 Monte Carlo steps (mcs). Theﬁle is named in the
+format of “Generation_mother ID_cell ID.txt” to facilitate lineage
+tree construction. The CompuCell3D model ﬁles containing the
+parameter values and Python script for analysis of simulated data
+are available athttps://github.com/pulsatility/2024-GCR-Model.git.
+Mu et al. 10.3389/fimmu.2024.1377303
+Frontiers inImmunology frontiersin.org04
+
+3 Results
+3.1 Morphology of a simulated GC
+The morphological results of a representative simulation of the
+GC model are shown inFigure 2. The simulated space dimension is
+250x200x11 pixels, which can be considered as 250x200x11 in µm
+in real space, to represent a slice of the GC to save computational
+time. The 2-D projection of the instantiated non-B cells on the X-Y
+plane is indicated inFigure 2A, while along the Z dimension, these
+cells are distributed randomly in 3 of the 11 layers (results not
+shown). There are 45 CRCs distributed on the left half of theﬁeld,
+which becomes the future DZ, and 45 FDCs and 36 Tfh cells
+distributed on the right half of theﬁeld, which becomes the future
+LZ. Tfh cells are located next to FDCs, reﬂecting the notion that
+they also express CXCR5 and are thus drawn to FDCs which secrete
+chemoattractant CXCL13 (61, 62). Not all FDCs are surrounded by
+Tfh cells, mimicking the situation that the availability of Tfh cells is
+AB
+D
+E
+C
+FIGURE 2
+Morphology of a representative simulated GC.(A) 2-D distributions of CRCs, FDCs, and Tfh cells in the DZ (left) and LZ (right) with X-Y coordinates
+indicated. (B, C)Concentration gradients of chemoattractants CXCL12 and CXCL13 respectively. White contour lines: isolines of equal
+concentrations. (D) Snapshots of simulated GC at variousmcs indicated. Colors of B cells denote BCR/antibody afﬁnity as indicated by the colormap.
+(E) 2-D trajectories of B cells in three select lineages leading respectively to damaging mutation-induced apoptosis in DZ (left panel), death timer-
+triggered apoptosis in the LZ for not positively selected (mid panel), and emergence of a PC (right panel). Dot color denotesmcs time as indicated
+by the colormap.
+Mu et al. 10.3389/fimmu.2024.1377303
+Frontiers inImmunology frontiersin.org05
+
+a limiting factor in the positive selection of LZ B cells (12, 63– 65).
+CRCs and FDCs secrete CXCL12 and CXCL13 respectively,
+establishing two opposing chemoattractant ﬁelds and thus the
+polarity of the GC (Figures 2B, C).
+With the layout of residential cells and chemoattractantﬁelds as
+above, a simulated GC that succeeds in producing B cells of high
+BCR/antibody afﬁnities is shown as snapshots inFigure 2Dand in
+Supplementary Video S1. For this simulation, the GC starts with
+200 B cells (clones) of intermediate afﬁnity of 5 (indicated by the
+color of the cells) between the DZ and LZ. Over a period of 40,000
+Monte Carlo steps ( mcs , where 100 mcs can be regarded
+approximately as 1 hour in real time), both the number of total
+GC B cells and the fraction of high-af ﬁnity B cells increase,
+indicating successful GC po pulation growth and af ﬁnity
+maturation. The 2-D trajectories of 3 select B cell lineage
+branches leading to different cell fates are shown inFigure 2E.
+These trajectories cycle between the DZ and LZ for multiple rounds.
+The ﬁrst trajectory ends with cell death in the DZ due to damaging
+mutation during mitosis (left panel), the second trajectory also ends
+with cell death but in the LZ due to death timer (mid panel), and the
+last trajectory ends with differentiation into a PC in the LZ
+(right panel).
+3.2 Cellular events of GC B cells
+3.2.1 B cell population dynamics
+In this section we performed an in-depth quantitative analysis
+of the GC B cell population dynamics with respect to time, location,
+and cell fates. For the GC simulation presented inFigure 2, the total
+number of B cells (NTot) increases rapidly from the initial 200 over a
+period of 40,000mcs, then approaches a steady-state size of about
+2,500 cells through 72,000 mcs (equivalent to 30 days) without
+considering GC termination (Figure 3A). The growth of the B cell
+population is not smooth– it proceeds in an uneven fashion due to
+random births and deaths occurring simultaneously. In the early
+stage of the GC, the numbers of B cells in the DZ (NDZ) and LZ
+(NLZ) alternate in anti-phase, resulting from cyclic cell migration in
+unison between the two zones (Video S1). In the late stage,NDZ is
+persistently greater than NLZ with the NDZ:N LZ ratio stabilizing
+near 3:1 (Figure 3A). The evolving B cell population in the GC is
+highly dynamic with constant turnover through several processes.
+Speciﬁcally, (i) B cells are born in the DZ as a result of proliferative
+bursts of clonal expansion; (ii) B cells are cleared from the GC via
+apoptosis triggered by damaging BCR mutations in the DZ and via
+apoptosis in the LZ if not positively selected; and (iii) B cells exit the
+GC as PCs. We next quanti ﬁed the birth and death
+(apoptosis) events.
+3.2.1.1 B cell birth
+The number of B cells engaged in cell cycle increases over time
+and these cells are predominantly in the DZ (Figure 3B). There are a
+small number of cell cycle-engaged B cells in the LZ, representing
+positively selected B cells that just initiate the cell cycle without
+much growing yet. Approaching the steady state, nearly 70% and
+30% of DZ and LZ B cells, respectively, are engaged in the cell cycle,
+while on average 65% of the overall B cell population is in the cell
+cycle (Figure 3C). B cells are born predominantly in the DZ with
+only a negligible number of births in the LZ (Figure 3D). The
+absolute birth rate increases over time approaching about 1100
+births per 600mcs (Figure 3E). Cumulative births reach 150K in the
+entire 72,000 mcs period when two birth events are registered for
+each cell division (Figure 3F). The mean cell generation increases
+almost linearly with time while the variability also progressively
+increases as more B cells are born (Figure 3G). The DZ B cell
+volumes exhibit a biphasic distribution, reﬂecting that these cells are
+actively engaged in growth and division (Figure 3H). In contrast,
+the LZ B cells exhibit a very narrow volume distribution consistent
+with the notion that they are mostly non-proliferating centrocytes.
+3.2.1.2 B cell death
+As the GC B cell population grows, the number of cell deaths
+increases and then approaches a steady state, where the total death
+rate is about 1000 deaths per 600mcs (Figure 3I). Although at the
+early time the DZ: LZ death rate ratioﬂuctuates dramatically as a
+result of randomness due to small numbers of cell deaths and DZ-
+LZ migration, the ratio stabilizes at about 2.5:1 at later time. The
+steady-state death turnover rate of the overall B cell population is
+slightly above 40% in 600mcs, and the turnover rates in both zones
+are similar (Figure 3J). Cumulatively, there are nearly 70,000 cell
+deaths, among which 70% occurred in the DZ and 30% in the
+LZ (Figure 3K).
+Further analysis showed that different types of cell deaths occur
+at different rates (Figure 3L). B cell death due to damaging BCR
+mutations occurs most often, comprising 65% of total deaths at
+steady state, followed by cell death due to no access to Tfh cells at
+30%, while cell death for not being positively selected even after
+contacting Tfh cells (labelled as Neg selected) is only a small
+fraction of all death events (Figure 3M). When a B cell cannot
+access Tfh cells, positive selection decisions cannot be made in time
+and the B cell will die when the default death timer goes off. This
+type of death is only limited to B cells in the LZ initially, but as the
+GC population grows such that the space becomes more compact
+and thus crowded, such death also expands to the DZ when some of
+the B cells exiting the cell cycle do not have enough time to migrate
+through the densely populated DZ (Figure 3N); however, these
+deaths in the DZ are only a small fraction (Figure 3O).
+3.2.2 Afﬁnity maturation and clonal dominance
+We next characterized the evolution of the BCR antigen
+afﬁnities in the simulated GC. With all the 200 seeder B cells
+starting with an intermediate BCR afﬁnity of 5 in this simulation,
+their clonal afﬁnities initially drift to both higher and lower levels
+(Figure 4A). However, the mean afﬁnity increases progressively in a
+winding manner and then reaches a plateau at about 8.5. The
+variabilities of the BCR afﬁnities, as deﬁned by the 25– 75% quantiles
+and 2.5– 97.5% percentiles, also shift upward and then plateau along
+with the mean, despite that the afﬁnities of some B cells reach as low
+as near 2 and as high as over 12 at times. PCs start to emerge shortly
+after 20,000mcs, with >10 afﬁnity levels (Figure 4A,1 0i sd eﬁned as
+Mu et al. 10.3389/fimmu.2024.1377303
+Frontiers inImmunology frontiersin.org06
+
+14.08.25 GCR_48.xml 1
+file:///home/lutz/Downloads/test/GCR_50/GCR_50/Simulation/GCR_48.xml
+< CompuCell3D 	Revision = "20210612" 	Version = "4.2.5" >						 < Potts >						 < Dimensions 	x = "250" 	y = "200" 	z = "11" />						 < Steps > 72000 </ Steps >						 < Temperature > 15.0 </ Temperature >						 < NeighborOrder > 1 </ NeighborOrder >			 </ Potts >						 < Plugin 	Name = "CellType" >												 <!--	Listing	all	cell	types	in	the	simulation	-->						 < CellType 	TypeId = "0" 	TypeName = "Medium" />						 < CellType 	TypeId = "1" 	TypeName = "BCell" />						 < CellType 	TypeId = "2" 	TypeName = "FDC" 	Freeze = "" />						 < CellType 	TypeId = "3" 	TypeName = "CRC" 	Freeze = "" />						 < CellType 	TypeId = "4" 	TypeName = "TCell" 	Freeze = "" />						 < CellType 	TypeId = "5" 	TypeName = "Wall" 	Freeze = "" />			 </ Plugin >
+			 < Plugin 	Name = "Contact" >						 < Energy 	Type1 = "Medium" 	Type2 = "Medium" > 0.0 </ Energy >						 <!--	<Energy	Type1="Medium"	Type2="BCell">8.0</Energy>	-->						 < Energy 	Type1 = "Medium" 	Type2 = "BCell" > 2.0 </ Energy >						 <!--	<Energy	Type1="BCell"	Type2="BCell">40.0</Energy>	-->						 < Energy 	Type1 = "BCell" 	Type2 = "BCell" > 5.0 </ Energy >						 <!--<NeighborOrder>4</NeighborOrder>-->						 < Energy 	Type1 = "FDC" 	Type2 = "FDC" > 0 </ Energy >						 < Energy 	Type1 = "FDC" 	Type2 = "Medium" > 0 </ Energy >						 <!--	<Energy	Type1="FDC"	Type2="BCell">50.0</Energy>	-->						 < Energy 	Type1 = "FDC" 	Type2 = "BCell" > 3.0 </ Energy >						 < Energy 	Type1 = "CRC" 	Type2 = "FDC" > 0 </ Energy >						 < Energy 	Type1 = "CRC" 	Type2 = "Medium" > 0 </ Energy >						 < Energy 	Type1 = "CRC" 	Type2 = "BCell" > 3.0 </ Energy >						 < Energy 	Type1 = "CRC" 	Type2 = "CRC" > 0 </ Energy >						 < Energy 	Type1 = "TCell" 	Type2 = "FDC" > 0 </ Energy >						 < Energy 	Type1 = "TCell" 	Type2 = "Medium" > 0 </ Energy >						 <!--	<Energy	Type1="TCell"	Type2="BCell">8.0</Energy>	-->						 < Energy 	Type1 = "TCell" 	Type2 = "BCell" > 3.0 </ Energy >						 < Energy 	Type1 = "TCell" 	Type2 = "CRC" > 0 </ Energy >						 < Energy 	Type1 = "TCell" 	Type2 = "TCell" > 0 </ Energy >						 < Energy 	Type1 = "Wall" 	Type2 = "FDC" > 0 </ Energy >						 < Energy 	Type1 = "Wall" 	Type2 = "Medium" > 0 </ Energy >						 < Energy 	Type1 = "Wall" 	Type2 = "BCell" > 30.0 </ Energy >						 < Energy 	Type1 = "Wall" 	Type2 = "CRC" > 0 </ Energy >						 < Energy 	Type1 = "Wall" 	Type2 = "TCell" > 0 </ Energy >						 < Energy 	Type1 = "Wall" 	Type2 = "Wall" > 0 </ Energy >						 < Depth > 2 </ Depth >			 </ Plugin >						 < Plugin 	Name = "Chemotaxis" >						 < ChemicalField 	Name = "CXCL12" />						 < ChemicalField 	Name = "CXCL13" />			 </ Plugin >						 < Steppable 	Type = "DiffusionSolverFE" >			 <!--	<Steppable	Type="SteadyStateDiffusionSolver">	-->						 < DiffusionField 	Name = "CXCL13" >									 < DiffusionData >												 < FieldName > CXCL13 </ FieldName >												 < DiffusionConstant > 2 </ DiffusionConstant > 	
+
+14.08.25 GCR_48.xml 2
+file:///home/lutz/Downloads/test/GCR_50/GCR_50/Simulation/GCR_48.xml
+												 < DecayConstant > 0.001 </ DecayConstant >									 </ DiffusionData >									 < SecretionData >												 < Secretion 	Type = "FDC" > 3.6 </ Secretion >									 </ SecretionData >						 </ DiffusionField >
+						 < DiffusionField 	Name = "CXCL12" >									 < DiffusionData >												 < FieldName > CXCL12 </ FieldName >												 < DiffusionConstant > 2 </ DiffusionConstant >												 < DecayConstant > 0.001 </ DecayConstant >									 </ DiffusionData >									 < SecretionData >												 < Secretion 	Type = "CRC" > 3.6 </ Secretion >									 </ SecretionData >						 </ DiffusionField >			 </ Steppable >			</ CompuCell3D >

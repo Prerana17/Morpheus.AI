@@ -1,0 +1,61 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Logger_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger" ]
+Gnuplotter_0_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter" ]
+B_0[label="B", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[0]"]
+I_0[label="I", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[2]"]
+K_0[label="K", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[1]"]
+V_0[label="V", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[1]"]
+beta_0[label="beta", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[2]"]
+burst_0[label="burst", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[4]"]
+m_0[label="m", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[5]"]
+r_0[label="r", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[0]"]
+tau_0[label="tau", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[3]"]
+subgraph cluster_1 {
+label="";
+System_1_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.1</td></tr></table></font>>, URL="morph://MorpheusModel/Global/System" ]
+}
+}
+B_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+B_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+I_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+I_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+K_0 -> System_1_0_1 [penwidth=2, color="#112c5f"] 
+
+System_1_0_1 -> B_0 [penwidth=3, color="#8f100d"] 
+
+System_1_0_1 -> I_0 [penwidth=3, color="#8f100d"] 
+
+System_1_0_1 -> V_0 [penwidth=3, color="#8f100d"] 
+
+V_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+V_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+beta_0 -> System_1_0_1 [penwidth=2, color="#112c5f"] 
+
+burst_0 -> System_1_0_1 [penwidth=2, color="#112c5f"] 
+
+m_0 -> System_1_0_1 [penwidth=2, color="#112c5f"] 
+
+r_0 -> System_1_0_1 [penwidth=2, color="#112c5f"] 
+
+tau_0 -> System_1_0_1 [penwidth=2, color="#112c5f"] 
+
+}

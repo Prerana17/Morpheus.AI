@@ -1,0 +1,130 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Caspase-9 Kinetic Wave Propagation in Cell Death</Title>
+        <Details>Model of caspase-9 activation wave spreading through a spatial population of cells following cytochrome c release. Based on Atwell et al. 2025 - kinetic wave mechanism during MOMP-induced cell death.</Details>
+    </Description>
+    
+    <Global>
+        <Constant symbol="D_casp9" value="10.0" name="Diffusion coefficient of caspase-9"/>
+        <Constant symbol="k_act" value="0.5" name="Activation rate of caspase-9"/>
+        <Constant symbol="k_deg" value="0.1" name="Degradation rate"/>
+        <Constant symbol="threshold" value="0.3" name="Activation threshold"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="200, 200, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="500"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="0"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType class="medium" name="medium"/>
+        
+        <CellType class="biological" name="cell">
+            <VolumeConstraint target="200" strength="1"/>
+            <SurfaceConstraint target="180" mode="aspherity" strength="1"/>
+            
+            <Property symbol="casp9_inactive" value="1.0" name="Inactive caspase-9"/>
+            <Property symbol="casp9_active" value="0.0" name="Active caspase-9"/>
+            <Property symbol="cytc_released" value="0.0" name="Cytochrome c release status"/>
+            
+            <System time-scaling="1" solver="Dormand-Prince [adaptive, O(5)]">
+                <DiffEqn symbol-ref="casp9_active">
+                    <Expression>k_act * casp9_inactive * (cytc_released + casp9_active^2/(1 + casp9_active^2)) - k_deg * casp9_active</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="casp9_inactive">
+                    <Expression>-k_act * casp9_inactive * (cytc_released + casp9_active^2/(1 + casp9_active^2))</Expression>
+                </DiffEqn>
+            </System>
+            
+            <Event trigger="when true" time-step="50" name="CytC_Release">
+                <Condition>time == 50 and cell.center.x > 95 and cell.center.x &lt; 105 and cell.center.y > 95 and cell.center.y &lt; 105</Condition>
+                <Rule symbol-ref="cytc_released">
+                    <Expression>1.0</Expression>
+                </Rule>
+            </Event>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0.0">
+            <Contact type1="cell" type2="medium" value="12"/>
+            <Contact type1="cell" type2="cell" value="6"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population size="0" type="cell">
+            <InitCircle mode="random" number-of-cells="50">
+                <Dimensions radius="size.x/3" center="size.x/2, size.y/2, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="5" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Active Caspase-9 Concentration">
+                <Cells value="casp9_active" min="0" max="1.0">
+                    <ColorMap>
+                        <Color value="0" color="blue"/>
+                        <Color value="0.5" color="green"/>
+                        <Color value="1.0" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <Gnuplotter time-step="5" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cytochrome c Release Status">
+                <Cells value="cytc_released" min="0" max="1">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="1" color="black"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="5">
+            <Input>
+                <Symbol symbol-ref="casp9_active"/>
+                <Symbol symbol-ref="casp9_inactive"/>
+                <Symbol symbol-ref="cytc_released"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+        </Logger>
+        
+        <ModelGraph include-tags="#untagged" reduced="false" format="dot"/>
+    </Analysis>
+</MorpheusModel>

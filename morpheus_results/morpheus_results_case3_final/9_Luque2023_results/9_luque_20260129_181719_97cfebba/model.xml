@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Liver Regeneration and Hepatocellular Carcinoma Model</Title>
+        <Details>Agent-based model simulating liver regeneration after partial hepatectomy.
+        Models hepatocyte proliferation and hypertrophy driven by diffusing substrate.
+        Based on Luque et al. 2023 PLoS Comp Biol study of liver regeneration.</Details>
+    </Description>
+    <Global>
+        <Field name="substrate" symbol="S" value="1.0">
+            <Diffusion rate="0.1"/>
+        </Field>
+        <System name="SubstrateDynamics" solver="Runge-Kutta [fixed, O(4)]" time-step="1.0">
+            <Constant symbol="production_rate" value="0.001"/>
+            <Constant symbol="decay_rate" value="0.002"/>
+            <DiffEqn symbol-ref="S">
+                <Expression>production_rate - decay_rate * S</Expression>
+            </DiffEqn>
+        </System>
+        <Variable symbol="total_hepatocytes" value="0"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="300, 300, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="20000"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="123"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    <CellTypes>
+        <CellType name="medium" class="medium"/>
+        <CellType name="hepatocyte" class="biological">
+            <Property symbol="proliferation_rate" value="0.00008" name="Proliferation rate"/>
+            <Property symbol="division_counter" value="0" name="Number of divisions"/>
+            <Property symbol="recent_division" value="0" name="Division marker"/>
+            <Property symbol="local_substrate" value="0" name="Local substrate concentration"/>
+            <VolumeConstraint target="250" strength="1"/>
+            <SurfaceConstraint target="0.9" mode="aspherity" strength="1"/>
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <Rule symbol-ref="local_substrate">
+                    <Expression>S</Expression>
+                </Rule>
+                <Rule symbol-ref="recent_division">
+                    <Expression>if(recent_division > 0, recent_division - 1, 0)</Expression>
+                </Rule>
+            </System>
+            <CellDivision division-plane="random">
+                <Condition>rand_uni(0,1) &lt; proliferation_rate * local_substrate</Condition>
+                <Triggers>
+                    <Rule symbol-ref="division_counter">
+                        <Expression>division_counter + 1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="recent_division">
+                        <Expression>500</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            <Chemotaxis field="S" strength="0" contact-inhibition="true"/>
+        </CellType>
+        <CellType name="cancer_cell" class="biological">
+            <Property symbol="proliferation_rate" value="0.0002" name="Cancer proliferation rate"/>
+            <Property symbol="division_counter" value="0" name="Number of divisions"/>
+            <Property symbol="recent_division" value="0" name="Division marker"/>
+            <Property symbol="local_substrate" value="0" name="Local substrate concentration"/>
+            <VolumeConstraint target="200" strength="1"/>
+            <SurfaceConstraint target="0.85" mode="aspherity" strength="1"/>
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <Rule symbol-ref="local_substrate">
+                    <Expression>S</Expression>
+                </Rule>
+                <Rule symbol-ref="recent_division">
+                    <Expression>if(recent_division > 0, recent_division - 1, 0)</Expression>
+                </Rule>
+            </System>
+            <CellDivision division-plane="random">
+                <Condition>rand_uni(0,1) &lt; proliferation_rate * local_substrate</Condition>
+                <Triggers>
+                    <Rule symbol-ref="division_counter">
+                        <Expression>division_counter + 1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="recent_division">
+                        <Expression>500</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            <Chemotaxis field="S" strength="0" contact-inhibition="true"/>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="hepatocyte" type2="medium" value="12"/>
+            <Contact type1="hepatocyte" type2="hepatocyte" value="4"/>
+            <Contact type1="cancer_cell" type2="medium" value="10"/>
+            <Contact type1="cancer_cell" type2="cancer_cell" value="3"/>
+            <Contact type1="hepatocyte" type2="cancer_cell" value="14"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2" yield="0.1"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population type="hepatocyte" size="0">
+            <InitCircle mode="random" number-of-cells="30">
+                <Dimensions center="150, 150, 0" radius="60"/>
+            </InitCircle>
+        </Population>
+        <Population type="cancer_cell" size="0">
+            <InitCircle mode="random" number-of-cells="5">
+                <Dimensions center="150, 150, 0" radius="30"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="200" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Liver Cell Types">
+                <Cells value="cell.type" flooding="true">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="1" color="green"/>
+                        <Color value="2" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Cell Division Events">
+                <Cells value="recent_division" min="0" max="1">
+                    <ColorMap>
+                        <Color value="0" color="lightgreen"/>
+                        <Color value="1" color="darkred"/>
+                    </ColorMap>
+                </Cells>
+                <CellLabels value="division_counter" fontsize="6"/>
+            </Plot>
+            <Plot title="Substrate Field">
+                <Field symbol-ref="S" min="0" max="2"/>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="100">
+            <Input>
+                <Symbol symbol-ref="celltype.hepatocyte.size"/>
+                <Symbol symbol-ref="celltype.cancer_cell.size"/>
+                <Symbol symbol-ref="S"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="2000">
+                    <Style style="linespoints" point-size="0.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis minimum="0" maximum="20000">
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="200">
+                        <Symbol symbol-ref="celltype.hepatocyte.size"/>
+                    </Y-axis>
+                </Plot>
+                <Plot time-step="2000">
+                    <Style style="linespoints" point-size="0.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis minimum="0" maximum="20000">
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="50">
+                        <Symbol symbol-ref="celltype.cancer_cell.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph include-tags="#untagged" reduced="false" format="dot"/>
+    </Analysis>
+</MorpheusModel>

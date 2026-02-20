@@ -1,0 +1,780 @@
+Setting output directory /Users/prerana/Desktop/morpheus/20260126_224045_f5b846d9
+Initializing from file model.xml
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/System/DiffEqn/Expression to /MorpheusModel/Global/System/DiffEqn/Reaction
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion[@rate!=~0(?:\.0+)?]/@rate to /MorpheusModel/Global/System/DiffEqn[@symbol-ref=%1]/Diffusion/@text
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion to 
+AutoFix: Moved 10 element(s)  matching /MorpheusModel/CellTypes/CellType/System/DiffEqn/Expression to /MorpheusModel/CellTypes/CellType/System/DiffEqn/Reaction
+Applied 22 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread Intitalize Thread Intitalize Thread 0 with seed 8 with seed 3119077927
+Intitalize Thread 3 with seed 2332761683
+1769463974
+2 with seed Intitalize Thread 9 with seed 3011636320
+3618124755
+Intitalize Thread 4 with seed 142136715
+Intitalize Thread 7 with seed Intitalize Thread 2139135317Intitalize Thread 6 with seed 1915058257
+1 with seed 2789869088
+
+Intitalize Thread 5 with seed 4256968213
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread 8 with seed 4226128334
+Intitalize Thread Intitalize Thread 9 with seed Intitalize Thread 4 with seed 1386903166
+Intitalize Thread 1 with seed 2256526400
+7Intitalize Thread Intitalize Thread 5 with seed  with seed 3850189868
+2 with seed 2111863253
+256824811Intitalize Thread 0 with seed 123Intitalize Thread Intitalize Thread 6 with seed 3 with seed 1320940964
+4068791613
+2342964264
+
+
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 200, 80, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [6] Global Plugins
+getXMLAttribute: seeking for Field->symbol: shh
+Registering Symbol shh of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: bmp4
+Registering Symbol bmp4 of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: fgf8
+Registering Symbol fgf8 of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: wnt
+Registering Symbol wnt of linktype FieldLink in Scope root
+getXMLAttribute: seeking for System->time-step: 2.0
+Creating subscope System in scope root
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: k_prod
+getXMLAttribute: seeking for Constant->value: 0.2
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol k_prod of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: k_decay
+getXMLAttribute: seeking for Constant->value: 0.01
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol k_decay of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for DiffEqn->symbol-ref: shh
+getXMLAttribute: seeking for Reaction->text: k_prod - k_decay * shh
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.1
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: bmp4
+getXMLAttribute: seeking for Reaction->text: k_prod * (1.0 - fgf8*0.5) - k_decay * bmp4
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.08
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: fgf8
+getXMLAttribute: seeking for Reaction->text: -0.005 * fgf8
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.05
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: wnt
+getXMLAttribute: seeking for Reaction->text: k_prod - k_decay * wnt
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.06
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Variable->name .. not found
+getXMLAttribute: seeking for Variable->symbol: cell_count
+getXMLAttribute: seeking for Variable->value: 0
+getXMLAttribute: seeking for Variable->notation .. not found
+Registering Symbol cell_count of linktype VariableLink in Scope root
+Creating subscope CellType[notochord] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[notochord]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[notochord]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[notochord]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[notochord]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[notochord]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[notochord]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[notochord]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol celltype.notochord.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.notochord.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[neuroectoderm] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[neuroectoderm]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol celltype.neuroectoderm.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.neuroectoderm.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[surface_ectoderm] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[surface_ectoderm]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol celltype.surface_ectoderm.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.surface_ectoderm.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[mesoderm] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[mesoderm]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[mesoderm]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[mesoderm]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[mesoderm]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol celltype.mesoderm.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.mesoderm.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[neural_crest] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[neural_crest]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[neural_crest]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[neural_crest]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[neural_crest]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol celltype.neural_crest.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.neural_crest.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: 120
+getXMLAttribute: seeking for VolumeConstraint->strength: 2
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: shh_production
+getXMLAttribute: seeking for Property->value: 2.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol shh_production of linktype CellPropertyLink in Scope CellType[notochord]
+Registering Symbol shh_production of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: cell_fate
+getXMLAttribute: seeking for Property->value: 1
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cell_fate of linktype CellPropertyLink in Scope CellType[notochord]
+Registering Symbol cell_fate of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: signal_strength
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol signal_strength of linktype CellPropertyLink in Scope CellType[notochord]
+Registering Symbol signal_strength of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for System->time-step: 3.0
+Creating subscope System in scope CellType[notochord]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: signal_strength
+getXMLAttribute: seeking for Reaction->text: shh_production * 0.5 - signal_strength * 0.02
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for VolumeConstraint->target: 100
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.5
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ptch1_response
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ptch1_response of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol ptch1_response of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol apical_constriction of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: cell_fate
+getXMLAttribute: seeking for Property->value: 2
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cell_fate of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: signal_strength
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol signal_strength of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+getXMLAttribute: seeking for System->time-step: 4.0
+Creating subscope System in scope CellType[neuroectoderm]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: ptch1_response
+getXMLAttribute: seeking for Reaction->text: shh * 1.5 - ptch1_response * 0.08
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: apical_constriction
+getXMLAttribute: seeking for Reaction->text: (ptch1_response - 0.2) * 0.3 * (ptch1_response > 0.2 ? 1 : 0)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: signal_strength
+getXMLAttribute: seeking for Reaction->text: ptch1_response * 0.4 - signal_strength * 0.03
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for VolumeConstraint->target: 90
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.8
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.1
+getXMLAttribute: seeking for SurfaceConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: bmp4_production
+getXMLAttribute: seeking for Property->value: 1.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol bmp4_production of linktype CellPropertyLink in Scope CellType[surface_ectoderm]
+Registering Symbol bmp4_production of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: wnt_production
+getXMLAttribute: seeking for Property->value: 1.2
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol wnt_production of linktype CellPropertyLink in Scope CellType[surface_ectoderm]
+Registering Symbol wnt_production of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: cell_fate
+getXMLAttribute: seeking for Property->value: 3
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cell_fate of linktype CellPropertyLink in Scope CellType[surface_ectoderm]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: signal_strength
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol signal_strength of linktype CellPropertyLink in Scope CellType[surface_ectoderm]
+getXMLAttribute: seeking for System->time-step: 3.0
+Creating subscope System in scope CellType[surface_ectoderm]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: signal_strength
+getXMLAttribute: seeking for Reaction->text: (bmp4_production + wnt_production) * 0.25 - signal_strength * 0.02
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for VolumeConstraint->target: 110
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.4
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: bmpr_activity
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol bmpr_activity of linktype CellPropertyLink in Scope CellType[mesoderm]
+Registering Symbol bmpr_activity of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: cell_fate
+getXMLAttribute: seeking for Property->value: 4
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cell_fate of linktype CellPropertyLink in Scope CellType[mesoderm]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: signal_strength
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol signal_strength of linktype CellPropertyLink in Scope CellType[mesoderm]
+getXMLAttribute: seeking for System->time-step: 5.0
+Creating subscope System in scope CellType[mesoderm]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: bmpr_activity
+getXMLAttribute: seeking for Reaction->text: bmp4 * 1.0 - bmpr_activity * 0.06
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: signal_strength
+getXMLAttribute: seeking for Reaction->text: bmpr_activity * 0.3 - signal_strength * 0.02
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for VolumeConstraint->target: 70
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.3
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: wnt_response
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol wnt_response of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol wnt_response of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: migration_signal
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol migration_signal of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol migration_signal of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: cell_fate
+getXMLAttribute: seeking for Property->value: 5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cell_fate of linktype CellPropertyLink in Scope CellType[neural_crest]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: signal_strength
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol signal_strength of linktype CellPropertyLink in Scope CellType[neural_crest]
+getXMLAttribute: seeking for System->time-step: 6.0
+Creating subscope System in scope CellType[neural_crest]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: wnt_response
+getXMLAttribute: seeking for Reaction->text: wnt * 1.2 * (1.0 - fgf8*0.4) - wnt_response * 0.1
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: migration_signal
+getXMLAttribute: seeking for Reaction->text: wnt_response * 0.6 - migration_signal * 0.04
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: signal_strength
+getXMLAttribute: seeking for Reaction->text: migration_signal * 0.5 - signal_strength * 0.02
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for PersistentMotion->decay-time: 40
+getXMLAttribute: seeking for PersistentMotion->strength: 1.5
+getXMLAttribute: seeking for PersistentMotion->protrusion .. not found
+getXMLAttribute: seeking for PersistentMotion->retraction .. not found
+CellTypes defined: 'medium' 'mesoderm' 'neural_crest' 'neuroectoderm' 'notochord' 'surface_ectoderm' 
+getXMLAttribute: seeking for MonteCarloSampler/MCSDuration->value: 1
+getXMLAttribute: seeking for MonteCarloSampler->stepper: edgelist
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->temperature: 8
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->yield .. not found
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 6
+getXMLAttribute: seeking for Contact->value: 10
+getXMLAttribute: seeking for Contact->value: 7
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 2
+getXMLAttribute: seeking for Contact->value: 4
+getXMLAttribute: seeking for Contact->value: 3
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 3
+getXMLAttribute: seeking for Contact->value: 6
+getXMLAttribute: seeking for Contact->value: 1
+getXMLAttribute: seeking for Contact->value: 2
+getXMLAttribute: seeking for Contact->value: 3
+getXMLAttribute: seeking for Contact->value: 2
+getXMLAttribute: seeking for Contact->value: 4
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 2
+Assigning Shape Neighborhood of size 3 -> 28 neighbors.
+Setting boundary neighborhood to order 6
+Creating cell layer of size 0.472656 MB
+with initial state set to CellType 'medium'
+Initializing celltype 'notochord'
+Scope: Creating Accessor for symbol 'signal_strength' from Scope CellType[notochord]
+Scope: Creating Accessor for symbol 'shh_production' from Scope CellType[notochord]
+System::init: Reordering Initializers ...
+Initializing celltype 'neuroectoderm'
+Scope: Creating Accessor for symbol 'ptch1_response' from Scope CellType[neuroectoderm]
+Scope: Creating Accessor for symbol 'apical_constriction' from Scope CellType[neuroectoderm]
+Scope: Creating Accessor for symbol 'signal_strength' from Scope CellType[neuroectoderm]
+Scope: Creating Accessor for symbol 'shh' from Scope root
+System::init: Reordering Initializers ...
+Initializing celltype 'surface_ectoderm'
+Scope: Creating Accessor for symbol 'signal_strength' from Scope CellType[surface_ectoderm]
+Scope: Creating Accessor for symbol 'bmp4_production' from Scope CellType[surface_ectoderm]
+Scope: Creating Accessor for symbol 'wnt_production' from Scope CellType[surface_ectoderm]
+System::init: Reordering Initializers ...
+Initializing celltype 'mesoderm'
+Scope: Creating Accessor for symbol 'bmpr_activity' from Scope CellType[mesoderm]
+Scope: Creating Accessor for symbol 'signal_strength' from Scope CellType[mesoderm]
+Scope: Creating Accessor for symbol 'bmp4' from Scope root
+System::init: Reordering Initializers ...
+Initializing celltype 'neural_crest'
+Scope: Creating Accessor for symbol 'wnt_response' from Scope CellType[neural_crest]
+Scope: Creating Accessor for symbol 'migration_signal' from Scope CellType[neural_crest]
+Scope: Creating Accessor for symbol 'signal_strength' from Scope CellType[neural_crest]
+Scope: Creating Accessor for symbol 'wnt' from Scope root
+Scope: Creating Accessor for symbol 'fgf8' from Scope root
+System::init: Reordering Initializers ...
+Registering Symbol stored_direction of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol stored_direction of linktype CompositeLink in Scope root
+Registering Symbol stored_direction.x of linktype VectorComponentLink in Scope root
+Registering Symbol stored_direction.y of linktype VectorComponentLink in Scope root
+Registering Symbol stored_direction.z of linktype VectorComponentLink in Scope root
+Registering Symbol stored_direction.phi of linktype VectorComponentLink in Scope root
+Registering Symbol stored_direction.theta of linktype VectorComponentLink in Scope root
+Registering Symbol stored_direction.abs of linktype VectorComponentLink in Scope root
+Registering Symbol stored_direction.x of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_direction.y of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_direction.z of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_direction.phi of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_direction.theta of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_direction.abs of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_center of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol stored_center of linktype CompositeLink in Scope root
+Registering Symbol stored_center.x of linktype VectorComponentLink in Scope root
+Registering Symbol stored_center.y of linktype VectorComponentLink in Scope root
+Registering Symbol stored_center.z of linktype VectorComponentLink in Scope root
+Registering Symbol stored_center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol stored_center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol stored_center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol stored_center.x of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_center.y of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_center.z of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_center.phi of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_center.theta of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol stored_center.abs of linktype VectorComponentLink in Scope CellType[neural_crest]
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[neural_crest]
+Initializing celltype 'medium'
+Scope: Creating Accessor for symbol 'cell.center' from Scope root
+Scope: Creating Accessor for symbol 'cell.volume' from Scope root
+Scope: Creating Accessor for symbol 'cell.surface' from Scope root
+Scope: Creating Accessor for symbol 'cell.length' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+CPM: InteractionEnergy has 28 neighbors
+CPM: InteractionEnergy was initialized with  IA_COLLAPSE 
+Scope: Creating Accessor for symbol 'shh' from Scope root
+Scope: Creating Accessor for symbol 'bmp4' from Scope root
+Scope: Creating Accessor for symbol 'fgf8' from Scope root
+Scope: Creating Accessor for symbol 'wnt' from Scope root
+Scope: Creating Accessor for symbol 'shh' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'bmp4' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'fgf8' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'wnt' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'k_prod' from Scope System
+Scope: Creating Accessor for symbol 'k_decay' from Scope System
+System::init: Reordering Initializers ...
+Loading Analysis tools [4]
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size: 800,600,0
+getXMLAttribute: seeking for Gnuplotter->time-step: 60
+getXMLAttribute: seeking for Cells->value: cell.type
+getXMLAttribute: seeking for Field->symbol-ref: shh
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min .. not found
+getXMLAttribute: seeking for Field->max .. not found
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Cells->value: cell.type
+getXMLAttribute: seeking for Field->symbol-ref: bmp4
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min .. not found
+getXMLAttribute: seeking for Field->max .. not found
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Cells->value: cell.type
+getXMLAttribute: seeking for Field->symbol-ref: fgf8
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min .. not found
+getXMLAttribute: seeking for Field->max .. not found
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Cells->value: cell.type
+getXMLAttribute: seeking for Cells->value: signal_strength
+getXMLAttribute: seeking for Cells->value: apical_constriction
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: time
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: shh
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: bmp4
+getXMLAttribute: seeking for Input/Symbol[3]->symbol-ref: fgf8
+getXMLAttribute: seeking for Input/Symbol[4]->symbol-ref: wnt
+getXMLAttribute: seeking for Input/Symbol[5]->symbol-ref: cell_count
+getXMLAttribute: seeking for Input/Symbol[6]->symbol-ref: cell.center.x
+getXMLAttribute: seeking for Input/Symbol[7]->symbol-ref: cell.center.y
+getXMLAttribute: seeking for Input/Symbol[8]->symbol-ref: cell.type
+getXMLAttribute: seeking for Input/Symbol[9]->symbol-ref: signal_strength
+getXMLAttribute: seeking for Input/Symbol[10]->symbol-ref: apical_constriction
+getXMLAttribute: seeking for Input/Symbol[11]->symbol-ref: cell_fate
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format: csv
+getXMLAttribute: seeking for Plots/Plot[0]->time-step: 150
+getXMLAttribute: seeking for Plots/Plot[0]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->style: linespoints
+getXMLAttribute: seeking for Plots/Plot[0]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->line-width .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[0]->symbol-ref: shh
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[1]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[2]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->time-step: 150
+getXMLAttribute: seeking for Plots/Plot[1]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[1]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->style: linespoints
+getXMLAttribute: seeking for Plots/Plot[1]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->line-width .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[0]->symbol-ref: bmp4
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[1]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[2]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Plots/Plot[2]->time-step: 150
+getXMLAttribute: seeking for Plots/Plot[2]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[2]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[2]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[2]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Style->style: linespoints
+getXMLAttribute: seeking for Plots/Plot[2]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Style->line-width .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[2]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[0]->symbol-ref: fgf8
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[1]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[2]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[2]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Logger->time-step: 30
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: cell.id
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: cell.center.x
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: cell.center.y
+getXMLAttribute: seeking for Input/Symbol[3]->symbol-ref: cell.volume
+getXMLAttribute: seeking for Input/Symbol[4]->symbol-ref: signal_strength
+getXMLAttribute: seeking for Input/Symbol[5]->symbol-ref: cell_fate
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation: cell
+getXMLAttribute: seeking for Output/TextOutput->file-format: csv
+getXMLAttribute: seeking for Logger->time-step: 60
+getXMLAttribute: seeking for ModelGraph->format: svg
+getXMLAttribute: seeking for ModelGraph->reduced: false
+getXMLAttribute: seeking for ModelGraph->exclude-symbols .. not found
+getXMLAttribute: seeking for ModelGraph->include-tags: #untagged
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'shh' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'bmp4' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'fgf8' from Scope root
+Scope: Creating Accessor for symbol 'signal_strength' from Scope root
+Scope: Creating Accessor for symbol 'apical_constriction' from Scope root
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'shh' from Scope root
+Scope: Creating Accessor for symbol 'bmp4' from Scope root
+Scope: Creating Accessor for symbol 'fgf8' from Scope root
+Scope: Creating Accessor for symbol 'wnt' from Scope root
+Scope: Creating Accessor for symbol 'cell_count' from Scope root
+Scope: Creating Accessor for symbol 'cell.center.x' from Scope root
+Scope: Creating Accessor for symbol 'cell.center.y' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'signal_strength' from Scope root
+Scope: Creating Accessor for symbol 'apical_constriction' from Scope root
+Scope: Creating Accessor for symbol 'cell_fate' from Scope root
+Plugin Logger: Registered input symbol dependencies time [root] ,cell.type [root] ,shh [root] ,bmp4 [root] ,fgf8 [root] ,wnt [root] ,cell_count [root] ,signal_strength [root] ,apical_constriction [root] ,cell_fate [root] ,cell.center.x [root] ,cell.center.y [root] ,
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'shh' from Scope root
+Scope: Creating Accessor for symbol 'bmp4' from Scope root
+Scope: Creating Accessor for symbol 'fgf8' from Scope root
+Scope: Creating Accessor for symbol 'wnt' from Scope root
+Scope: Creating Accessor for symbol 'cell_count' from Scope root
+Scope: Creating Accessor for symbol 'cell.center.x' from Scope root
+Scope: Creating Accessor for symbol 'cell.center.y' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Generated symbol dependency graph. Exiting.

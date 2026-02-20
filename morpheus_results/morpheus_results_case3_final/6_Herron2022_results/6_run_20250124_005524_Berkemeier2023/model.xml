@@ -1,0 +1,157 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Lateral Inhibition via Delta-Notch Signaling</Title>
+        <Details>Model of lateral inhibition pattern formation via Delta-Notch signaling.
+Based on Berkemeier et al. 2023 - "Turing pattern design with Laplacian dynamics on complex networks"
+Cells express Delta (ligand) and Notch (receptor) which interact to generate self-organized patterns through local cell-cell interactions.</Details>
+    </Description>
+
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="200, 200, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <NodeLength value="2"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+    </Space>
+
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="500"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="123"/>
+        <TimeSymbol symbol="t"/>
+    </Time>
+
+    <Global>
+        <!-- Global parameters for Turing pattern -->
+        <Constant symbol="rho" value="0.1" name="Basal production rate"/>
+        <Constant symbol="mu" value="0.2" name="Degradation rate"/>
+        <Constant symbol="alpha" value="1.0" name="Activation strength"/>
+        <Constant symbol="beta" value="0.5" name="Inhibition strength"/>
+    </Global>
+
+    <CellTypes>
+        <CellType name="medium" class="medium"/>
+        
+        <CellType name="cells" class="biological">
+            <!-- Delta and Notch expression levels -->
+            <Property symbol="delta" value="rand_uni(0.3, 0.7)" name="Delta ligand"/>
+            <Property symbol="notch" value="rand_uni(0.3, 0.7)" name="Notch receptor"/>
+            
+            <!-- Reaction dynamics for Delta-Notch interaction -->
+            <System solver="Dormand-Prince [adaptive, O(5)]" time-step="1.0">
+                
+                <!-- Delta dynamics: self-activation inhibited by local Notch -->
+                <DiffEqn symbol-ref="delta">
+                    <Reaction>rho + alpha*delta*delta/(1.0 + beta*notch*notch) - mu*delta</Reaction>
+                </DiffEqn>
+                
+                <!-- Notch dynamics: self-activation inhibited by local Delta -->
+                <DiffEqn symbol-ref="notch">
+                    <Reaction>rho + alpha*notch*notch/(1.0 + beta*delta*delta) - mu*notch</Reaction>
+                </DiffEqn>
+            </System>
+            
+            <!-- Cell mechanics -->
+            <VolumeConstraint target="100" strength="1"/>
+            <SurfaceConstraint target="1" mode="aspherity" strength="1"/>
+        </CellType>
+    </CellTypes>
+
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="cells" type2="medium" value="12"/>
+            <Contact type1="cells" type2="cells" value="6"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+
+    <CellPopulations>
+        <Population type="cells" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="12, 12, 1" displacements="15, 15, 1">
+                    <Sphere radius="6" center="50, 50, 0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+    </CellPopulations>
+
+    <Analysis>
+        <!-- Visualize Delta expression -->
+        <Gnuplotter time-step="10" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Delta Expression Pattern">
+                <Cells value="delta" min="0" max="2">
+                    <ColorMap>
+                        <Color value="0.0" color="blue"/>
+                        <Color value="1.0" color="white"/>
+                        <Color value="2.0" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Visualize Notch expression -->
+        <Gnuplotter time-step="10" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Notch Expression Pattern">
+                <Cells value="notch" min="0" max="2">
+                    <ColorMap>
+                        <Color value="0.0" color="green"/>
+                        <Color value="1.0" color="white"/>
+                        <Color value="2.0" color="yellow"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Visualize cell types -->
+        <Gnuplotter time-step="10" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cell Layout">
+                <Cells value="cell.type" min="0" max="2">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="1" color="darkblue"/>
+                        <Color value="2" color="darkred"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Log data -->
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="delta"/>
+                <Symbol symbol-ref="notch"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Restriction>
+                <CellType celltype="cells"/>
+            </Restriction>
+        </Logger>
+        
+        <!-- Model structure -->
+        <ModelGraph include-tags="#untagged" reduced="false" format="dot"/>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,98 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Logger_0_100[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>100</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger" ]
+Gnuplotter_0_200[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>200</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter" ]
+CPM_0_1 [shape=record, label="{CPM|1}", URL="morph://MorpheusModel/CPM" ]
+cell_center_0[label="cell.center", fillcolor="#b5b426",peripheries=2]
+cell_type_0[label="cell.type", fillcolor="#d3d247",peripheries=2]
+celltype_cancer_cells_size_0[label="celltype.cancer_cells.size", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]"]
+celltype_nonsenescent_mesothelia_size_0[label="celltype.nonsenescent_mesothelia.size", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+celltype_senescent_mesothelia_size_0[label="celltype.senescent_mesothelia.size", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+divisions_0[label="divisions", fillcolor="#d3d247",peripheries=2]
+time_0[label="time", fillcolor="#d3d247", URL="morph://MorpheusModel/Time/TimeSymbol"]
+subgraph cluster_1 {
+label="CellType[medium]";
+}
+subgraph cluster_2 {
+label="CellType[nonsenescent_mesothelia]";
+cell_center_2[label="cell.center", fillcolor="#b5b426"]
+cell_type_2[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+}
+subgraph cluster_3 {
+label="CellType[senescent_mesothelia]";
+cell_center_3[label="cell.center", fillcolor="#b5b426"]
+cell_type_3[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+}
+subgraph cluster_4 {
+label="CellType[cancer_cells]";
+CellDivision_4_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>CellDivision</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[3]/CellDivision" ]
+cell_center_4[label="cell.center", fillcolor="#b5b426"]
+cell_type_4[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]"]
+color_marker_4[label="color_marker", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[2]"]
+divisions_4[label="divisions", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[1]"]
+p_4[label="p", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[3]/Property[0]"]
+subgraph cluster_5 {
+label="";
+System_5_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[3]/System" ]
+}
+subgraph cluster_6 {
+label="";
+}
+}
+}
+CPM_0_1 -> cell_center_0 [penwidth=3, color="#8f100d"] 
+
+CPM_0_1 -> cell_type_0 [penwidth=3, color="#8f100d"] 
+
+CellDivision_4_1 -> cell_center_4 [penwidth=3, color="#8f100d"] 
+
+CellDivision_4_1 -> color_marker_4 [penwidth=3, color="#8f100d"] 
+
+CellDivision_4_1 -> divisions_4 [penwidth=3, color="#8f100d"] 
+
+System_5_1 -> color_marker_4 [penwidth=3, color="#8f100d"] 
+
+cell_center_2 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_3 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_4 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_0 -> Gnuplotter_0_200 [penwidth=2, color="#112c5f"] 
+
+cell_type_2 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_3 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_4 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+celltype_cancer_cells_size_0 -> Logger_0_100 [penwidth=2, color="#112c5f"] 
+
+celltype_nonsenescent_mesothelia_size_0 -> Logger_0_100 [penwidth=2, color="#112c5f"] 
+
+celltype_senescent_mesothelia_size_0 -> Logger_0_100 [penwidth=2, color="#112c5f"] 
+
+divisions_0 -> Gnuplotter_0_200 [penwidth=2, color="#112c5f"] 
+
+divisions_4 -> divisions_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+p_4 -> CellDivision_4_1 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Logger_0_100 [penwidth=2, color="#112c5f"] 
+
+}

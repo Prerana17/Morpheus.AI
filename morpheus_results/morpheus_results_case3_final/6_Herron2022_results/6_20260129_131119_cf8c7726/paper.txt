@@ -1,0 +1,1075 @@
+RESEA RCH ARTICL E
+Spatial models of pattern formation during
+phagocytosis
+John Cody Herron
+ID
+1,2
+, Shiqiong Hu
+ID
+3
+, Bei Liu
+ID
+3
+, Takashi Watanabe
+ID
+3¤
+, Klaus
+M. Hahn
+ID
+2,3
+, Timothy C. Elston
+ID
+1,2,3
+*
+1 Curriculu m in Bioinform atics and Comp utational Biology, Univers ity of North Carolina at Chapel Hill, Chapel
+Hill, North Carolina , United States of America, 2 Comput ational Medicine Program, University of North
+Carolina at Chapel Hill, Chapel Hill, North Carolina, United States of America, 3 Department of
+Pharma cology, School of Medicine, University of North Carolina at Chapel Hill, Chapel Hill, North Carolina,
+United States of America
+¤ Current address: Cance r Center Division of Gene Regulatio n, Fujita Health Universit y, Toyoake, Japan
+* telston@ med.unc.edu
+Abstract
+Phagocytosis, the biological process in which cells ingest large particles such as bacteria, is
+a key component of the innate immune response. Fcγ receptor (FcγR)-media ted phagocyto-
+sis is initiated when these receptors are activated after binding immunoglobulin G (IgG).
+Receptor activation initiates a signaling cascade that leads to the formation of the phago-
+cytic cup and culminates with ingestion of the foreign particle. In the experimental system
+termed “frustrated phagocytosis” , cells attempt to internalize micropatterned disks of IgG.
+Cells that engage in frustrated phagocytosis form “rosettes” of actin-enrich ed structures
+called podosomes around the IgG disk. The mechanism that generates the rosette pattern
+is unknown. We present data that supports the involvement of Cdc42, a member of the Rho
+family of GTPases, in pattern formation. Cdc42 acts downstream of receptor activation,
+upstream of actin polymerization, and is known to play a role in polarity establishment.
+Reaction-diffusio n models for GTPase spatiotemporal dynamics exist. We demonstrate
+how the addition of negative feedback and minor changes to these models can generate the
+experimentally observed rosette pattern of podosomes . We show that this pattern formation
+can occur through two general mechanisms. In the first mechanism, an intermediate species
+forms a ring of high activity around the IgG disk, which then promotes rosette organization.
+The second mechanism does not require initial ring formation but relies on spatial gradients
+of intermediate chemical species that are selectively activated over the IgG patch. Finally,
+we analyze the models to suggest experiments to test their validity.
+Author summary
+Phagocytosis, the process by which cells ingest foreign bodies, plays an important role in
+innate immunity. Phagocytosis is initiated when antibodies coating the surface of a for-
+eign body are recognized by immune cells, such as macrophages. To study early events in
+phagocytosis, we used “frustrated phagocytosis”, an experimental system in which
+PLOS COMP UTATIONAL  BIOLOGY
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 1 / 25
+a1111111111
+a1111111111
+a1111111111
+a1111111111
+a1111111111
+OPEN ACCESS
+Citation: Herron JC, Hu S, Liu B, Watanabe T,
+Hahn KM, Elston TC (2022) Spatial models of
+pattern formation during phagocy tosis. PLoS
+Comput Biol 18(10): e1010092. https://d oi.org/
+10.1371/ journal.pcbi.10 10092
+Editor: Attila Csika ´ sz-Nagy, Pa ´ zma ´ ny Pe ´ ter Catholic
+University : Pazmany Peter Katolikus Egyetem,
+HUNGARY
+Received: April 11, 2022
+Accepted: September 22, 2022
+Published: October 3, 2022
+Copyright: © 2022 Herron et al. This is an open
+access article distributed under the terms of the
+Creative Commons Attribution License, which
+permits unrestricte d use, distribu tion, and
+reproduction in any medium, provided the original
+author and source are credited.
+Data Availabilit y Statement: The code and data
+used for this project is available on GitHub (https://
+github.co m/elstonlab/P hagocytosisR osetteMod el)
+and under the Zenodo archive: https://doi.o rg/10.
+5281/zenodo. 6448430. Note that for counting
+podosome s, additional code is required from:
+https://github .com/elston lab/
+PodosomeIm ageAnalys is.
+Funding: This work was supported by grants from
+the National Institute of General Medical Sciences
+(NIGMS) to TCE (R35GM127 145) and to KMH
+
+antibodies are micropatterned in disks on a cover slip. The cytoskeleton of cells attempt-
+ing to phagocytose these disks organizes into “rosette” patterns around the disks. To
+investigate mechanisms that underlie rosette formation we turned to mathematical
+modeling based on reaction-diffusion equations. Building on existing models for polarity
+establishment, our analysis revealed two mechanisms for rosette formation. In the first
+scenario an initial ring of an intermediate signaling molecule forms around the disk,
+while in the second scenario rosette formation is driven by gradients of positive and nega-
+tive pathway regulators that are activated over the disk. Finally, we analyze our models to
+suggest experiments for testing these mechanisms.
+Introduction
+All cells must be able to respond to changes in their environment, and often the proper
+response requires cells to adopt a new morphology. For example, cell shape changes occur dur-
+ing migration, division, and phagocytosis. Typically, these changes are initiated when recep-
+tors on the cell surface are activated by an external cue [1]. Receptor activation initiates a
+signaling cascade that results in spatiotemporal regulation of the actin cytoskeleton. The Rho
+family of GTPases are a class of signaling molecules that play key roles in this process [2–6].
+These proteins act as molecular switches. They are in an inactive state when bound with GDP
+and become active when GDP is exchanged for GTP. Once active, Rho GTPases interact with
+effector molecules including those that regulate the actin cytoskeleton. Due to the nonlinear
+nature of the signaling pathways that regulate GTPase activity, understanding the molecular
+mechanisms that generate cell shape changes has proven challenging [1]. Therefore, many
+recent studies have turned to mathematical modeling to explore mechanisms capable of gener-
+ating complex molecular structures [7–11].
+Here we focus on Fcγ Receptor (FcγR)-mediated phagocytosis because of its biological
+importance in the innate immune response [12,13] and because phagocytosis provides an
+ideal system for studying how Rho GTPases organize the cytoskeleton into well-defined struc-
+tures. Phagocytosis is initiated by the binding of the antibody immunoglobulin G (IgG) to
+FcγR. Upon FcγR clustering, receptor cross-linking leads to phosphorylation of activation
+motif domains, enabling downstream signaling [12–14]. To study the events that initiate
+phagocytosis under well-controlled conditions, IgG is micropatterned in small disks on a glass
+coverslip (Fig 1A). Because the antibody is attached to the coverslip it cannot be internalized,
+and the experimental system is therefore referred to as “frustrated” phagocytosis [15]. Follow-
+ing receptor activation, actin-enriched, adhesion-like structures termed podosomes [13,16,17]
+form in a circle around the IgG disk (Fig 1B and 1C). Podosomes classically have been consid-
+ered rod or cone-like structures of dense actin [16,17]. However, we recently demonstrated an
+hourglass-like shape [18]. Podosomes recruit many additional molecules and are thought to
+coordinate interactions between the actin cytoskeleton and the extracellular matrix [16,17,19].
+They also form the leading edge of the phagocytic cup [20,21], and have been referred to as
+“teeth” coordinating the “jaw” during phagocytosis [21]. The mechanisms responsible for
+podosome formation and patterning are not known. Therefore, we turned to mathematical
+modeling to establish sufficient conditions for pattern formation during frustrated
+phagocytosis.
+Beginning with Turing’s seminal paper [22] and continuing with developments by Gierer
+and Meinhardt [23] and Meinhardt [24], reaction-diffusion models have been used to investi-
+gate pattern formation in biological systems. These models rely on positive feedback to amplify
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 2 / 25
+(R35GM1225 96), as well as from the National
+Institute of Biomedic al Imaging and Bioenginee ring
+to TCE (U01 EB018816 ). JCH received support
+from the NIGMS (5T32 GM0675 53). The funders
+had no role in study design, data collecti on and
+analysis, decision to publish, or prepara tion of the
+manuscript.
+Competing interests : The authors have declared
+that no competing interests exist.
+
+observing and analyzing single molecule conformational changes in living cells [42]. We made
+use of these techniques to visualize Cdc42 during frustrated phagocytosis (Figs 1D–1G and
+S1C). Cdc42 localized to the podosome rosette, with individual molecule tracks clustered near
+podosomes (Fig 1D–1G).
+Taken together these results suggest podosome rosette organization involves localized
+Cdc42 activity but does not require active myosin-mediated force generation. The involvement
+of Cdc42 in rosette formation is also supported by other studies; Cdc42 levels are reduced
+when actin is reduced at the phagocytic site [43], and Cdc42 is recruited to the tips of pseudo-
+podia early in phagocytosis [40,44]. Therefore, we decided to investigate if a mechanism
+involving Cdc42 might underlie formation of the podosome rosette.
+Forming coexisting clusters of active GTPase
+The core components of mathematical models for polarity establishment include an inactive
+form of a GTPase that is cytosolic and diffuses rapidly, an active form that is membrane bound
+and diffuses slowly, and positive feedback through autoactivation [7–11]. Additionally, these
+models often assume that mass is conserved and, therefore, do not include protein synthesis
+and degradation. In their simplest form, these models typically form a single polarity site [7–
+10,25]. Recent investigations have focused on establishing mechanisms that generate coexist-
+ing active GTPase clusters. Chiou et al. investigated a minimal model of a GTPase polarity cir-
+cuit that assumed mass conservation and did not include any form of negative feedback [8].
+They demonstrated how, in this model, local depletion increases the competition time between
+clusters so that coexistence is maintained over biologically relevant time scales. To generate
+stable coexisting sites requires the inclusion of protein synthesis and degradation [10,45,46],
+adding negative feedback to limit the growth of active cluster [10,46], or including an interme-
+diate state of the Rho GTPase, so it cannot be immediately reactivated following deactivation
+[9]. We note that any of these mechanisms might underlie rosette pattern formation. However,
+the GAPs ARHGAP12, ARHGAP25, and SH3BP1 have been shown to play a role in phagocy-
+tosis [47]. Therefore, we focused on the Wave-Pinning GAP (WPGAP) model studied by
+Jacobs et al. in which negative feedback occurs through activation of a GAP [10].
+The WPGAP model (Fig 2A, [10]) is described mathematically by the following set of reac-
+tion-diffusion equations:
+@ u
+@ t
+¼ bv þ gv
+u
+n
+K
+n
+þ u
+n
+  su   eGu þ D
+u
+r
+2
+u;
+@ v
+@ t
+¼   bv   gv
+u
+n
+K
+n
+þ u
+n
+þ su þ eGu þ D
+v
+r
+2
+v;
+@ G
+@ t
+¼ cug   dG þ D
+G
+r
+2
+G;
+@ g
+@ t
+¼   cug þ dG þ D
+g
+r
+2
+g ;
+where u is the concentration of active GTPase, v is the concentration of inactive GTPase, G is
+the concentration of active GAP, and g is the concentration of inactive GAP. The basal GTPase
+activation rate is b, the maximum self-positive feedback rate is γ, K is the concentration of
+active GTPase when the feedback is at the half-maximal response, the basal GTPase inactiva-
+tion rate is σ, the GAP-mediated negative feedback rate is e, the GAP activation is c, and the
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 5 / 25
+
+GAP inactivation rate is d. The total mass of both species is conserved:
+T ¼
+Z
+ðu þ vÞ dV ;
+T
+g
+¼
+Z
+ðG þ g Þ dV ;
+where the integrals are over the volume of the system. A requirement for polarization is that
+the membrane-bound active form of GTPase diffuses slowly in comparison to the cytosolic
+inactive form:
+D
+v
+>>D
+u
+:
+Both the active and inactive forms of the GAP are treated as cytosolic species that diffuse rap-
+idly compared to the membrane-bound active GTPase.
+It is tempting for simplicity and computational efficiency to perform initial investigations
+on a 1D ring to find regions of parameter space that support coexisting spots. However, the
+existence of coexisting clusters on a 1D ring does not guarantee a localized ring of clusters will
+form when the system is extended to 2D. One important difference between 1D and 2D is that
+Fig 2. The WPGAP model generate s rosettes of GTPase activity if a ring of an intermedia te species is assumed. A) Schemati c of the Wave-Pinnin g GTPase
+Activating Protein (WPGAP ) model. B) WPGAP simulation results for individual parameter sweeps (Table 1). Red arrows show most parameters can
+transition from a low intensity homogenou s regime (circle cap) to a spot patterning regime (arrow cap). C) Spatial profile of parameters modulate d by species
+M. M either activates (first 3 panels) or inhibits (last 3 panels) parameters. D) Active GTPase concent rations using the parame ter profiles shown in C (above
+each panel, respectively). Consistent with parameter sweeps shown in B, each parame ter is capable of being modulate d to form a rosette pattern except for the
+basal activation rate b.
+https://do i.org/10.1371/j ournal.pc bi.1010092. g002
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 6 / 25
+
+in 2D spots have curvature, which can contribute to their stability [8]. Furthermore, our sys-
+tem requires low activity without patterning away from the spots, which could not be captured
+in 1D. Therefore, we performed WPGAP simulations in 2D.
+For the WPGAP model, Jacobs et al. [10] explored how changes in the total amount of
+GTPase (T) impacted bistability and the types of patterns that formed. They found the system
+could form spots (localized regions of high GTPase activity), mazes, and negative spots (local-
+ized regions of low GTPase activity). In this study, we are interested in coexisting spots, and
+thus, guided by the work of Jacobs et al. [10], we began with parameter values that placed the
+system in this regime. From single particle tracking during frustrated phagocytosis (Fig 1D–
+1G), we estimated the diffusivity for the membrane-bound form of Cdc42 as ~0.04 μm
+2
+s
+-1
+(S1C Fig). Using this information, we fixed D
+u
+= 0.04 μm
+2
+s
+-1
+and we let D
+v
+= D
+g
+= D
+G
+= 100
+D
+u
+. Radii of podosomes have been observed to be anywhere from ~0.15–0.6 microns
+[17,18,48,49]. Therefore, we tuned the rate constants (Table 1) so that the model produced
+spots with radius 0.31 ± 0.02 μm. Because most of the rate constants in the model have not
+been measured experimentally, our choices for the initial parameter values are somewhat arbi-
+trary. However, these rate constants result in coexisting spots of appropriate size when using
+the estimated membrane-bound diffusion coefficient for Cdc42.
+To explore how GTPase cluster size depends on the relative time scales of diffusion and
+chemical kinetics, we fixed the rate constants and varied the diffusion coefficient of the active
+GTPase D
+u
+, keeping the other diffusion coefficients 100-fold greater than D
+u
+(S2A Fig). Note
+that mathematically this is equivalent to fixing the diffusion coefficients and varying the time
+scale for the chemical kinetics, because solutions to the model equations only depend on the
+ratio of these two time scales. We found that increasing the diffusivity increased the spot size
+(S2A and S2B Fig), but did not impact the patterns formed by the system (quantified by spot
+eccentricity, S2C Fig).
+We set the average Cdc42 concentration to 808 molecules per μm
+2
+(Table 1). The number
+of Cdc42 molecules per podosome is not known. However, particle-based simulations of
+Cdc42 polarity in yeast typically predict around 3000 molecules in a polarity site of roughly
+1 μm radius, resulting in a surface concentration of ~950 molecules per μm
+2
+[50]. Using a
+GTPase spot radius of 0.31 μm, the area of a podosome is approximately 0.30 μm
+2
+, and there
+are approximately 240 Cdc42 molecules per podosome. This produces a surface concentration
+Table 1. Baseline parame ter values.
+Paramet er Descriptio n Value
+b GTPase activatio n 1 s
+-1
+γ GTPase maxima l self-positi ve feedback rate 20 s
+-1
+K Half-m aximal response GTPase concentr ation 200 molecules per μm
+2
+n Hill coefficient 2
+σ GTPase inactivat ion 10 s
+-1
+c GAP activation 0.05 μm
+2
+s
+-1
+d GAP inactivation 10 s
+-1
+e GAP dependen t GTPase inactivation 10 μm
+2
+s
+-1
+D
+u
+Active GTPase diffusion 0.04 μm
+2
+s
+-1
+D
+v
+Inactive GTPase diffusion 4 μm
+2
+s
+-1
+D
+G
+Active GAP diffusio n 4 μm
+2
+s
+-1
+D
+g
+Inactive GAP diffusion 4 μm
+2
+s
+-1
+T Total GTPase Concent ration 808 molecules per μm
+2
+T
+g
+Total GAP Concentrat ion 10 molecules per μm
+2
+https://d oi.org/10.1371/j ournal.pc bi.1010092. t001
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 7 / 25
+
+of ~900 molecules per μm
+2
+at active spots, which is consistent with particle-based models for
+the polarity site in yeast.
+Next, we explored how varying individual parameters changed pattern formation. When
+sweeping the GTPase activation rate b, lower values resulted in spots, but higher values
+resulted in a spatially homogenous steady state with an intermediate level of GTPase activity
+(Fig 2B). This suggested that a finite basal GTPase activation rate b was not required or had to
+be quite small to facilitate patterning. Interestingly, each of the other parameter sweeps
+resulted in changes in the observed patterning types, including spots, mazes, and holes (Fig
+2B). For the GTPase inactivation rate σ, a high value resulted in a single low concentration
+throughout the domain, and decreasing this value led to spots, then mazes. However, minimiz-
+ing this value did not cause the entire domain to be at a single, high steady state, due to nega-
+tive feedback from GAPs. In contrast, the self-positive feedback rate γ, the GAP inactivation
+rate c, the GAP activation rate d, and the GAP-mediated negative feedback rate e were capable
+of all patterning types, from a single low state to spots, mazes, holes, and a single high state
+(Fig 2B). Overall, these observations suggested that it would be possible to spatially modulate
+these parameters to go from the low, homogenous state to the spot forming state.
+A two-step model for rosette formation
+We next sought to determine if the WPGAP model could be modified to enable rosette formation.
+One possible explanation for how a rosette could form is if two distinct steps occur: 1) an initial
+ring of high or low concentration of some species (M) forms and 2) this species modulates a key
+parameter in the pattern forming, WPGAP model. To test this model, we assumed a preexisting
+ring in the concertation profile of M. We note that rings of high GTPase activity have been
+observed and modeled in other contexts, such as in wound healing, in which a chemical gradient
+and modulation of a bistable GTPase resulted in distinct rings of activity [32,33].
+For our initial investigations, we assumed that a modulator M affected a rate in the
+WPGAP model through the functional form:
+o
+�
+ðr Þ ¼ o
+1
+� o
+2
+M ðr Þ;
+where ω
+1
+is the basal rate, ω
+2
+models the effect of M on ω
+±
+and r measures the radial distance
+from the center of an IgG disk. In our simulations, we consider a single IgG disk and use polar
+coordinates with the origin located at the center of the disk. The computational domain con-
+sists of a disk of radius of R with reflective boundaries at r = 0 to r = R (see Methods). Unless
+otherwise noted R = 4 μm. M(r) was modeled as a Gaussian-shaped function centered at
+r = 2 μm with variable variance. This form of ω
+±
+allowed us to tune model parameters so that
+spot formation was only promoted within the ring.
+For parameters that increase GTPase activity (GTPase activation b, GAP inactivation d, and
+the maximum self-positive feedback rate γ), the WPGAP model was coupled to a ring of high
+M concentration ω
++
+(Fig 2C and 2D, three leftmost columns). For parameters that decrease
+GTPase activity (GAP activation c, GTPase inactivation σ, and GAP-mediated GTPase inacti-
+vation e), the WPGAP model was coupled to an inverted ring of M, ω
+-
+(Fig 2C and 2D, three
+rightmost columns). For each model parameter, ω
+1
+and ω
+2
+were varied to determine if the sys-
+tem could generate rosette organization. As an initial guess, the parameter values were chosen
+based on the results from the parameter sweeps (Fig 2B).
+As expected from the parameter sweep results, modulating the basal GTPase activation rate
+b did not appear sufficient to form a rosette pattern, because this produced spot formation
+throughout the entire domain. However, modulating the other rate constants, such as the posi-
+tive feedback rate γ, all resulted in a rosette forming (Fig 2C and 2D). Interestingly, when we
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 8 / 25
+
+modulated the rates for GTPase inactivation σ and the GAP-mediated negative feedback e, we
+found that the rates required to form rosettes were higher than expected (Fig 2C and 2D). For
+example, to form a rosette, the rate required for the GTPase inactivation σ within the ring was
+~15 s
+-1
+, which resulted in no patterning when used as the global rate in the isolated WPGAP
+model (Fig 2B–2D).
+Gradient establishment by a simple reaction-diffusion model
+The analysis presented above demonstrated that the rosette pattern can form following the
+establishment of a ring of activity. Therefore, we next wanted to determine if rosette formation
+could occur in the absence of such an initial ring. Our first goal was to establish the concentra-
+tion profile of a signaling molecule that is activated by IgG-bound receptors over the disk and
+deactivated throughout the domain. This profile was later used to model the spatially-depen-
+dent rate constants in the WPGAP model. Let X represent the active form of this molecule. To
+model the spatiotemporal dynamics of X, we used the following equation:
+@ X
+@ t
+¼ k
+x
+rð Þ   d
+x
+X þ
+D
+x
+r
+@
+@ r
+r
+@
+@ r
+� �
+X
+where k
+x
+(r) is the spatially-dependent activation rate, δ
+x
+is the deactivation rate and D
+x
+is the
+diffusion coefficient for X (Fig 3A). Note that if k
+x
+is independent of r, then at steady state X(r)
+= k
+x
+/δ
+x
+. To model the IgG disk, we treat k
+x
+(r) as a step-function:
+k
+x
+ðr Þ ¼
+k
+dis k
+if r < m
+F
+;
+k
+basa l
+if r � m
+F
+;
+(
+where k
+disk
+is the IgG-induced activation rate, k
+basal
+is the basal activation rate, and μ
+F
+is the
+radius of the disk. For fixed values of k
+disk
+, k
+basal
+, and δ
+x
+, this system was simulated for varying
+diffusion coefficients D
+x
+(Fig 3B). The range of diffusion coefficients was chosen to approxi-
+mate the orders of magnitude observed in cellular diffusion rates [51,52], from a slow mem-
+brane-bound rate (10
+−3
+μm
+2
+s
+-1
+) to a fast cytosolic rate (10.0 μm
+2
+s
+-1
+). For a domain with a
+radius R = 4 μm, changing the diffusivity of X resulted in changes in both the gradient steep-
+ness and the difference between the maximum and minimum values of X (Fig 3C). For small
+values of D
+x
+, the distribution of X was switch-like, and X approached the expected steady state,
+k
+x
+(r)/δ
+x
+. However, for larger values of D
+x
+, the gradient in X was shallower, and deviated signifi-
+cantly from k
+x
+(r)/δ
+x
+with a lower total amplitude (Fig 3B and 3C). We wondered if there was a
+functional form that approximated the solution to this equation, and found that our simula-
+tion results could be well approximated using a logistic function with the form:
+f rð Þ ¼ b þ
+a
+1 þ exp ðk
+m
+ðr   r
+0
+ÞÞ
+;
+where β and α+β are the minimum and maximum values of f(r), respectively, k
+m
+is the logistic
+decay rate, and f(r
+0
+) = β+α/2 (Fig 3D). Therefore, for simplicity and computational speed we
+used f(r) when performing parameter searches for the WGAP model. However, after perform-
+ing parameter searches, we then verified that directly simulating the diffusing species rather
+than using f(r) also generated rosette formation (see S1 Note).
+Rosette formation through gradients
+To determine if rosette formation is possible in the WPGAP model without the formation of
+an initial ring around the IgG disk, we treated the positive feedback rate γ and the GAP
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 9 / 25
+
+activation rate c as spatially-dependent with profiles given by f(r):
+g rð Þ ¼ g
+b
+þ
+g
+a
+1 þ expðg
+km
+ðr   r
+0
+ÞÞ
+;
+c rð Þ ¼ c
+b
+þ
+c
+a
+1 þ ex pðc
+km
+ðr   r
+0
+ÞÞ
+:
+Note that these functions asymptotically approach their maximum values of γ
+max
+= γ
+α
++ γ
+β
+or
+c
+max
+= c
+α
++ c
+β
+as r decreases.
+Unlike the two-step model, it was difficult to empirically determine parameter values that
+form a rosette. Thus, we used a two-step approach to search parameter space. We first used an
+evolutionary algorithm (EA) [53] to perform a global search and subsequently performed a
+more local sampling of parameter space using a Delayed Rejection Adaptive Metropolis Mar-
+kov chain Monte Carlo (DRAM-MCMC, see Methods) [54,55].
+To implement the two-step approach requires a score function that provides a quantitative
+measure for how close a simulated result is to the desired rosette pattern. For the desired pat-
+tern, a GTPase rosette formed by the two-step model was used (Fig 2D). From this, we mea-
+sured the radial average and radial standard deviation for the active GTPase u (Fig 4A–4C).
+For new simulations, we measured the radial average of u (Fig 4A and 4C). We then divided
+the system into octants and measured the radial standard deviation within each octant (Fig 4B
+and 4C). The difference between the means of the desired output and simulation result and
+Fig 3. A simple reaction- diffusion model for gradients of activity. A) Schematic of the simple reaction-diff usion model in which a species
+X is activated by a rate k
+x
+(r), which depends on the local IgG concentratio n, and is deactivate d at a constant rate δ
+x
+. B) Simulati ons of the
+model for various diffusion rates D
+x
+. The spatial profile of k
+x
+(r) is shown as the dashed line and δ
+x
+= 0.75 s
+-1
+. The homogenou s steady states
+values of X when k = k
+x
+(0) and k = k
+x
+(r
+max
+) are shown as well (dotted lines). C) Maximum slope of X(r) and percent increase of X(0) over X
+(r
+max
+) as a function of D
+x
+. D) Blue curves are same as in B and dashed lines are best fits of these curves to the logistic function (see Method s
+for curve fitting details).
+https://do i.org/10.1371/j ournal.pc bi.1010092. g003
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 10 / 25
+
+Fig 4. Model parameterizati on reveals mechanism enabling rosette formation. A) Schematic illustrating the radial averaging of GTPase activity used in
+the score function. B) Schemati c illustrating the radial standard deviation of GTPase activity per octant used in the score functio n. This results in eight
+individual quantificati ons used in the score function. C) Radial profiles of the average and standard deviation of GTPase activity. These profiles were used
+in the score function and compared to the results from numerical simulations. D) Parameter distributions after performing DRAM-M CMC sampling.
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 11 / 25
+
+the differences between the standard deviation of the desired output and standard deviations
+in each octant were calculated. These nine measurements (Fig 4A–4C) were then averaged to
+produce a single score. This score function was accurate, but flexible enough to allow for vari-
+ous numbers of spots and spot locations.
+Simulations were initialized with a small amount of random noise and seeded with an ini-
+tial concentration of active GTPase in the shape of a rosette (see Methods). We seeded simula-
+tions with a rosette to decrease the time for pattern formation, because parameter estimation
+requires a significant number of simulations. Also, from observations of initial parameteriza-
+tion attempts, the GTPase activation rate b, the GTPase inactivation rate σ, the minimum self-
+positive feedback rate γ
+α
+, and the minimum GAP activation rate c
+α
+were typically quite small
+and were thus fixed at 2e-3, 0.4, 5e-3, and 5e-3 s
+-1
+, respectively. For 99 individual EA runs (100
+individuals, 100 generations), most runs were able to discover parameters capable of rosette
+organization (top 80 appeared successful, S3A and S3B Fig). The best parameter set found by
+the EAs was then used to initialize DRAM-MCMC simulations. DRAM-MCMCs were simu-
+lated until they appeared to converge, with all but the final 5,000 iterations removed as a
+“burn-in” period (S3C Fig, see Methods).
+The parameter distributions generated by MCMC sampling appeared Gaussian (Fig 4D, on
+the diagonal). We took the mean values of the individual parameter distributions as our repre-
+sentative parameter set (Figs 4D–4F and S3D and Table 2). To check how well the MCMC per-
+formed, we also simulated the worst scoring parameter set, and these parameters also resulted
+in rosette organization (S3D and S3E Fig and S1 Table). Our simulations predicted that
+GTPase rosettes mostly form by 20 s and appear stable by 40 s (S4 Fig). We also verified that
+simulating the diffusing species (see the section Gradient Establishment by a Simple Reaction-
+Diffusion Model) rather than using the logistic function approximation f(r) would generate
+rosette formation (see S1 Note, S5 Fig).
+Inspection of the spatially-dependent rates revealed how the system was capable of rosette
+patterning (Fig 4E). When the ratio between the positive to negative feedback (γ(r) /c(r)) is
+plotted as a function of r using the identified parameter sets, in all cases the ratio is maximized
+just beyond r = 2 μm, near where the spots formed (Fig 4E and 4F). Relative to the self-positive
+feedback rate γ(r) (Fig 4G, magenta), the GAP activation rate c(r) (Fig 4E, green) is high over
+the disk and away from the disk. However, c transitions more rapidly than γ between its ele-
+vated level over the disk and its basal level away from the disk (Fig 4E). Thus, while the nega-
+tive feedback is relatively high over the disk and away from it, there is a zone near the edge of
+the disk where the negative feedback is low relative to the positive feedback. It is in this region
+that rosette formation occurs.
+To gain further insight into the model’s behavior we looked for pairwise correlations
+between model parameters. Several parameters demonstrated strong correlations (Fig 4D).
+There was a strong anti-correlation between c
+max
+, the maximum GAP activation rate, and e,
+the rate constant for GAP-mediated GTPase inactivation. This likely indicates a sensitivity of
+the model to the total amount of GAP activity. The other correlations were not as intuitively
+apparent, so to further explore parameter-dependent model behavior, we performed individ-
+ual parameter sweeps using the representative parameter set (Table 2 and Fig 5A–5F). Parame-
+ters typically moved from no patterning to rosette organization to ring formation (c
+km
+, γ
+max
+,
+Individual parameter distributions are shown on the diagonal. Lower triangular plots show kernel density estimates for parameter pairs. Circles in the
+upper triangle represent the Spearman correlation coefficient between parame ters. E) Radial profiles for the non-con stant parameters from the parameter
+estimation . The positive to negative feedback ratio is also shown. For visualization purposes, the GAP activation rate and ratio are scaled to be similar
+orders of magnitud e. The solid lines are the results for the mean parame ter values from D (on the diagonal , Table 2) and the shaded regions indicate one
+standard deviation. F) Active GTPase concentration using the representati ve parameter set (Table 2). Simulation domain has a max radius of 4.0 μm.
+https://do i.org/10.1371/j ournal.pc bi.1010092. g004
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 12 / 25
+
+and d, Fig 5B, 5C and 5E), or vice versa (c
+max
+, γ
+km,
+and e, Fig 5A, 5D and 5F). Thus, the anti-
+correlations between c
+km
+and γ
+max
+as well as γ
+km
+and e likely result from a balancing of the
+effects produced by varying the individual parameters. However, the reason for the positive
+correlation between c
+max
+and γ
+km
+is not readily apparent but may result from the logistic func-
+tion having a lower maximum value for shallower gradients (i.e., low decay rates, Fig 3). Also,
+note that this model can generate rings of activity (Fig 5A–5F), as is required for the two-step
+model discussed above.
+Table 2. Mean param eter set after MCMC param eterization.
+Parameter Descriptio n Value (± StDev) Fixed or Sampled
+b GTPase activatio n 0.002 s
+-1
+Fixed
+γ
+max
+GTPase self-positi ve feedback rate, maximum spatial value 9.6 ± 0.5 s
+-1
+Sampled
+γ
+km
+GTPase self-positi ve feedback rate, decay rate 2.04 ± 0.16 Sampled
+γ
+α
+GTPase self-positi ve feedback rate, minimum spatial value 0.005 s
+-1
+Fixed
+K Half-maxi mal response GTPase concentr ation 200 molecules per μm
+2
+Fixed
+n Hill coefficient 2 Fixed
+σ GTPase inactivat ion 0.4 s
+-1
+Fixed
+c
+max
+GAP activation , maximum spatial value 0.08 ± 0.01 μm
+2
+s
+-1
+Sampled
+c
+km
+GAP activation , decay rate 13.0 ± 1.2 Sampled
+c
+α
+GAP activation , minimum spatial value 0.005 μm
+2
+s
+-1
+Fixed
+d GAP inactivation 43.0 ± 1.1 s
+-1
+Sampled
+e GAP dependen t GTPase inactivation 31.3 ± 4.4 μm
+2
+s
+-1
+Sampled
+D
+u
+Active GTPase diffusion 0.04 μm
+2
+s
+-1
+Fixed
+D
+v
+Inactive GTPase diffusion 4 μm
+2
+s
+-1
+Fixed
+D
+G
+Active GAP diffusio n 4 μm
+2
+s
+-1
+Fixed
+D
+g
+Inactive GAP diffusion 4 μm
+2
+s
+-1
+Fixed
+T Amoun t of GTPase 808 molecules per μm
+2
+Fixed
+T
+g
+Amoun t of GAP 10 molecul es per μm
+2
+Fixed
+https://do i.org/10.1371/j ournal.pc bi.1010092. t002
+Fig 5. Effects of individual parameters on patterning . A-F) Plots of the score function versus model parameters (Table 2). Represen tative simulation results
+shown to illustrate the impact of varying parameter values on rosette formation. G) Two parameter sweep varying c and γ. Each grid cell shows the active
+GTPase concentratio n for an individual simulation when c and γ are fixed. The red dashed line is a plot of c(r) versus γ(r) from Fig 4E and Table 2.
+https://do i.org/10.1371/j ournal.pc bi.1010092. g005
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 13 / 25
+
+Fluor 568 phalloidin (dilution 1:500, ThermoFisher Scientific A12380) diluted in 2% BSA in
+PBS at room temperature for 20 min followed by one wash with 1xPBS/0.05% Tween for 10
+min, and two washes with 1x PBS for 15 min.
+Imaging of podosome structures during frustrated phagocytosis
+Total internal reflection fluorescence structured illumination microscopy (TIRF-SIM) was
+used to image podosomes in F-tractin-tdTomato transfected live RAW 264.7 macrophages.
+Fluorescence emission was recorded using an sCMOS camera (Hamamatsu, Orca Flash 4.0 v2
+sCMOS). Lasers with wavelengths 560 and 647 nm and an Olympus UApo N 100x oil NA 1.49
+objective were used, and fluorescence emission was recorded using an sCMOS camera (Hama-
+matsu, Orca Flash 4.0 v2 sCMOS). A Nikon SIM microscope was used to image podosomes in
+fixed RAW 264.7 macrophages after Y-27632 inhibition, using 488 and 561 nm lasers. A 100x
+oil immersion objective (1.49 NA, Nikon CFI Apochromat TIRF 100x) and EMCCD camera
+(Andor DU-897) were used. To image podosomes in bone marrow-derived macrophages, a
+Zeiss confocal microscope LSM880 built around AxioObserver 7 with a 63x 1.4 NA oil objec-
+tive (Zeiss) was used.
+Single particle tracking
+Single particle tracking was performed using a home-built total internal reflection microscope
+based on an Olympus IX81. The microscope was equipped with four solid state lasers (Coher-
+ent OBIS 405 nm, 488 nm, 561 nm, and 647 nm), a 100X TIRF objective (Olympus, UPLA-
+PO100XOHR) and an sCMOS camera (Photometrics Prime 95B) for fluorescence collection.
+Raw cells were co-transfected with mScarlet-F-tractin (Excitation, 561 nm; Emission, Semrock,
+FF01-600/52) and Cdc42-HaloTag [68]. Note that the HaloTag was attached to the N terminus
+of Cdc42 to ensure that membrane interactions were not impaired. Cells were incubated with
+100 pM dye JF646-Halo (Emission, Semrock, FF01-698/70) for 30 minutes and washed with
+culture medium three times before imaging. Super-resolved F-tractin images were acquired at
+100 Hz for 5 seconds and subjected to Super-Resolution Radial Fluctuations analysis [69]. For
+single particle tracking of Cdc42, we streamed for 40 seconds at 50 Hz (2000 frames).
+Single molecule diffusion analysis was done as before [42]. Briefly, individual molecules
+were identified by a wavelet decomposition based approach [70] and precise centroids were
+obtained by fitting with a 2D Gaussian function. Single molecule trajectories were built
+through a well-established linking algorithm [71] and the mean-square-dis placement was then
+calculated [72,73] to color encode the tracks.
+Numerical simulations
+Ordinary differential equation (ODE) simulations were performed by using the Python pack-
+age odeint from Scipy [74]. Reaction-diffusion equations were solved using the spectral differ-
+ential equation solver Python package Dedalus [75]. For simulations using Cartesian
+coordinates, the system was spatially discretized using a Fourier basis in x and a Chebyshev
+basis in y with the recommended dealiasing factor of 1.5, as done before [10]. The system had
+periodic boundary conditions in x and Neumann (reflective) boundary conditions in y. Simi-
+larly, for simulations using polar coordinates, the system was spatially discretized using a Fou-
+rier basis in ϕ, and a Chebyshev basis in r (dealiasing factor of 1.5) with periodic boundary
+conditions in ϕ, and Neumann (no flux) boundary conditions in r. The typical grid size used
+for simulations was 256 x 128 (ϕ, r respectively) which was informed by mesh grid refinement
+(i.e., larger grid sizes resulted in the same outcome). However, a grid size of 64 x 64 was used
+for parameterization steps to decrease simulation time. Simulations were typically performed
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 18 / 25
+
+using a time step dt = 0.01 s or 0.025 s. Reaction steps were solved using 4
+th
+order Runge-
+Kutta, although 2
+nd
+order Runge-Kutta was used for parameterization steps.
+Homogeneous steady states were determined by running the ODE system (without diffu-
+sion) for t = 1000 s using odeint. For initial conditions of the reaction-diffusion equations,
+each species was set to its steady state value throughout the domain and subsequently noise
+was added by converting a small fraction of inactive species to the active form. The fraction of
+concentration converted was determined by each simulation but was typically generated by
+uniform sampling between 0 and 0.2v
+ss
+(where v
+ss
+is the steady state concentration for the inac-
+tive species). For seeded simulations, the same random noise (but between 0 and 0.1v
+ss
+) was
+converted and additionally the normalized seed (i.e., a rosette) was scaled by 0.1v
+ss
+and con-
+verted to active GTPase. For simulations with non-constant coefficients, the initial steady
+states were determined by using the basal values for the spatially-dependent rates.
+To fit the logistic equation to the simple reaction-diffusion profiles, we used the Python
+package minimize (using method = "SLSQP") from Scipy [74].
+Parametrization
+Evolutionary algorithm (EA) simulations were performed using the Python package DEAP
+(v1.3.1) [53]. For EA hyperparameters we used a mutation rate of 0.3 and a crossover rate of
+0.5. Markov chain Monte Carlo (MCMC) simulations were performed using the Python pack-
+age Pymcmcstat (v1.9.1) [55]. For MCMC sampling, we used the Delayed Rejection Adaptive
+Metropolis (DRAM) algorithm [54,55]. MCMC hyperparameters were set to S20 = 0.015 and
+N0 = 0.015, which resulted in chain acceptance rates between 29–40%. Chains were run for
+between 10,000–12,500 steps. All but the last 5,000 steps for individual MCMC chains were
+discarded as a “burn-in” period. MCMC chains appeared to pass all convergence tests, includ-
+ing within chain variance (Geweke statistic p >> 0.05, [76]) and between chain variance (Gel-
+man-Rubin diagnostic < 1.1, [77]).
+Note that for the coupled model, where the simple reaction diffusion model was simulated
+in place of the logistic function, we used the same MCMC pipeline for sampling to discover a
+working coupled model. For proof of concept, we simply ran this pipeline for 1,000 steps and
+took the best scoring parameter set.
+Spot size determination
+Simulations were performed as described above using cartesian coordinates (t
+final
+= 40 s). Each
+system was interpolated to a uniform grid with the same grid size (128 x 128). A mask was gen-
+erated by thresholding at the mean of the maximum and minimum concentrations within the
+system. Using this mask, features were quantified using the Python package scikit-image [78].
+The effective radius was defined as the average between the major and minor axis lengths.
+After an initial pass at fitting Radius
+eff
+based on log(D
+u
+), simulations were rerun using different
+grid sizes to ensure the number of spots counted for each simulation were similar (N~100).
+Counting podosomes per site
+For experimental results, the number of podosomes per site were calculated using a pipeline
+we developed previously [18] (https://github.com/ elstonlab/PodosomeImageAnalys is). In
+essence, this pipeline uses persistent homology, a type of topological data analysis, to identify
+significantly persistent features (connected components, holes) within images followed by
+post-processing.
+PLOS COMP UTATIONAL  BIOLOGY
+Spatial models of pattern formation during phagocytosis
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010092 October 3, 2022 19 / 25
+
+S1 Note
+In the main manuscript, the profiles of the spatially dependent rates g(r) and 
+c(r) were prescribed using the logistic function f(r). Therefore, we wanted to 
+confirm that when we use the solution to the equation for a diffusing species X 
+that is activated over the disk to generate spatial profiles for the chemical species 
+that modulate g(r) and c(r), the system still generates a rosette pattern. As noted in 
+the main text the equation for X is:
+∂ X
+∂ t =kx ( r )−δx X + Dx
+r
+∂
+∂ r (r ∂
+∂ r ) X
+kx ( r )={
+kdisk if r <μF ,
+kbasal if r ≥ μF ,
+where kx(r) is the spatially dependent activation rate, dx is the deactivation rate and 
+Dx is the diffusion coefficient for X, kdisk is the IgG-induced activation rate, kbasal is the 
+basal activation rate, and F is the radius of the disk.
+Surprisingly, however, fitting solutions for X to g(r) and c(r) from the main 
+text (logistic function approximation) and using these solutions in the WPGAP 
+model did not lead to proper rosette formation.  This discrepancy likely arises from 
+slight differences between the logistic function and solutions to the reaction-
+diffusion equation (Fig 3D). Therefore, we used the parameter values found from 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+
+fitting g(r) and c(r) to initialize another DRAM-MCMC run that included equations 
+for species that modulate g(r) and c(r). Because our goal was to simply demonstrate 
+proof of principle, we only performed 22 short (1000 iterations) DRAM-MCMC runs, 
+and we took the single best scoring parameter set. However, this was sufficient to 
+demonstrate that a model that explicitly considered species that modulate g(r) and 
+c(r) was able to generate a GTPase rosette (S5 Fig, S1 Note Table A, below). In 
+S5C,D Fig, we plot the distributions of the species modulating the rates for the GAP 
+activation rate, c, and the self-positive feedback rate, g, respectively. Interestingly, 
+if these profiles are used to modulate the intermediate species M in the two-step 
+model, the system creates a ring of active M (as in S5E Fig). Thus, the same 
+mechanism where the positive feedback strength is lower, but transitions less 
+rapidly than the negative feedback strength can also be used to create an initial 
+ring which could then drive rosette formation. Finally, we note that with the right 
+choice of parameter values, this model can also generate a ring, which could then 
+be used to drive rosette formation (examples of this ring formation can be 
+observed in Fig 5A-F).
+Parameter Description Value
+kdisk - c On disk activation rate of a species modulating 
+c
+113 s-1
+kbasal - c Off disk/basal activation rate of a species 6.8 s-1
+2
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+
+modulating c
+dc Inactivation rate of a species modulating c 6.96 s-1
+Dc Diffusion coefficient of a species modulating c 0.04 mm2s-1
+kdisk - g On disk activation rate of a species modulating 
+g
+63.3 s-1
+kbasal - g Off disk/basal activation rate of a species 
+modulating g
+9.9e-5 s-1
+dg Inactivation rate of a species modulating g 5.06 s-1
+Dg Diffusion coefficient of a species modulating g 4.21 mm2s-1
+S1 Note Table A. Parameters for describing diffusing species that modulate 
+the GAP activation rate, c, and the self-positive feedback rate, g. 
+3
+37
+38
+39
+40

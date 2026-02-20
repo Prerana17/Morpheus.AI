@@ -1,0 +1,127 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Berkemeier2023: κ-Collier Model - Long-range Notch-Delta Signalling</Title>
+        <Details>Implementation of the κ-Collier model from Berkemeier &amp; Page (2023). 
+        Models Notch-Delta lateral inhibition with long-range signalling via cell protrusions 
+        on a hexagonal lattice. Parameter κ balances juxtacrine and protrusion-based signalling.</Details>
+    </Description>
+    <Global>
+        <Constant symbol="kappa_param" value="0.3" name="Long-range coupling parameter"/>
+    </Global>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size symbol="size" value="20, 20, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="50"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="cells">
+            <Property symbol="D" value="0.0" name="Delta activity"/>
+            <Property symbol="N" value="0.0" name="Notch activity"/>
+            <Property symbol="D_neighbors" value="0.0" name="Average Delta from neighbors"/>
+            <Property symbol="D_longrange" value="0.0" name="Average Delta from long-range"/>
+            <Property symbol="D_combined" value="0.0" name="Combined Delta signal"/>
+            
+            <!-- Short-range (juxtacrine) signalling -->
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="D"/>
+                <Output symbol-ref="D_neighbors" mapping="average"/>
+            </NeighborhoodReporter>
+            
+            <!-- Long-range signalling (second neighbors) -->
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="D"/>
+                <Output symbol-ref="D_longrange" mapping="average"/>
+                <Neighborhood>
+                    <Distance>2</Distance>
+                </Neighborhood>
+            </NeighborhoodReporter>
+            
+            <System solver="runge-kutta" time-step="0.05">
+                <Constant symbol="a" value="100" name="Delta inhibition strength"/>
+                <Constant symbol="n" value="2" name="Hill coefficient"/>
+                <Constant symbol="k" value="3" name="Hill coefficient for Delta production"/>
+                <Constant symbol="a_param" value="0.001" name="Trans-activation parameter"/>
+                <Constant symbol="gamma" value="1.0" name="Decay rate ratio"/>
+                
+                <DiffEqn symbol-ref="D_combined">
+                    <Expression>(1.0 - kappa_param) * D_neighbors + kappa_param * D_longrange - D_combined</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="N">
+                    <Expression>D_combined^k / (a_param + D_combined^k) - N</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="D">
+                    <Expression>gamma * (1.0 / (1.0 + a*N^n) - D)</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+        <CellType class="medium" name="medium">
+            <Property symbol="D" value="0.0" name="Delta"/>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="0" type="cells">
+            <InitCellLattice>
+                <Neighborhood>
+                    <Order>1</Order>
+                </Neighborhood>
+            </InitCellLattice>
+            <InitProperty symbol-ref="D">
+                <Expression>rand_uni(0.05, 0.15)</Expression>
+            </InitProperty>
+            <InitProperty symbol-ref="N">
+                <Expression>rand_uni(0.05, 0.15)</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="2.0" decorate="true">
+            <Terminal name="png" size="600, 600, 0"/>
+            <Plot title="Delta Expression (SOP Patterning)">
+                <Cells value="D" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="0.0" color="green"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="1.0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Gnuplotter time-step="2.0" decorate="true">
+            <Terminal name="png" size="600, 600, 0"/>
+            <Plot title="Notch Activity">
+                <Cells value="N" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="0.0" color="white"/>
+                        <Color value="0.5" color="blue"/>
+                        <Color value="1.0" color="darkblue"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="0.5">
+            <Input>
+                <Symbol symbol-ref="D"/>
+                <Symbol symbol-ref="N"/>
+                <Symbol symbol-ref="D_combined"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+        </Logger>
+        <ModelGraph include-tags="#untagged" format="dot" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

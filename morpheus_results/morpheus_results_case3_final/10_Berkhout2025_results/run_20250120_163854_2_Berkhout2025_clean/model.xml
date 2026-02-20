@@ -1,0 +1,362 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Neural Tube Closure - Berkhout et al. 2025</Title>
+        <Details>Cellular Potts Model of neural tube closure with gene regulatory networks, diffusing morphogens (SHH, BMP4, FGF8, ATRA), and apical constriction. Model includes 8 cell types: medial floor plate (MFP), lateral floor plate (LFP), pMN, p3, p2, p1, p0, and dorsal neural progenitors. Based on Berkhout et al., eLIFE 2025.</Details>
+    </Description>
+    <Global>
+        <Field symbol="SHH" name="Sonic Hedgehog" value="0.0">
+            <Diffusion rate="10.0"/>
+        </Field>
+        <Field symbol="BMP4" name="Bone Morphogenetic Protein 4" value="0.0">
+            <Diffusion rate="10.0"/>
+        </Field>
+        <Field symbol="FGF8" name="Fibroblast Growth Factor 8" value="0.0">
+            <Diffusion rate="8.0"/>
+        </Field>
+        <Field symbol="ATRA" name="All-trans Retinoic Acid" value="0.0">
+            <Diffusion rate="12.0"/>
+        </Field>
+        <System solver="runge-kutta" time-step="0.1">
+            <DiffEqn symbol-ref="SHH">
+                <Expression>-0.01 * SHH</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="BMP4">
+                <Expression>-0.01 * BMP4</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="FGF8">
+                <Expression>-0.01 * FGF8</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="ATRA">
+                <Expression>-0.01 * ATRA</Expression>
+            </DiffEqn>
+        </System>
+        <Variable symbol="total_cells" value="0.0"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="250, 100, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="10000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    <CellTypes>
+        <CellType class="medium" name="medium">
+            <Property symbol="SHH_prod" value="0.0"/>
+            <Property symbol="BMP4_prod" value="0.0"/>
+            <Property symbol="FGF8_prod" value="0.0"/>
+            <Property symbol="ATRA_prod" value="0.0"/>
+        </CellType>
+        <CellType class="biological" name="MFP">
+            <VolumeConstraint target="150" strength="1.0"/>
+            <SurfaceConstraint target="1.2" mode="aspherity" strength="0.8"/>
+            <Property symbol="SHH_prod" value="5.0"/>
+            <Property symbol="BMP4_prod" value="0.0"/>
+            <Property symbol="FGF8_prod" value="0.0"/>
+            <Property symbol="ATRA_prod" value="0.0"/>
+            <Property symbol="NKX22" value="0.8"/>
+            <Property symbol="OLIG2" value="0.1"/>
+            <Property symbol="PAX6" value="0.1"/>
+            <Property symbol="apical_constriction" value="0.3"/>
+            <System solver="euler" time-step="1.0">
+                <Rule symbol-ref="NKX22">
+                    <Expression>NKX22 + 0.01 * (1.0/(1.0 + exp(-5.0*(SHH - 3.0)))) - 0.02 * NKX22</Expression>
+                </Rule>
+            </System>
+            <PropertyVector symbol="polarity" value="0.0, 1.0, 0.0"/>
+        </CellType>
+        <CellType class="biological" name="LFP">
+            <VolumeConstraint target="150" strength="1.0"/>
+            <SurfaceConstraint target="1.2" mode="aspherity" strength="0.8"/>
+            <Property symbol="SHH_prod" value="3.0"/>
+            <Property symbol="BMP4_prod" value="0.0"/>
+            <Property symbol="FGF8_prod" value="0.0"/>
+            <Property symbol="ATRA_prod" value="0.0"/>
+            <Property symbol="NKX22" value="0.6"/>
+            <Property symbol="OLIG2" value="0.2"/>
+            <Property symbol="PAX6" value="0.2"/>
+            <Property symbol="apical_constriction" value="0.25"/>
+            <System solver="euler" time-step="1.0">
+                <Rule symbol-ref="OLIG2">
+                    <Expression>OLIG2 + 0.01 * (1.0/(1.0 + exp(-5.0*(SHH - 2.0)))) - 0.02 * OLIG2</Expression>
+                </Rule>
+            </System>
+            <PropertyVector symbol="polarity" value="0.0, 1.0, 0.0"/>
+        </CellType>
+        <CellType class="biological" name="pMN">
+            <VolumeConstraint target="150" strength="1.0"/>
+            <SurfaceConstraint target="1.2" mode="aspherity" strength="0.8"/>
+            <Property symbol="SHH_prod" value="0.5"/>
+            <Property symbol="BMP4_prod" value="0.0"/>
+            <Property symbol="FGF8_prod" value="0.0"/>
+            <Property symbol="ATRA_prod" value="0.0"/>
+            <Property symbol="NKX22" value="0.3"/>
+            <Property symbol="OLIG2" value="0.7"/>
+            <Property symbol="PAX6" value="0.4"/>
+            <Property symbol="apical_constriction" value="0.15"/>
+            <System solver="euler" time-step="1.0">
+                <Rule symbol-ref="OLIG2">
+                    <Expression>OLIG2 + 0.01 * (1.0/(1.0 + exp(-5.0*(SHH - 1.5)))) - 0.02 * OLIG2</Expression>
+                </Rule>
+                <Rule symbol-ref="PAX6">
+                    <Expression>PAX6 + 0.01 * (1.0/(1.0 + exp(-5.0*(2.0 - SHH)))) - 0.02 * PAX6</Expression>
+                </Rule>
+            </System>
+            <PropertyVector symbol="polarity" value="0.0, 1.0, 0.0"/>
+        </CellType>
+        <CellType class="biological" name="p3">
+            <VolumeConstraint target="150" strength="1.0"/>
+            <SurfaceConstraint target="1.2" mode="aspherity" strength="0.8"/>
+            <Property symbol="SHH_prod" value="0.3"/>
+            <Property symbol="BMP4_prod" value="0.0"/>
+            <Property symbol="FGF8_prod" value="0.0"/>
+            <Property symbol="ATRA_prod" value="0.0"/>
+            <Property symbol="NKX22" value="0.5"/>
+            <Property symbol="OLIG2" value="0.5"/>
+            <Property symbol="PAX6" value="0.3"/>
+            <Property symbol="apical_constriction" value="0.1"/>
+            <PropertyVector symbol="polarity" value="0.0, 1.0, 0.0"/>
+        </CellType>
+        <CellType class="biological" name="p2">
+            <VolumeConstraint target="150" strength="1.0"/>
+            <SurfaceConstraint target="1.2" mode="aspherity" strength="0.8"/>
+            <Property symbol="SHH_prod" value="0.1"/>
+            <Property symbol="BMP4_prod" value="0.0"/>
+            <Property symbol="FGF8_prod" value="0.5"/>
+            <Property symbol="ATRA_prod" value="0.0"/>
+            <Property symbol="NKX22" value="0.2"/>
+            <Property symbol="OLIG2" value="0.3"/>
+            <Property symbol="PAX6" value="0.6"/>
+            <Property symbol="apical_constriction" value="0.05"/>
+            <System solver="euler" time-step="1.0">
+                <Rule symbol-ref="PAX6">
+                    <Expression>PAX6 + 0.01 * (1.0/(1.0 + exp(-5.0*(1.5 - SHH)))) - 0.02 * PAX6</Expression>
+                </Rule>
+            </System>
+            <PropertyVector symbol="polarity" value="0.0, 1.0, 0.0"/>
+        </CellType>
+        <CellType class="biological" name="p1">
+            <VolumeConstraint target="150" strength="1.0"/>
+            <SurfaceConstraint target="1.2" mode="aspherity" strength="0.8"/>
+            <Property symbol="SHH_prod" value="0.0"/>
+            <Property symbol="BMP4_prod" value="0.2"/>
+            <Property symbol="FGF8_prod" value="1.0"/>
+            <Property symbol="ATRA_prod" value="0.0"/>
+            <Property symbol="NKX22" value="0.1"/>
+            <Property symbol="OLIG2" value="0.1"/>
+            <Property symbol="PAX6" value="0.7"/>
+            <Property symbol="apical_constriction" value="0.02"/>
+            <PropertyVector symbol="polarity" value="0.0, 1.0, 0.0"/>
+        </CellType>
+        <CellType class="biological" name="p0">
+            <VolumeConstraint target="150" strength="1.0"/>
+            <SurfaceConstraint target="1.2" mode="aspherity" strength="0.8"/>
+            <Property symbol="SHH_prod" value="0.0"/>
+            <Property symbol="BMP4_prod" value="0.5"/>
+            <Property symbol="FGF8_prod" value="0.5"/>
+            <Property symbol="ATRA_prod" value="0.3"/>
+            <Property symbol="NKX22" value="0.0"/>
+            <Property symbol="OLIG2" value="0.0"/>
+            <Property symbol="PAX6" value="0.8"/>
+            <Property symbol="apical_constriction" value="0.01"/>
+            <PropertyVector symbol="polarity" value="0.0, 1.0, 0.0"/>
+        </CellType>
+        <CellType class="biological" name="dorsal">
+            <VolumeConstraint target="150" strength="1.0"/>
+            <SurfaceConstraint target="1.2" mode="aspherity" strength="0.8"/>
+            <Property symbol="SHH_prod" value="0.0"/>
+            <Property symbol="BMP4_prod" value="3.0"/>
+            <Property symbol="FGF8_prod" value="0.0"/>
+            <Property symbol="ATRA_prod" value="1.0"/>
+            <Property symbol="NKX22" value="0.0"/>
+            <Property symbol="OLIG2" value="0.0"/>
+            <Property symbol="PAX6" value="0.3"/>
+            <Property symbol="apical_constriction" value="0.0"/>
+            <System solver="euler" time-step="1.0">
+                <Rule symbol-ref="PAX6">
+                    <Expression>PAX6 + 0.01 * (1.0/(1.0 + exp(-5.0*(BMP4 - 2.0)))) - 0.02 * PAX6</Expression>
+                </Rule>
+            </System>
+            <PropertyVector symbol="polarity" value="0.0, 1.0, 0.0"/>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="10.0">
+            <Contact type1="medium" type2="MFP" value="15"/>
+            <Contact type1="medium" type2="LFP" value="15"/>
+            <Contact type1="medium" type2="pMN" value="15"/>
+            <Contact type1="medium" type2="p3" value="15"/>
+            <Contact type1="medium" type2="p2" value="15"/>
+            <Contact type1="medium" type2="p1" value="15"/>
+            <Contact type1="medium" type2="p0" value="15"/>
+            <Contact type1="medium" type2="dorsal" value="15"/>
+            <Contact type1="MFP" type2="MFP" value="5"/>
+            <Contact type1="MFP" type2="LFP" value="8"/>
+            <Contact type1="LFP" type2="LFP" value="5"/>
+            <Contact type1="LFP" type2="pMN" value="8"/>
+            <Contact type1="pMN" type2="pMN" value="5"/>
+            <Contact type1="pMN" type2="p3" value="8"/>
+            <Contact type1="p3" type2="p3" value="5"/>
+            <Contact type1="p3" type2="p2" value="8"/>
+            <Contact type1="p2" type2="p2" value="5"/>
+            <Contact type1="p2" type2="p1" value="8"/>
+            <Contact type1="p1" type2="p1" value="5"/>
+            <Contact type1="p1" type2="p0" value="8"/>
+            <Contact type1="p0" type2="p0" value="5"/>
+            <Contact type1="p0" type2="dorsal" value="8"/>
+            <Contact type1="dorsal" type2="dorsal" value="5"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="3.0"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population type="MFP" size="0">
+            <InitRectangle mode="random" number-of-cells="8">
+                <Dimensions size="40, 20, 0" center="125, 25, 0"/>
+            </InitRectangle>
+        </Population>
+        <Population type="LFP" size="0">
+            <InitRectangle mode="random" number-of-cells="10">
+                <Dimensions size="50, 20, 0" center="80, 25, 0"/>
+            </InitRectangle>
+            <InitRectangle mode="random" number-of-cells="10">
+                <Dimensions size="50, 20, 0" center="170, 25, 0"/>
+            </InitRectangle>
+        </Population>
+        <Population type="pMN" size="0">
+            <InitRectangle mode="random" number-of-cells="12">
+                <Dimensions size="50, 20, 0" center="50, 25, 0"/>
+            </InitRectangle>
+            <InitRectangle mode="random" number-of-cells="12">
+                <Dimensions size="50, 20, 0" center="200, 25, 0"/>
+            </InitRectangle>
+        </Population>
+        <Population type="p3" size="0">
+            <InitRectangle mode="random" number-of-cells="8">
+                <Dimensions size="30, 20, 0" center="30, 25, 0"/>
+            </InitRectangle>
+            <InitRectangle mode="random" number-of-cells="8">
+                <Dimensions size="30, 20, 0" center="220, 25, 0"/>
+            </InitRectangle>
+        </Population>
+        <Population type="p2" size="0">
+            <InitRectangle mode="random" number-of-cells="8">
+                <Dimensions size="25, 20, 0" center="20, 40, 0"/>
+            </InitRectangle>
+            <InitRectangle mode="random" number-of-cells="8">
+                <Dimensions size="25, 20, 0" center="230, 40, 0"/>
+            </InitRectangle>
+        </Population>
+        <Population type="p1" size="0">
+            <InitRectangle mode="random" number-of-cells="6">
+                <Dimensions size="20, 20, 0" center="20, 60, 0"/>
+            </InitRectangle>
+            <InitRectangle mode="random" number-of-cells="6">
+                <Dimensions size="20, 20, 0" center="230, 60, 0"/>
+            </InitRectangle>
+        </Population>
+        <Population type="p0" size="0">
+            <InitRectangle mode="random" number-of-cells="6">
+                <Dimensions size="20, 20, 0" center="20, 75, 0"/>
+            </InitRectangle>
+            <InitRectangle mode="random" number-of-cells="6">
+                <Dimensions size="20, 20, 0" center="230, 75, 0"/>
+            </InitRectangle>
+        </Population>
+        <Population type="dorsal" size="0">
+            <InitRectangle mode="random" number-of-cells="10">
+                <Dimensions size="60, 15, 0" center="125, 90, 0"/>
+            </InitRectangle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cell Types - Neural Tube">
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="1" color="red"/>
+                        <Color value="2" color="orange"/>
+                        <Color value="3" color="yellow"/>
+                        <Color value="4" color="green"/>
+                        <Color value="5" color="cyan"/>
+                        <Color value="6" color="blue"/>
+                        <Color value="7" color="purple"/>
+                        <Color value="8" color="magenta"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="SHH Gradient">
+                <Field symbol-ref="SHH" min="0" max="5"/>
+            </Plot>
+            <Plot title="BMP4 Gradient">
+                <Field symbol-ref="BMP4" min="0" max="3"/>
+            </Plot>
+            <Plot title="PAX6 Expression">
+                <Cells value="PAX6" min="0" max="1">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="1" color="darkgreen"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="50">
+            <Input>
+                <Symbol symbol-ref="SHH"/>
+                <Symbol symbol-ref="BMP4"/>
+                <Symbol symbol-ref="FGF8"/>
+                <Symbol symbol-ref="ATRA"/>
+                <Symbol symbol-ref="celltype.MFP.size"/>
+                <Symbol symbol-ref="celltype.LFP.size"/>
+                <Symbol symbol-ref="celltype.pMN.size"/>
+                <Symbol symbol-ref="celltype.p3.size"/>
+                <Symbol symbol-ref="celltype.p2.size"/>
+                <Symbol symbol-ref="celltype.p1.size"/>
+                <Symbol symbol-ref="celltype.p0.size"/>
+                <Symbol symbol-ref="celltype.dorsal.size"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="500">
+                    <Style style="linespoints" point-size="0.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="20">
+                        <Symbol symbol-ref="celltype.MFP.size"/>
+                        <Symbol symbol-ref="celltype.LFP.size"/>
+                        <Symbol symbol-ref="celltype.pMN.size"/>
+                        <Symbol symbol-ref="celltype.dorsal.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph include-tags="#untagged" format="dot" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

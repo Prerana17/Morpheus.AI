@@ -1,0 +1,66 @@
+{
+  "run_id": "run_luque2023",
+  "total_score": 7,
+  "max_possible_score": 7,
+  "score_percentage": 100.0,
+  "breakdown": {
+    "xml_error_count": 0,
+    "xml_error_penalty": 0,
+    "stderr_file_exists": true,
+    "model_graph_present": true,
+    "model_graph_files": [
+      "model_graph.dot"
+    ],
+    "model_graph_score": 1,
+    "time_lines_count": 101,
+    "time_score": 3,
+    "time_values_sample": [
+      0.0,
+      2.0,
+      4.0,
+      6.0,
+      8.0
+    ],
+    "last_time_value": 200.0,
+    "stdout_file_exists": true,
+    "stop_time": 200.0,
+    "last_simulation_time": 200.0,
+    "stop_time_match": true,
+    "stop_time_score": 1,
+    "results_generated": true,
+    "has_png_files": true,
+    "has_csv_files": true,
+    "png_files": [
+      "plot_00130.png",
+      "plot_00124.png",
+      "plot_00118.png",
+      "plot_00044.png",
+      "plot_00050.png",
+      "plot_00078.png",
+      "plot_00092.png",
+      "plot_00086.png",
+      "plot_00090.png",
+      "plot_00084.png",
+      "plot_00046.png",
+      "plot_00052.png",
+      "plot_00132.png",
+      "plot_00126.png",
+      "plot_00122.png",
+      "plot_00136.png",
+      "plot_00056.png",
+      "plot_00042.png",
+      "plot_00080.png",
+      "plot_00094.png"
+    ],
+    "csv_files": [
+      "logger_V.csv",
+      "logger_B.csv",
+      "logger_I.csv"
+    ],
+    "png_count": 101,
+    "csv_count": 3,
+    "results_score": 1,
+    "bonus_many_results": 1
+  },
+  "timestamp": "2026-01-29T18:23:22.321711"
+}

@@ -1,0 +1,304 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>C. elegans Germ Line Development Model (Atwell 2025)</Title>
+        <Details>
+            Model of C. elegans germ line development combining:
+            - 3D cell mechanics with repulsion forces
+            - Cell cycle progression with GLD-1 regulation
+            - DTC signaling gradient for stem cell maintenance
+            - Cell fate decisions: stem cells, meiotic entry, meiotic progression
+            - Spatial organization in a tube-like gonad structure
+            
+            Based on: Atwell et al. (2025) "A quantitative model of germ cell proliferation 
+            and meiotic entry in C. elegans reveals how nutrient sensing drives gametogenesis"
+        </Details>
+    </Description>
+    
+    <Global>
+        <!-- DTC signaling field - creates gradient from distal tip -->
+        <Field name="DTC_signal" symbol="dtc" value="0.0">
+            <Diffusion rate="5.0"/>
+        </Field>
+        
+        <!-- Nutrient signal field -->
+        <Field name="nutrient" symbol="N" value="1.0">
+            <Diffusion rate="0.1"/>
+        </Field>
+        
+        <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.1">
+            <DiffEqn symbol-ref="dtc">
+                <Expression>-0.05 * dtc</Expression>
+            </DiffEqn>
+        </System>
+        
+        <Constant name="max_distance" symbol="d_max" value="150"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="cubic">
+            <Size symbol="size" value="200, 50, 50"/>
+            <BoundaryConditions>
+                <Condition type="noflux" boundary="x"/>
+                <Condition type="noflux" boundary="-x"/>
+                <Condition type="periodic" boundary="y"/>
+                <Condition type="periodic" boundary="z"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="500"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123456"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType class="medium" name="medium"/>
+        
+        <!-- Distal Tip Cell - source of signaling -->
+        <CellType class="biological" name="DTC">
+            <Property symbol="signal_strength" value="100.0"/>
+            <VolumeConstraint target="50" strength="1.0"/>
+            <Property symbol="dtc_production" value="10.0"/>
+            <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.1">
+                <DiffEqn symbol-ref="dtc">
+                    <Expression>dtc_production</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+        
+        <!-- Stem cells - proliferative zone -->
+        <CellType class="biological" name="stem_cell">
+            <Property symbol="GLD1" value="0.0" name="GLD-1 level"/>
+            <Property symbol="cell_cycle_phase" value="0.0"/>
+            <Property symbol="distance_from_DTC" value="0.0"/>
+            <Property symbol="Vt" value="30" name="Target Volume"/>
+            
+            <VolumeConstraint target="Vt" strength="1.0"/>
+            <SurfaceConstraint target="1.0" strength="0.5" mode="aspherity"/>
+            
+            <!-- Cell cycle and GLD-1 dynamics -->
+            <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.1">
+                <Constant symbol="k_gld" value="0.02"/>
+                <Constant symbol="d_gld" value="0.01"/>
+                <Constant symbol="K_dtc" value="5.0"/>
+                <Constant symbol="n_hill" value="2"/>
+                <Constant symbol="k_cycle" value="0.05"/>
+                
+                <!-- GLD-1 increases with distance, inhibited by DTC signal -->
+                <DiffEqn symbol-ref="GLD1">
+                    <Expression>k_gld * (1.0 - dtc/(K_dtc + dtc)) - d_gld * GLD1</Expression>
+                </DiffEqn>
+                
+                <!-- Cell cycle progression -->
+                <DiffEqn symbol-ref="cell_cycle_phase">
+                    <Expression>k_cycle * (1.0 + 0.5 * N)</Expression>
+                </DiffEqn>
+                
+                <!-- Track distance from DTC -->
+                <Rule symbol-ref="distance_from_DTC">
+                    <Expression>sqrt((cell.center.x - 10)^2 + (cell.center.y - 25)^2 + (cell.center.z - 25)^2)</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Cell division when cycle completes and volume sufficient -->
+            <CellDivision division-plane="major">
+                <Condition>cell_cycle_phase > 6.28 and cell.volume > Vt*0.9 and GLD1 &lt; 0.8</Condition>
+                <Triggers>
+                    <Rule symbol-ref="cell_cycle_phase">
+                        <Expression>0.0</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <!-- Transition to meiotic entry when GLD-1 is high -->
+            <ChangeCellType newCellType="meiotic_entry" time-step="1.0">
+                <Condition>GLD1 > 1.5</Condition>
+            </ChangeCellType>
+        </CellType>
+        
+        <!-- Meiotic entry cells - transition zone -->
+        <CellType class="biological" name="meiotic_entry">
+            <Property symbol="GLD1" value="2.0"/>
+            <Property symbol="meiotic_timer" value="0.0"/>
+            <Property symbol="Vt" value="25"/>
+            
+            <VolumeConstraint target="Vt" strength="1.0"/>
+            <SurfaceConstraint target="1.0" strength="0.5" mode="aspherity"/>
+            
+            <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.1">
+                <DiffEqn symbol-ref="meiotic_timer">
+                    <Expression>0.02</Expression>
+                </DiffEqn>
+                
+                <DiffEqn symbol-ref="GLD1">
+                    <Expression>0.01 * (3.0 - GLD1)</Expression>
+                </DiffEqn>
+            </System>
+            
+            <!-- Transition to meiotic progression -->
+            <ChangeCellType newCellType="meiotic_progression" time-step="1.0">
+                <Condition>meiotic_timer > 10.0</Condition>
+            </ChangeCellType>
+        </CellType>
+        
+        <!-- Meiotic progression cells - proximal region -->
+        <CellType class="biological" name="meiotic_progression">
+            <Property symbol="GLD1" value="3.0"/>
+            <Property symbol="Vt" value="20"/>
+            <Property symbol="maturation" value="0.0"/>
+            
+            <VolumeConstraint target="Vt" strength="1.0"/>
+            <SurfaceConstraint target="1.0" strength="0.5" mode="aspherity"/>
+            
+            <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.1">
+                <DiffEqn symbol-ref="maturation">
+                    <Expression>0.01</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <!-- Cell-cell adhesion -->
+            <Contact type1="stem_cell" type2="stem_cell" value="-5"/>
+            <Contact type1="stem_cell" type2="meiotic_entry" value="-4"/>
+            <Contact type1="stem_cell" type2="meiotic_progression" value="-3"/>
+            <Contact type1="meiotic_entry" type2="meiotic_entry" value="-5"/>
+            <Contact type1="meiotic_entry" type2="meiotic_progression" value="-4"/>
+            <Contact type1="meiotic_progression" type2="meiotic_progression" value="-5"/>
+            <Contact type1="DTC" type2="stem_cell" value="-8"/>
+            <Contact type1="stem_cell" type2="medium" value="0"/>
+            <Contact type1="meiotic_entry" type2="medium" value="0"/>
+            <Contact type1="meiotic_progression" type2="medium" value="0"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2.0"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>2.5</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <!-- Initialize DTC at distal tip -->
+        <Population type="DTC" size="1">
+            <InitCellObjects mode="distance">
+                <Arrangement displacements="1, 1, 1" repetitions="1, 1, 1">
+                    <Sphere radius="3" center="10, 25, 25"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <!-- Initialize stem cells in proliferative zone -->
+        <Population type="stem_cell" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement displacements="8, 0, 0" repetitions="5, 1, 1">
+                    <Sphere radius="2.5" center="20, 25, 25"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <Population type="meiotic_entry" size="0"/>
+        <Population type="meiotic_progression" size="0"/>
+    </CellPopulations>
+    
+    <Analysis>
+        <!-- Visualize cells in 3D with slice view -->
+        <Gnuplotter time-step="10" decorate="true">
+            <Terminal name="png" size="800, 400, 0"/>
+            <Plot title="C. elegans Germ Line - XY slice (z=25)">
+                <Cells value="cell.type" slice="25">
+                    <ColorMap>
+                        <Color value="1" color="red"/>      <!-- DTC -->
+                        <Color value="2" color="green"/>    <!-- stem cells -->
+                        <Color value="3" color="yellow"/>   <!-- meiotic entry -->
+                        <Color value="4" color="blue"/>     <!-- meiotic progression -->
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Plot DTC signal gradient -->
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png" size="600, 400, 0"/>
+            <Plot title="DTC Signal Gradient">
+                <Field symbol-ref="dtc" slice="25" min="0" max="20"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Logger for population dynamics -->
+        <Logger time-step="5">
+            <Input>
+                <Symbol symbol-ref="celltype.stem_cell.size"/>
+                <Symbol symbol-ref="celltype.meiotic_entry.size"/>
+                <Symbol symbol-ref="celltype.meiotic_progression.size"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="10">
+                    <Style style="lines" line-width="3.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="celltype.stem_cell.size"/>
+                        <Symbol symbol-ref="celltype.meiotic_entry.size"/>
+                        <Symbol symbol-ref="celltype.meiotic_progression.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- Logger for GLD-1 dynamics -->
+        <Logger time-step="5">
+            <Restriction>
+                <Celltype celltype="stem_cell"/>
+            </Restriction>
+            <Input>
+                <Symbol symbol-ref="GLD1"/>
+                <Symbol symbol-ref="cell_cycle_phase"/>
+                <Symbol symbol-ref="distance_from_DTC"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="50">
+                    <Style style="points" point-size="0.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="distance_from_DTC"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="GLD1"/>
+                    </Y-axis>
+                    <Range>
+                        <Time mode="current"/>
+                    </Range>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- Model graph -->
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,105 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Endothelial Cell Migration with Persistent Random Walk</Title>
+        <Details>
+            Cellular Potts Model of endothelial cell migration based on Szabó et al. 2010.
+            Implements persistent random walk motion with velocity autocorrelation.
+        </Details>
+    </Description>
+    
+    <Space>
+        <Lattice class="square">
+            <Size value="200, 200, 0" symbol="size"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+        </Lattice>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="2000"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <Global>
+        <Constant symbol="ncells" value="100"/>
+    </Global>
+    
+    <CellTypes>
+        <CellType name="endothelial" class="biological">
+            <PropertyVector symbol="velocity" value="0.0, 0.0, 0.0" name="Cell velocity"/>
+            <Property symbol="speed" value="0.0" name="Cell speed"/>
+            <Property symbol="target_volume" value="100" name="Target cell volume"/>
+            
+            <VolumeConstraint target="target_volume" strength="1"/>
+            <SurfaceConstraint target="1.0" strength="2" mode="aspherity"/>
+            
+            <PersistentMotion decay-time="100" strength="10" protrusion="true"/>
+            
+            <MotilityReporter time-step="10">
+                <Velocity symbol-ref="velocity"/>
+            </MotilityReporter>
+            
+            <System time-step="10" solver="Dormand-Prince [adaptive, O(5)]">
+                <Rule symbol-ref="speed">
+                    <Expression>sqrt(velocity.x^2 + velocity.y^2)</Expression>
+                </Rule>
+            </System>
+        </CellType>
+        
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0.0">
+            <Contact type1="endothelial" type2="endothelial" value="20"/>
+            <Contact type1="endothelial" type2="medium" value="2"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="15"/>
+        </MonteCarloSampler>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="endothelial" size="ncells">
+            <InitCircle mode="random" number-of-cells="ncells">
+                <Dimensions radius="80" center="100, 100, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cell Migration">
+                <Cells value="cell.type"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="cell.id"/>
+                <Symbol symbol-ref="cell.center.x"/>
+                <Symbol symbol-ref="cell.center.y"/>
+                <Symbol symbol-ref="velocity.x"/>
+                <Symbol symbol-ref="velocity.y"/>
+                <Symbol symbol-ref="speed"/>
+            </Input>
+            <Restriction>
+                <Celltype celltype="endothelial"/>
+            </Restriction>
+            <Output>
+                <TextOutput/>
+            </Output>
+        </Logger>
+        
+        <ModelGraph format="svg" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

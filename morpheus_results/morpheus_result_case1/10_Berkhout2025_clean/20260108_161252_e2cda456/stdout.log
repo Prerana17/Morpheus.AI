@@ -1,0 +1,711 @@
+Initializing from file model.xml
+AutoFix: Moved 6 element(s)  matching /MorpheusModel/Global/System/DiffEqn/Expression to /MorpheusModel/Global/System/DiffEqn/Reaction
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion[@rate!=~0(?:\.0+)?]/@rate to /MorpheusModel/Global/System/DiffEqn[@symbol-ref=%1]/Diffusion/@text
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion to 
+AutoFix: Moved 21 element(s)  matching /MorpheusModel/CellTypes/CellType/System/DiffEqn/Expression to /MorpheusModel/CellTypes/CellType/System/DiffEqn/Reaction
+Applied 35 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 8 with seed 762289999
+Intitalize Thread Intitalize Thread 4 with seed 3809093915
+Intitalize Thread 6 with seed 443477877
+Intitalize Thread 9 with seed Intitalize Thread 3 with seed 3745674176
+Intitalize Thread 7 with seed 3196196310
+2723656049
+Intitalize Thread 5 with seed 1094708188
+Intitalize Thread 1 with seed 3762331389
+Intitalize Thread 2 with seed 2721100768
+0 with seed 1767885287
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread 8 with seed 1166165736
+Intitalize Thread Intitalize Thread Intitalize Thread 7Intitalize Thread 9 with seed 1868579686
+ with seed Intitalize Thread Intitalize Thread Intitalize Thread 3 with seed 01 with seed 3410091070
+ with seed Intitalize Thread 4 with seed 402986821769919023
+Intitalize Thread 5 with seed 2 with seed 990324140
+634710479180
+
+ with seed 4250921454
+
+1044445579
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 252, 200, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [11] Global Plugins
+getXMLAttribute: seeking for Field->symbol: BMP4
+Registering Symbol BMP4 of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: SHH
+Registering Symbol SHH of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: WNT
+Registering Symbol WNT of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: NOG
+Registering Symbol NOG of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Variable->name: All-trans Retinoic Acid
+getXMLAttribute: seeking for Variable->symbol: ATRA
+getXMLAttribute: seeking for Variable->value: 0.0
+getXMLAttribute: seeking for Variable->notation .. not found
+Registering Symbol ATRA of linktype VariableLink in Scope root
+getXMLAttribute: seeking for Variable->name: Fibroblast Growth Factor 8
+getXMLAttribute: seeking for Variable->symbol: FGF8
+getXMLAttribute: seeking for Variable->value: 1.0
+getXMLAttribute: seeking for Variable->notation .. not found
+Registering Symbol FGF8 of linktype VariableLink in Scope root
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope root
+getXMLAttribute: seeking for System->solver: Euler [fixed, O(1)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: ATRA
+getXMLAttribute: seeking for Reaction->text: 0.0035 * (1.0 - ATRA)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: FGF8
+getXMLAttribute: seeking for Reaction->text: -0.0035 * FGF8
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: BMP4
+getXMLAttribute: seeking for Reaction->text: -0.00050 * BMP4
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 3.6
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: SHH
+getXMLAttribute: seeking for Reaction->text: -0.00050 * SHH
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 3.6
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: WNT
+getXMLAttribute: seeking for Reaction->text: -0.00050 * WNT
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 3.6
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: NOG
+getXMLAttribute: seeking for Reaction->text: -0.00050 * NOG
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 3.6
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Constant->name: Half-maximal constant
+getXMLAttribute: seeking for Constant->symbol: K_hill
+getXMLAttribute: seeking for Constant->value: 0.5
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol K_hill of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: Hill coefficient
+getXMLAttribute: seeking for Constant->symbol: n_hill
+getXMLAttribute: seeking for Constant->value: 8
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol n_hill of linktype ConstantLink in Scope root
+Creating subscope Function in scope root
+getXMLAttribute: seeking for Function->symbol: hill_activate
+getXMLAttribute: seeking for Expression->text: x^n_hill / (K_hill^n_hill + x^n_hill)
+getXMLAttribute: seeking for Parameter[0]->symbol: x
+getXMLAttribute: seeking for Parameter[0]->name: activator level
+Registering Symbol hill_activate of linktype FunctionLink in Scope root
+Creating subscope Function in scope root
+getXMLAttribute: seeking for Function->symbol: hill_inhibit
+getXMLAttribute: seeking for Expression->text: K_hill^n_hill / (K_hill^n_hill + x^n_hill)
+getXMLAttribute: seeking for Parameter[0]->symbol: x
+getXMLAttribute: seeking for Parameter[0]->name: inhibitor level
+Registering Symbol hill_inhibit of linktype FunctionLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[notochord] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[notochord]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[notochord]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[notochord]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[notochord]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[notochord]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[notochord]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[notochord]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[notochord]
+Registering Symbol celltype.notochord.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.notochord.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[surface_ectoderm] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[surface_ectoderm]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[surface_ectoderm]
+Registering Symbol celltype.surface_ectoderm.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.surface_ectoderm.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[neuroectoderm] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[neuroectoderm]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[neuroectoderm]
+Registering Symbol celltype.neuroectoderm.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.neuroectoderm.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[mesoderm] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[mesoderm]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[mesoderm]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[mesoderm]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[mesoderm]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[mesoderm]
+Registering Symbol celltype.mesoderm.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.mesoderm.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[somite] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[somite]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[somite]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[somite]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[somite]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[somite]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[somite]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[somite]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[somite]
+Registering Symbol celltype.somite.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.somite.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[neural_crest] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[neural_crest]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[neural_crest]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[neural_crest]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[neural_crest]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[neural_crest]
+Registering Symbol celltype.neural_crest.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.neural_crest.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for Property->name: SHH production
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 0.007
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[notochord]
+Registering Symbol SHH_prod of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: 49
+getXMLAttribute: seeking for VolumeConstraint->strength: 2.0
+getXMLAttribute: seeking for Chemotaxis->field: SHH
+getXMLAttribute: seeking for Chemotaxis->strength: -0.1
+getXMLAttribute: seeking for Chemotaxis->saturation .. not found
+getXMLAttribute: seeking for Chemotaxis->retraction: false
+getXMLAttribute: seeking for Chemotaxis->contact-inhibition .. not found
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[notochord]
+getXMLAttribute: seeking for System->solver: Euler [fixed, O(1)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: SHH
+getXMLAttribute: seeking for Reaction->text: SHH_prod
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Property->name: BMP4 production
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.015
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[surface_ectoderm]
+Registering Symbol BMP4_prod of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: WNT production
+getXMLAttribute: seeking for Property->symbol: WNT_prod
+getXMLAttribute: seeking for Property->value: 0.007
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol WNT_prod of linktype CellPropertyLink in Scope CellType[surface_ectoderm]
+Registering Symbol WNT_prod of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Target volume
+getXMLAttribute: seeking for Property->symbol: target_vol
+getXMLAttribute: seeking for Property->value: 49
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol target_vol of linktype CellPropertyLink in Scope CellType[surface_ectoderm]
+Registering Symbol target_vol of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: target_vol
+getXMLAttribute: seeking for VolumeConstraint->strength: 2.0
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[surface_ectoderm]
+getXMLAttribute: seeking for System->solver: Euler [fixed, O(1)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: target_vol
+getXMLAttribute: seeking for Reaction->text: 0.003 * target_vol
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: BMP4
+getXMLAttribute: seeking for Reaction->text: BMP4_prod * hill_inhibit(FGF8)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: WNT
+getXMLAttribute: seeking for Reaction->text: WNT_prod * (ATRA + FGF8) / 2.0
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: force_x
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol force_x of linktype CellPropertyLink in Scope CellType[surface_ectoderm]
+Registering Symbol force_x of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for DirectedMotion->direction: force_x, 0, 0
+getXMLAttribute: seeking for DirectedMotion->strength: 1.0
+getXMLAttribute: seeking for DirectedMotion->protrusion .. not found
+getXMLAttribute: seeking for DirectedMotion->retraction .. not found
+getXMLAttribute: seeking for Property->name: Patched receptor
+getXMLAttribute: seeking for Property->symbol: PTCH1
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PTCH1 of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol PTCH1 of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Zinc finger protein
+getXMLAttribute: seeking for Property->symbol: ZIC
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ZIC of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol ZIC of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: GLI2 transcription factor
+getXMLAttribute: seeking for Property->symbol: GLI2
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol GLI2 of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol GLI2 of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: BMP receptor
+getXMLAttribute: seeking for Property->symbol: BMPR
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMPR of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol BMPR of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Internal Noggin
+getXMLAttribute: seeking for Property->symbol: NOG_int
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NOG_int of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol NOG_int of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Apical constriction state
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol apical_constriction of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Floor plate marker
+getXMLAttribute: seeking for Property->symbol: is_floor_plate
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol is_floor_plate of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol is_floor_plate of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Target volume
+getXMLAttribute: seeking for Property->symbol: target_vol
+getXMLAttribute: seeking for Property->value: 49
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol target_vol of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+getXMLAttribute: seeking for VolumeConstraint->target: target_vol
+getXMLAttribute: seeking for VolumeConstraint->strength: 2.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.5
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[neuroectoderm]
+getXMLAttribute: seeking for System->solver: Euler [fixed, O(1)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: SHH_local
+getXMLAttribute: seeking for Constant->value: 0.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol SHH_local of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: BMP4_local
+getXMLAttribute: seeking for Constant->value: 0.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol BMP4_local of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for DiffEqn->symbol-ref: PTCH1
+getXMLAttribute: seeking for Reaction->text: 0.1 * (hill_activate(SHH.cell) - PTCH1)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: ZIC
+getXMLAttribute: seeking for Reaction->text: 0.1 * (hill_inhibit(PTCH1) * hill_inhibit(GLI2) - ZIC)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: GLI2
+getXMLAttribute: seeking for Reaction->text: 0.1 * (hill_activate(PTCH1) - GLI2)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: BMPR
+getXMLAttribute: seeking for Reaction->text: 0.1 * (hill_activate(BMP4.cell) * hill_inhibit(NOG_int) - BMPR)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: NOG_int
+getXMLAttribute: seeking for Reaction->text: 0.006 * (hill_activate(FGF8) + hill_activate(BMPR)) - 0.001 * NOG_int
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: is_floor_plate
+getXMLAttribute: seeking for Expression->text: if(SHH.cell > 0.7 and time > 2000, 1.0, is_floor_plate)
+getXMLAttribute: seeking for Rule->symbol-ref: apical_constriction
+getXMLAttribute: seeking for Expression->text: bmp_effect * shh_inhib
+getXMLAttribute: seeking for DiffEqn->symbol-ref: NOG
+getXMLAttribute: seeking for Reaction->text: 0.00025 * NOG_int
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: SHH
+getXMLAttribute: seeking for Reaction->text: is_floor_plate * 0.007 * hill_activate(PTCH1)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Input->value: BMP4
+getXMLAttribute: seeking for Polarity->symbol-ref .. not found
+getXMLAttribute: seeking for Output[0]->mapping: average
+getXMLAttribute: seeking for Output[0]->symbol-ref: BMP4.cell
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4.cell
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4.cell of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol BMP4.cell of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Input->value: SHH
+getXMLAttribute: seeking for Polarity->symbol-ref .. not found
+getXMLAttribute: seeking for Output[0]->mapping: average
+getXMLAttribute: seeking for Output[0]->symbol-ref: SHH.cell
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH.cell
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH.cell of linktype CellPropertyLink in Scope CellType[neuroectoderm]
+Registering Symbol SHH.cell of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: BMP receptor
+getXMLAttribute: seeking for Property->symbol: BMPR
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMPR of linktype CellPropertyLink in Scope CellType[mesoderm]
+getXMLAttribute: seeking for Property->name: Internal Noggin
+getXMLAttribute: seeking for Property->symbol: NOG_int
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NOG_int of linktype CellPropertyLink in Scope CellType[mesoderm]
+getXMLAttribute: seeking for Property->name: Target volume
+getXMLAttribute: seeking for Property->symbol: target_vol
+getXMLAttribute: seeking for Property->value: 49
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol target_vol of linktype CellPropertyLink in Scope CellType[mesoderm]
+getXMLAttribute: seeking for Property->name: Somitogenesis probability
+getXMLAttribute: seeking for Property->symbol: somite_prob
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol somite_prob of linktype CellPropertyLink in Scope CellType[mesoderm]
+Registering Symbol somite_prob of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: target_vol
+getXMLAttribute: seeking for VolumeConstraint->strength: 2.0
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[mesoderm]
+getXMLAttribute: seeking for System->solver: Euler [fixed, O(1)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: target_vol
+getXMLAttribute: seeking for Reaction->text: 0.02 * (200 - target_vol) / 200
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: BMPR
+getXMLAttribute: seeking for Reaction->text: 0.1 * (hill_activate(BMP4.cell) - BMPR)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: NOG_int
+getXMLAttribute: seeking for Reaction->text: 0.006 * hill_activate(BMPR) - 0.001 * NOG_int
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: NOG
+getXMLAttribute: seeking for Reaction->text: 0.00025 * NOG_int
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Input->value: BMP4
+getXMLAttribute: seeking for Polarity->symbol-ref .. not found
+getXMLAttribute: seeking for Output[0]->mapping: average
+getXMLAttribute: seeking for Output[0]->symbol-ref: BMP4.cell
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4.cell
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4.cell of linktype CellPropertyLink in Scope CellType[mesoderm]
+getXMLAttribute: seeking for Condition->text: time > 4000 and rand_uni(0,1) < 0.0004
+getXMLAttribute: seeking for ChangeCellType->newCellType: somite
+getXMLAttribute: seeking for Property->name: Target volume
+getXMLAttribute: seeking for Property->symbol: target_vol
+getXMLAttribute: seeking for Property->value: 49
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol target_vol of linktype CellPropertyLink in Scope CellType[somite]
+getXMLAttribute: seeking for VolumeConstraint->target: target_vol
+getXMLAttribute: seeking for VolumeConstraint->strength: 2.0
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[somite]
+getXMLAttribute: seeking for System->solver: Euler [fixed, O(1)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: target_vol
+getXMLAttribute: seeking for Reaction->text: 0.001 * target_vol
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Property->name: Frizzled receptor
+getXMLAttribute: seeking for Property->symbol: FZD
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FZD of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol FZD of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: PAX3
+getXMLAttribute: seeking for Property->symbol: PAX3
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX3 of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol PAX3 of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: SNAIL1
+getXMLAttribute: seeking for Property->symbol: SNAI1
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SNAI1 of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol SNAI1 of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Cadherin (1=E-cad, 0=N-cad)
+getXMLAttribute: seeking for Property->symbol: CAD
+getXMLAttribute: seeking for Property->value: 1.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol CAD of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol CAD of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Delamination state
+getXMLAttribute: seeking for Property->symbol: delaminated
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol delaminated of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol delaminated of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Target volume
+getXMLAttribute: seeking for Property->symbol: target_vol
+getXMLAttribute: seeking for Property->value: 49
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol target_vol of linktype CellPropertyLink in Scope CellType[neural_crest]
+getXMLAttribute: seeking for VolumeConstraint->target: target_vol
+getXMLAttribute: seeking for VolumeConstraint->strength: 2.0
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[neural_crest]
+getXMLAttribute: seeking for System->solver: Euler [fixed, O(1)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: target_vol
+getXMLAttribute: seeking for Reaction->text: 0.003 * target_vol
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: FZD
+getXMLAttribute: seeking for Reaction->text: 0.1 * (hill_activate(WNT.cell) - FZD)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: PAX3
+getXMLAttribute: seeking for Reaction->text: 0.05 * (hill_activate(ATRA) * hill_activate(FZD) - PAX3)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: SNAI1
+getXMLAttribute: seeking for Reaction->text: 0.05 * (hill_activate(PAX3) - SNAI1)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: CAD
+getXMLAttribute: seeking for Reaction->text: -0.01 * hill_activate(SNAI1) * hill_inhibit(FGF8)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: delaminated
+getXMLAttribute: seeking for Expression->text: if(CAD < 0.3, 1.0, delaminated)
+getXMLAttribute: seeking for Input->value: WNT
+getXMLAttribute: seeking for Polarity->symbol-ref .. not found
+getXMLAttribute: seeking for Output[0]->mapping: average
+getXMLAttribute: seeking for Output[0]->symbol-ref: WNT.cell
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: WNT.cell
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol WNT.cell of linktype CellPropertyLink in Scope CellType[neural_crest]
+Registering Symbol WNT.cell of linktype CompositeLink in Scope root
+CellTypes defined: 'medium' 'mesoderm' 'neural_crest' 'neuroectoderm' 'notochord' 'somite' 'surface_ectoderm' 
+getXMLAttribute: seeking for MonteCarloSampler/MCSDuration->value: 1.0
+getXMLAttribute: seeking for MonteCarloSampler->stepper: edgelist
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->temperature: 10
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->yield: 0.1
+getXMLAttribute: seeking for Contact->value: 20
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 10
+getXMLAttribute: seeking for Contact->value: 20
+getXMLAttribute: seeking for Contact->value: 20
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 3
+getXMLAttribute: seeking for Contact->value: 3
+getXMLAttribute: seeking for Contact->value: 3
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 25
+getXMLAttribute: seeking for Contact->value: 10
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 7
+getXMLAttribute: seeking for Contact->value: 20
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 2
+Assigning Shape Neighborhood of size 1.41421 -> 8 neighbors.
+Setting boundary neighborhood to order 2
+Creating cell layer of size 1.41895 MB
+with initial state set to CellType 'medium'
+getXMLAttribute: seeking for InitRectangle->number-of-cells: 30
+getXMLAttribute: seeking for InitRectangle->mode: regular
+getXMLAttribute: seeking for InitRectangle->random-offset .. not found
+getXMLAttribute: seeking for Dimensions->origin: 91, 40, 0
+getXMLAttribute: seeking for Dimensions->size: 70, 14, 0
+getXMLAttribute: seeking for InitRectangle->number-of-cells: 180
+getXMLAttribute: seeking for InitRectangle->mode: regular
+getXMLAttribute: seeking for InitRectangle->random-offset .. not found
+getXMLAttribute: seeking for Dimensions->origin: 28, 60, 0
+getXMLAttribute: seeking for Dimensions->size: 196, 42, 0
+getXMLAttribute: seeking for InitRectangle->number-of-cells: 24
+getXMLAttribute: seeking for InitRectangle->mode: regular
+getXMLAttribute: seeking for InitRectangle->random-offset .. not found
+getXMLAttribute: seeking for Dimensions->origin: 0, 60, 0
+getXMLAttribute: seeking for Dimensions->size: 28, 42, 0
+getXMLAttribute: seeking for InitRectangle->number-of-cells: 24
+getXMLAttribute: seeking for InitRectangle->mode: regular
+getXMLAttribute: seeking for InitRectangle->random-offset .. not found
+getXMLAttribute: seeking for Dimensions->origin: 224, 60, 0
+getXMLAttribute: seeking for Dimensions->size: 28, 42, 0
+getXMLAttribute: seeking for InitRectangle->number-of-cells: 200
+getXMLAttribute: seeking for InitRectangle->mode: regular
+getXMLAttribute: seeking for InitRectangle->random-offset .. not found
+getXMLAttribute: seeking for Dimensions->origin: 0, 40, 0
+getXMLAttribute: seeking for Dimensions->size: 252, 20, 0
+getXMLAttribute: seeking for InitRectangle->number-of-cells: 40
+getXMLAttribute: seeking for InitRectangle->mode: regular
+getXMLAttribute: seeking for InitRectangle->random-offset .. not found
+getXMLAttribute: seeking for Dimensions->origin: 28, 102, 0
+getXMLAttribute: seeking for Dimensions->size: 196, 14, 0
+Initializing celltype 'medium'
+Initializing celltype 'notochord'
+Scope: Creating Accessor for symbol 'SHH' from Scope root
+Plugin Chemotaxis: Registered input symbol dependencies SHH [root] ,
+Scope: Creating Accessor for symbol 'SHH' from Scope root
+Scope: Creating Accessor for symbol 'SHH_prod' from Scope CellType[notochord]
+System::init: Reordering Initializers ...
+InitRectangle: number of cells = 30, origin = 91, 40, 0, size = 70, 14, 0
+InitRectangle: clamped size from (70,14,0) to (70,14,1)
+successfully created 30 cells.
+Cells 30 requested 0
+Initializing celltype 'surface_ectoderm'
+Scope: Creating Accessor for symbol 'target_vol' from Scope CellType[surface_ectoderm]
+Plugin VolumeConstraint: Registered input symbol dependencies target_vol [CellType[surface_ectoderm]] ,
+Scope: Creating Accessor for symbol 'target_vol' from Scope CellType[surface_ectoderm]
+Scope: Creating Accessor for symbol 'BMP4' from Scope root
+Scope: Creating Accessor for symbol 'WNT' from Scope root

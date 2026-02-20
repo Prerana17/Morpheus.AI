@@ -1,0 +1,38 @@
+============================================================
+MORPHEUS EVALUATION REPORT
+============================================================
+Run ID: run_20250116_151053_atwell2025
+Timestamp: 2026-01-27T15:42:50.538406
+
+TOTAL SCORE: 1 / 6 (16.67%)
+
+------------------------------------------------------------
+SCORING BREAKDOWN:
+------------------------------------------------------------
+
+1. XML Errors (penalty, best=0):
+   - Error count: 0
+   - Score: 0
+
+2. Model Graph (model_graph.dot):
+   - Present: True
+   - Files: ['model_graph.dot']
+   - Score: 1 / 1
+
+3. Time Step Progression:
+   - Time lines count: 0
+   - Scoring: 0->+0, 1->+1, 2-100->+2, 101->+3
+   - Score: 0 / 3
+
+4. StopTime Match:
+   - StopTime in XML: 500.0
+   - Last simulation time: None
+   - Match: False
+   - Score: 0 / 1
+
+5. Result Files Generated:
+   - PNG files: 0 []
+   - CSV files: 0 []
+   - Score: 0 / 1
+
+============================================================

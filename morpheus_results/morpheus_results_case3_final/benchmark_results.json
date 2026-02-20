@@ -1,0 +1,140 @@
+{
+  "benchmark_summary": {
+    "model": "claude-sonnet-4-5-20250929",
+    "total_papers_processed": 10,
+    "successfully_completed": 9,
+    "failed_incomplete": 1,
+    "total_pngs_generated": 944,
+    "total_csvs_generated": 162,
+    "average_score": 6.3,
+    "max_possible_score": 7,
+    "min_score": 0,
+    "max_score": 7,
+    "duration": "70m 39s",
+    "duration_seconds": 4239,
+    "success_rate_percent": 90.0,
+    "perfect_scores_count": 9
+  },
+  "individual_results": [
+    {
+      "paper": "1_Szabo2010_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/1_Szabo2010_clean.pdf",
+      "status": "completed",
+      "run_id": "20260127_115432_b7afc65c",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 249,
+      "csv_count": 150,
+      "iterations": 23,
+      "error": null
+    },
+    {
+      "paper": "2_Thapa2024_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/2_Thapa2024_clean.pdf",
+      "status": "completed",
+      "run_id": "20260127_125105_082fa5f2",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 112,
+      "csv_count": 1,
+      "iterations": 15,
+      "error": null
+    },
+    {
+      "paper": "3_Carpenter2024_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/3_Carpenter2024_clean.pdf",
+      "status": "completed",
+      "run_id": "20260129_183548_03941a64",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 62,
+      "csv_count": 1,
+      "iterations": 8,
+      "error": null
+    },
+    {
+      "paper": "4_Atwell2025_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/4_Atwell2025_clean.pdf",
+      "status": "completed",
+      "run_id": "20260128_202918_b5dafca9",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 111,
+      "csv_count": 1,
+      "iterations": 12,
+      "error": null
+    },
+    {
+      "paper": "5_Berkemeier2023_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/5_Berkemeier2023_clean.pdf",
+      "status": "completed",
+      "run_id": "20260129_183902_8b454efd",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 52,
+      "csv_count": 1,
+      "iterations": 13,
+      "error": null
+    },
+    {
+      "paper": "6_Herron2022_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/6_Herron2022_clean.pdf",
+      "status": "completed",
+      "run_id": "20260129_131119_cf8c7726",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 43,
+      "csv_count": 2,
+      "iterations": 10,
+      "error": null
+    },
+    {
+      "paper": "7_Scheel2021_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/7_Scheel2021_clean.pdf",
+      "status": "completed",
+      "run_id": "20260129_161929_315e7116",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 111,
+      "csv_count": 2,
+      "iterations": 16,
+      "error": null
+    },
+    {
+      "paper": "8_Mu2024_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/8_Mu2024_clean.pdf",
+      "status": "completed",
+      "run_id": "20260129_184542_f876ef8f",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 103,
+      "csv_count": 1,
+      "iterations": 14,
+      "error": null
+    },
+    {
+      "paper": "9_Luque2023_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/9_Luque2023_clean.pdf",
+      "status": "completed",
+      "run_id": "20260129_181719_97cfebba",
+      "score": 7,
+      "max_score": 7,
+      "png_count": 101,
+      "csv_count": 3,
+      "iterations": 23,
+      "error": null
+    },
+    {
+      "paper": "10_Berkhout2025_clean.pdf",
+      "pdf_path": "/Users/prerana/Desktop/morpheus/papers/10_Berkhout2025_clean.pdf",
+      "status": "max_iterations",
+      "run_id": "20260129_182618_a01629bb",
+      "score": 0,
+      "max_score": 7,
+      "png_count": 0,
+      "csv_count": 0,
+      "iterations": 25,
+      "error": null
+    }
+  ]
+}

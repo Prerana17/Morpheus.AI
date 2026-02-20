@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Ovarian Cancer Colonization on Senescent Mesothelial Monolayers</Title>
+        <Details>Model based on Thapa et al. (2024) - Cellular and Molecular Life Sciences.
+        
+        Simulates the interaction between ovarian cancer cells (SKOV-3/OVCAR-3) and senescent vs non-senescent mesothelial cells (MeT-5A).
+        
+        Key features:
+        - Three cell types: senescent mesothelia, non-senescent mesothelia, cancer cells
+        - Differential adhesion: cancer cells adhere more strongly to senescent mesothelia (lower contact energy)
+        - Cancer cell proliferation
+        - Cell extrusion dynamics
+        
+        The paper showed that senescent mesothelial cells express higher ECM (fibronectin, laminin) which enhances cancer cell adhesion and colonization.
+        </Details>
+    </Description>
+    <Global>
+        <Variable symbol="total_cancer_cells" value="0.0" name="Total number of cancer cells"/>
+        <Variable symbol="total_senescent" value="0.0" name="Total number of senescent mesothelia"/>
+        <Variable symbol="total_nonsenescent" value="0.0" name="Total number of non-senescent mesothelia"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="400, 400, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="50000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="0"/>
+    </Time>
+    <CellTypes>
+        <CellType name="medium" class="medium"/>
+        
+        <CellType name="nonsenescent_mesothelia" class="biological">
+            <VolumeConstraint target="150" strength="1"/>
+            <SurfaceConstraint target="0.9" mode="aspherity" strength="1"/>
+            <Property symbol="cell_age" value="0"/>
+        </CellType>
+        
+        <CellType name="senescent_mesothelia" class="biological">
+            <VolumeConstraint target="250" strength="1"/>
+            <SurfaceConstraint target="0.85" mode="aspherity" strength="1"/>
+            <Property symbol="cell_age" value="0"/>
+        </CellType>
+        
+        <CellType name="cancer_cells" class="biological">
+            <VolumeConstraint target="180" strength="1"/>
+            <SurfaceConstraint target="0.92" mode="aspherity" strength="1"/>
+            <Property symbol="p" value="8e-5" name="proliferation rate"/>
+            <Property symbol="divisions" value="0" name="number of divisions"/>
+            <Property symbol="color_marker" value="0" name="marker for recent division"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <Rule symbol-ref="color_marker">
+                    <Expression>if(color_marker > 0, color_marker - 1, 0)</Expression>
+                </Rule>
+            </System>
+            
+            <CellDivision division-plane="random">
+                <Condition>rand_uni(0,1) &lt; p</Condition>
+                <Triggers>
+                    <Rule symbol-ref="divisions">
+                        <Expression>divisions + 1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="color_marker">
+                        <Expression>500</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0">
+            <!-- Medium interactions -->
+            <Contact type1="nonsenescent_mesothelia" type2="medium" value="10"/>
+            <Contact type1="senescent_mesothelia" type2="medium" value="10"/>
+            <Contact type1="cancer_cells" type2="medium" value="12"/>
+            
+            <!-- Mesothelial cell-cell interactions -->
+            <Contact type1="nonsenescent_mesothelia" type2="nonsenescent_mesothelia" value="5"/>
+            <Contact type1="senescent_mesothelia" type2="senescent_mesothelia" value="5"/>
+            <Contact type1="nonsenescent_mesothelia" type2="senescent_mesothelia" value="6"/>
+            
+            <!-- Cancer-cancer interactions -->
+            <Contact type1="cancer_cells" type2="cancer_cells" value="4"/>
+            
+            <!-- Cancer-mesothelial interactions - KEY DIFFERENCE -->
+            <!-- Non-senescent mesothelia have higher contact energy with cancer (weaker adhesion) -->
+            <Contact type1="cancer_cells" type2="nonsenescent_mesothelia" value="18"/>
+            
+            <!-- Senescent mesothelia have LOWER contact energy with cancer (STRONGER adhesion) -->
+            <!-- This is the key finding from the paper - enhanced adhesion to senescent ECM -->
+            <Contact type1="cancer_cells" type2="senescent_mesothelia" value="8"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="3" yield="0.1"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <!-- Initialize non-senescent mesothelial monolayer -->
+        <Population type="nonsenescent_mesothelia" size="0">
+            <InitCircle mode="random" number-of-cells="40">
+                <Dimensions radius="80" center="100, 200, 0"/>
+            </InitCircle>
+        </Population>
+        
+        <!-- Initialize senescent mesothelial monolayer (larger cells, fewer) -->
+        <Population type="senescent_mesothelia" size="0">
+            <InitCircle mode="random" number-of-cells="30">
+                <Dimensions radius="80" center="300, 200, 0"/>
+            </InitCircle>
+        </Population>
+        
+        <!-- Initialize cancer cells -->
+        <Population type="cancer_cells" size="0">
+            <InitCircle mode="random" number-of-cells="15">
+                <Dimensions radius="60" center="200, 200, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <!-- Gnuplotter - REQUIRED for PNG generation -->
+        <Gnuplotter time-step="200" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cell Types Distribution">
+                <Cells value="cell.type" min="0" max="3">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="1" color="blue"/>
+                        <Color value="2" color="orange"/>
+                        <Color value="3" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Cancer Cell Divisions">
+                <Cells value="divisions" min="0" max="5">
+                    <ColorMap>
+                        <Color value="5" color="darkred"/>
+                        <Color value="3" color="red"/>
+                        <Color value="1" color="yellow"/>
+                        <Color value="0" color="white"/>
+                    </ColorMap>
+                </Cells>
+                <CellLabels value="divisions" fontsize="6"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Logger - REQUIRED for CSV generation -->
+        <Logger time-step="100">
+            <Input>
+                <Symbol symbol-ref="celltype.cancer_cells.size"/>
+                <Symbol symbol-ref="celltype.senescent_mesothelia.size"/>
+                <Symbol symbol-ref="celltype.nonsenescent_mesothelia.size"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="2000">
+                    <Style style="linespoints" point-size="0.5" grid="true"/>
+                    <Terminal terminal="png"/>
+                    <X-axis minimum="0" maximum="50000">
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="150">
+                        <Symbol symbol-ref="celltype.cancer_cells.size"/>
+                        <Symbol symbol-ref="celltype.senescent_mesothelia.size"/>
+                        <Symbol symbol-ref="celltype.nonsenescent_mesothelia.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- ModelGraph - generates model structure visualization -->
+        <ModelGraph include-tags="#untagged" reduced="false" format="dot"/>
+    </Analysis>
+</MorpheusModel>

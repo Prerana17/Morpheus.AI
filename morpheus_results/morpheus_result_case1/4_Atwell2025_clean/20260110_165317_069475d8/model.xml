@@ -1,0 +1,310 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>C. elegans Germ Line - 3D with DTC Migration</Title>
+        <Details>
+        Enhanced model based on Atwell et al. (2015) Development 142:3902-3911
+        
+        Features:
+        - Full 3D mechanics with CPM
+        - DTC (Distal Tip Cell) migration creating gonad boundary
+        - 16 initial proliferative germ cells
+        - Cell cycle: 3h (larval) → 8h (adult)
+        - Position-dependent differentiation
+        - Contact inhibition in adults (compression-based cell cycle delay)
+        - Sperm/oocyte temporal switch at 32.5 hph
+        
+        Starting at 18.5 hph (beginning of L3 stage)
+        </Details>
+    </Description>
+    
+    <Global>
+        <Variable symbol="time_hph" value="18.5" name="Hours post-hatching"/>
+        <Variable symbol="DTC_position" value="50" name="DTC x-position"/>
+        <Constant symbol="meiotic_threshold" value="70" name="Distance for meiotic entry"/>
+        <Constant symbol="gamete_threshold" value="200" name="Distance for gamete differentiation"/>
+        <Constant symbol="sperm_cutoff" value="32.5" name="Sperm production ends (hph)"/>
+        <Constant symbol="larval_cycle_time" value="3.0" name="Larval cell cycle (hours)"/>
+        <Constant symbol="adult_cycle_time" value="8.0" name="Adult cell cycle (hours)"/>
+        <Constant symbol="adult_transition" value="35.5" name="Larval to adult transition (hph)"/>
+        <Constant symbol="DTC_speed" value="10.0" name="DTC migration speed"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="cubic">
+            <Size symbol="size" value="400, 80, 80"/>
+            <BoundaryConditions>
+                <Condition type="constant" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+                <Condition type="periodic" boundary="z"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="100"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="42"/>
+    </Time>
+    
+    <CellTypes>
+        <!-- DTC (Distal Tip Cell) - migrates and signals -->
+        <CellType name="DTC" class="biological">
+            <Property symbol="velocity" value="10"/>
+            
+            <VolumeConstraint strength="2" target="500"/>
+            <SurfaceConstraint mode="aspherity" strength="1" target="0.8"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="0.1">
+                <Rule symbol-ref="velocity">
+                    <Expression>if(time_hph &lt; adult_transition, DTC_speed, 0)</Expression>
+                </Rule>
+            </System>
+            
+            <!-- DTC migrates in +x direction -->
+            <DirectedMotion strength="1" direction="1, 0, 0"/>
+        </CellType>
+        
+        <!-- Proliferative germ cells -->
+        <CellType name="proliferative" class="biological">
+            <Property symbol="dist_DTC" value="0"/>
+            <Property symbol="cycle_time" value="0"/>
+            <Property symbol="target_cycle" value="3.0"/>
+            <Property symbol="divisions" value="0"/>
+            <Property symbol="compressed" value="0"/>
+            
+            <VolumeConstraint strength="1" target="250"/>
+            <SurfaceConstraint mode="aspherity" strength="0.5" target="0.9"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="0.1">
+                <!-- Calculate distance from DTC -->
+                <Rule symbol-ref="dist_DTC">
+                    <Expression>abs(cell.center.x - DTC_position)</Expression>
+                </Rule>
+                
+                <!-- Set cycle length based on developmental stage -->
+                <Rule symbol-ref="target_cycle">
+                    <Expression>if(time_hph >= adult_transition, adult_cycle_time, larval_cycle_time)</Expression>
+                </Rule>
+                
+                <!-- Check if compressed (contact inhibition in adults) -->
+                <Rule symbol-ref="compressed">
+                    <Expression>if(time_hph >= adult_transition and cell.volume &lt; 175, 1, 0)</Expression>
+                </Rule>
+                
+                <!-- Advance cell cycle unless compressed -->
+                <Rule symbol-ref="cycle_time">
+                    <Expression>if(compressed == 0, cycle_time + 0.1, cycle_time)</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Cell division when cycle completes -->
+            <CellDivision division-plane="random">
+                <Condition>cycle_time >= target_cycle</Condition>
+                <Triggers>
+                    <Rule symbol-ref="cycle_time">
+                        <Expression>0</Expression>
+                    </Rule>
+                    <Rule symbol-ref="divisions">
+                        <Expression>divisions + 0.5</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <!-- Enter meiosis when beyond proliferative zone -->
+            <ChangeCellType newCellType="meiotic">
+                <Condition>dist_DTC >= meiotic_threshold</Condition>
+            </ChangeCellType>
+        </CellType>
+        
+        <!-- Meiotic cells -->
+        <CellType name="meiotic" class="biological">
+            <Property symbol="dist_DTC" value="0"/>
+            <Property symbol="maturation" value="0"/>
+            
+            <VolumeConstraint strength="1" target="400"/>
+            <SurfaceConstraint mode="aspherity" strength="0.5" target="0.85"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="0.1">
+                <Rule symbol-ref="dist_DTC">
+                    <Expression>abs(cell.center.x - DTC_position)</Expression>
+                </Rule>
+                <Rule symbol-ref="maturation">
+                    <Expression>maturation + 0.1</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Differentiate to sperm during L4 -->
+            <ChangeCellType newCellType="sperm">
+                <Condition>dist_DTC >= gamete_threshold and time_hph &lt; sperm_cutoff and maturation > 5</Condition>
+            </ChangeCellType>
+            
+            <!-- Differentiate to oocyte in adult -->
+            <ChangeCellType newCellType="oocyte">
+                <Condition>dist_DTC >= gamete_threshold and time_hph >= sperm_cutoff and maturation > 5</Condition>
+            </ChangeCellType>
+        </CellType>
+        
+        <!-- Sperm -->
+        <CellType name="sperm" class="biological">
+            <VolumeConstraint strength="1" target="80"/>
+            <SurfaceConstraint mode="aspherity" strength="0.3" target="0.8"/>
+        </CellType>
+        
+        <!-- Oocytes -->
+        <CellType name="oocyte" class="biological">
+            <Property symbol="age" value="0"/>
+            
+            <VolumeConstraint strength="1" target="1000"/>
+            <SurfaceConstraint mode="aspherity" strength="0.5" target="0.8"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="0.1">
+                <Rule symbol-ref="age">
+                    <Expression>age + 0.1</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Physiological apoptosis -->
+            <CellDeath>
+                <Condition>age > 20 and rand_uni(0,1) &lt; 0.015</Condition>
+            </CellDeath>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <!-- DTC interactions -->
+            <Contact type1="DTC" type2="DTC" value="20"/>
+            <Contact type1="DTC" type2="proliferative" value="-8"/>
+            <Contact type1="DTC" type2="meiotic" value="5"/>
+            
+            <!-- Germ cell interactions -->
+            <Contact type1="proliferative" type2="proliferative" value="-6"/>
+            <Contact type1="proliferative" type2="meiotic" value="-4"/>
+            <Contact type1="meiotic" type2="meiotic" value="-4"/>
+            <Contact type1="meiotic" type2="sperm" value="3"/>
+            <Contact type1="meiotic" type2="oocyte" value="-3"/>
+            
+            <!-- Gamete interactions -->
+            <Contact type1="sperm" type2="sperm" value="-2"/>
+            <Contact type1="oocyte" type2="oocyte" value="-3"/>
+            <Contact type1="sperm" type2="oocyte" value="-1"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="5" yield="0.1"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>3</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <!-- DTC starts at distal end -->
+        <Population type="DTC" size="1">
+            <Cell id="1" name="DTC">
+                <Nodes>60, 40, 40</Nodes>
+            </Cell>
+        </Population>
+        
+        <!-- 16 initial proliferative germ cells near DTC -->
+        <Population type="proliferative" size="0">
+            <InitRectangle mode="random" number-of-cells="16">
+                <Dimensions size="40, 60, 60" origin="70, 10, 10"/>
+            </InitRectangle>
+            <InitProperty symbol-ref="cycle_time">
+                <Expression>rand_uni(0, larval_cycle_time)</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <!-- Track DTC position -->
+        <Mapper time-step="1">
+            <Input value="cell.center.x"/>
+            <Output symbol-ref="DTC_position" mapping="average"/>
+            <Restriction>
+                <Celltype celltype="DTC"/>
+            </Restriction>
+        </Mapper>
+        
+        <!-- Track time in hours -->
+        <Mapper time-step="1">
+            <Input value="0.1"/>
+            <Output symbol-ref="time_hph" mapping="sum"/>
+        </Mapper>
+        
+        <!-- Visualization -->
+        <Gnuplotter time-step="5" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="0" color="cyan"/>
+                        <Color value="1" color="yellow"/>
+                        <Color value="2" color="green"/>
+                        <Color value="3" color="blue"/>
+                        <Color value="4" color="red"/>
+                    </ColorMap>
+                </Cells>
+                <CellLabels value="divisions" fontsize="5"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Data logging -->
+        <Logger time-step="1">
+            <Input>
+                <Symbol symbol-ref="time"/>
+                <Symbol symbol-ref="time_hph"/>
+                <Symbol symbol-ref="DTC_position"/>
+                <Symbol symbol-ref="celltype.DTC.size"/>
+                <Symbol symbol-ref="celltype.proliferative.size"/>
+                <Symbol symbol-ref="celltype.meiotic.size"/>
+                <Symbol symbol-ref="celltype.sperm.size"/>
+                <Symbol symbol-ref="celltype.oocyte.size"/>
+            </Input>
+            <o>
+                <TextOutput file-format="csv"/>
+            </o>
+            <Plots>
+                <Plot time-step="10">
+                    <Style style="lines" line-width="2" grid="true"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time_hph"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="200" label="Cell count">
+                        <Symbol symbol-ref="celltype.proliferative.size"/>
+                        <Symbol symbol-ref="celltype.meiotic.size"/>
+                        <Symbol symbol-ref="celltype.sperm.size"/>
+                        <Symbol symbol-ref="celltype.oocyte.size"/>
+                    </Y-axis>
+                </Plot>
+                <Plot time-step="10">
+                    <Style style="lines" line-width="2" grid="true"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time_hph"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="350" label="DTC position (x)">
+                        <Symbol symbol-ref="DTC_position"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

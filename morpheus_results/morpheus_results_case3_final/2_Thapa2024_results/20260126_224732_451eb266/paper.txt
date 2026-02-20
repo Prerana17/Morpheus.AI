@@ -1,0 +1,404 @@
+Vol.:(0123456789)1 3
+Cellular and Molecular Life Sciences            (2024) 81:2  
+https://doi.org/10.1007/s00018-023-05017-x
+ORIGINAL ARTICLE
+The senescent mesothelial matrix accentuates colonization by ovarian 
+cancer cells
+Bharat Vivan Thapa1,2 · Mallar Banerjee1 · Tilmann Glimm3 · Deepak K. Saini1,4 · Ramray Bhat1,4 
+Received: 6 June 2023 / Revised: 4 October 2023 / Accepted: 24 October 2023 
+© The Author(s) 2023
+Abstract
+Ovarian cancer is amongst the most morbid of gynecological malignancies due to its diagnosis at an advanced stage, a 
+transcoelomic mode of metastasis, and rapid transition to chemotherapeutic resistance. Like all other malignancies, the 
+progression of ovarian cancer may be interpreted as an emergent outcome of the conflict between metastasizing cancer cells 
+and the natural defense mounted by microenvironmental barriers to such migration. Here, we asked whether senescence 
+in coelom-lining mesothelia, brought about by drug exposure, affects their interaction with disseminated ovarian cancer 
+cells. We observed that cancer cells adhered faster on senescent human and murine mesothelial monolayers than on non-
+senescent controls. Time-lapse epifluorescence microscopy showed that mesothelial cells were cleared by a host of cancer 
+cells that surrounded the former, even under sub-confluent conditions. A multiscale computational model predicted that 
+such colocalized mesothelial clearance under sub-confluence requires greater adhesion between cancer cells and senescent 
+mesothelia. Consistent with the prediction, we observed that senescent mesothelia expressed an extracellular matrix with 
+higher levels of fibronectin, laminins and hyaluronan than non-senescent controls. On senescent matrix, cancer cells adhered 
+more efficiently, spread better, and moved faster and persistently, aiding the spread of cancer. Inhibition assays using RGD 
+cyclopeptides suggested the adhesion was predominantly contributed by fibronectin and laminin. These findings led us to 
+propose that the senescence-associated matrisomal phenotype of peritoneal barriers enhances the colonization of invading 
+ovarian cancer cells contributing to the metastatic burden associated with the disease.
+Keywords Chemotherapy · Extracellular matrix · Mesothelia · Multiscale modeling · Ovarian cancer · Senescence
+Introduction
+The high morbidity associated with epithelial ovarian can-
+cer (EOC) is due to its ability to rapidly metastasize and 
+colonize the visceral peritoneum. Transformed cells at 
+the primary site are shed into the peritoneal cavity via the 
+movement of peritoneal fluid. Ovarian cancer cells adhere 
+to the lining of the peritonea [1, 2], retract mesothelial cells 
+[3], and actively degrade the underlying and exposed extra-
+cellular matrix (ECM) by expressing proteolytic enzymes 
+such as matrix metalloproteinases (MMPs) [2]. Management 
+of EOC involves surgical cytoreduction with chemotherapy 
+provided before or/and after surgery [4]. Cytotoxic therapeu-
+tics commonly employed in EOC are carboplatin and doxo-
+rubicin, which bind to and alkylate DNA, and paclitaxel, 
+which binds to tubulin and prevents karyokinesis. Treatment 
+with these agents inhibits cell division and ultimately leads 
+to cell death. However, exposure to such drugs may also 
+induce a cytostatic (as opposed to cytotoxic) state in both 
+cancer and primary cells, also known as senescence, wherein 
+the cells are metabolically active but growth-arrested. Ther-
+apy-induced senescence (TIS) has been proposed to suppress 
+tumor cell proliferation [5 ]. On the other hand, it has also 
+been shown to potentiate tumor heterogeneity, resistance [6], 
+and relapse [7 ]. For instance, TIS in ovarian cancer cells 
+Cellular andM olecular Life Sciences
+ * Deepak K. Saini 
+ deepaksaini@iisc.ac.in
+ * Ramray Bhat 
+ ramray@iisc.ac.in
+1 Department of Developmental Biology and Genetics, Indian 
+Institute of Science, Bangalore 560012, India
+2 Undergraduate Program, Indian Institute of Science, 
+Bangalore 560012, India
+3 Department of Mathematics, Western Washington University, 
+Bellingham, WA 98229, USA
+4 Department of Bioengineering, Indian Institute of Science, 
+Bangalore 560012, India
+
+ B. V. Thapa et al.
+1 3    2  Page 2 of 15
+leads to their transient dormancy, which can be reversed to 
+re-initiate proliferation [8, 9]. TIS-associated cytokine secre-
+tion (as part of the broader phenomenon of senescence-asso-
+ciated secretory phenotype or SASP) may accentuate infiltra-
+tion by tumor-associated macrophages (TAMs) in primary 
+tumors leading to greater invasion and metastasis [10– 12].
+Exposure to therapeutic drugs can affect not just the trans-
+formed cell niche within a tumor but also the untransformed 
+cellular microenvironment in ways that engender disease 
+progression. Stromal constituents such as endothelial cells 
+and bone marrow-derived cells signal in response to chemo-
+therapeutic exposure to accentuate metastasis [13– 16]. In 
+this context, it is pertinent to study whether senescence in 
+stromal constituents due to drug exposure contributes to can-
+cer cell invasion. Indeed, the accumulation of senescent/aged 
+mesothelia, the cells lining the peritoneal cavity, has been 
+shown to aid ovarian cancer metastasis [17].
+In this study, we sought to ask whether chemotherapeutic 
+drugs can drive mesothelial cells to senescence with an unin-
+tended potentiation of cancer progression. Using a human-
+murine hybrid ex vivo system, human mesothelial-cancer 
+coculture system and a Cellular Potts Model (CPM)-based 
+multiscale framework, we found that the senescent meso-
+thelia secrete a unique matrisome that provides a habitable 
+niche for metastasizing cancer cells. A comprehensive 
+understanding of how such a ‘senescence-associated matri-
+somal phenotype’ leads to higher invasion by ovarian cancer 
+will help design novel therapeutics for the management of 
+metastasis.
+Results
+Senescent mesothelial monolayers potentiate 
+adhesion of ovarian cancer cells
+Parietal peritoneal tissue was dissected from 4 to 6 week 
+Balb/c female mice and cultivated ex vivo as described 
+earlier [18]. Senescence was induced in the explants 
+using 100 nM doxorubicin. Mesothelial cells were har -
+vested from control and senescent murine peritonea and 
+senescence was confirmed by morphological examina-
+tion (Figure S1A). Control and senescent explants were 
+cultivated with a suspension of GFP-expressing SKOV-3 
+cells and the adhesion of the latter assessed (Fig.  1A). 
+SKOV-3 cells were observed to attach faster to the 
+senescent murine peritoneum than untreated controls 
+(Fig.  1Bi-ii; statistical significance shown in Fig.  1Biii). 
+Fig. 1  Effect of a senescent mesothelial microenvironment on the 
+adhesion of ovarian cancer cells (A) Schematic depiction of the adhe-
+sion assay performed on murine peritonea that were rendered senes-
+cent using 100  nM doxorubicin, cultivated ex-vivo in the presence 
+of ovarian cancer cell suspension. B Representative fluorescence 
+micrographs showing the adhesion of GFP-expressing SKOV-3 cells 
+on control murine peritonea (i), senescent murine peritonea (ii), and 
+bar graph showing the number of adhered SKOV-3 cells per field 
+for control and senescent murine peritonea (iii). C Schematic depic-
+tion of the adhesion assay performed on RFP-expressing control and 
+doxorubicin-induced senescent MeT-5A monolayers cultivated in the 
+presence of GFP-expressing ovarian cancer cells. D Representative 
+fluorescence micrographs showing the adhesion of GFP-expressing 
+SKOV-3 cells on control MeT-5A monolayer (i), senescent MeT-
+5A monolayer (ii), and a bar graph showing the number of SKOV-3 
+cells per field for control and senescent MeT-5A monolayers (iii). 
+The fields are at 10 × magnification with a scale bar of 100 μm. The 
+experiments were performed in triplicates. The data are presented as 
+mean ± SEM and significance is obtained using an unpaired paramet-
+ric t-test with Welch’s correction
+
+ B. V. Thapa et al.
+1 3    2  Page 4 of 15
+We did not observe any notable difference in acellular spaces 
+between control and senescent mesothelial monolayers prior 
+to the adhesion of cancer cells, which suggested that clear -
+ance rather than available adherable space could play a role 
+in a greater cancer cell occupancy within senescent cell 
+populations.
+To confirm that the clearance of senescent MeT-5A 
+monolayers is indeed caused by SKOV-3 cells, a senescent 
+monolayer without SKOV-3 cells was also imaged for 72 h 
+(Figure S4A; see also video S3). We observed a significant 
+reduction in the area occupied by senescent MeT-5A mon-
+olayers in the presence of SKOV-3 cells compared to SKOV-
+3-less controls (Fig.  2Di and Figure S4B). To confirm the 
+ability of ovarian cancer cells to clear, and proliferate amidst, 
+senescent mesothelia, GFP-expressing OVCAR-3 cells were 
+cultivated with senescent and control MeT-5A monolay -
+ers for 60 h (Figure S5A and S5B). We observed higher 
+proliferation of OVCAR-3 cells within senescent MeT-5A 
+monolayers (Figure S5Ci-ii) and a significant reduction in 
+the area occupied by senescent MeT-5A monolayers com-
+pared with control MeT-5A monolayers (Figure S5Di-ii). 
+We also observed a substantial decrease in the area occupied 
+by senescent MeT-5A monolayers cultured with OVCAR-3 
+cancer cells compared with senescent MeT-5A monolayers 
+where with OVCAR-3 cells were not added (Figure S5E-F 
+and Di).
+Multiple cancer cells surround and clear senescent 
+mesothelia independent of confluence
+Extrusion of cells within populations is well known across 
+developmental and oncological contexts and is often driven 
+through cell-density dependent mechanisms [19, 20]. We 
+asked if the clearance of mesothelia was achieved by can-
+cer cells only when both were part of a jammed confluent 
+population. To answer this question, we examined our epif-
+luorescence time-lapses and observed senescent cell extru-
+sions by SKOV-3 cells even in sub-confluent conditions 
+(Fig.  3A). We found that the total number of extrusions 
+in senescent MeT-5A monolayers with SKOV-3 cells was 
+significantly higher than the total number of extrusions in 
+control MeT-5A monolayers with SKOV-3 cells and senes-
+cent MeT-5A monolayers without SKOV-3 cells (Fig. 3B). 
+Moreover, we observed that a significant number of extruded 
+senescent MeT-5A were surrounded and impacted by more 
+than one SKOV-3 cell before their clearance (Fig.  3C). To 
+our surprise, we also observed that senescent cells distant 
+from SKOV-3 cells showed a lower frequency for extru-
+sion (similar to non-senescent cells in controls distant from 
+SKOV-3 cells. This suggested that the extrusion of senescent 
+mesothelial cells was strongly correlated with their proxim-
+ity with ovarian cancer cells.
+To further characterize cellular neighborhoods within 
+coculture monolayers, we determined the total number and 
+type of neighbors for senescent and non-senescent mesothe-
+lia within cocultures. Due to their larger surface area, the 
+number of neighbors for senescent cells is naturally higher 
+(~ 4–5 cells) than for non-senescent cells (~ 2–3 cells). Nev-
+ertheless, the proportion of neighboring cells being cancer 
+cells was found to be significantly higher for senescent 
+mesothelia than their counterpart non-senescent cells in the 
+same fields (Fig. 3D).
+Our observation that cancer cells can clear mesothelia 
+independent of cell crowding effects suggested that conflu-
+ence dependent cell extrusion may not be operative here. 
+This surmise was reinforced by our observation of a closer 
+localization of cancer cells to senescent mesothelia. To shed 
+light on the intercellular interactions that allow confluence-
+agnostic senescent cell shedding, we employed a multiscale 
+virtual tissue simulation approach using the Cellular Potts 
+Model (CPM)-based computational framework Compu-
+cell3D. A monolayer consisting of senescent, non-senescent, 
+and cancer cells was simulated initially, incorporating dif -
+ferences in their cell proliferation rates and relative cell size. 
+The simulation period in Monte-Carlo steps (MCS) was cali-
+brated with experiments by comparing the growth of cancer 
+cells in the experiments to the growth rate of cancer cells 
+in simulations. The size and number of each cell type was 
+quantified based on their initial starting conditions in experi-
+ments. Our first model (Fig. 4Bi; video S4) incorporated no 
+other interactive rule. It was, therefore, not surprising that 
+the first model resulted in a confluent monolayer without 
+any colocalization of cancer cells and senescent cells and 
+without any clearance of the latter. Based on our observa -
+tions in Fig. 3A, we incorporated an additional rule (Model 
+2, Fig. 4Bii; video S5), wherein clearance of senescent cells 
+could occur if they share >  = 55% of their perimeter with 
+cancer cells. This did result in the extrusion of senescent 
+cells, but only after cancer cells had proliferated enough to 
+create a confluent cocultured monolayer. Therefore, clear -
+ance occurred much after confluence had been reached. This 
+led us to hypothesize that an effective attractive force may 
+exist between senescent and cancer cells, driving them to 
+localize close to each other (consistent with our experimen-
+tal observations of their proximity). Solely implementing 
+such an attractive force (through decreasing the contact 
+energy of adhesion between the senescent and cancer cells; 
+ CEnew = 15, while  CEold = 30) was insufficient for mesothe-
+lial clearance (Model 3, Fig. 4Biii; video S6). However, the 
+simultaneous implementation of adhesive attraction between 
+senescent and cancer cells and the rule for extrusion (Model 
+4, Fig. 4Biv; video S7) brought about clearance even when 
+the monolayers were sub-confluent, similar to what we 
+observed in experiments (as shown in Fig. 4C, D). We next 
+asked whether senescent cells secreted any chemoattractants 
+
+ B. V. Thapa et al.
+1 3    2  Page 6 of 15
+
+
+The senescent mesothelial matrix accentuates colonization by ovarian cancer cells  
+1 3 Page 13 of 15     2 
+199 media (HiMedia; AL014A) along with 10% fetal bovine 
+serum (Gibco; 10,270) were used for conditioned media 
+growth assay with SKOV-3 cancer cells.
+Senescent and non‑senescent matrix preparation
+Senescent and non-senescent MeT-5A cells were seeded at 
+high confluency on chamber wells with coverslip bottoms. 
+The cells were allowed to adhere and lay down the extracel-
+lular matrix for the next 36 h. The confluent MeT-5A mon-
+olayers were then washed with 1 × PBS twice and decellular-
+ized using a 20 mM solution of  NH4OH in Milli-Q water for 
+7–10 min [49]. The cellular debris was gently removed by 
+giving 2–3 washes with Milli-Q water. The extracted extra-
+cellular matrices laid on the chamber wells were used for 
+adhesion assays.
+Adhesion assay with RGD peptide
+The SKOV-3 cells (5000 in number) suspended in Mcoy’s 
+5A media (HiMedia; AL057A) along with 10% fetal bovine 
+serum (Gibco; 10,270) were added to the decellularized 
+senescent and non-senescent matrices and allowed to adhere 
+on the matrix for 25 min. For adhesion assay with RGD pep-
+tide, the media also had cyclic RGD peptide (Sigma; G1269-
+1MG) at 10 and 20 μg/mL concentrations. After incubation, 
+the wells were washed with 1 × PBS twice and immediately 
+imaged by using an Olympus IX83 inverted epifluorescence 
+microscope at 10 × magnification. The images were ana-
+lyzed and the number of cells adhered to the matrices was 
+counted using the “analyze particles” feature in ImageJ. The 
+attached cells were also time-lapsed for 24 h using a Tokai 
+Hit stage-top incubator with image acquisition through an 
+Orca Flash LT plus camera (Hamamatsu) on an Olympus 
+IX73 microscope. The data were analyzed using a manual 
+tracking plugin in FIJI and Ibidi’s chemotaxis and migra-
+tion tool to see differences in displacement and velocity of 
+SKOV-3 cells on senescent and non-senescent matrices (can 
+be seen in videos S8 and S9).
+Compucell 3D model for the clearance of senescent 
+mesothelia
+Compucell3D (CC3D) is based on the Cellular Potts Model 
+(CPM), also known as the Glazier-Graner-Hogeweg (GGH) 
+model. It has been utilized extensively for computational 
+models of the collective behavior of cellular structures. The 
+CPM is a lattice-based discrete model in which spatiotem-
+poral development is simulated via an energy minimizing 
+procedure [34, 50]. Each cell consists of a collection of lat-
+tice sites (pixels). Each configuration is associated with an 
+effective energy, or Hamiltonian (H), which is calculated 
+based on properties such as volume, surface area, contact 
+energies, or external properties. Time evolution is simulated 
+via Monte Carlo Steps (MCS) that involve random changes 
+of lattice site occupations and the changes that decrease the 
+energy are more likely than those that increase it. The Ham-
+iltonian of the system is formulated as:
+where i, j are lattice sites, /u1D70Ei is the cell at site i, /u1D70F(/u1D70E) is 
+the cell type of cell /u1D70E , J is the coefficient determining the 
+adhesion between two cells of types /u1D70F(/u1D70E) , /u1D70F(/u1D70E�) , /u1D6FF is the 
+Kronecker delta, v( /u1D70E ) is the volume of cell /u1D70E , V(/u1D70E ) is the 
+target volume, and /u1D706 is a Lagrange multiplier determining 
+the strength of the volume constraint. We utilized a simple 
+two-dimensional model 140*140*1 using a square pixel lat-
+tice to find and understand the effect of factors sufficient 
+to bring a considerable decline in the senescent mesothelia 
+area as observed in the mesothelial clearance experiments 
+that were recorded using time-lapse epifluorescence videog-
+raphy. The simulation time was set to 8000 MCS as per the 
+corresponding normalized length of the experimental time-
+lapse videos. The lattice is composed of the medium, senes-
+cent cells (SEN), non-senescent cells (NON_SEN), ovarian 
+cancer cells (CANCER), and a frozen wall that mimics a 
+closed system such as enclosed peritoneal cavity (shown 
+in figure S12). This simple model has four variations with 
+the contact energies between cancer and senescent cells to 
+be either 15 (greater adhesion) or 30 (same as other contact 
+energy combinations) and activation or deactivation of the 
+active extrusion rule (shown in figure S13). The other impor-
+tant parameters used in the model and their input values are 
+available at Table S2. To compare the simulation time to 
+the timescale of senescent mesothelial clearance by ovarian 
+cancer cells, a calibration was performed. The division time 
+of ovarian cancer cells in experiments (SKOV-3 cells) was 
+18 h and the division time of ovarian cancer cells in simula-
+tions was 750 MCS. This factor was used to calibrate the 
+simulations time to real-time and the comparison between 
+the computational model and senescent mesothelial clear -
+ance experiments was made.
+Statistical analysis
+The experiments were repeated at least three times and 
+unpaired parametric t-test with Welch’s correction were used 
+for statistical testing unless otherwise stated in the figure leg-
+ends. The graphs were plotted using GraphPad Prism 8.0.2 
+and p-values < 0.05 was considered statistically significant.
+Supplementary Information The online version contains supplemen-
+tary material available at https:// doi. org/ 10. 1007/ s00018- 023- 05017-x.
+Acknowledgements The authors would like to thank Abraham Binoy 
+Mathew for technical help with senescence induction.
+H =
+/uni2211.s1
+i,jneighbors
+J
+/parenleft.s1
+/u1D70F
+/parenleft.s1
+/u1D70Ei
+/parenright.s1
+,
+/parenleft.s1
+/u1D70Ej
+/parenright.s1/parenright.s1/parenleft.s1
+1 − /u1D6FF
+/parenleft.s1
+/u1D70Ei,/u1D70Ej
+/parenright.s1/parenright.s1
++ /u1D706
+/uni2211.s1
+/u1D70Ei
+(v
+/parenleft.s1
+/u1D70Ei
+/parenright.s1
+− V (/u1D70Ei))
+2
+
+S12
+A snapshot of the initial layout of the different cells on the lattice  – The picture depicts the initial layout of 
+senescent, non-senescent, and cancer cells in a two-dimensional setup and the incorporated plugins. The relative 
+sizes and the proliferation rates of the three cell types were calibrated from the experiments.
+S11
+Screenshot showing the analysis performed on images collected from mesothelial clearance assay to calculate 
+the area occupied by MeT-5A and SKOV-3/OVCAR-3 cells in the same field. The highest value of the threshold 
+with a neat background was chosen for generating the mask. The area of cells in the field was measured by 
+summing up the individual particle area and is calculated under the ‘Analyze particles’ options with size limit = 
+0.01-Infinity. 
+
+
+Gene name Forward primer (5’→3’) Reverse primer (5’→3’)
+GAPDH GGAGCGAGATCCCTCCAAAA GGCTGTTGTCATACTTCTCATGG
+p21 GGAAGACCATGTGGACCTGT TAGGGCTTCCTCTTGGAGAA
+Gal-9 CCTACCTGAGTCCAGCTGTC GAGGGTTGAAGTGGAAGGCA
+LamB3 GCAGCCTCACAACTACTACAG CCAGGTCTTACCGAAGTCTGA
+Col6A1 ACAGTGACGAGGTGGAGATCA GATAGCGCAGTCGGTGTAGG
+FN1 CAAGCCAGATGTCAGAAGC GGATGGTGCATCAATGGCA
+LamA3 CACCGGGATATTTCGGAATC AGCTGTCGCAATCATCACATT
+Col18A1 CAGTGGACACACTTAGCCCTC GCGGCATTCTCTGGAACTCC
+FBLN1 AGAGCTGCGAGTACAGCCT CGACATCCAAATCTCCGGTCT
+FBLN-1C TGACTGGCATCCACAACTGC GCTTGGAGCACTCCCGATTCT
+FBLN-1D TGCCTACCTTCCGCGAGTTC GCCGTCCATGTAACGCTTGA
+Gal-1 TCAAACCTGGAGAGTGCCTT CACACCTCTGCAACACTTCC
+Gal-3 ATGGCAGACAATTTTTCGCTCC GCCTGTCCAGGATAAGCCC
+Table 1 – RT PCR primer sequence information for the gene expression studies in non-senescent and 
+senescent MeT-5A monolayers
+S13
+A snapshot of the active clearance code from Twedit++5 – The code shows the implementation of the killing of 
+senescent cells if more than 55% of their perimeter is shared with ovarian cancer cells.
+
+14.08.25 Model_2D_XY_ovcar_with_chemotaxis_mixed.xml 1
+file:///home/lutz/Downloads/Model_2D_XY_ovcar_with_chemotaxis_mixed.xml
+< CompuCell3D 	Revision = "2" 	Version = "4.3.0" >						 < Metadata >												 <!--	Basic	properties	simulation	-->						 < NumberOfProcessors > 4 </ NumberOfProcessors >			 </ Metadata >						 < Potts >												 <!--	Basic	properties	of	CPM	(GGH)	algorithm	-->						 <!--	Basic	properties	of	CPM	(GGH)	algorithm	-->						 < Dimensions 	x = "140" 	y = "140" 	z = "1" />						 < Steps > 100000 </ Steps >						 < Temperature > 20.0 </ Temperature >						 < NeighborOrder > 1 </ NeighborOrder >						 <!--	<Boundary_x>Periodic</Boundary_x>	-->						 <!--	<Boundary_y>Periodic</Boundary_y>	-->			 </ Potts >						 < Plugin 	Name = "CellType" >												 <!--	Listing	all	cell	types	in	the	simulation	-->						 < CellType 	TypeId = "0" 	TypeName = "Medium" />						 < CellType 	TypeId = "1" 	TypeName = "SEN" />						 < CellType 	TypeId = "2" 	TypeName = "NON_SEN" />						 < CellType 	TypeId = "3" 	TypeName = "CANCER" />						 < CellType 	Freeze = "" 	TypeId = "4" 	TypeName = "WALL" />			 </ Plugin >									 < Plugin 	Name = "Contact" >						 <!--	Specification	of	adhesion	energies	-->						 < Energy 	Type1 = "Medium" 	Type2 = "Medium" > 10.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "SEN" > 10.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "NON_SEN" > 10.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "CANCER" > 10.0 </ Energy >						 < Energy 	Type1 = "SEN" 	Type2 = "SEN" > 30.0 </ Energy >						 < Energy 	Type1 = "SEN" 	Type2 = "NON_SEN" > 30.0 </ Energy >						 < Energy 	Type1 = "SEN" 	Type2 = "CANCER" > 30.0 </ Energy >						 < Energy 	Type1 = "NON_SEN" 	Type2 = "NON_SEN" > 30.0 </ Energy >						 < Energy 	Type1 = "NON_SEN" 	Type2 = "CANCER" > 30.0 </ Energy >						 < Energy 	Type1 = "CANCER" 	Type2 = "CANCER" > 30.0 </ Energy >						 < Energy 	Type1 = "WALL" 	Type2 = "SEN" > 50.0 </ Energy >						 < Energy 	Type1 = "WALL" 	Type2 = "NON_SEN" > 50.0 </ Energy >						 < Energy 	Type1 = "WALL" 	Type2 = "CANCER" > 50.0 </ Energy >												 < NeighborOrder > 4 </ NeighborOrder >			 </ Plugin >						 < Plugin 	Name = "Chemotaxis" >												 <!--	You	may	repeat	ChemicalField	element	for	each	chemical	field	declared	in	the	PDE
+solvers	-->						 <!--	Specification	of	chemotaxis	properties	of	select	cell	types.	-->						 < ChemicalField 	Name = "CHEMOKINE" >								 < ChemotaxisByType 	ChemotactTowards = "NON_SEN" 	Lambda = "0" 	Type = "CANCER" />						 </ ChemicalField >						 < ChemicalField 	Name = "CHEMOKINE" >								 < ChemotaxisByType 	ChemotactTowards = "CANCER" 	Lambda = "0" 	Type = "CANCER" />						 </ ChemicalField >
+
+14.08.25 Model_2D_XY_ovcar_with_chemotaxis_mixed.xml 2
+file:///home/lutz/Downloads/Model_2D_XY_ovcar_with_chemotaxis_mixed.xml
+						 < ChemicalField 	Name = "CHEMOKINE" >								 < ChemotaxisByType 	ChemotactTowards = "Medium" 	Lambda = "0" 	Type = "CANCER" />						 </ ChemicalField >			 </ Plugin >									 < Steppable 	Type = "DiffusionSolverFE" >												 <!--	Specification	of	PDE	solvers	-->						 < DiffusionField 	Name = "CHEMOKINE" >									 < DiffusionData >												 < FieldName > CHEMOKINE </ FieldName >												 < GlobalDiffusionConstant > 0.1 </ GlobalDiffusionConstant >												 < GlobalDecayConstant > 0.0002 </ GlobalDecayConstant >									 </ DiffusionData >									 < BoundaryConditions >												 < Plane 	Axis = "X" >															 < ConstantDerivative 	PlanePosition = "Min" 	Value = "0.0" />															 < ConstantDerivative 	PlanePosition = "Max" 	Value = "0.0" />												 </ Plane >												 < Plane 	Axis = "Y" >															 < ConstantDerivative 	PlanePosition = "Min" 	Value = "0.0" />															 < ConstantDerivative 	PlanePosition = "Max" 	Value = "0.0" />												 </ Plane >									 </ BoundaryConditions >						 </ DiffusionField >			 </ Steppable >						 < Steppable 	Type = "UniformInitializer" >			 </ Steppable ></ CompuCell3D >

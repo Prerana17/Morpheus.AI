@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>C. elegans Germ Line Mechano-Logical Model (Atwell et al. 2025)</Title>
+        <Details>3D mechano-logical model combining cell mechanics, cell cycle dynamics, 
+        spatial signaling from distal tip cell (DTC), and fate decisions (proliferation vs meiotic entry).
+        
+        Model features:
+        - 3D cubic lattice representing tubular germ line geometry
+        - Distal tip cell (DTC) producing GLP-1/Notch signaling gradient
+        - Proliferative zone cells cycling in proximal region
+        - Meiotic entry zone where cells transition to meiosis
+        - Cell division with volume constraints
+        - Spatial gradient of proliferative signal
+        
+        Reference: Atwell et al. 2025, combining spherical cell mechanics with cell cycle control
+        </Details>
+    </Description>
+    <Global>
+        <Variable symbol="total_cells" value="0" name="Total cell count"/>
+        <Variable symbol="proliferative_cells" value="0" name="Cells in proliferative zone"/>
+        <Variable symbol="meiotic_cells" value="0" name="Cells in meiotic zone"/>
+    </Global>
+    <Space>
+        <Lattice class="cubic">
+            <Size symbol="size" value="120, 40, 40"/>
+            <BoundaryConditions>
+                <Condition type="noflux" boundary="x"/>
+                <Condition type="noflux" boundary="-x"/>
+                <Condition type="periodic" boundary="y"/>
+                <Condition type="periodic" boundary="z"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="3000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="42"/>
+    </Time>
+    <Global>
+        <Field symbol="GLP1_signal" value="0.0" name="GLP-1/Notch signaling gradient">
+            <Diffusion rate="5.0"/>
+        </Field>
+    </Global>
+    <CellTypes>
+        <CellType class="medium" name="medium"/>
+        
+        <!-- Distal Tip Cell - source of proliferative signal -->
+        <CellType class="biological" name="DTC">
+            <Property symbol="Vt" value="400" name="Target Volume"/>
+            <VolumeConstraint target="Vt" strength="1.0"/>
+            <SurfaceConstraint target="1.0" strength="0.5" mode="aspherity"/>
+            <Property symbol="signal_production" value="10.0"/>
+            <System time-step="1.0" solver="Euler [fixed, O(1)]">
+                <DiffEqn symbol-ref="GLP1_signal">
+                    <Expression>signal_production</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+        
+        <!-- Proliferative germ cells -->
+        <CellType class="biological" name="germcell_proliferative">
+            <Property symbol="Vt" value="300" name="Target Volume"/>
+            <Property symbol="divisions" value="0" name="Division counter"/>
+            <Property symbol="cell_cycle_phase" value="0.0" name="Cell cycle phase (0-1)"/>
+            <Property symbol="local_signal" value="0.0" name="Local GLP-1 signal"/>
+            
+            <VolumeConstraint target="Vt" strength="1.0"/>
+            <SurfaceConstraint target="1.0" strength="0.8" mode="aspherity"/>
+            
+            <!-- Cell cycle model -->
+            <System time-step="0.1" solver="Runge-Kutta [fixed, O(4)]">
+                <Constant symbol="cycle_rate" value="0.002" name="Cell cycle rate"/>
+                <Constant symbol="signal_threshold" value="2.0" name="Signal threshold for proliferation"/>
+                
+                <DiffEqn symbol-ref="cell_cycle_phase">
+                    <Expression>if(GLP1_signal > signal_threshold, cycle_rate, 0.0)</Expression>
+                </DiffEqn>
+                
+                <Rule symbol-ref="local_signal">
+                    <Expression>GLP1_signal</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Cell division when cycle complete and volume sufficient -->
+            <CellDivision division-plane="minor">
+                <Condition>cell_cycle_phase > 1.0 and cell.volume > Vt*0.85</Condition>
+                <Triggers>
+                    <Rule symbol-ref="divisions">
+                        <Expression>divisions + 1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="cell_cycle_phase">
+                        <Expression>0.0</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <!-- Transition to meiotic entry when signal drops -->
+            <ChangeCellType newCellType="germcell_meiotic" time-step="10">
+                <Condition>GLP1_signal &lt; 1.5 and cell.center.x > 40</Condition>
+            </ChangeCellType>
+        </CellType>
+        
+        <!-- Meiotic entry cells (non-proliferative) -->
+        <CellType class="biological" name="germcell_meiotic">
+            <Property symbol="Vt" value="350" name="Target Volume"/>
+            <Property symbol="meiotic_stage" value="0.0" name="Meiotic progression"/>
+            
+            <VolumeConstraint target="Vt" strength="1.0"/>
+            <SurfaceConstraint target="1.2" strength="0.6" mode="aspherity"/>
+            
+            <System time-step="0.1" solver="Euler [fixed, O(1)]">
+                <Constant symbol="meiotic_rate" value="0.001"/>
+                <DiffEqn symbol-ref="meiotic_stage">
+                    <Expression>meiotic_rate</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0.0">
+            <Contact type1="DTC" type2="medium" value="8"/>
+            <Contact type1="DTC" type2="germcell_proliferative" value="2"/>
+            <Contact type1="DTC" type2="germcell_meiotic" value="4"/>
+            <Contact type1="germcell_proliferative" type2="medium" value="10"/>
+            <Contact type1="germcell_proliferative" type2="germcell_proliferative" value="-4"/>
+            <Contact type1="germcell_proliferative" type2="germcell_meiotic" value="0"/>
+            <Contact type1="germcell_meiotic" type2="medium" value="12"/>
+            <Contact type1="germcell_meiotic" type2="germcell_meiotic" value="-2"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2.0"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>2.5</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <!-- Distal tip cell at x=0 (distal end) -->
+        <Population type="DTC" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="1, 1, 1" displacements="1, 1, 1">
+                    <Sphere radius="4.5" center="5, 20, 20"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <!-- Initial proliferative germ cells in distal region -->
+        <Population type="germcell_proliferative" size="0">
+            <InitCircle mode="random" number-of-cells="15">
+                <Dimensions center="25, 20, 20" radius="12"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <!-- Visual output: 2D slice through 3D simulation -->
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png"/>
+            <Plot slice="20" title="Germ line cells (mid-plane slice)">
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="1" color="blue"/>
+                        <Color value="2" color="green"/>
+                        <Color value="3" color="red"/>
+                    </ColorMap>
+                </Cells>
+                <Field symbol-ref="GLP1_signal" min="0" max="10">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="5" color="yellow"/>
+                        <Color value="10" color="orange"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+            <Plot slice="20" title="Cell cycle phase">
+                <Cells value="cell_cycle_phase" min="0" max="1">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="0.5" color="cyan"/>
+                        <Color value="1" color="blue"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Data logging -->
+        <Logger time-step="20">
+            <Input>
+                <Symbol symbol-ref="celltype.DTC.size"/>
+                <Symbol symbol-ref="celltype.germcell_proliferative.size"/>
+                <Symbol symbol-ref="celltype.germcell_meiotic.size"/>
+                <Symbol symbol-ref="time"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="500">
+                    <Style style="linespoints" line-width="2"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="celltype.germcell_proliferative.size"/>
+                        <Symbol symbol-ref="celltype.germcell_meiotic.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- Field snapshot logging -->
+        <Logger time-step="100">
+            <Input>
+                <Field symbol-ref="GLP1_signal"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+        </Logger>
+        
+        <ModelGraph format="dot" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

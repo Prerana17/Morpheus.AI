@@ -1,0 +1,104 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Gnuplotter_0_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[1]" ]
+Gnuplotter_0_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[0]" ]
+Logger_0_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>0.5</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger" ]
+D_0[label="D", fillcolor="#d3d247",peripheries=2]
+D_combined_0[label="D_combined", fillcolor="#d3d247",peripheries=2]
+N_0[label="N", fillcolor="#d3d247",peripheries=2]
+kappa_param_0[label="kappa_param", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant"]
+subgraph cluster_1 {
+label="CellType[cells]";
+NeighborhoodReporter_1_0_05[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>NeighborhoodReporter</td></tr>
+<hr/>
+<tr><td>0.05</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[0]/NeighborhoodReporter[0]" ]
+NeighborhoodReporter_1_0_05[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>NeighborhoodReporter</td></tr>
+<hr/>
+<tr><td>0.05</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[0]/NeighborhoodReporter[1]" ]
+D_1[label="D", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[0]"]
+D_combined_1[label="D_combined", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[4]"]
+D_longrange_1[label="D_longrange", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[3]"]
+D_neighbors_1[label="D_neighbors", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[2]"]
+N_1[label="N", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[1]"]
+cell_center_1[label="cell.center", fillcolor="#b5b426"]
+subgraph cluster_3 {
+label="";
+System_3_0_05[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.05</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[0]/System" ]
+a_3[label="a", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/System/Constant[0]"]
+a_param_3[label="a_param", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/System/Constant[3]"]
+gamma_3[label="gamma", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/System/Constant[4]"]
+k_3[label="k", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/System/Constant[2]"]
+n_3[label="n", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/System/Constant[1]"]
+}
+}
+subgraph cluster_2 {
+label="CellType[medium]";
+D_2[label="D", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property"]
+}
+}
+D_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+D_0 -> Logger_0_0_5 [penwidth=2, color="#112c5f"] 
+
+D_0 -> NeighborhoodReporter_1_0_05 [penwidth=2, color="#112c5f"] 
+
+D_1 -> D_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+D_2 -> D_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+D_combined_0 -> Logger_0_0_5 [penwidth=2, color="#112c5f"] 
+
+D_combined_1 -> D_combined_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+D_longrange_1 -> System_3_0_05 [penwidth=2, color="#112c5f"] 
+
+D_neighbors_1 -> System_3_0_05 [penwidth=2, color="#112c5f"] 
+
+N_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+N_0 -> Logger_0_0_5 [penwidth=2, color="#112c5f"] 
+
+N_1 -> N_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+NeighborhoodReporter_1_0_05 -> D_longrange_1 [penwidth=3, color="#8f100d"] 
+
+NeighborhoodReporter_1_0_05 -> D_neighbors_1 [penwidth=3, color="#8f100d"] 
+
+System_3_0_05 -> D_1 [penwidth=3, color="#8f100d"] 
+
+System_3_0_05 -> D_combined_1 [penwidth=3, color="#8f100d"] 
+
+System_3_0_05 -> N_1 [penwidth=3, color="#8f100d"] 
+
+a_3 -> System_3_0_05 [penwidth=2, color="#112c5f"] 
+
+a_param_3 -> System_3_0_05 [penwidth=2, color="#112c5f"] 
+
+cell_center_1 -> NeighborhoodReporter_1_0_05 [penwidth=2, color="#112c5f"] 
+
+gamma_3 -> System_3_0_05 [penwidth=2, color="#112c5f"] 
+
+k_3 -> System_3_0_05 [penwidth=2, color="#112c5f"] 
+
+kappa_param_0 -> System_3_0_05 [penwidth=2, color="#112c5f"] 
+
+n_3 -> System_3_0_05 [penwidth=2, color="#112c5f"] 
+
+}

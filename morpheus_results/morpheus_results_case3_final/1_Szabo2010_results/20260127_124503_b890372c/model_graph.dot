@@ -1,0 +1,16 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+subgraph cluster_1 {
+label="CellType[neural]";
+}
+subgraph cluster_2 {
+label="CellType[mesenchyme]";
+}
+subgraph cluster_3 {
+label="CellType[medium]";
+}
+}
+}

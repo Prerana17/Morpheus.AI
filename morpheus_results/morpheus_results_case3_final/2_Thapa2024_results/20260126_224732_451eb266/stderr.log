@@ -1,0 +1,3 @@
+Error 'Invalid function-, variable- or constant name: "celltype.cancer_cells.volume".' in expression "celltype.cancer_cells.volume" in root.
+
+XMLPath: MorpheusModel/Analysis/Mapper[0]/Input

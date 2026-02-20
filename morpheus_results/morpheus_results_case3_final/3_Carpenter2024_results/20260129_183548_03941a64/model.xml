@@ -1,0 +1,186 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Carpenter2024-Epithelial Monolayer Growth with Contact Inhibition</Title>
+        <Details>
+Model of mechanical control of cell proliferation patterns in growing epithelial monolayers.
+Implements CPM with G1 sizer model for cell cycle, contact inhibition via crowding-induced 
+suppression of growth, and density-dependent apoptosis.
+
+Reference: Carpenter et al. (2024) Biophysical Journal 123, 909-919
+        </Details>
+    </Description>
+    
+    <Global>
+        <Variable symbol="total_cells" value="0.0" name="Total number of cells"/>
+        <Variable symbol="avg_area" value="0.0" name="Average cell area"/>
+        <Constant symbol="G" value="0.5" name="Growth rate"/>
+        <Constant symbol="k" value="0.001" name="Contact inhibition sensitivity"/>
+        <Constant symbol="A_S" value="250" name="G1/S threshold area"/>
+        <Constant symbol="t0" value="500" name="S/G2/M phase duration"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="300, 300, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="12345"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="medium" class="medium"/>
+        
+        <CellType name="epithelial" class="biological">
+            <VolumeConstraint target="200" strength="1.0"/>
+            <SurfaceConstraint target="180" mode="aspherity" strength="0.5"/>
+            
+            <Property symbol="target_area" value="200" name="Target area for growth"/>
+            <Property symbol="phase" value="0" name="Cell cycle phase: 0=G1, 1=S/G2/M"/>
+            <Property symbol="timer" value="0" name="Time in S/G2/M phase"/>
+            <Property symbol="local_density" value="0" name="Local cell density"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <!-- Cell growth: target area increases with rate G, suppressed by crowding -->
+                <Rule symbol-ref="target_area">
+                    <Expression>if(phase == 0, target_area + G * exp(-k * (cell.volume - target_area)^2), target_area)</Expression>
+                </Rule>
+                
+                <!-- Timer for S/G2/M phase -->
+                <Rule symbol-ref="timer">
+                    <Expression>if(phase == 1, timer + 1, 0)</Expression>
+                </Rule>
+                
+                <!-- Phase transition: G1 to S/G2/M when area exceeds threshold -->
+                <Rule symbol-ref="phase">
+                    <Expression>if(phase == 0 and cell.volume > A_S, 1, phase)</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Cell division: occurs after timer reaches t0 -->
+            <CellDivision division-plane="random">
+                <Condition>phase == 1 and timer > t0</Condition>
+                <Triggers>
+                    <Rule symbol-ref="target_area">
+                        <Expression>cell.volume / 2</Expression>
+                    </Rule>
+                    <Rule symbol-ref="phase">
+                        <Expression>0</Expression>
+                    </Rule>
+                    <Rule symbol-ref="timer">
+                        <Expression>0</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <!-- Neighborhood reporter for local density -->
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="1"/>
+                <Output symbol-ref="local_density" mapping="sum"/>
+            </NeighborhoodReporter>
+            
+            <!-- Density-dependent apoptosis -->
+            <CellDeath>
+                <Condition>rand_uni(0,1) &lt; 0.0001 * local_density</Condition>
+            </CellDeath>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="epithelial" type2="medium" value="16"/>
+            <Contact type1="epithelial" type2="epithelial" value="6"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="3" yield="0.1"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="epithelial" size="0">
+            <InitCircle mode="random" number-of-cells="30">
+                <Dimensions center="150, 150, 0" radius="60"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cell Phase (0=G1, 1=S/G2/M)">
+                <Cells value="phase" min="0" max="1">
+                    <ColorMap>
+                        <Color value="0" color="green"/>
+                        <Color value="1" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Cell Area">
+                <Cells value="cell.volume" min="100" max="300">
+                    <ColorMap>
+                        <Color value="100" color="blue"/>
+                        <Color value="200" color="white"/>
+                        <Color value="300" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Local Density">
+                <Cells value="local_density" min="0" max="10">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="5" color="yellow"/>
+                        <Color value="10" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="50">
+            <Input>
+                <Symbol symbol-ref="celltype.epithelial.size"/>
+                <Symbol symbol-ref="phase"/>
+                <Symbol symbol-ref="local_density"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="500">
+                    <Style style="linespoints" point-size="0.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="celltype.epithelial.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="dot" reduced="false" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,316 @@
+Journal of Mathematical Biology            (2021) 83:6 
+https://doi.org/10.1007/s00285-021-01627-w Mathematical Biology
+Signaling gradients in surface dynamics as basis for
+planarian regeneration
+Arnd Scheel 1 · Angela Stevens 2 · Christoph Tenbrock 2
+Received: 13 August 2019 / Revised: 1 June 2021 / Accepted: 13 June 2021
+© The Author(s), under exclusive licence to Springer-Verlag GmbH Germany, part of Springer Nature 2021,
+corrected publication 2022
+Abstract
+Based on experimental data, we introduce and analyze a system of reaction-diffusion
+equations for the regeneration of planarian ﬂatworms. We model dynamics of head and
+tail cells expressing positional control genes that translate into localized signals which
+in turn guide stem cell differentiation. Tissue orientation and positional information
+are encoded in a long range wnt-related signaling gradient. Our system correctly
+reproduces typical cut and graft experiments, and improves on previous models by
+preserving polarity in regeneration over orders of magnitude in body size during growth
+phases. Key to polarity preservation in our model ﬂatworm is the sensitivity of cell
+differentiation to gradients of wnt-related signals relative to the tissue surface. This
+process is particularly relevant in small tissue layers close to cuts during their healing,
+and modeled in a robust fashion through dynamic boundary conditions.
+1 Introduction
+Planarians are nonparasitic ﬂatworms commonly found in freshwater streams and
+ponds (Reddien and Alvarado 2004;R i n k2018) with a body size in the mm-scale. The
+best experimental data is available for the species “Schmidtea mediterranea”, which
+is 1–20 mm long and consists of 100 .000 to more than 2 .000.000 cells. Planarians
+B Arnd Scheel
+scheel@umn.edu
+Angela Stevens
+angela.stevens@wwu.de
+Christoph Tenbrock
+christoph.tenbrock@gmail.com
+1 School of Mathematics, University of Minnesota, 206 Church St. S.E.,, Minneapolis, MN 55455,
+USA
+2 Applied Mathematics, University of Münster (WWU), Einsteinstr. 62, D-48149 Münster, Germany
+0123456789().: V,-vol 123
+
+    6 Page 2 of 31 A. Scheel et al.
+possess the ability to regenerate after rather severe injuries to their body. When small
+tissue parts are cut from the ﬂatworm—in extreme cases just 0 .5% of the original
+size—these can regenerate to a fully functioning and intact organism (Reddien and
+Alvarado 2004) with head and tail positioned such that the original orientation of the
+tissue fragment is respected. When tissue parts are cut from a donor and grafted into a
+host, the newly created planarian integrates the old positional information of the tissue
+fragment from the donor with the new positional information it obtains from the host.
+A better understanding of these processes has a far reaching potential for regeneration
+in general.
+Here, we present a minimal mathematical model, informed by experimental data,
+that reproduces this fascinating behavior. To the best of our knowledge, our system
+of reacting and diffusing species is to date the only model that correctly recovers
+most of the typical cutting and grafting experiments, and preserves polarity during
+regeneration, even of small tissue fragments. The proposed mechanisms resolve a
+conundrum in modeling efforts. Many models of spontaneous formation of ﬁnite-size
+structure in unstructured tissue so far, allude to a Turing type mechanism to select
+a ﬁnite wavelength. Activator-inhibitor systems (Meinhardt 2012), have often been
+discussed, for instance in the context of regeneration in hydra, which is similarly
+robust as planarian regeneration. Turing’s mechanism however does (intentionally)
+not scale across several orders of magnitude, nor does it incorporate robust selection
+of polarity.
+1.1 The mathematical model
+We focus on the ante-posterior (AP) axis of planarians and consider a one-dimensional
+domain x ∈[ −L, L], populated by different cell types and signals. Head cells h and
+tail cells d generate corresponding signals u
+h and ud, which activate the respective
+differentiation of stem cells s. A long-range wnt-related signal w, in short wnt-signal,
+encodes orientational information through its gradient. It is produced by tail cells in a
+saturating fashion, and degraded by reactions with head cells:
+∂
+t s = Ds ∂xx s + ρs (s) − ph uh s − pd ud s, (1.1)
+∂t h = Dh ∂xx h + ph uh s − ηh h, (1.2)
+∂t d = Dd ∂xx d + pd ud s − ηd d, (1.3)
+∂t uh = Duh ∂xx uh + h2(r0 − r1uh ) − r2uh d − r3uh , (1.4)
+∂t ud = Dud ∂xx ud + d2(r0 − r1ud ) − r2ud h − r3ud , (1.5)
+∂t w = Dw∂xx w − pwhw + pwd(1 − w). (1.6)
+Stem cells proliferate with saturating rate and undergo apoptosis (Baguñ et al. 1990),
+which is encoded in ρs (s) = ps s
+1+s − ηs s. Stem cells also differentiate irreversibly
+into head and tail cells, guided by positional control genes, which are modeled by the
+respective related localized signals u
+h ,ud . Those signals are produced by head and
+tail cells up to a saturation level, with rates r0 and r1 and decay with rate r3.T h i s
+interaction works during both, normal tissue turnover and regeneration (Reddien and
+123
+
+Signaling gradients in surface dynamics as basis... Page 3 of 31     6 
+Alvarado 2004). Head and tail cells result from stem cell differentiation and do not
+proliferate. They undergo apoptosis and degrade the signal associated with the other
+cell type with rate r2.
+The quadratic dependence of the production of uh and ud on h and d corresponds to
+higher order molecular kinetics, quadratic here in their simplest form. Replacing these
+reactions by ﬁrst-order kinetics, linear in h,d, would result in spontaneous growth of
+head and tail regions caused by a linear instability of the zero state; see ( 4.1) in our
+analysis and model reduction in Sect. 4 based on tristability, that is, linear stability
+of head-only, tail-only, and zero states. The quadratic dependence postulated here
+suppresses this instability and we suggest that some effective higher-order kinetics are
+indeed crucial there. We used the same parameter p
+w for production and degradation
+of w, since differing rates showed qualitatively similar outcomes in our simulations.
+Finally, random motion of cells and diffusion of signal molecules are modeled through
+the diffusion coefﬁcients D j .
+Writing U (t , x ) = (s, h,d,uh ,ud ,w) (t , x ), D = diag (Ds , Dh , Dd , Duh , Dud ,
+Dw) and F = (Fs , Fh , Fd , Fuh , Fud , Fw) in the system ( 1.1)–(1.6), we ﬁnd
+∂t U = DUxx + F (U ). (1.7)
+We prescribe inhomogeneous Dirichlet boundary conditions Ux =±L = U± and evo-
+lution equations for the time dependent Dirichlet data
+d
+dt U± =− 1
+γ D ∂νU |x =±L + F (U±) + B, (1.8)
+where ∂νU |x =±L =± ∂x U (t , x )|x =±L denotes the normal derivative. We think of
+U± as concentrations in a boundary compartment of length γ where concentrations are
+spatially constant. Fluxes − 1
+γ D ∂νU |x =±L ensure mass conservation up to kinetics,
+d
+dt
+( ∫
+U +
+∑
+±
+γU±
+)
+=
+∫
+F (U ) +
+∑
+±
+(
+D∂νU |±L + γ d
+dt U±
+)
+=
+∫
+F (U ) + γ
+∑
+±
+(F (U±) + B).
+Kinetics here are identical to those in the bulk of the domain up to a new term B,
+present in the dynamics for s±, h±, and d±, that represents a boundary-speciﬁc stem-
+cell differentiation mechanism through rates Ψ ±
+h/d ,
+d
+dt s± =− 1
+γ Ds ∂νs|x =±L + Fs − Ψ ±
+h s − Ψ ±
+d s , (1.9)
+d
+dt h± =− 1
+γ Dh ∂νh|x =±L + Fh + Ψ ±
+h s , (1.10)
+d
+dt d± =− 1
+γ Dd ∂νd|x =±L + Fd + Ψ ±
+d s . (1.11)
+123
+
+    6 Page 4 of 31 A. Scheel et al.
+Fig. 1 Schematic plot of the smoothed indicator functions χε that detect positive and negative values of
+the gradient, respectively, with offset θ and sensing thresholds ε
+The differentiation is triggered by lack of head or tail cells, and directed according to
+the sign of ∂νw, explicitly through Ψ ±
+h/d = Ψh/d (h,d,∂νw)|x =±L ,
+Ψh = τ(1 − h)(1 − d)χε
+>θ(∂νw), and Ψd = τ(1 − h)(1 − d)χε
+<−θ (∂νw).
+Here τ ≫ 1 is the rate of differentiation, and the χε are smoothed versions of the
+characteristic function, for example
+χε
+>θ(ξ) = 1
+2
+[
+tanh((ξ − εθ)/ε) + 1
+]
+,
+χε
+<−θ(ξ) = 1
+2
+[
+tanh(−(ξ + εθ)/ε) + 1
+]
+; (1.12)
+see Fig. 1 for an illustration.
+The steepness ε−1 of the smoothed characteristic function can be interpreted as a
+sensitivity of differentiation with respect to small gradients. The offset θ measures
+minimal detectable strength of the gradient at the body or wound edge in ε-units.
+Overall, the kinetics Fs in ( 1.1) regulate a near-constant supply of stem-cells. As a
+result, a healthy planarian consists of a high concentration of h near x =− L, a high
+concentration of d near x = L, and a near-constant gradient of w in x ∈ (−L, L);s e e
+Fig. 2.
+1.2 Boundary dynamics
+Differentiation rates in Ψ ±
+h/d do not depend on w itself. In particular, concentration
+levels of the wnt-related (or other long-range) signal w are not converted into positional
+information that in turn directs the differentiation process. Such a direct conversion
+of signals is often referred to as a French-ﬂag model [see (Wolpert 1969, 1994) and,
+for planarians, (Rink 2018)] but intentionally not used here:
+(1) Positional information is inherently incapable of explaining preservation of polar-
+ity. Since regeneration and polarity are robust with respect to the location of cut
+out tissue fragments, near head, tail, or from the central body region, absolute
+levels of w play apparently little role in their regeneration.
+(2) Positional information is not necessary in the early stages of regeneration, but
+seemingly relevant only later when the size of functional regions like head or tail
+are regulated; see Sect. 6.
+(3) There is little evidence thus far on the nature of robust biological mechanisms
+that would translate wnt-signal levels into differentiation of stem cells. Postulating
+123
+
+Signaling gradients in surface dynamics as basis... Page 5 of 31     6 
+Fig. 2 Typical experiments and their representations in terms of our mathematical model. T op left:Schematic
+illustration of head grafting and regeneration of a two-headed planarian. Top right: Head grafting and
+regeneration into a normal planarian with one head and tail. Middle row: Cutting experiment and regeneration
+of eight planarians. Bottom row: Schematic illustration of experiments on planarians and associated spatial
+distribution of concentrations h, d,w, s, uh ,ud . Homeostasis (left) has head cells concentrated on the left,
+tail cells concentrated on the right, a wnt-gradient directed towards wnt-production in the tail, roughly
+constant stem cell population with a slight decrease where differentiation into head and tail cells occurs.
+Head and tail signals are closely mimicking the distribution of head and tail cells. Grafting (center): The
+head region of a donor is grafted into a host, retaining roughly the distribution of cell concentrations and
+signaling molecules from its original location. Cutting (right): A thin fragment (here from the trunk region)
+retains a small wnt-gradient but no head or tail cells. Regeneration in this context refers to reestablishing
+head and tail cell populations while preserving polarity
+such mechanisms would simplify the task of reproducing observed phenomena at
+the (unnecessary) expense of adding a somewhat poorly substantiated regulatory
+mechanism.
+Cutting experiments eliminate head and/or tail cells, thus inﬂuence the wnt-pathway
+and destroy the associated signaling gradient. The terms B in ( 1.8) model the strong
+123
+
+    6 Page 6 of 31 A. Scheel et al.
+local peak of differentiation of stem cells (Wenemoser and Reddien 2010), at wounds
+inside a formed blastema, guided by wnt-signaling (Adell et al. 2010). This reaction,
+which is speciﬁc to wounds with loss of tissue, is not completely understood (Owlarn
+and Bartscherer 2016), and occurs in our model in regions at the ends of [−L, L].
+We crucially rely on the detection of the orientation of the wnt-gradient relative to the
+respective body edge. We view this as an in some sense necessary, minimal informa-
+tion, to guide regeneration while at the same time preserving polarity. Looking at the
+boundary after cutting in Fig. 2, one readily sees that the sign of ∂
+νw gives clues as to
+whether differentiation towards head or tail cells should occur.
+One can envision several scenarios that enable stem cell differentiation to be guided
+by gradients of a chemical signal, for instance through comparing signal strength
+spatially or temporally; see (Alt 1980; Iijima et al. 2002). We do not attempt to model
+details of this sensing process in the present paper, but simply include a lumped reaction
+term for differentiation, that depends sharply on the sign of ∂νw.
+We shall see that our somewhat non standard dynamic (or Wentzel) boundary con-
+ditions cannot be readily replaced by, say, Robin boundary conditions. Formally, one
+could for instance let rates of boundary dynamics tend to inﬁnity or the mass fraction
+of the boundary compartment γ tend to zero. In the latter case, assuming at the same
+time rapid reactions N1,i n
+d
+dt U± =− 1
+γ D ∂νU |x =±L + N , N = 1
+γ N1 + N2 ,
+one ﬁnds in the limit the mixed boundary condition D∂νU = N1(U ). In Sect. 4.4,
+we will see that, in this limit to “instantaneous” boundary conditions, the model does
+not correctly reproduce the phenomena of regeneration. This mathematical curiosity
+implies for instance the presence of distinguished body regions relevant in regeneration
+and may relate to the concept of poles separating head and tail regions from the trunk
+as discussed in Rink ( 2018) where it is attributed a key role in regeneration.
+In another interpretation of dynamic boundary conditions, we can think of compart-
+ments for the main body on a uniform grid x
+(1),..., x (N ), with size x (j +1)−x (j ) ≡ dx
+and associated concentrations U (1),..., U (N ) such that individual compartments carry
+masses dx U (j ). We now add separate boundary compartments U (0) = U− and
+U (N +1) = U+ carrying (larger) masses γU (0),γ U (N +1), independent of dx , and
+impose no-ﬂux boundary conditions on this inhomogeneous spatial grid. Fixing γ and
+letting dx → 0 we arrive at our dynamic boundary condition. Letting γ → dx ,w e
+loose the concept of dynamic boundary conditions and should interpret the additional
+reaction terms B as nonlinear ﬂuxes. We are not aware of a systematic analysis of such
+limits, connecting discretization, nonlinear ﬂuxes, and dynamic boundary conditions.
+1.3 Outline of the paper
+We review biological experiments that motivate our model in Sect. 2 and describe
+numerical simulations that mimic planarian regeneration in various scenarios in Sect.
+3. In Sect. 4, we present analytical results that reduce dynamics to an order parameter c
+that lumps concentrations of head and tail cells, coupled to the long-range wnt-related
+123
+
+Signaling gradients in surface dynamics as basis... Page 11 of 31     6 
+Table 1 Parameter values used
+in simulations throughout,
+unless noted otherwise
+Ds 1 ps 200 r0 18 ηs 100
+Dh 10−3 ph 1 r1 12 ηh 1
+Dd 10−3 pd 1 r2 6 ηd 1
+Duh 10−2 pw 10 r3 6 τ 0.5
+Dud 10−2 γ 0.3 θ 3
+Dw 1 L 10 ε 2 · 10−3
+A discussion on the biological measurements and non-
+dimensionalization can be found in Tenbrock ( 2017)
+signals uh/d diffuse slowly, while the long-range wnt-related signal w has a diffusion
+constant of order 1. We work on domains of length 10 and attribute a mass fraction
+γ = 0.3 to the boundary. We assume very fast proliferation of stem cells p
+s ≫ 1 and
+fast signaling dynamics r j relative to cell differentiation. Cell differentiation ph/d ,
+apoptosis ηh/d , and differentiation at the tissue edges during wound healing τ occur
+on a time scale of order 1. The production rate of wnt-related signals pw is faster in
+comparison.
+3.2 Numerical implementation
+We implemented the dynamic boundary conditions as time-dependent Dirichlet condi-
+tions. The system was solved with grid spacing dx = 0.01 and time stepping 5 · 10−4
+using a semi-implicit Euler method. We found little changes from reﬁning spatio-
+temporal grids and also used Matlab’s stiff solver ode15s for comparison with
+good agreement.
+3.3 Results of the numerical simulations
+We obtained equilibrium proﬁles starting with initial conditions that represent head
+and tail cells in the boundary compartments at the body edges, a uniform distribution
+of stem cells throughout the trunk, and a uniform wnt-signaling gradient. Solving
+the initial-value problem for a short time, we found that concentrations approached
+constants in time. Speciﬁcally, we used initial conditions
+h
+0(x ) ≡ 0, h−,0 = 1, h+,0 = 0, d0(x ) ≡ 0, d−,0 = 0, d+,0 = 1,
+s0(x ) ≡ 1, s−,0 = 1, s+,0 = 1,w 0(x ) = x + L
+2L ,w −,0 = 0,w +,0 = 1, (3.1)
+and let uh ,ud equal h,d. The results match the schematics in Fig. 2. Figure 3 illustrates
+the dynamic stationary proﬁles of healthy planarians of different body size in our
+mathematical model.
+The linear concentration proﬁle in the wnt-signal is quite robust under dramatic
+changes in the domain size. Fixing the width of the boundary compartment γ and
+varying L we found robust homeostasis between L = 0.005 (!) and L = 40. For
+123

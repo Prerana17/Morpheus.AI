@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Liver Regeneration Model - Luque et al. 2023</Title>
+        <Details>
+Agent-based model of liver regeneration after partial hepatectomy.
+Features:
+- Hepatocyte cells with CPM mechanics
+- Oxygen diffusion from portal triads
+- Growth factor-regulated proliferation
+- Cell cycle with G1, S, G2, M phases
+- Hypertrophy and hyperplasia
+- 3D cubic lattice representing liver parenchyma
+
+Reference: Luque, Carlevaro, Llamoza Torres, Lomba (2023) PLOS Comp Biol 19(3):e1010920
+        </Details>
+    </Description>
+    
+    <Global>
+        <Field symbol="oxygen" name="O2" value="38.0">
+            <Diffusion rate="100000.0"/>
+        </Field>
+        
+        <Field symbol="GF" name="growth_factor" value="1.0">
+            <Diffusion rate="1000000.0"/>
+        </Field>
+        
+        <System solver="Runge-Kutta [fixed, O(4)]" time-step="1.0">
+            <DiffEqn symbol-ref="oxygen">
+                <Expression>-0.1*oxygen</Expression>
+            </DiffEqn>
+            
+            <DiffEqn symbol-ref="GF">
+                <Expression>-0.5*GF</Expression>
+            </DiffEqn>
+        </s>
+        
+        <Constant symbol="O2_vessel" value="38.0"/>
+        <Constant symbol="GF_prol" value="0.25"/>
+        <Constant symbol="O2_prol" value="10.0"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="cubic">
+            <Size symbol="size" value="100, 100, 100"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="noflux"/>
+                <Condition boundary="z" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="10000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="12345"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="hepatocyte" class="biological">
+            <Property symbol="target_volume" value="150.0"/>
+            <Property symbol="cycle_phase" value="0"/>
+            <Property symbol="oxygen_local" value="38.0"/>
+            <Property symbol="GF_local" value="1.0"/>
+            <Property symbol="can_divide" value="1"/>
+            
+            <VolumeConstraint target="target_volume" strength="1.0"/>
+            <SurfaceConstraint target="1.0" strength="0.5" mode="aspherity"/>
+            
+            <Mapper name="sense_oxygen">
+                <Input value="oxygen"/>
+                <Output symbol-ref="oxygen_local" mapping="average"/>
+            </Mapper>
+            
+            <Mapper name="sense_GF">
+                <Input value="GF"/>
+                <Output symbol-ref="GF_local" mapping="average"/>
+            </Mapper>
+            
+            <CellDivision division-plane="major">
+                <Condition>can_divide > 0.5 and GF_local > GF_prol and oxygen_local > O2_prol and cell.volume > target_volume*0.9 and rand_uni(0,1) &lt; 0.001</Condition>
+                <Triggers>
+                    <Rule symbol-ref="target_volume">
+                        <Expression>target_volume/2</Expression>
+                    </Rule>
+                    <Rule symbol-ref="can_divide">
+                        <Expression>0</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <ChangeCellType time-step="100" newCellType="hepatocyte">
+                <Condition>can_divide &lt; 0.5</Condition>
+                <Triggers>
+                    <Rule symbol-ref="can_divide">
+                        <Expression>1</Expression>
+                    </Rule>
+                </Triggers>
+            </ChangeCellType>
+        </CellType>
+        
+        <CellType name="portal_triad" class="biological">
+            <Property symbol="oxygen_local" value="38.0"/>
+            <Property symbol="GF_local" value="1.0"/>
+            <VolumeConstraint target="50" strength="10.0"/>
+            <PropertyVector symbol="O2_production" value="100.0, 0, 0"/>
+            <PropertyVector symbol="GF_production" value="10.0, 0, 0"/>
+        </CellType>
+        
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="hepatocyte" type2="hepatocyte" value="-12"/>
+            <Contact type1="hepatocyte" type2="medium" value="0"/>
+            <Contact type1="hepatocyte" type2="portal_triad" value="-6"/>
+            <Contact type1="portal_triad" type2="medium" value="0"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2.0" yield="0.1"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>3</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="hepatocyte" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="3, 3, 3" displacements="30, 30, 30">
+                    <Sphere radius="8" center="15, 15, 15"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <Population type="portal_triad" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="2, 2, 2" displacements="45, 45, 45">
+                    <Sphere radius="4" center="22, 22, 22"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="500" decorate="false">
+            <Terminal name="png"/>
+            <Plot slice="50">
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="1" color="pink"/>
+                        <Color value="2" color="red"/>
+                        <Color value="0" color="white"/>
+                    </ColorMap>
+                </Cells>
+                <Field symbol-ref="oxygen" min="0" max="40" isolines="5">
+                    <ColorMap>
+                        <Color value="40" color="red"/>
+                        <Color value="20" color="yellow"/>
+                        <Color value="0" color="blue"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="100">
+            <Input>
+                <Symbol symbol-ref="celltype.hepatocyte.size"/>
+                <Symbol symbol-ref="cell.volume"/>
+            </Input>
+            <o>
+                <TextOutput file-format="csv"/>
+            </o>
+            <Plots>
+                <Plot time-step="500">
+                    <Style style="linespoints"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="celltype.hepatocyte.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

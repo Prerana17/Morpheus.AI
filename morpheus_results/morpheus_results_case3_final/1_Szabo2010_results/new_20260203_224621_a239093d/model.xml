@@ -1,0 +1,134 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Collective Cell Motion in Endothelial Monolayers - Szabo 2010</Title>
+        <Details>
+            Model of endothelial cell monolayer exhibiting collective streaming behavior.
+            Based on Cellular Potts Model with active cell motility and polarity feedback.
+            Cells maintain internal polarity vectors that are reinforced by cell displacements,
+            creating persistent random walk behavior and emergent collective streaming patterns.
+            
+            Reference: Szabo et al., Phys. Biol. 7 (2010) 046007
+            Key parameters: alpha=2, lambda=1, P=2, r=0.2 (decay rate)
+        </Details>
+    </Description>
+    <Global>
+        <Constant symbol="cell_count" value="0"/>
+        <Constant symbol="avg_speed" value="0"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="200, 200, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="constant"/>
+                <Condition boundary="y" type="constant"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="0"/>
+    </Time>
+    <CellTypes>
+        <CellType class="medium" name="medium"/>
+        <CellType class="biological" name="endothelial">
+            <VolumeConstraint target="50" strength="1"/>
+            <SurfaceConstraint target="0.9" mode="aspherity" strength="1"/>
+            <Property symbol="polarity_x" value="rand_uni(-1.0, 1.0)" name="Polarity X component"/>
+            <Property symbol="polarity_y" value="rand_uni(-1.0, 1.0)" name="Polarity Y component"/>
+            <PropertyVector symbol="polarity" value="polarity_x, polarity_y, 0.0" name="Cell polarity vector"/>
+            <PropertyVector symbol="velocity" value="0.0, 0.0, 0.0" name="Cell velocity"/>
+            <PersistentMotion protrusion="true" decay-time="5" strength="2"/>
+            <MotilityReporter time-step="10">
+                <Velocity symbol-ref="velocity"/>
+            </MotilityReporter>
+        </CellType>
+    </CellTypes>
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="endothelial" type2="medium" value="12"/>
+            <Contact type1="endothelial" type2="endothelial" value="2"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="endothelial">
+            <InitCircle mode="random" number-of-cells="100">
+                <Dimensions radius="80" center="100, 100, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Endothelial Cell Monolayer - Cell Types">
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="1" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Cell Velocity Magnitude">
+                <Cells value="velocity.abs" max="5.0">
+                    <ColorMap>
+                        <Color value="5.0" color="red"/>
+                        <Color value="2.5" color="yellow"/>
+                        <Color value="0.0" color="blue"/>
+                    </ColorMap>
+                </Cells>
+                <CellArrows orientation="velocity" scale="2.0"/>
+            </Plot>
+            <Plot title="Polarity Direction">
+                <Cells value="polarity.phi" min="0.0" max="6.28">
+                    <ColorMap>
+                        <Color value="6.28" color="red"/>
+                        <Color value="3.14" color="green"/>
+                        <Color value="0.0" color="blue"/>
+                    </ColorMap>
+                </Cells>
+                <CellArrows orientation="polarity" scale="3.0"/>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="cell.center.x"/>
+                <Symbol symbol-ref="cell.center.y"/>
+                <Symbol symbol-ref="velocity.abs"/>
+                <Symbol symbol-ref="polarity.abs"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="100">
+                    <Style style="lines" line-width="1.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="velocity.abs"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <ModelGraph include-tags="#untagged" reduced="false" format="dot"/>
+    </Analysis>
+</MorpheusModel>

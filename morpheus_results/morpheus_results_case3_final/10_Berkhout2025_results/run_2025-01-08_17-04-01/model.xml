@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Zebrafish Wound Healing - Mechanical and Chemical Signaling</Title>
+        <Details>Model of zebrafish wound healing combining mechanical stretching and calcium signaling.
+        Based on Berkhout et al. 2025 - Balancing stretch and Ca2+ signaling.
+        
+        Simulates:
+        - Epithelial cells with volume and surface constraints
+        - Cell proliferation in response to mechanical stretch
+        - Calcium wave propagation via diffusion
+        - Cell activation by calcium signals
+        - Wound healing dynamics
+        </Details>
+    </Description>
+    
+    <Global>
+        <Field symbol="Ca" value="0.1 + rand_uni(-0.05, 0.05)">
+            <Diffusion rate="50.0"/>
+        </Field>
+        <Variable symbol="wound_created" value="0"/>
+        <Constant symbol="Ca_threshold" value="0.5"/>
+        <Constant symbol="stretch_threshold" value="1.2"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="400, 400, 0"/>
+            <BoundaryConditions>
+                <Condition type="noflux" boundary="x"/>
+                <Condition type="noflux" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="42"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="medium" class="medium">
+            <System time-step="1.0" solver="Euler [fixed, O(1)]">
+                <DiffEqn symbol-ref="Ca">
+                    <Expression>-0.05 * Ca</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+        
+        <CellType name="epithelial" class="biological">
+            <Property symbol="target_volume" value="200"/>
+            <Property symbol="activation_level" value="0"/>
+            <Property symbol="stretch_factor" value="1.0"/>
+            <Property symbol="can_divide" value="0"/>
+            <Property symbol="local_Ca" value="0"/>
+            
+            <VolumeConstraint target="target_volume" strength="1.0"/>
+            <SurfaceConstraint target="180" mode="aspherity" strength="1.0"/>
+            
+            <System time-step="1.0" solver="Euler [fixed, O(1)]">
+                <Rule symbol-ref="local_Ca">
+                    <Expression>Ca</Expression>
+                </Rule>
+                
+                <Rule symbol-ref="stretch_factor">
+                    <Expression>cell.volume / target_volume</Expression>
+                </Rule>
+                
+                <Rule symbol-ref="activation_level">
+                    <Expression>if(local_Ca > Ca_threshold or stretch_factor > stretch_threshold, min(1.0, activation_level + 0.01), max(0.0, activation_level - 0.005))</Expression>
+                </Rule>
+                
+                <Rule symbol-ref="can_divide">
+                    <Expression>if(activation_level > 0.5 and cell.volume > 180, 1, 0)</Expression>
+                </Rule>
+                
+                <DiffEqn symbol-ref="Ca">
+                    <Expression>if(activation_level > 0.8, 2.0, 0) - 0.1 * Ca</Expression>
+                </DiffEqn>
+            </System>
+            
+            <CellDivision division-plane="minor">
+                <Condition>can_divide > 0.5 and rand_uni(0,1) &lt; 0.001</Condition>
+                <Triggers>
+                    <Rule symbol-ref="target_volume">
+                        <Expression>target_volume * 0.5</Expression>
+                    </Rule>
+                    <Rule symbol-ref="activation_level">
+                        <Expression>0.0</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="epithelial" type2="epithelial" value="8"/>
+            <Contact type1="epithelial" type2="medium" value="16"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="5" yield="0.1"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="epithelial" size="0">
+            <InitRectangle mode="random" number-of-cells="100">
+                <Dimensions size="300, 300, 0" origin="50, 50, 0"/>
+            </InitRectangle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Wound Healing - Cell Activation">
+                <Cells value="activation_level" min="0" max="1">
+                    <ColorMap>
+                        <Color value="0" color="blue"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="1" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Calcium Field">
+                <Field symbol-ref="Ca" min="0" max="2">
+                    <ColorMap>
+                        <Color value="0" color="black"/>
+                        <Color value="1" color="yellow"/>
+                        <Color value="2" color="white"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="celltype.epithelial.size"/>
+                <Symbol symbol-ref="Ca"/>
+                <Symbol symbol-ref="activation_level"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="500">
+                    <Style style="lines" line-width="2"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="150">
+                        <Symbol symbol-ref="celltype.epithelial.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph include-tags="#untagged" reduced="false" format="dot"/>
+    </Analysis>
+</MorpheusModel>

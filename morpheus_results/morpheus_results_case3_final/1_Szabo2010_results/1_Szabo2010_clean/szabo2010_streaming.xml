@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Szabo2010 - Collective Cell Motion in Endothelial Monolayers</Title>
+        <Details>
+Model of collective migration in endothelial cell monolayers based on:
+Szabo et al., Physical Review E 82, 041903 (2010)
+
+This model implements a Cellular Potts Model with:
+- Active cell motility with persistence
+- Cell-cell contact inhibition
+- Streaming behavior emerging from collective effects
+- Analysis of velocity correlation and collective motion patterns
+        </Details>
+    </Description>
+    <Global>
+        <Constant symbol="lattice_size" value="300"/>
+        <Constant symbol="ncells" value="150"/>
+        <Variable symbol="avg_speed" value="0" name="Average cell speed"/>
+    </Global>
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="lattice_size, lattice_size, 0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="endothelial">
+            <PropertyVector symbol="velocity" value="0.0, 0.0, 0.0" name="Cell velocity"/>
+            <Property symbol="speed" value="0.0" name="Cell speed"/>
+            <Property symbol="target_volume" value="150" name="Target cell volume"/>
+            
+            <!-- Volume constraint -->
+            <VolumeConstraint target="target_volume" strength="1"/>
+            
+            <!-- Surface constraint for cell shape -->
+            <SurfaceConstraint target="1.0" mode="aspherity" strength="2"/>
+            
+            <!-- Persistent motion for active cell motility -->
+            <PersistentMotion protrusion="true" decay-time="100" strength="10"/>
+            
+            <!-- Connectivity to prevent fragmentation -->
+            <ConnectivityConstraint/>
+            
+            <!-- Report cell velocity -->
+            <MotilityReporter time-step="10">
+                <Velocity symbol-ref="velocity"/>
+            </MotilityReporter>
+            
+            <!-- Calculate speed from velocity -->
+            <System solver="Dormand-Prince [adaptive, O(5)]" time-step="10">
+                <Rule symbol-ref="speed">
+                    <Expression>sqrt(velocity.x^2 + velocity.y^2)</Expression>
+                </Rule>
+            </System>
+        </CellType>
+        <CellType class="medium" name="medium"/>
+    </CellTypes>
+    <CPM>
+        <Interaction>
+            <!-- Cell-medium adhesion -->
+            <Contact type1="endothelial" type2="medium" value="20"/>
+            <!-- Cell-cell adhesion (lower than cell-medium to promote contact) -->
+            <Contact type1="endothelial" type2="endothelial" value="2"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="15"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>3</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    <CellPopulations>
+        <Population size="0" type="endothelial">
+            <InitCircle mode="random" number-of-cells="ncells">
+                <Dimensions radius="lattice_size/2.5" center="lattice_size/2, lattice_size/2, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <!-- Visualization of cells and their motion -->
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png" size="800, 800, 0"/>
+            <Plot title="Endothelial Cell Monolayer - Cell IDs">
+                <Cells value="cell.id">
+                    <ColorMap>
+                        <Color value="100" color="red"/>
+                        <Color value="50" color="yellow"/>
+                        <Color value="1" color="blue"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Endothelial Cell Speed">
+                <Cells value="speed" min="0" max="2">
+                    <ColorMap>
+                        <Color value="2" color="red"/>
+                        <Color value="1" color="yellow"/>
+                        <Color value="0" color="blue"/>
+                    </ColorMap>
+                </Cells>
+                <CellArrows orientation="2*velocity/speed" style="1"/>
+            </Plot>
+            <Plot title="Cell Types">
+                <Cells value="cell.type"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Logger for cell tracking -->
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="cell.id"/>
+                <Symbol symbol-ref="cell.center.x"/>
+                <Symbol symbol-ref="cell.center.y"/>
+                <Symbol symbol-ref="velocity.x"/>
+                <Symbol symbol-ref="velocity.y"/>
+                <Symbol symbol-ref="speed"/>
+            </Input>
+            <Output>
+                <TextOutput file-separation="cell"/>
+            </Output>
+            <Restriction>
+                <Celltype celltype="endothelial"/>
+            </Restriction>
+            <Plots>
+                <Plot time-step="100">
+                    <Style style="lines" line-width="1.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis minimum="0" maximum="lattice_size">
+                        <Symbol symbol-ref="cell.center.x"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="lattice_size">
+                        <Symbol symbol-ref="cell.center.y"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="time"/>
+                    </Color-bar>
+                    <Range>
+                        <Time mode="history" history="100"/>
+                    </Range>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- Population-level statistics -->
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="speed"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="50">
+                    <Style style="linespoints"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="3">
+                        <Symbol symbol-ref="speed"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

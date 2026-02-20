@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Contact Inhibition in Cancer Cell Proliferation</Title>
+        <Details>
+Model based on Carpenter et al. 2024: "Contact Inhibition: From Molecular Mechanisms to Applications in Cancer and Immunotherapy"
+
+This model simulates:
+- Cancer cells with contact-dependent proliferation inhibition
+- Local density-dependent growth control
+- Cell division with approximately 24-hour cycle time
+- Spatial patterns emerging from contact inhibition loss
+
+The model tracks:
+- Cell population growth over time
+- Local cell density measurements
+- Spatial distribution patterns
+- Individual cell proliferation status
+        </Details>
+    </Description>
+    
+    <Global>
+        <Variable symbol="total_cells" value="0" name="Total cell count"/>
+        <Variable symbol="avg_density" value="0" name="Average local density"/>
+        <Constant symbol="proliferation_threshold" value="4.0" name="Density threshold for contact inhibition"/>
+        <Constant symbol="division_time" value="48" name="Cell cycle duration"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="300, 300, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="500"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType class="biological" name="cancer_cell">
+            <!-- Volume constraint -->
+            <VolumeConstraint target="200" strength="1.0"/>
+            
+            <!-- Surface constraint for cell shape -->
+            <SurfaceConstraint target="1.0" strength="0.5" mode="aspherity"/>
+            
+            <!-- Track local cell density for contact inhibition -->
+            <Property symbol="local_density" value="0.0" name="Number of neighboring cells"/>
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="cell.type == celltype.cancer_cell.id"/>
+                <Output symbol-ref="local_density" mapping="sum"/>
+            </NeighborhoodReporter>
+            
+            <!-- Contact inhibition: cells only divide if local density is low -->
+            <Property symbol="can_divide" value="1.0" name="Division permission (1=yes, 0=no)"/>
+            <System time-step="1.0" solver="Euler [fixed, O(1)]">
+                <Rule symbol-ref="can_divide">
+                    <Expression>if(local_density &lt; proliferation_threshold, 1.0, 0.0)</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Track cell age for division timing -->
+            <Property symbol="cell_age" value="0.0"/>
+            <System time-step="1.0" solver="Euler [fixed, O(1)]">
+                <DiffEqn symbol-ref="cell_age">
+                    <Expression>1.0</Expression>
+                </DiffEqn>
+            </System>
+            
+            <!-- Cell division with age and contact inhibition conditions -->
+            <CellDivision division-plane="random">
+                <Condition>cell_age > division_time and can_divide > 0.5 and time > 10</Condition>
+            </CellDivision>
+            
+            <!-- Reset cell age after division -->
+            <Event trigger="when-true" time-step="1.0">
+                <Condition>cell_age > division_time and can_divide > 0.5</Condition>
+                <Rule symbol-ref="cell_age">
+                    <Expression>0.0</Expression>
+                </Rule>
+            </Event>
+        </CellType>
+        
+        <CellType class="medium" name="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0.0">
+            <Contact type1="cancer_cell" type2="cancer_cell" value="10"/>
+            <Contact type1="cancer_cell" type2="medium" value="14"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="5"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population size="0" type="cancer_cell">
+            <InitCircle mode="random" number-of-cells="50">
+                <Dimensions radius="size.x/4" center="size.x/2, size.y/2, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <!-- Cell count tracker -->
+        <Mapper time-step="1.0">
+            <Input value="celltype.cancer_cell.size"/>
+            <Output symbol-ref="total_cells" mapping="set"/>
+        </Mapper>
+        
+        <Mapper time-step="1.0">
+            <Input value="local_density"/>
+            <Output symbol-ref="avg_density" mapping="average"/>
+        </Mapper>
+        
+        <!-- Visual output: cell positions and density -->
+        <Gnuplotter time-step="10" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cancer Cell Population - Contact Inhibition">
+                <Cells flooding="true" value="cell.type">
+                    <ColorMap>
+                        <Color value="1" color="red"/>
+                        <Color value="0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Local Cell Density (Contact Inhibition Signal)">
+                <Cells flooding="true" value="local_density">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="2" color="yellow"/>
+                        <Color value="4" color="orange"/>
+                        <Color value="6" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Division Permission (Contact Inhibition Active)">
+                <Cells flooding="true" value="can_divide">
+                    <ColorMap>
+                        <Color value="0" color="gray"/>
+                        <Color value="1" color="green"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Data logging -->
+        <Logger time-step="5.0">
+            <Input>
+                <Symbol symbol-ref="total_cells"/>
+                <Symbol symbol-ref="avg_density"/>
+                <Symbol symbol-ref="time"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="50" title="Cell Population Growth">
+                    <Style style="linespoints" line-width="2.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="total_cells"/>
+                    </Y-axis>
+                </Plot>
+                <Plot time-step="50" title="Average Local Cell Density">
+                    <Style style="linespoints" line-width="2.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="avg_density"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- Track individual cell properties -->
+        <Logger time-step="10.0">
+            <Restriction>
+                <Celltype celltype="cancer_cell"/>
+            </Restriction>
+            <Input>
+                <Symbol symbol-ref="local_density"/>
+                <Symbol symbol-ref="can_divide"/>
+                <Symbol symbol-ref="cell_age"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+        </Logger>
+        
+        <ModelGraph include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

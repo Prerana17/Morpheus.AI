@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Neural Tube Closure Model - Berkhout et al. 2025</Title>
+        <Details>
+            Agent-based multicellular model of neural tube closure.
+            
+            Key features:
+            - Multiple cell types (neural epithelium, mesenchyme, surface ectoderm)
+            - Apical constriction driving tissue bending
+            - Differential adhesion between cell types
+            - Convergent extension movements
+            - Tissue folding and closure dynamics
+            
+            Based on: Berkhout et al. (2025) - Multiscale agent-based model of neural tube morphogenesis
+        </Details>
+    </Description>
+    
+    <Global>
+        <Variable symbol="neural_plate_width" value="0.0" name="Width of neural plate"/>
+        <Variable symbol="closure_progress" value="0.0" name="Neural tube closure progress"/>
+        <Constant symbol="apical_constriction_rate" value="0.001"/>
+        <Constant symbol="convergence_rate" value="0.0005"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="400, 300, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="10000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    
+    <CellTypes>
+        <!-- Neural Epithelial Cells - undergo apical constriction -->
+        <CellType name="neural_epithelium" class="biological">
+            <Property symbol="apical_area" value="1.0" name="Apical surface area"/>
+            <Property symbol="constriction" value="0.0" name="Constriction level"/>
+            <Property symbol="position_y" value="cell.center.y"/>
+            
+            <VolumeConstraint target="400" strength="1"/>
+            <SurfaceConstraint target="1.2" strength="0.5" mode="aspherity"/>
+            
+            <!-- Apical constriction dynamics -->
+            <System solver="Euler [fixed, O(1)]" time-step="10">
+                <Rule symbol-ref="constriction">
+                    <Expression>if(constriction &lt; 1.0, constriction + apical_constriction_rate, 1.0)</Expression>
+                </Rule>
+                <Rule symbol-ref="apical_area">
+                    <Expression>1.0 - 0.7 * constriction</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Convergent extension - mediolateral polarization -->
+            <DirectedMotion direction="1.0, 0.0, 0.0" strength="convergence_rate"/>
+        </CellType>
+        
+        <!-- Mesenchymal Cells - fill space, provide mechanical support -->
+        <CellType name="mesenchyme" class="biological">
+            <Property symbol="pressure" value="0.0"/>
+            
+            <VolumeConstraint target="350" strength="1"/>
+            <SurfaceConstraint target="1.0" strength="0.3" mode="aspherity"/>
+            
+            <!-- Random motility -->
+            <PersistentMotion strength="0.5" decay-time="50"/>
+        </CellType>
+        
+        <!-- Surface Ectoderm - forms outer layer -->
+        <CellType name="surface_ectoderm" class="biological">
+            <Property symbol="tension" value="1.0"/>
+            
+            <VolumeConstraint target="380" strength="1"/>
+            <SurfaceConstraint target="1.1" strength="0.4" mode="aspherity"/>
+        </CellType>
+        
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <!-- Neural epithelium interactions -->
+            <Contact type1="neural_epithelium" type2="neural_epithelium" value="2"/>
+            <Contact type1="neural_epithelium" type2="medium" value="20"/>
+            <Contact type1="neural_epithelium" type2="mesenchyme" value="8"/>
+            <Contact type1="neural_epithelium" type2="surface_ectoderm" value="12"/>
+            
+            <!-- Mesenchyme interactions -->
+            <Contact type1="mesenchyme" type2="mesenchyme" value="6"/>
+            <Contact type1="mesenchyme" type2="medium" value="15"/>
+            <Contact type1="mesenchyme" type2="surface_ectoderm" value="10"/>
+            
+            <!-- Surface ectoderm interactions -->
+            <Contact type1="surface_ectoderm" type2="surface_ectoderm" value="3"/>
+            <Contact type1="surface_ectoderm" type2="medium" value="18"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="5" yield="0.1"/>
+        </MonteCarloSampler>
+    </CPM>
+    
+    <CellPopulations>
+        <!-- Initialize neural epithelial layer in the middle -->
+        <Population type="neural_epithelium" size="30">
+            <InitRectangle mode="random" number-of-cells="30">
+                <Dimensions origin="150, 100, 0" size="100, 100, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <!-- Initialize surrounding mesenchyme -->
+        <Population type="mesenchyme" size="40">
+            <InitRectangle mode="random" number-of-cells="40">
+                <Dimensions origin="50, 50, 0" size="300, 200, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <!-- Initialize surface ectoderm on edges -->
+        <Population type="surface_ectoderm" size="20">
+            <InitRectangle mode="random" number-of-cells="20">
+                <Dimensions origin="10, 10, 0" size="380, 280, 0"/>
+            </InitRectangle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <!-- Visualize cells and constriction -->
+        <Gnuplotter time-step="200" decorate="true">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="cell.type"/>
+            </Plot>
+            <Plot>
+                <Cells value="constriction"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Log cell populations and properties -->
+        <Logger time-step="100">
+            <Input>
+                <Symbol symbol-ref="celltype.neural_epithelium.size"/>
+                <Symbol symbol-ref="celltype.mesenchyme.size"/>
+                <Symbol symbol-ref="celltype.surface_ectoderm.size"/>
+                <Symbol symbol-ref="constriction"/>
+                <Symbol symbol-ref="apical_area"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="2000" title="Cell Populations">
+                    <Terminal terminal="png"/>
+                    <Style style="linespoints" point-size="0.5" line-width="2"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="50">
+                        <Symbol symbol-ref="celltype.neural_epithelium.size"/>
+                    </Y-axis>
+                </Plot>
+                <Plot time-step="2000" title="Apical Constriction">
+                    <Terminal terminal="png"/>
+                    <Style style="lines" line-width="2"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="1">
+                        <Symbol symbol-ref="constriction"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- Log cell positions for spatial analysis -->
+        <Logger time-step="500">
+            <Input>
+                <Symbol symbol-ref="cell.center.x"/>
+                <Symbol symbol-ref="cell.center.y"/>
+                <Symbol symbol-ref="cell.type"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="2500" title="Cell Distribution">
+                    <Terminal terminal="png"/>
+                    <Style style="points" point-size="1.5"/>
+                    <X-axis minimum="0" maximum="400">
+                        <Symbol symbol-ref="cell.center.x"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="300">
+                        <Symbol symbol-ref="cell.center.y"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="cell.type"/>
+                    </Color-bar>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- Track model structure -->
+        <Logger time-step="500"/>
+        
+        <ModelGraph format="svg" reduced="false" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

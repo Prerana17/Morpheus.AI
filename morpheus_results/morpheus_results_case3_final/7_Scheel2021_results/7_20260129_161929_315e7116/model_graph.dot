@@ -1,0 +1,114 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Gnuplotter_0_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[0]" ]
+Gnuplotter_0_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[1]" ]
+Gnuplotter_0_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[2]" ]
+Gnuplotter_0_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[3]" ]
+Logger_0_2[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>2</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger[1]" ]
+Logger_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger[0]" ]
+d_0[label="d", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[2]"]
+h_0[label="h", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[1]"]
+s_0[label="s", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[0]"]
+ud_0[label="ud", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[4]"]
+uh_0[label="uh", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[3]"]
+w_0[label="w", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[5]"]
+subgraph cluster_1 {
+label="";
+System_1_10155290712068213458_0_01[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<tr><td><i>'PlanarianRegeneration'</i></td></tr>
+<hr/>
+<tr><td>0.01</td></tr></table></font>>, URL="morph://MorpheusModel/Global/System" ]
+eta_d_1[label="eta_d", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[5]"]
+eta_h_1[label="eta_h", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[4]"]
+eta_s_1[label="eta_s", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[1]"]
+pd_1[label="pd", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[3]"]
+ph_1[label="ph", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[2]"]
+ps_1[label="ps", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[0]"]
+pw_1[label="pw", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[10]"]
+r0_1[label="r0", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[6]"]
+r1_1[label="r1", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[7]"]
+r2_1[label="r2", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[8]"]
+r3_1[label="r3", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[9]"]
+}
+}
+System_1_10155290712068213458_0_01 -> d_0 [penwidth=3, color="#8f100d"] 
+
+System_1_10155290712068213458_0_01 -> h_0 [penwidth=3, color="#8f100d"] 
+
+System_1_10155290712068213458_0_01 -> s_0 [penwidth=3, color="#8f100d"] 
+
+System_1_10155290712068213458_0_01 -> ud_0 [penwidth=3, color="#8f100d"] 
+
+System_1_10155290712068213458_0_01 -> uh_0 [penwidth=3, color="#8f100d"] 
+
+System_1_10155290712068213458_0_01 -> w_0 [penwidth=3, color="#8f100d"] 
+
+d_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+d_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+d_0 -> Logger_0_2 [penwidth=2, color="#112c5f"] 
+
+eta_d_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+eta_h_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+eta_s_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+h_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+h_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+h_0 -> Logger_0_2 [penwidth=2, color="#112c5f"] 
+
+pd_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+ph_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+ps_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+pw_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+r0_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+r1_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+r2_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+r3_1 -> System_1_10155290712068213458_0_01 [penwidth=2, color="#112c5f"] 
+
+s_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+s_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+ud_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+uh_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+w_0 -> Gnuplotter_0_2 [penwidth=2, color="#112c5f"] 
+
+w_0 -> Logger_0_1 [penwidth=2, color="#112c5f"] 
+
+}

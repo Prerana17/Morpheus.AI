@@ -1,0 +1,844 @@
+A computational dynamic systems model for in silico prediction of neural 
+tube closure defects
+☆ , ☆☆
+Job H. Berkhout
+a , b , *
+, James A. Glazier
+c
+, Aldert H. Piersma
+a , b
+, Julio M. Belmonte
+d
+,  
+Juliette Legler
+b
+, Richard M. Spencer
+e
+, Thomas B. Knudsen
+c , e
+, Harm J. Heusinkveld
+a
+a
+Centre for Health Protection, National Institute for Public Health and the Environment, Bilthoven, the Netherlands
+b
+Institute for Risk Assessment Sciences, Utrecht University, Utrecht, the Netherlands
+c
+Biocomplexity Institute, Indiana University, Bloomington, USA
+d
+Department of Physics, NC State University, Raleigh, NC, USA
+e
+U.S. EPA/ORD, Research Triangle Park, NC, USA
+ARTICLE INFO
+Keywords:
+Neural tube closure
+Multicellular agent-based model
+Computer simulation
+Developmental toxicity
+In silico
+Probabilistic assessment
+Gene network
+ABSTRACT
+Neural tube closure is a critical morphogenetic event during early vertebrate development. This complex process 
+is susceptible to perturbation by genetic errors and chemical disruption, which can induce severe neural tube 
+defects (NTDs) such as spina bifida. We built a computational agent-based model (ABM) of neural tube devel -
+opment based on the known biology of morphogenetic signals and cellular biomechanics underlying neural fold 
+elevation, bending and fusion. The computer model functionalizes cell signals and responses to render a dynamic 
+representation of neural tube closure. Perturbations in the control network can then be introduced synthetically 
+or from biological data to yield quantitative simulation and probabilistic prediction of NTDs by incidence and 
+degree of defect. Translational applications of the model include mechanistic understanding of how singular or 
+combinatorial alterations in gene-environmental interactions and animal-free assessment of developmental 
+toxicity for an important human birth defect (spina bifida) and potentially other neurological problems linked to 
+development of the brain and spinal cord.
+Introduction
+Critical to embryonic development of the brain and spinal cord is 
+elevation and folding of the neural plate into a neural tube. This process, 
+neural tube closure, occurs between day 23 and day 30 of human 
+gestation ( Gilbert et al. ). Its failure underlies neural tube defects (NTDs) 
+such as spina bifida and anencephaly. With an estimated global inci -
+dence of 20 cases per 10,000 live-births, NTDs are among the most 
+prevalent human congenital malformations ( Kancherla, 2023 ). In -
+dividuals born with NTDs are known to have severe neurological and 
+developmental problems.
+Neural tube closure is a tightly regulated process that involves the 
+coordinated action of various signaling pathways and cellular processes. 
+This system is susceptible to disruptions, including genetic variations 
+that alter the normal function of key genes involved in the process, and 
+environmental factors such as chemical exposures ( Kancherla, 2023; 
+Heusinkveld et al., 2021; Nikolopoulou et al., 2017 ). Exposure to 
+chemicals, such as pharmaceuticals, pesticides, and industrial chem -
+icals, increases the risk of NTDs ( Felisbino et al., 2024; Brender et al., 
+2014; Yazdy et al., 2013; Rull et al., 2006; Mulu et al., 2022; Lupo et al., 
+2011; Isakovi ´c et al., 2022; Huang et al., 2023 ). Therefore, these 
+chemicals warrant attention in safety assessments traditionally con -
+ducted in guideline prenatal development studies, such as OECD 414 
+and OPPTS 870.3700 ( OECD, 2018; EPA, 1998 ). However, there is an 
+increasing demand for alternative approaches due to ethical concerns, 
+the call for greater chemical coverage with fewer resources, and scien -
+tific arguments related to the limited predictability of animal models for 
+human health ( Kiani, et al., 2022; Piersma, 2006; Piersma et al., 2019 ).
+Various in vitro alternatives for developmental toxicity testing have 
+been developed during the past decades. These alternatives are often 
+☆
+This article is part of a special issue entitled: ‘Alternative Methods DARTS (2024) ’ published in Current Research in Toxicology.
+☆☆
+Disclosure statement: Given 
+his role as Editor-in-Chief, Dr. Thomas B Knudsen had no involvement in the peer review of the article and has no access to information regarding its peer-review. Full 
+responsibility for the editorial process of this article was delegated to Dr. Mathieu Vinken.
+* Corresponding author at: Centre for Health Protection, National Institute for Public Health and the Environment, Bilthoven, the Netherlands.
+E-mail address: job.berkhout@rivm.nl (J.H. Berkhout). 
+Contents lists available at ScienceDirect
+Current Research in Toxicology
+journal homepage: www.journa ls.elsevier.c om/current -research-in-t oxicology
+https://doi.org/10.1016/j.crtox.2024.100210
+Received 11 September 2024; Received in revised form 6 December 2024; Accepted 10 December 2024  
+Current Research in Toxicology 8 (2025) 100210 
+Available online 18 December 2024 
+2666-027X/© 2024 The Author(s). Published by Elsevier B.V. This is an open access article under the CC BY license ( http://creativecommons.org/licenses/by/4.0/ ). 
+
+Fig. 1. A computational model of mammalian neural tube closure. The 8 diff erent cell types featured in the model are incidated in legend with their respective color. 
+The colorbar represents relative gene expression, where 1 indicates the highest amount and 0 the lowest amount. The model respresents a dorso-ventral section of the 
+middle spinal region of the embryo, outlined by the violet box in the schematic. At t = 0 h the size of the model is 252 µ m by 50 µ m by 1. The gene that is visualized in 
+each image series is indicated in the top left corner of the first image of the series. (For interpretation of the references to color in this figure legend, the reader is 
+referred to the web version of this article.)
+J.H. Berkhout et al.                                                                                                                                                                                                                            Current Research in Toxicology 8 (2025) 100210 
+2 
+
+based on pluripotent stem cells, small model organisms such as the 
+zebrafish, and complex organoid or in vitro engineered microsystems 
+( Xue et al., 2018; Lee et al., 2010; Dreser et al., 2020; McCollum et al., 
+2011; Van Der Ven et al., 2022; Karzbrun et al., 2021; Xue et al., 2024; 
+Knight et al., 2018 ). These approaches may replicate some key aspects of 
+neural tube development (e.g., neuruloids, neural rosettes), offering a 
+window into the potential teratogenic effects leading to NTDs. Despite 
+advancements, it is still challenging to capture the complex interactions 
+and integrative biology of in vivo mammalian development.
+Computational agent-based models (ABMs) are a method in which 
+individual entities, or agents — specifically cells in this context — are 
+simulated to mimic and study complex behaviors. These models put 
+cellular dynamics in motion to reproduce self-organizing and emergent 
+phenotypes designed in a computer model to enable the prediction of 
+systems-level outcomes linked to defined biomolecular abnormalities 
+( Hutson et al., 2017; Kleinstreuer et al., 2013; Swat et al., 2012; Shir -
+inifard et al., 2012 ). For example, the models developed for blood vessel 
+formation and palatal fusion have demonstrated how genetic and 
+chemical perturbations, represented by adjusted fold changes in key 
+genes, can predict adverse outcomes observed in vivo ( Hutson et al., 
+2017; Kleinstreuer et al., 2013 ). This approach provides valuable 
+understanding of the mechanisms and vulnerabilities of these develop -
+mental processes. When designed with sufficient biological accuracy, 
+ABMs can probabilistically assess the impact of perturbations on neural 
+tube closure. This offers insights into mechanisms underlying neural 
+tube closure and potential disruption of this process by chemical or 
+genetic factors.
+In this study, we present a new computational ABM that re -
+capitulates the morphogenetic events driving mammalian neural tube 
+closure, using the open source CompuCell3D modeling environment 
+( Swat et al., 2012 ). Our ABM is based on the physiological map of 
+mammalian neural tube closure we developed earlier, which systemat -
+ically organizes the cellular and molecular interactions driving this 
+process ( Heusinkveld et al., 2021 ). This map serves as a reference tool 
+for identifying critical pathways and integrating them into the ABM. 
+Here, we show how variations in cell signals and responses may lead to 
+alterations reminiscent of NTDs that can be calibrated to in vivo models 
+(mouse, zebrafish). Additionally, the computer model can offer mech -
+anistic insights often obscured in traditional animal models to bridge the 
+gap between a molecular alteration and a developmental phenotype.
+Fig. 1. ( continued ).
+J.H. Berkhout et al.                                                                                                                                                                                                                            Current Research in Toxicology 8 (2025) 100210 
+3 
+
+Results
+A computational model of the mammalian neural tube closure
+We built a multi-scale model of mammalian neural tube closure using 
+CompuCell3D, an open-source platform that simulates multicellular 
+systems based on a Cellular Potts model. The platform takes into account 
+the specific behaviors of cells, their regulatory signals, and physical 
+properties ( Swat, et al., 2012 ). Neural tube closure involves complex 
+tissue morphogenesis where tissue bending plays an essential role. This 
+bending is primarily driven by apical constriction of cells in the neuro -
+epithelium. The collective changes shape the tissue at emergent hinge 
+points (bending points) ( Nikolopoulou et al., 2017 ). The current model 
+is two-dimensional in the dorso-ventral plane representing the mid- 
+lumbar region of the neural tube. Within this region, both median 
+hinge points (MHPs) and dorsolateral hinge points (DLHPs) are present 
+during neural tube closure ( Juriloff and Harris, 2018 ).
+The stepwise progression of the model is shown in Fig. 1 . It starts as a 
+planar neural plate, measuring 252 µ m by 50 µ m by 1 µ m , and over the 
+course of 50 simulated hours undergoes the morphogenetic changes 
+necessary to form a closed neural tube ( Cork and Gasser, 2012 ). The 
+start of the model approximates gestational day 28, Carnegie Stage 10 in 
+human development. To make the model as human-like as possible, we 
+adjusted its physical properties, time constraints and spatial organiza -
+tion to closely represent the characteristics of human neural tube closure 
+( Cork and Gasser, 2012 ). Executing the computer model simulates key 
+morphogenetic events akin to those seen in reconstructed sections of the 
+embryo ( Cork and Gasser, 2012 ). These events are directly driven by a 
+gene regulatory network that is embedded in each cell featured in the 
+ABM ( Fig. 2 ). Below we describe the biological processes that occur 
+during neural tube closure and are incorporated in our model, which 
+progress through six distinct stages.
+In the first stage, molecular protein signals shape the initial 
+morphogenesis. The notochord starts to produce sonic hedgehog (SHH), 
+which activates Patched Homolog 1 (PTCH1) ( Aruga, 2004; Caspary and 
+Anderson, 2003 ). PTCH1 downregulates Zinc finger proteins (ZIC) and 
+upregulates Glioma-associated oncogene 2 (GLI2) proteins, which 
+inhibit ZIC ( Fig. 2 ) ( Aruga, 2004; Caspary and Anderson, 2003; Copp 
+and Greene, 2010 ). This starts apical constriction and the formation of 
+median hinge-point cells in the targeted region ( Caspary and Anderson, 
+2003; Copp and Greene, 2010 ). Opposing the SHH gradient is the Bone 
+morphogenetic protein 4 (BMP4) gradient, secreted by the surface 
+ectoderm ( Copp and Greene, 2010; Liu and Niswander, 2005; Sheng 
+et al., 2010; Anderson et al., 2016 ). BMP4 induces cell proliferation in 
+the mesoderm and activates the BMP receptor (BMPR) ( Sheng et al., 
+2010; Anderson et al., 2016; Chesnutt et al., 2004; Sakurai et al., 2012 ). 
+BMP4 activity is regulated by fibroblast growth factor 8 (FGF8) and 
+Noggin (NOG). FGF8, which levels are highest in the first stage, directly 
+inhibits BMP4 gene expression ( Fig. 2 ). NOG, secreted by the mesoderm, 
+neuroectoderm, and notochord, acts as a ligand that binds to BMP4, 
+forming an inactive NOG-BMP4 complex ( Fig. 2 ) ( Felder et al., 2002; 
+Phan-Everson et al., 2021; Zimmerman et al., 1996 ). The surface ecto -
+derm also secretes WNT, which activates the Frizzled (FZD) receptor to 
+start the cascade of events leading to neural crest cell delamination 
+( Nikolopoulou et al., 2017; Gray et al., 2013; Pera et al., 2014 ). How -
+ever, early neural crest specification and delamination is inhibited by 
+the high levels of FGF8 ( Diez Del Corral and Morales, 2017 ). This is 
+complemented by low levels of all-trans retinoic acid (ATRA), FGF8 ′ s 
+regulatory counterpart ( Heusinkveld et al., 2021 ).
+In the second stage, approximately 10 h into neural tube 
+Fig. 2. Gene regulatory network that drives the neural tube closure model. The network regulates three key processes crucial for successful neural tube closure 
+(purple diamonds): floor plate formation, dorsolateral hinge point formation, and neural crest cell delamination. Symbols represent specific molecular and cellular 
+components within the network: light-yellow chevrons indicate receptors, yellow rectangles represent genes, and green rectangles depict proteins. Arrows and their 
+formatting denote specific interactions: white arrows represent specific triggering events; black arrows indicate receptor binding; and black arrows with a line signify 
+transport processes. White squares provide anchor points for the attachment of trigger arrows to reaction pathways, enhancing diagram clarity. (For interpretation of 
+the references to color in this figure legend, the reader is referred to the web version of this article.)
+J.H. Berkhout et al.                                                                                                                                                                                                                            Current Research in Toxicology 8 (2025) 100210 
+4 
+
+development, the median hinge point cells anchor to the notochord 
+beneath them and start to form the floor plate. The floor plate gives 
+stability to the neural plate and starts to produce SHH, reinforcing the 
+sustained SHH gradient along the ventral-dorsal axis ( Greene et al., 
+1998 ). Floor plate formation in combination with further growth of the 
+mesoderm results in the formation of a furrow at the midline of the 
+model, the neural groove ( van Straaten et al., 1993 ). Meanwhile, 
+physical forces outside of the neural plate are also at work. The surface 
+ectoderm starts to push towards the midline of the neural tube 
+( Schoenwolf and Alvarez, 1991 ). These forces are generated by the 
+pressure of surrounding tissues or fluids and are critical for bending of 
+the neural plate later in time. In our simulation, we approximated this 
+behavior by applying a directional vector force on the surface ectoderm, 
+which compels the surface ectoderm to move inward. This ensures that 
+the neural tube invaginates into the embryo and not outward 
+( Schoenwolf and Alvarez, 1991 ).
+In the third stage, around 20 h into development, key molecular 
+changes occur. ATRA levels continue to increase, exceeding FGF levels, 
+while FGF levels further decrease ( Heusinkveld et al., 2021 ). This shift 
+results in reduced NOG levels, subsequently increasing the amount of 
+free active BMP4. Still, the NOG-BMP4 balance is maintained because 
+BMP4 induces the production of NOG ( Felder et al., 2002; Phan-Everson 
+et al., 2021 ). Somitogenesis commences and plays a critical role in 
+shaping and stabilizing the neuroectodermal tissue. This contributes to 
+the elevation of the neural folds by exerting physical forces that push up 
+the neuroectoderm, thereby deepening the neural groove 
+( Christodoulou and Skourides, 2023 ). During neural tube closure, so -
+mite formation is initiated via an oscillatory mechanism, often referred 
+to as the “segmentation clock”, in which the Notch, WNT and FGF 
+pathways play a major role ( Gibb et al., 2010; Maroto et al., 2012 ). The 
+computer model abstracts a segmentation clock without its regulators, 
+as noted in the Methods section.
+Around 30 h into development, the hallmark of the fourth stage is 
+marked by the formation of dorsolateral hinge-points (DLHPs) at the 
+neural plate’s upper regions. DLHP formation initiates bending of the 
+neural plate via apical constriction, the formation of wedge-shaped cells. 
+This process is driven by localized actomyosin contraction at the apical 
+side of cells and is accompanied by cell elongation, as cell volume is 
+redistributed along the apicobasal axis ( Sawyer et al., 2010 ). Basal 
+thickening, with nuclei retained basally, further reinforces this wedge 
+shape and stabilizes the hinge point structure. DLHP formation is highest 
+in regions with intermediate BMP4 levels, where BMP signaling is 
+inhibited by NOG, ensuring proper spatial localization ( Gilbert et al. ). In 
+contrast, SHH signaling via PTCH acts as an inhibitor of DLHP forma -
+tion, further refining their placement ( Stottmann et al., 2006; Ybot- 
+Gonzalez et al., 2007 ). At this stage, the continuous downregulation of 
+FGF and increasing activity of ATRA allows the start of the neural crest 
+cell delamination cascade. The end of the cascade results in an E- to N- 
+cadherin switch, which allows neural crest cells to delaminate. In our 
+model we simplified this through a single Cadherin (CAD). When CAD 
+expression is high, its properties approximate E-cadherin. Low expres -
+sion switches to N-cadherin properties. The E/N Cadherin switch is 
+inhibited by FGF8 and induced by BMP4, FZD, paired box gene 3 (PAX3) 
+and snail family transcriptional repressor 1 (SNAI1), which is increasing 
+in this stage ( Fig. 1 ) ( Gray et al., 2013; Pera et al., 2014; Ichi et al., 2010; 
+Nakazaki et al., 2009 ).
+In the fifth stage, around 40 h into development, the formation of 
+DLHPs further progressed into the center region of the neural plate 
+under the influence of an increasing BMP4 gradient ( Sheng et al., 2010; 
+Anderson et al., 2016 ). This change, combined with the physical forces 
+exerted by the surface ectoderm towards the midline, leads to near 
+fusion of the surface ectoderm and neuroectoderm, almost closing the 
+neural tube ( Schoenwolf and Alvarez, 1991 ). The rising FZD, PAX3 and 
+SNAI1 levels cause the start of the neural crest cell delamination ( Gray 
+et al., 2013; Pera et al., 2014; Ichi et al., 2010; Nakazaki et al., 2009 ).
+After approximately 40–50 h of development, a section of the neural 
+tube closes. The final stage displays 50 h into development, the neural 
+tube is now fully closed, and the neural crest cells delaminated. A 
+summary of all the signaling molecules and cell behaviors implemented 
+in the computational model is presented in Table 1 .
+Towards modeling neural tube closure defects
+To calibrate our computational model against known biological data 
+and explore potential developmental anomalies, we performed in silico 
+parameter variation experiments. In these experiments nine different 
+genes that participate in the regulation of the three key processes (floor 
+plate formation, DLHPs formation, neural crest cell delamination) were 
+hyperactivated or knocked out, while keeping the rest of the parameters 
+the same. Each hyperactivation or knockout scenario was simulated 20 
+times to calculate the probability of defect, with the standard error of the 
+mean (SEM) calculated to represent variability across simulations. The 
+results presented in the following sections are organized per morpho -
+genetic event and offer insight in the predicted dynamics of neural tube 
+closure. The series of images shown are examples of the most common 
+outcomes ( Fig. 3 ). A summary of the in silico gene perturbation experi -
+ments is presented in Supplementary Table 1 .
+Floor plate formation
+The floor plate is a specialized structure of the neural tube and is 
+formed in the second stage of the neural tube closure. Floor plate for -
+mation was disrupted in the model by knockout of SHH, PTCH1 or GLI2 
+( Fig. 3 ). This prevented the neuroectoderm from anchoring to noto -
+chord, which reduced the stability of the neural plate. As a result, 
+structural malformations occurred at the midline of the neural tube.
+Due to disruptions in floor plate formation, the strength of the SHH 
+gradient along the ventral-dorsal axis was reduced. Due to the reduced 
+SHH gradient (the inhibitor of DLHP formation), DLHP formation was 
+increased near the ventral side of the tube. Due to increased DLHPs 
+formation, the neural tube still managed to close in most cases. How -
+ever, the lack of floor plate and reduced stability of the neuroectoderm 
+reduced the size of the neural canal (the hollow part of the neural tube). 
+Table 1 
+Summary of the molecules and behavior in the neural tube closure model.
+Cell type Behavior Signal 
+molecules
+Reference
+Surface 
+Ectoderm
+BMP4 secretion, 
+WNT secretion, 
+cell migration
+BMP4, FGF8, 
+ATRA, WNT
+( Liu and Niswander, 
+2005; Sheng, 2010; 
+Anderson et al., 2016 )
+Neural crest cell delamination WNT, FZD, 
+FGF8, PAX3, 
+TGFbeta, 
+SNAI1, CHD, 
+BMP4, BMPR
+( Gray, 2013; Pera 
+et al., 2014; Ichi, 
+2010; Nakazaki, 
+2009 )
+Neuroectoderm apical 
+constriction, DLHP 
+formation, 
+floor plate 
+formation, NOG 
+secretionSHH 
+secretion
+NOG, FGF8, 
+BMP4, BMPR, 
+ZIC, GLI2, 
+ATRA, SHH, 
+PTCH
+( Greene et al., 1998; 
+van Straaten et al., 
+1993; Caspary and 
+Anderson, 2003; Copp 
+and Greene, 2010; 
+Felder, 2002; Phan- 
+Everson, 2021; 
+Zimmerman et al., 
+1996 )
+Mesoderm cell proliferation, 
+somite formation, 
+NOG secretion
+NOG, FGF8, 
+BMP4, BMPR, 
+ZIC, GLI2, 
+ATRA, SHH, 
+PTCH
+( Anderson et al., 
+2016; Chesnutt et al., 
+2004; Sakurai, 2012; 
+Felder, 2002; Phan- 
+Everson, 2021; 
+Zimmerman et al., 
+1996 )
+Notochordal 
+plate
+SHH secretion, 
+Floor plate 
+induction
+SHH, PTCH, 
+FGF8
+( Aruga, 2004; 
+Caspary and 
+Anderson, 2003 )
+J.H. Berkhout et al.                                                                                                                                                                                                                            Current Research in Toxicology 8 (2025) 100210 
+5 
+
+energy function. Specifically, changes that improve the pseudo energy 
+always succeed, while those that worsen it may succeed based on a 
+probability linked to the effective “ temperature ” (Teff), which was set to 
+10 in our simulations. This value was chosen based on recommendations 
+in the CompuCell3D manual to balance stochasticity and energy mini -
+mization. This temperature introduces randomness in cellular motility 
+and behavior, ensuring the model captures biological variability while 
+preserving realistic dynamics ( Swat et al., 2012 ). Exact details of the 
+modeling framework can be found in the Compucell3D manual on 
+compucell3d.org and in Shirinfiard et al. 2012 ( Shirinifard et al., 2012 ). 
+We quantified the dynamics in terms of Monte Carlo Steps (MCS), with 
+each MCS involving 252 * 200 = 50400 change attempts. Each simu -
+lation ran for a total of 12.000 Monte Carlo Steps (MCS), with one MCS 
+representing 15 s real time for a total real time of 50 h. Up to 20 sim -
+ulations were simultaneously ran locally on a 3.60 GHz intel core i7- 
+12700KF processor, which took approximately 2 h to complete. We 
+stored cell and field-lattice configurations every 25 simulated minutes 
+(100 MCS) and rendered the snapshots using a home-written python 
+script ( Figs. 1 and 3 ).
+Model scope
+Our model recapitulates a single dorso-ventral section of caudal 
+neural tube closure, specifically the middle spinal region at somite lo -
+cations 15 – 20. The model covers major morphogenetic events that 
+revolve around the all- trans -retinoic acid (ATRA)-related molecular 
+pathways for neural tube closure and disruption ( Heusinkveld et al., 
+2021 ). These events include apical constriction, Floor plate formation, 
+DLHPs formation, neural fold elevation, neural crest cell delamination, 
+surface ectoderm fusion and somite formation. Here Floor plate forma -
+tion, DLHPs formation and neural crest cell delamination are actively 
+regulated by a constructed gene regulatory network ( Fig. 2 ). The model 
+approximates a timeline from embryonic (E) days E8.5   E10 in the 
+mouse and gestational days 28 – 31, Carnegie Stage (CS) CS10   CS12 in 
+human development ( Cork and Gasser, 2012 ). Initial model size of 252 x 
+50 was set based on CS10 sections of the caudal neural tube at the virtual 
+human embryo project ( Cork and Gasser, 2012 ).
+Model cell properties
+We initialized the cell volume for the paraxial mesoderm, surface 
+ectoderm, and neural crest cell types at 49, with a variance of plus or 
+minus 10, and positioned them in a 7 by 7 µ m layout. This setup mirrors 
+observations from the Virtual Human Embryo project ( Cork and Gasser, 
+2012 ). We calibrated the delta cell volume increase to reflect a 24-hour 
+proliferation rate without inducing cell proliferation. For the neuro -
+ectoderm and median hinge point cell types, we divided each cell into 
+basal, lateral, and apical sites, each spanning 7 by 7 µ m . These cells, as 
+observed in the Virtual Human Embryo images, seemed elongated, being 
+roughly three times longer than other cell types. To keep the neural plate 
+structure stable and intact during the simulation, a minimum cell width 
+of 7 µ m was essential, making our simulated neuroectoderm cells 
+approximately 2 µ m wider than their estimated biological size. We 
+ensured the structural integrity of the neural plate by connecting apical 
+and basal cells within the neuroectodermal layer with springs, simu -
+lating the role of tight junctions through the use of the Focal Point 
+Plasticity plugin in CompuCell3D ( Swat et al., 2012 ). We set the target 
+distance between these points at 5 µ m to create a stable neuroectodermal 
+layer.
+Model cell behavior
+Apical Constriction in MHP formation: Apical constriction in the 
+MHP is directly induced by SHH signaling secreted by the notochordal 
+plate. When neuroectodermal cells are in contact with the notochord, 
+the high SHH signaling triggers apical constriction via PTCH ( Fig. 2 ). 
+When a cell undergoes apical constriction, the target distance of the 
+mechanical springs on the apical side of the cell reduces from 5 µ m to 0 
+µ m, implemented in steps of 0.005 µ m per MCS for stable dynamic 
+transition. This reduction represents the constriction of the actomyosin 
+machinery on the apical surface of the cell ( Cork and Gasser, 2012; 
+Greene et al., 1998; Sawyer et al., 2010 ). To simulate the elongation of 
+cells during apical constriction, additional mechanical springs are 
+introduced between the apical and basal sides of the cell. These springs 
+extend the target distance of the basal compartment to 15 µ m from an 
+initial 9 µ m, reflecting the elongation behavior during apical constric -
+tion ( Cork and Gasser, 2012; Sawyer et al., 2010 ). Simultaneously, cell 
+volume is dynamically redistributed among three compartments (apical, 
+lateral, and basal), increasing the basal compartment ’ s volume by 57 % 
+while proportionally decreasing the apical compartment ’ s volume. This 
+adjustment mimics basal thickening and the formation of wedge-shaped 
+cells while maintaining the overall cell volume ( Gilbert et al.; Cork and 
+Gasser, 2012 ).
+Apical Constriction during DLPHs formation: Apical constriction 
+during DLHPs formation in the neuroectoderm is an emergent feature 
+induced by intermediate BMP4 levels and inhibited by SHH ( Fig. 2 ). 
+While the behavior of cells undergoing apical constriction during DLHP 
+formation resembles that during MHP formation, the triggering mech -
+anisms differ. the first model calculates the maximum probability of 
+apical constriction ( max
+ac
+) for each neuroectodermal cell at every MCS 
+based on local BMP4 concentration using the equation: 
+max
+ac
+= 4
+(
+C
+8
+bmp
+0 . 5
+8
++ xC
+8
+bmp
+*
+0 . 5
+8
+0 . 5
+8
++ C
+8
+bmp
+)
+(1) 
+Here max
+ac 
+is the maximum apical constriction probability and C
+bmp 
+is 
+the local BMP4 concentration. Next the inhibition of apical constriction 
+by SHH (shh
+aci
+) is calculated using the equation: 
+shh
+aci
+=
+0 . 5
+8
+0 . 5
+8
++ C
+8
+shh
+(2) 
+where shh
+aci 
+represents represents the level of apical constriction inhi -
+bition by SHH and C
+shh 
+is the local SHH concentration. The combined 
+probability of apical constriction ( rate
+ac
+) is then determined by multi -
+plying the BMP4 and SHH effects: 
+rat e
+ac
+= max
+ac
+*shh
+aci
+(3) 
+This value ( rate
+ac
+) is subsequently corrected for time using a Poisson 
+distribution: 
+p
+ac
+= 1   exp
+ 
+(
+rat e ac
+4
+)
+(4) 
+Here p
+ac 
+represents the time-corrected probability of apical constriction. 
+Upon successful apical constriction, the cell transitions one step closer to 
+adopting a wedge-shaped morphology. If unsuccessful, the cell reverts 
+one step towards its original shape. This stochastic approach captures 
+the biological variability and dynamic nature of DLHP formation.
+The segmentation clock: In our model, we implemented the seg -
+mentation clock via an internal “ counter, ” that triggers the start of so -
+mite formation after 17 h simulated time ( Cork and Gasser, 2012 ). Cells 
+from the paraxial mesoderm type have a 1/2500 chance to differentiate 
+to a somite cell with different properties. This probability is increased by 
+1 %, each time a paraxial mesoderm cell contacts a somite cell. These 
+parameters were arbitrarily chosen to ensure rapid somite formation 
+while minimizing the amount of extracellular matrix (ECM) captured 
+within these somites ( Martins et al., 2009 ). This implementation 
+allowed us to reduce the complexity of the model while maintaining the 
+critical function of the somites in neural tube closure.
+J.H. Berkhout et al.                                                                                                                                                                                                                            Current Research in Toxicology 8 (2025) 100210 
+11 
+
+A gene regulatory network that drives the neural tube closure model
+To simulate the complex interplay between various genes and pro -
+teins during neural tube closure in our model, we created a gene regu -
+latory network of neural tube closure that contains key genes. All genes 
+and proteins implemented in the model are displayed in the gene reg -
+ulatory network ( Fig. 2 ). The gene regulatory network implemented in 
+our model is a refined extraction from a larger network and embedded in 
+each cell in the ABM ( Heusinkveld et al., 2021 ). Our network regulates 
+three key processes for successful neural tube closure: ( Fig. 2 ) floor plate 
+formation, DLHP formation and neural crest cell delamination ( Fig. 2 ). 
+The development and simulation of this gene regulatory network, was 
+conducted entirely within the CompuCell3D environment. As mecha -
+nistic data of the human neural tube is scarce the network primarily 
+relies on animal data. 
+gene
+a
+=
+x
+n
+K
+n
++ x
+n
+(5) 
+gene
+i
+= 1  
+K
+n
+K
+n
++ x
+n
+(6) 
+In these equations: 
+• x represents the gene expression level of the regulating gene (acti -
+vator or inhibitor).
+• K is the half-maximal constant.
+• n is the Hill coefficient.
+The Hill functions in the network are scaled between 0 and 1, with n 
+= 8 and K = 0.5. These parameter values were selected due to the 
+absence of precise values in existing data. To incorporate the inherent 
+variability and unpredictability of biological systems, a random back -
+ground transcription level is included for each gene in the network.
+Protein gradients that are known to be critical for neural tube include 
+BMP secreted by the surface ectoderm, SHH from the notochord and 
+floor plate, NOG from the mesoderm, neuroectoderm, and floor plate, 
+and WNT from the surface ectoderm. The protein concentration of these 
+gradients is scaled between 0 and 1, a similar scaling as the gene regu -
+latory network. We normalized the protein gradients by selecting 
+identical values for each gradient for the diffusion and decay constant. 
+The diffusion constant for all protein gradients was parameterized to be 
+0.24 µ m ( Kancherla, 2023 )/s. The decay constant was parameterized to 
+be 3.33*10
+-5
+s
+  1 
+in all compartments but increased to 2.333*10
+-4
+s
+  1 
+in 
+the medium compartment (all values scaled to the simulation ’ s time and 
+space units). This ensured consistent behavior of these signaling mole -
+cules across different cell types and spatial locations. Then, we cali -
+brated the secretion constants based on cell number to accurately reflect 
+the biological context (exact parameter values can be found in the 
+simulation ’ s parameter file). The rostro-caudal gradients: ATRA and FGF 
+are fixed in space, meaning their concentrations are the same 
+throughout the model, but vary over time. Specifically, FGF concen -
+tration decreases over time and ATRA increases, both scaled between 
+0 and 1. This design mimics the rostro-caudal protein balance of FGF- 
+ATRA crucial for neural tube closure, and ensures that these gradients 
+capture the temporal dynamics needed for patterning in this 2D 
+framework ( Heusinkveld et al., 2021 ).
+Disclaimer
+The views expressed in this article are those of the authors and do not 
+necessarily reflect the views or policies of the U.S. Environmental Pro -
+tection Agency. Mention of trade names or commercial products does 
+not constitute endorsement or recommendation for use. The review and 
+editorial management of this manuscript were handled entirely outside 
+the domain of the three co-authors who are members of the CRTOX 
+Editorial Board (Piersma), the Associate Editor (Heusinkveld), and the 
+Editor-in-Chief (Knudsen).
+CRediT authorship contribution statement
+Job H. Berkhout: Conceptualization, Methodology, Software, Vali -
+dation, Formal analysis, Investigation, Writing – original draft, Writing – 
+review & editing, Visualization. James A. Glazier: Conceptualization, 
+Methodology, Software, Validation, Supervision. Aldert H. Piersma: 
+Conceptualization, Project administration, Funding acquisition, Writing 
+– review & editing. Julio M. Belmonte: Methodology, Software. Juli -
+ette Legler: Project administration, Funding acquisition, Writing – re -
+view & editing. Richard M. Spencer: Conceptualization, Methodology, 
+Software. Thomas B. Knudsen: Conceptualization, Methodology, 
+Validation, Supervision, Writing – review & editing. Harm J. Heu -
+sinkveld: Conceptualization, Validation, Supervision, Writing – review 
+& editing, Project administration, Funding acquisition.
+Declaration of competing interest
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper.
+Acknowledgements
+The authors thank Victoria de Leeuw and Katie-Paul Friedman for 
+providing management review of the work. We also thank Cynthia Wolf 
+and Kelly Carstens for providing technical review of the work. The au -
+thors also thank Alessio Gamba, Luiz Carlos Maia Ladeira, Bernard 
+Staumont and Liesbet Geris for assisting with the gene regulatory 
+network. This work was performed in the context of the ONTOX project 
+( https://ontox-project.eu/ ) that has received funding from the European 
+Union ’ s Horizon 2020 Research and Innovation programme under grant 
+agreement No 963845. ONTOX is part of the ASPIS project cluster ( https 
+://aspiscluster.eu/ ).
+Appendix A. Supplementary data
+Supplementary data to this article can be found online at https://doi. 
+org/10.1016/j.crtox.2024.100210 .
+Data availability
+All data generated during this study is available in the BioStudies 
+database (http://www.ebi.ac.uk/biostudies) under accession number S- 
+ONTX34.
+References
+Anderson, M.J., Schimmang, T., Lewandoski, M., 2016. An FGF3-BMP signaling axis 
+regulates caudal neural tube closure, neural crest specification and anterior-posterior 
+axis extension. PLoS Genet 12, e1006018 .
+Aruga, J., 2004. The role of Zic genes in neural development. Mol Cell Neurosci 26, 
+205 – 221 .
+Brender, J.D., Shinde, M.U., Zhan, F.B., Gong, X., Langlois, P.H., 2014. Maternal 
+residential proximity to chlorinated solvent emissions and birth defects in offspring: 
+a case – control study. Environ. Health 13, 96 .
+Caspary, T., Anderson, K.V., 2003. Patterning cell types in the dorsal spinal cord: what 
+the mouse mutants say. Nat Rev Neurosci 4, 289 – 297 .
+Cerrizuela, S., Vega-Lopez, G.A., Aybar, M.J., 2020. The role of teratogens in neural crest 
+development. Birth Defects Res . 112, 584 – 632 .
+Chang, C.-P., et al., 2008. Pbx1 functions in distinct regulatory networks to pattern the 
+great arteries and cardiac outflow tract. Development 135, 3577 – 3586 .
+Chesnutt, C., Burrus, L.W., Brown, A.M.C., Niswander, L., 2004. Coordinate regulation of 
+neural tube patterning and proliferation by TGF β and WNT activity. Dev. Biol. 274, 
+334 – 347 .
+Chiang, C., et al., 1996. Cyclopia and defective axial patterning in mice lacking Sonic 
+hedgehog gene function. Nature 383, 407 – 413 .
+Christodoulou, N., Skourides, P.A., 2023. Somitic mesoderm morphogenesis is necessary 
+for neural tube closure during Xenopus development. Front. Cell Dev. Biol. 10, 
+1091629 .
+J.H. Berkhout et al.                                                                                                                                                                                                                            Current Research in Toxicology 8 (2025) 100210 
+12 
+
+13.08.25 Invitro_NTC_2D.xml 1
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+< CompuCell3D 	Revision = "2" 	Version = "4.3.0" >						 < Metadata >												 <!--	Basic	properties	simulation	-->						 < NumberOfProcessors > 1 </ NumberOfProcessors >						 < DebugOutputFrequency > 10 </ DebugOutputFrequency >						 <!--	<NonParallelModule	Name="Potts"/>	-->			 </ Metadata >						 < Potts >												 <!--	Basic	properties	of	CPM	(GGH)	algorithm	-->						 < Dimensions 	x = "252" 	y = "200" 	z = "1" />						 < Steps > 12001 </ Steps >						 < Temperature > 10.0 </ Temperature >						 < NeighborOrder > 1 </ NeighborOrder >			 </ Potts >						 < Plugin 	Name = "CellType" >												 <!--	Listing	all	cell	types	in	the	simulation	-->						 < CellType 	TypeId = "0" 	TypeName = "Medium" />						 < CellType 	TypeId = "1" 	TypeName = "endoderm" />						 < CellType 	Freeze = "" 	TypeId = "2" 	TypeName = "notochord" />						 < CellType 	TypeId = "3" 	TypeName = "somite" />						 < CellType 	TypeId = "4" 	TypeName = "mesoderm" />						 < CellType 	TypeId = "5" 	TypeName = "mhp_basal" />						 < CellType 	TypeId = "6" 	TypeName = "mhp_lateral" />						 < CellType 	TypeId = "7" 	TypeName = "mhp_apical" />						 < CellType 	TypeId = "8" 	TypeName = "np_basal_L" />						 < CellType 	TypeId = "9" 	TypeName = "np_lateral_L" />						 < CellType 	TypeId = "10" 	TypeName = "np_apical_L" />						 < CellType 	TypeId = "11" 	TypeName = "np_basal_R" />						 < CellType 	TypeId = "12" 	TypeName = "np_lateral_R" />						 < CellType 	TypeId = "13" 	TypeName = "np_apical_R" />						 < CellType 	TypeId = "14" 	TypeName = "ectoderm_L" />						 < CellType 	TypeId = "15" 	TypeName = "ectoderm_R" />						 < CellType 	Freeze = "" 	TypeId = "16" 	TypeName = "wall" />						 < CellType 	TypeId = "17" 	TypeName = "ECM" />						 < CellType 	TypeId = "18" 	TypeName = "fluid" />						 < CellType 	TypeId = "19" 	TypeName = "neuralcrest_L" />						 < CellType 	TypeId = "20" 	TypeName = "neuralcrest_R" />						 < CellType 	TypeId = "21" 	TypeName = "neuralcrest_L_DEL" />						 < CellType 	TypeId = "22" 	TypeName = "neuralcrest_R_DEL" /> 									 </ Plugin >						 < Plugin 	Name = "Volume" />						 < Plugin 	Name = "Surface" />
+									 < Plugin 	Name = "CenterOfMass" >												 <!--	Module	tracking	center	of	mass	of	each	cell	-->			 </ Plugin >						 < Plugin 	Name = "NeighborTracker" >												 <!--	Module	tracking	neighboring	cells	of	each	cell	-->
+
+13.08.25 Invitro_NTC_2D.xml 2
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+			 </ Plugin >							 < Plugin 	Name = "BoundaryPixelTracker" >						 <!--	Module	tracking	boundary	pixels	of	each	cell	-->				 < NeighborOrder > 1 </ NeighborOrder >				 </ Plugin >								 < Plugin 	Name = "PixelTracker" >						 <!--	Module	tracking	pixels	of	each	cell	-->				 </ Plugin >
+						 < Plugin 	Name = "Contact" >						 <!--	Specification	of	adhesion	energies	-->						 < Energy 	Type1 = "Medium" 	Type2 = "Medium" > 0.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "endoderm" > 20.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "notochord" > 20.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "somite" > 20.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "mesoderm" > 20.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "mhp_basal" > 20.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "mhp_lateral" > 10.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "mhp_apical" > 5.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "np_basal_L" > 20.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "np_lateral_L" > 10.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "np_apical_L" > 5.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "np_basal_R" > 20.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "np_lateral_R" > 10.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "np_apical_R" > 5.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "ectoderm_L" > 5.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "ectoderm_R" > 5.0 </ Energy >												 < Energy 	Type1 = "Medium" 	Type2 = "neuralcrest_L" > 5.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "neuralcrest_R" > 5.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "Medium" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "endoderm" 	Type2 = "endoderm" > 3.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "notochord" > 5.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "somite" > 30.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "mesoderm" > 15.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "mhp_basal" > 20.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "mhp_lateral" > 30.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "mhp_apical" > 30.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "np_basal_L" > 20.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "np_lateral_L" > 30.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "np_apical_L" > 30.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "np_basal_R" > 20.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "np_lateral_R" > 30.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "np_apical_R" > 30.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "ectoderm_L" > 20.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "ectoderm_R" > 20.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "neuralcrest_L" > 20.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "neuralcrest_R" > 20.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "endoderm" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "notochord" 	Type2 = "notochord" > 5.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "somite" > 25.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "mesoderm" > 25.0 </ Energy >
+
+13.08.25 Invitro_NTC_2D.xml 3
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+						 < Energy 	Type1 = "notochord" 	Type2 = "mhp_basal" > 5.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "mhp_lateral" > 15.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "mhp_apical" > 20.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "np_basal_L" > 15.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "np_lateral_L" > 20.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "np_apical_L" > 30.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "np_basal_R" > 15.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "np_lateral_R" > 20.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "np_apical_R" > 30.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "ectoderm_L" > 20.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "ectoderm_R" > 20.0 </ Energy >												 < Energy 	Type1 = "notochord" 	Type2 = "neuralcrest_L" > 20.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "neuralcrest_R" > 20.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "notochord" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "somite" 	Type2 = "somite" > 3.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "mesoderm" > 7.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "mhp_basal" > 20.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "mhp_lateral" > 20.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "mhp_apical" > 30.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "np_basal_L" > 15.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "np_lateral_L" > 20.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "np_apical_L" > 30.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "np_basal_R" > 15.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "np_lateral_R" > 20.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "np_apical_R" > 30.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "ectoderm_L" > 20.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "ectoderm_R" > 20.0 </ Energy >												 < Energy 	Type1 = "somite" 	Type2 = "neuralcrest_L" > 20.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "neuralcrest_R" > 20.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "somite" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "mesoderm" 	Type2 = "mesoderm" > 3.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "mhp_basal" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "mhp_lateral" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "mhp_apical" > 30.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "np_basal_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "np_lateral_L" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "np_apical_L" > 30.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "np_basal_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "np_lateral_R" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "np_apical_R" > 30.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "ectoderm_L" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "ectoderm_R" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "neuralcrest_L" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "neuralcrest_R" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "mesoderm" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "mhp_basal" 	Type2 = "mhp_basal" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "mhp_lateral" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "mhp_apical" > 15.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_basal_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_lateral_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_apical_L" > 15.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_basal_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_lateral_R" > 10.0 </ Energy >
+
+13.08.25 Invitro_NTC_2D.xml 4
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_apical_R" > 15.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "ectoderm_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "ectoderm_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "neuralcrest_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "neuralcrest_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "mhp_lateral" 	Type2 = "mhp_lateral" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "mhp_apical" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_basal_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_lateral_L" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_apical_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_basal_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_lateral_R" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_apical_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "ectoderm_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "ectoderm_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "neuralcrest_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "neuralcrest_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "mhp_apical" 	Type2 = "mhp_apical" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_basal_L" > 15.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_lateral_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_apical_L" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_basal_R" > 15.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_lateral_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_apical_R" > 5.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "ectoderm_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "ectoderm_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "neuralcrest_L" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "neuralcrest_R" > 10.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_basal_L" > 5.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_lateral_L" > 5.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_apical_L" > 15.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_basal_R" > 10.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_lateral_R" > 10.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_apical_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "ectoderm_L" > 15.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "ectoderm_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "neuralcrest_L" > 5.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "neuralcrest_R" > 5.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_lateral_L" > 3.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_apical_L" > 5.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_basal_R" > 10.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_lateral_R" > 10.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_apical_R" > 10.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "ectoderm_L" > 15.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "ectoderm_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "neuralcrest_L" > 8.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "neuralcrest_R" > 8.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >
+
+13.08.25 Invitro_NTC_2D.xml 5
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+												 < Energy 	Type1 = "np_apical_L" 	Type2 = "np_apical_L" > 3.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "np_basal_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "np_lateral_R" > 10.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "np_apical_R" > 10.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "ectoderm_L" > 15.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "ectoderm_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "neuralcrest_L" > 8.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "neuralcrest_R" > 8.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "np_basal_R" 	Type2 = "np_basal_R" > 3.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "np_lateral_R" > 5.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "np_apical_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "ectoderm_L" > 15.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "ectoderm_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "neuralcrest_L" > 5.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "neuralcrest_R" > 5.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "np_lateral_R" 	Type2 = "np_lateral_R" > 3.0 </ Energy >						 < Energy 	Type1 = "np_lateral_R" 	Type2 = "np_apical_R" > 5.0 </ Energy >						 < Energy 	Type1 = "np_lateral_R" 	Type2 = "ectoderm_L" > 15.0 </ Energy >						 < Energy 	Type1 = "np_lateral_R" 	Type2 = "ectoderm_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_lateral_R" 	Type2 = "neuralcrest_L" > 8.0 </ Energy >						 < Energy 	Type1 = "np_lateral_R" 	Type2 = "neuralcrest_R" > 8.0 </ Energy >						 < Energy 	Type1 = "np_lateral_R" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "np_lateral_R" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "np_apical_R" 	Type2 = "np_apical_R" > 3.0 </ Energy >						 < Energy 	Type1 = "np_apical_R" 	Type2 = "ectoderm_L" > 15.0 </ Energy >						 < Energy 	Type1 = "np_apical_R" 	Type2 = "ectoderm_R" > 15.0 </ Energy >						 < Energy 	Type1 = "np_apical_R" 	Type2 = "neuralcrest_L" > 8.0 </ Energy >						 < Energy 	Type1 = "np_apical_R" 	Type2 = "neuralcrest_R" > 8.0 </ Energy >						 < Energy 	Type1 = "np_apical_R" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "np_apical_R" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "ectoderm_L" 	Type2 = "ectoderm_L" > 5.0 </ Energy >						 < Energy 	Type1 = "ectoderm_L" 	Type2 = "ectoderm_R" > 3.0 </ Energy >						 < Energy 	Type1 = "ectoderm_L" 	Type2 = "neuralcrest_L" > 5.0 </ Energy >						 < Energy 	Type1 = "ectoderm_L" 	Type2 = "neuralcrest_R" > 8.0 </ Energy >						 < Energy 	Type1 = "ectoderm_L" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "ectoderm_L" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "ectoderm_R" 	Type2 = "ectoderm_R" > 5.0 </ Energy >						 < Energy 	Type1 = "ectoderm_R" 	Type2 = "neuralcrest_L" > 8.0 </ Energy >						 < Energy 	Type1 = "ectoderm_R" 	Type2 = "neuralcrest_R" > 5.0 </ Energy >						 < Energy 	Type1 = "ectoderm_R" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "ectoderm_R" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "neuralcrest_L" 	Type2 = "neuralcrest_L" > 5.0 </ Energy >						 < Energy 	Type1 = "neuralcrest_L" 	Type2 = "neuralcrest_R" > 3.0 </ Energy >						 < Energy 	Type1 = "neuralcrest_L" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "neuralcrest_L" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "neuralcrest_R" 	Type2 = "neuralcrest_R" > 5.0 </ Energy >						 < Energy 	Type1 = "neuralcrest_R" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "neuralcrest_R" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >						
+
+13.08.25 Invitro_NTC_2D.xml 6
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+						 < Energy 	Type1 = "neuralcrest_L_DEL" 	Type2 = "neuralcrest_L_DEL" > 20.0 </ Energy >						 < Energy 	Type1 = "neuralcrest_L_DEL" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "neuralcrest_R_DEL" 	Type2 = "neuralcrest_R_DEL" > 20.0 </ Energy >												 < Energy 	Type1 = "wall" 	Type2 = "wall" > 1.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "endoderm" > 0.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "notochord" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "somite" > 30.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "mesoderm" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "mhp_basal" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "mhp_lateral" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "mhp_apical" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "np_basal_L" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "np_lateral_L" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "np_apical_L" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "np_basal_R" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "np_lateral_R" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "np_apical_R" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "ectoderm_L" > 5.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "ectoderm_R" > 5.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "neuralcrest_L" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "neuralcrest_R" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "neuralcrest_L_DEL" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "neuralcrest_R_DEL" > 10.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "ECM" > 5.0 </ Energy >						 < Energy 	Type1 = "wall" 	Type2 = "Medium" > 0.0 </ Energy >												 < Energy 	Type1 = "ECM" 	Type2 = "ECM" > 0.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "endoderm" > 5.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "notochord" > 7.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "somite" > 7.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "mesoderm" > 0.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "mhp_basal" > 10.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "mhp_lateral" > 20.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "mhp_apical" > 25.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "np_basal_L" > 5.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "np_lateral_L" > 10.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "np_apical_L" > 20.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "np_basal_R" > 5.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "np_lateral_R" > 10.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "np_apical_R" > 20.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "ectoderm_L" > 10.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "ectoderm_R" > 10.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "Medium" > 50.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "neuralcrest_L" > 10.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "neuralcrest_R" > 10.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "neuralcrest_L_DEL" > 0.0 </ Energy >						 < Energy 	Type1 = "ECM" 	Type2 = "neuralcrest_R_DEL" > 0.0 </ Energy >												 < Energy 	Type1 = "fluid" 	Type2 = "fluid" > 1.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "endoderm" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "notochord" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "somite" > 30.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "mesoderm" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "mhp_basal" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "mhp_lateral" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "mhp_apical" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "np_basal_L" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "np_lateral_L" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "np_apical_L" > 10.0 </ Energy >
+
+13.08.25 Invitro_NTC_2D.xml 7
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+						 < Energy 	Type1 = "fluid" 	Type2 = "np_basal_R" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "np_lateral_R" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "np_apical_R" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "ectoderm_L" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "ectoderm_R" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "ECM" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "Medium" > 10.0 </ Energy >						 < Energy 	Type1 = "fluid" 	Type2 = "wall" > 0.0 </ Energy >																		 < NeighborOrder > 4 </ NeighborOrder >			 </ Plugin >												 < Plugin 	Name = "ContactInternal" >						 <!--	Specification	of	internal	adhesion	energies	--> 	
+						 < Energy 	Type1 = "mhp_basal" 	Type2 = "mhp_lateral" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "mhp_apical" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_lateral_L" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_apical_L" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_lateral_R" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_basal" 	Type2 = "np_apical_R" > 4.0 </ Energy >												 < Energy 	Type1 = "mhp_lateral" 	Type2 = "mhp_apical" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_basal_L" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_apical_L" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_basal_R" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_lateral" 	Type2 = "np_apical_R" > 4.0 </ Energy >								 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_basal_L" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_lateral_L" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_basal_R" > 4.0 </ Energy >						 < Energy 	Type1 = "mhp_apical" 	Type2 = "np_lateral_R" > 4.0 </ Energy >												 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_lateral_L" > 4.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_apical_L" > 4.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_lateral_R" > 4.0 </ Energy >						 < Energy 	Type1 = "np_basal_L" 	Type2 = "np_apical_R" > 4.0 </ Energy >												 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_apical_L" > 4.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_basal_R" > 4.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_lateral_R" > 0.0 </ Energy >						 < Energy 	Type1 = "np_lateral_L" 	Type2 = "np_apical_R" > 4.0 </ Energy >												 < Energy 	Type1 = "np_apical_L" 	Type2 = "np_basal_R" > 4.0 </ Energy >						 < Energy 	Type1 = "np_apical_L" 	Type2 = "np_lateral_R" > 4.0 </ Energy >												 < Energy 	Type1 = "np_basal_R" 	Type2 = "np_lateral_R" > 4.0 </ Energy >						 < Energy 	Type1 = "np_basal_R" 	Type2 = "np_apical_R" > 4.0 </ Energy >											 < Energy 	Type1 = "np_lateral_R" 	Type2 = "np_apical_R" > 4.0 </ Energy >												 < NeighborOrder > 4 </ NeighborOrder >			 </ Plugin >						 < Plugin 	Name = "FocalPointPlasticity" >												 <!--	Specification	of	focal	point	junctions	-->						 <!--	We	separetely	specify	links	between	members	of	same	cluster	-	InternalParameters	and
+members	of	different	clusters	Parameters.	When	not	using	compartmental		cells	comment	out
+InternalParameters	specification	-->
+
+13.08.25 Invitro_NTC_2D.xml 8
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+						 <!--	We	separetely	specify	links	between	members	of	same	cluster	-	InternalParameters	and
+members	of	different	clusters	Parameters.	When	not	using	compartmental		cells	comment	out
+InternalParameters	specification	-->						 <!--	To	modify	FPP	links	individually	for	each	cell	pair	uncomment	line	below	-->						 < Local />						 <!--	Note	that	even	though	you	may	manipulate	lambdaDistance,	targetDistance	and
+maxDistance	using	Python	you	still	need	to	set	activation	energy	from	XML	level	-->						 <!--	See	CC3D	manual	for	details	on	FPP	plugin		-->													 < Parameters 	Type1 = "mhp_apical" 	Type2 = "mhp_apical" >									 < Lambda > 20 </ Lambda >									 < ActivationEnergy > -50 </ ActivationEnergy >									 < TargetDistance > 5 </ TargetDistance >									 < MaxDistance > 20 </ MaxDistance >									 < MaxNumberOfJunctions 	NeighborOrder = "1" > 2 </ MaxNumberOfJunctions >						 </ Parameters >																			 < Parameters 	Type1 = "mhp_apical" 	Type2 = "np_apical_R" >									 < Lambda > 20 </ Lambda >									 < ActivationEnergy > -50 </ ActivationEnergy >									 < TargetDistance > 6 </ TargetDistance >									 < MaxDistance > 10 </ MaxDistance >									 < MaxNumberOfJunctions 	NeighborOrder = "1" > 1 </ MaxNumberOfJunctions >						 </ Parameters >																	 <!--	<Parameters	Type1="np_apical_R"	Type2="np_apical_R">	-->									 <!--	<Lambda>20</Lambda>	-->									 <!--	<ActivationEnergy>-50</ActivationEnergy>	-->									 <!--	<TargetDistance>5</TargetDistance>	-->									 <!--	<MaxDistance>20</MaxDistance>	-->									 <!--	<MaxNumberOfJunctions	NeighborOrder="1">2</MaxNumberOfJunctions>	-->						 <!--	</Parameters>	-->												 < Parameters 	Type1 = "mhp_basal" 	Type2 = "mhp_basal" >									 < Lambda > 20 </ Lambda >									 < ActivationEnergy > -50 </ ActivationEnergy >									 < TargetDistance > 6 </ TargetDistance >									 < MaxDistance > 20 </ MaxDistance >									 < MaxNumberOfJunctions 	NeighborOrder = "1" > 2 </ MaxNumberOfJunctions >						 </ Parameters >													 < Parameters 	Type1 = "mhp_basal" 	Type2 = "np_basal_R" >									 < Lambda > 20 </ Lambda >									 < ActivationEnergy > -50 </ ActivationEnergy >									 < TargetDistance > 5 </ TargetDistance >									 < MaxDistance > 20 </ MaxDistance >									 < MaxNumberOfJunctions 	NeighborOrder = "1" > 1 </ MaxNumberOfJunctions >						 </ Parameters >																	 < Parameters 	Type1 = "np_basal_R" 	Type2 = "np_basal_R" >									 < Lambda > 20 </ Lambda >									 < ActivationEnergy > -50 </ ActivationEnergy >									 < TargetDistance > 5 </ TargetDistance >									 < MaxDistance > 20 </ MaxDistance >									 < MaxNumberOfJunctions 	NeighborOrder = "1" > 2 </ MaxNumberOfJunctions >						 </ Parameters >												 < Parameters 	Type1 = "endoderm" 	Type2 = "endoderm" >									 < Lambda > 20 </ Lambda >
+
+13.08.25 Invitro_NTC_2D.xml 9
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+									 < ActivationEnergy > -75 </ ActivationEnergy >									 < TargetDistance > 14 </ TargetDistance >									 < MaxDistance > 30 </ MaxDistance >									 < MaxNumberOfJunctions 	NeighborOrder = "1" > 2 </ MaxNumberOfJunctions >						 </ Parameters >																	 < NeighborOrder > 1 </ NeighborOrder >			 </ Plugin >						 < Plugin 	Name = "Secretion" >												 <!--	Specification	of	secretion	properties	of	select	cell	types.	-->						 <!--	You	may	repeat	Field	element	for	each	chemical	field	declared	in	the	PDE	solvers	-->						 <!--	Specification	of	secretion	properties	of	individual	cells	can	be	done	in	Python	-->						 < Field 	Name = "BMP4" > 	 </ Field >						 < Field 	Name = "SHH" > 	 </ Field >						 < Field 	Name = "WNT" > 	 </ Field > 								 <!--	<Field	Name="TOXIC_FLUID">	</Field>	-->									 <!--	<Secretion	Type="ectoderm_L">0</Secretion>	-->									 <!--	<Secretion	Type="ectoderm_R">0</Secretion>	-->											 </ Plugin >						 < Steppable 	Type = "DiffusionSolverFE" >									 < DiffusionField 	Name = "BMP4" >									 < DiffusionData >												 < FieldName > BMP4 </ FieldName >												 < GlobalDiffusionConstant > 3.6 </ GlobalDiffusionConstant > 	 <!--	Was	0.2	-->												 < GlobalDecayConstant > 0.00050 </ GlobalDecayConstant > 	 <!--	Was	0.0010	-->												 < DiffusionCoefficient 	CellType = "wall" > 0.0 </ DiffusionCoefficient >												 < DecayCoefficient 	CellType = "Medium" > 0.00350 </ DecayCoefficient > 	 <!--	Was	0.0050	-->												 < DecayCoefficient 	CellType = "wall" > 1 </ DecayCoefficient >									 </ DiffusionData >							 </ DiffusionField >																 < DiffusionField 	Name = "SHH" >									 < DiffusionData >												 < FieldName > SHH </ FieldName >												 < GlobalDiffusionConstant > 3.6 </ GlobalDiffusionConstant > 	 <!--	Was	6.7	--> 																						 < GlobalDecayConstant > 0.00050 </ GlobalDecayConstant > 	 <!--	Was	0.00050	--> 																						 < DiffusionCoefficient 	CellType = "wall" > 2.5 </ DiffusionCoefficient >												 < DecayCoefficient 	CellType = "Medium" > 0.00350 </ DecayCoefficient >												 < DecayCoefficient 	CellType = "wall" > 1 </ DecayCoefficient >
+									 </ DiffusionData >							 </ DiffusionField >																		 < DiffusionField 	Name = "WNT" >									 < DiffusionData >												 < FieldName > WNT </ FieldName >												 < GlobalDiffusionConstant > 3.6 </ GlobalDiffusionConstant > 	 <!--	Was	0.2	-->																								 < GlobalDecayConstant > 0.00050 </ GlobalDecayConstant > < DecayCoefficient 	CellType = "Medium" > 0.00350 </ DecayCoefficient >												 < DiffusionCoefficient 	CellType = "wall" > 0 </ DiffusionCoefficient >									 </ DiffusionData >							 </ DiffusionField >														 < DiffusionField 	Name = "NOGGIN" >
+
+13.08.25 Invitro_NTC_2D.xml 10
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+									 < DiffusionData >												 < FieldName > NOGGIN </ FieldName >												 < GlobalDiffusionConstant > 3.6 </ GlobalDiffusionConstant > 	 <!--	Was	0.2	-->												 < GlobalDecayConstant > 0.00050 </ GlobalDecayConstant >												 < DiffusionCoefficient 	CellType = "wall" > 3.6 </ DiffusionCoefficient >												 < DecayCoefficient 	CellType = "Medium" > 0.00350 </ DecayCoefficient > 	 <!--	Was	0.0050	-->												 < DecayCoefficient 	CellType = "wall" > 1 </ DecayCoefficient >
+									 </ DiffusionData >							 </ DiffusionField >																 < BoundaryConditions >												 < Plane 	Axis = "X" >															 <!--	<ConstantValue	PlanePosition="Min"	Value="100.0"/>	-->															 <!--	<ConstantValue	PlanePosition="Max"	Value="0"/>	-->															 <!--	Other	options	are	(examples):	-->															 < Periodic />															 <!--	<ConstantDerivative	PlanePosition="Min"	Value="10.0"/>	-->												 </ Plane >												 < Plane 	Axis = "Y" >															 <!--	<ConstantDerivative	PlanePosition="Min"	Value="100.0"/>	-->															 <!--	<ConstantDerivative	PlanePosition="Max"	Value="0"/>	-->															 <!--	Other	options	are	(examples):	-->															 < Periodic />															 <!--	<ConstantValue	PlanePosition="Min"	Value="10.0"/>	-->												 </ Plane >									 </ BoundaryConditions >			 </ Steppable >			
+						 <!--	<Plugin	Name="LengthConstraintLocalFlex">	-->												 <!--	&lt;!&ndash;	Applies	elongation	constraint	to	each	cell.	Users	specify	the	length
+major	axis	-TargetLength	and	a	strength	of	the	constraint	-LambdaLength.	Parameters	are
+specified	for	each	cell	individually	&ndash;&gt;		-->
+						 <!--	&lt;!&ndash;	IMPORTANT:	To	prevent	cell	fragmentation	for	large	elongations	you	need
+to	also	use	connectivity	constraint	&ndash;&gt;		-->
+						 <!--	This	plugin	currently	works	only	in	2D.	Use	the	following	Python	syntax	to	set/modify
+length	constraint:	-->						 <!--	self.lengthConstraintFlexPlugin.setLengthConstraintData(cell,20,30)		#	cell	,
+lambdaLength,	targetLength			-->			 <!--	</Plugin>	-->
+			 < Plugin 	Name = "OrientedGrowth" >								 < Penalty > 150 </ Penalty >								 < Falloff > 5 </ Falloff >			 </ Plugin >								 < Plugin 	Name = "ExternalPotential" >				 </ Plugin >								 < Plugin 	Name = "LengthConstraint" >								 < LengthEnergyParameters 	CellType = "endoderm" 	TargetLength = "14" 	LambdaLength = "10" />				 </ Plugin >								 <!--	<Steppable	Type="PIFInitializer">	-->
+
+13.08.25 Invitro_NTC_2D.xml 11
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+								 <!--	<PIFName>Simulation/initial_layout.piff</PIFName>	-->				 <!--	</Steppable>	-->							 <!--	<Steppable	Type="UniformInitializer">	-->																 <!--	&lt;!&ndash;	&lt;!&ndash;	fluid	&ndash;&gt;		&ndash;&gt;		--> 										 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="0"	y="50"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="210"	y="100"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>fluid</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->
+							 <!--	&lt;!&ndash;	ENDODERM	&ndash;&gt;		--> 	
+								 <!--	<Region>	-->												 <!--	<BoxMin	x="0"	y="36"	z="0"/>	-->												 <!--	<BoxMax	x="210"	y="43"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>10</Width>	-->												 <!--	<Types>endoderm</Types>	-->								 <!--	</Region>	-->						
+																								 <!--	&lt;!&ndash;	&lt;!&ndash;	somite	LEFT	&ndash;&gt;		&ndash;&gt;		--> 	
+								 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->
+												 <!--	&lt;!&ndash;	<BoxMin	x="0"	y="50"	z="0"/>	&ndash;&gt;		-->
+												 <!--	&lt;!&ndash;	<BoxMax	x="84"	y="78"	z="1"/>	&ndash;&gt;		-->
+												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->
+												 <!--	&lt;!&ndash;	<Width>7</Width>		&ndash;&gt;		-->
+												 <!--	&lt;!&ndash;	<Types>mesoderm</Types>	&ndash;&gt;		-->
+								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->																 <!--	&lt;!&ndash;	somite	RIGHT	&ndash;&gt;		--> 	
+								 <!--	<Region>	-->												 <!--	<BoxMin	x="0"	y="43"	z="0"/>	-->												 <!--	<BoxMax	x="210"	y="64"	z="1"/>	-->
+
+13.08.25 Invitro_NTC_2D.xml 12
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>mesoderm</Types>	-->								 <!--	</Region>	-->																								 <!--	&lt;!&ndash;	ECM	&ndash;&gt;		--> 												 <!--	<Region>	-->												 <!--	<BoxMin	x="84"	y="43"	z="0"/>	-->												 <!--	<BoxMax	x="126"	y="57"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>ECM</Types>	-->								 <!--	</Region>	-->																 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="126"	y="50"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="133"	y="57"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>ECM</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->																 <!--	&lt;!&ndash;	NOTOCHORD	&ndash;&gt;		-->								 <!--	<Region>	-->												 <!--	<BoxMin	x="84"	y="49"	z="0"/>	-->												 <!--	<BoxMax	x="126"	y="51"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>1</Width>		-->												 <!--	<Types>notochord</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="102"	y="43"	z="0"/>	-->												 <!--	<BoxMax	x="108"	y="57"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>1</Width>		-->												 <!--	<Types>notochord</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="98"	y="44"	z="0"/>	-->												 <!--	<BoxMax	x="112"	y="56"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>1</Width>		-->												 <!--	<Types>notochord</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="94"	y="45"	z="0"/>	-->												 <!--	<BoxMax	x="116"	y="55"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>1</Width>		-->												 <!--	<Types>notochord</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="90"	y="46"	z="0"/>	-->												 <!--	<BoxMax	x="120"	y="54"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>1</Width>		-->												 <!--	<Types>notochord</Types>	-->
+
+13.08.25 Invitro_NTC_2D.xml 13
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="86"	y="47"	z="0"/>	-->												 <!--	<BoxMax	x="124"	y="53"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>1</Width>		-->												 <!--	<Types>notochord</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="85"	y="48"	z="0"/>	-->												 <!--	<BoxMax	x="125"	y="52"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>1</Width>		-->												 <!--	<Types>notochord</Types>	-->								 <!--	</Region>	-->																 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="86"	y="47"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="123"	y="53"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>1</Width>		&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>notochord</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->																						 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="84"	y="43"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="126"	y="57"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>		&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>notochord</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->								
+								
+																 <!--	&lt;!&ndash;	NeuralPlate_L	&ndash;&gt;		--> 									
+								 <!--	<Region>	-->												 <!--	<BoxMin	x="56"	y="57"	z="0"/>	-->												 <!--	<BoxMax	x="91"	y="64"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_basal_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="56"	y="64"	z="0"/>	-->												 <!--	<BoxMax	x="91"	y="71"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_lateral_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="56"	y="71"	z="0"/>	-->												 <!--	<BoxMax	x="91"	y="78"	z="1"/>	-->
+
+13.08.25 Invitro_NTC_2D.xml 14
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_apical_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="21"	y="64"	z="0"/>	-->												 <!--	<BoxMax	x="56"	y="71"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_basal_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="21"	y="71"	z="0"/>	-->												 <!--	<BoxMax	x="56"	y="78"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_lateral_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="21"	y="78"	z="0"/>	-->												 <!--	<BoxMax	x="56"	y="85"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_apical_R</Types>	-->								 <!--	</Region>	-->																								 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="21"	y="71"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="42"	y="78"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>np_basal_R</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->																 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="21"	y="78"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="42"	y="85"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>np_lateral_R</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->																 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="21"	y="85"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="42"	y="92"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>np_apical_R</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->																 <!--	&lt;!&ndash;	NeuralPlate_R	&ndash;&gt;		--> 																	 <!--	<Region>	-->												 <!--	<BoxMin	x="119"	y="57"	z="0"/>	-->												 <!--	<BoxMax	x="154"	y="64"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->
+
+13.08.25 Invitro_NTC_2D.xml 15
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+												 <!--	<Types>np_basal_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="119"	y="64"	z="0"/>	-->												 <!--	<BoxMax	x="154"	y="71"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_lateral_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="119"	y="71"	z="0"/>	-->												 <!--	<BoxMax	x="154"	y="78"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_apical_R</Types>	-->								 <!--	</Region>	-->																								 <!--	<Region>	-->												 <!--	<BoxMin	x="154"	y="64"	z="0"/>	-->												 <!--	<BoxMax	x="189"	y="71"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_basal_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="154"	y="71"	z="0"/>	-->												 <!--	<BoxMax	x="189"	y="78"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_lateral_R</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="154"	y="78"	z="0"/>	-->												 <!--	<BoxMax	x="189"	y="85"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>np_apical_R</Types>	-->								 <!--	</Region>	-->																								 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="168"	y="71"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="188"	y="78"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>np_basal_R</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->																 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="168"	y="78"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="188"	y="85"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>np_lateral_R</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->								
+
+13.08.25 Invitro_NTC_2D.xml 16
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+								 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMin	x="168"	y="85"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="188"	y="92"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>7</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>np_apical_R</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->
+																 <!--	&lt;!&ndash;	MHP	&ndash;&gt;		--> 	
+								 <!--	<Region>	-->												 <!--	<BoxMin	x="91"	y="57"	z="0"/>	-->												 <!--	<BoxMax	x="119"	y="64"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>mhp_basal</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="91"	y="64"	z="0"/>	-->												 <!--	<BoxMax	x="119"	y="71"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>mhp_lateral</Types>	-->								 <!--	</Region>	-->																 <!--	<Region>	-->												 <!--	<BoxMin	x="91"	y="71"	z="0"/>	-->												 <!--	<BoxMax	x="119"	y="78"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>mhp_apical</Types>	-->								 <!--	</Region>	-->																								 <!--	&lt;!&ndash;	ECTODERM	&ndash;&gt;		--> 	
+								 <!--	<Region>	-->												 <!--	<BoxMin	x="0"	y="64"	z="0"/>	-->												 <!--	<BoxMax	x="21"	y="85"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>ectoderm_L</Types>	-->								 <!--	</Region>	-->
+														 <!--	<Region>	-->												 <!--	<BoxMin	x="189"	y="64"	z="0"/>	-->												 <!--	<BoxMax	x="210"	y="85"	z="1"/>	-->												 <!--	<Gap>0</Gap>	-->												 <!--	<Width>7</Width>	-->												 <!--	<Types>ectoderm_R</Types>	-->								 <!--	</Region>	-->																 <!--	&lt;!&ndash;	<Region>	&ndash;&gt;		-->
+
+13.08.25 Invitro_NTC_2D.xml 17
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/Invitro_NTC_2D.xml
+												 <!--	&lt;!&ndash;	<BoxMin	x="210"	y="0"	z="0"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<BoxMax	x="250"	y="100"	z="1"/>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Gap>0</Gap>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Width>100</Width>	&ndash;&gt;		-->												 <!--	&lt;!&ndash;	<Types>fluid</Types>	&ndash;&gt;		-->								 <!--	&lt;!&ndash;	</Region>	&ndash;&gt;		-->
+			 <!--	</Steppable>	--></ CompuCell3D >
+
+13.08.25 parameters.py 1
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/parameters.py
+##	Data	Output	Parameters	###	Directory	where	simulation	output	data	will	be	saved	in	the	form	of	a	dictionary	(set	to	a
+suitable	location)cell_data_dir	 = 	 r"C:\Users\jobbe\PUBLICATION_DATA\Nature_version\Control\celldata"#	Frequency	(in	MCS	steps)	at	which	cell	information	will	be	savedsave_cell_info_frequency	 = 	 100
+##	Cell	Initialization	Parameters	###	Notochord	dimensions	and	positionnotochord_radius_x	 = 	 21 		 #	Radius	of	the	notochord	in	the	x-axisnotochord_radius_y	 = 	 7 			 #	Radius	of	the	notochord	in	the	y-axisnotochord_xCOM	 = 	 0.5 					 #	X	center	of	mass	for	notochord	positioningnotochord_yCOM	 = 	 0.20 				 #	Y	center	of	mass	for	notochord	positioning
+#	Neural	epithelium	(NE)	cell	dimensionsne_cell_width	 = 	 7ne_cell_height	 = 	 7
+#	Surface	ectoderm	(SE)	cell	dimensions	and	numberse_cell_width	 = 	 7se_cell_height	 = 	 7se_cell_number	 = 	 3 		 #	Number	of	cells	in	the	SE	layer
+#	Neural	crest	(NC)	cell	countnc_cell_number	 = 	 1 							 #	Number	of	NC	cells	in	the	x	directionnc_cell_number_y	 = 	 3 					 #	Number	of	NC	cells	in	the	y	direction
+#	Endoderm	cell	dimensionsendoderm_cell_width	 = 	 14endoderm_cell_height	 = 	 5
+##	General	Cell	Parameters	##standard_target_volume	 = 	 49 										 #	Initial	target	volume	(based	on	7x7	cell	layout)standard_lambda_volume	 = 	 2.0 									 #	Volume	constraint	factor	(lambda)cell_cycle_time	 = 	 4000 															 #	Number	of	MCS	per	cell	cyclemesoderm_growth_rate	 = 	 0.02 										 #	Volume	increment	per	MCS	in	mesodermmesoderm_max_growth_rate	 = 	 0.1 							 #	Maximum	mesoderm	growth	rate	(for	hill	function)start_somitogenesis	 = 	 4000 											 #	Time	(in	MCS)	to	start	somitogenesisectoderm_growth_rate	 = 	 0.0030 								 #	Volume	increment	per	MCS	in	ectodermneuralcrest_growth_rate	 = 	 0.0030 					 #	Volume	increment	per	MCS	in	neural	crestsomite_growth_rate	 = 	 0.0010 										 #	Volume	increment	per	MCS	in	somiteECM_growth_rate	 = 	 0.0050 													 #	Volume	increment	per	MCS	in	ECMsomite_formation_prob	 = 	 1 / 2500 							 #	Probability	for	somite	formationapoptosis_chance	 = 	 1 / 10000 											 #	Probability	for	a	cell	to	undergo	apoptosis
+##	Cell	Behavior	Parameters	###	Apical	constriction	parametersenable_apical_constriction_behavior	 = 	 True 						 #	Enable	apical	constrictionenable_mhp_formation	 = 	 True 																					 #	Enable	medial	hinge	point	(MHP)	formationapical_constrict_target_volume	 = 	 21 													 #	Min	target	volume	for	apical	cellsbasal_constrict_target_volume	 = 	 77 														 #	Max	target	volume	for	basal	cellsmhp_constrict_frequency	 = 	 1 																					 #	Frequency	of	MHP	constriction	(in	MCS)apical_constrict_frequency	 = 	 1 																		 #	Frequency	of	apical	constriction	stepsdelta_target_volume	 = 	 0.04 																						 #	Change	in	target	volume	per	stepdelta_lambda_volume	 = 	 0.008 																					 #	Lambda	volume	change	per	stepdelta_target_volume_apical	 = 	 0.04 															 #	Apical	volume	change	per	stepapical_constriction_elongation	 = 	 18 													 #	Target	FPP	link	distance	for	constricted	cellsdelta_elongation	 = 	 0.01 																									 #	Elongation	change	per	stepstandard_elongation	 = 	 12 																								 #	Standard	FPP	link	distance	for	cells
+#	Midline	migration	forces	for	neural	crest	and	ectoderm	cells
+
+13.08.25 parameters.py 2
+file:///home/lutz/data/AI/YouCom_for_MorpheusML/BenchmarkPapers/cNTC_Model/Invitro_NTC_2D_main/Simulation/parameters.py
+nc_midline_migration_force_low	 = 	 1.00nc_midline_migration_force_high	 = 	 1.05ec_midline_migration_force_low	 = 	 1.00ec_midline_migration_force_high	 = 	 1.05
+##	Gradient	Parameters	###	Parameters	for	various	molecular	gradients	(BMP4,	SHH,	ATRA,	FGF,	WNT,	NOG)BMP4_secretion_constant	 = 	 0.0150BMP4_FGF_inhibition	 = 	 0.0150
+NC_SHH_secretion_constant	 = 	 0.0070NC_FGF_induction	 = 	 0.0070FP_SHH_secretion_constant	 = 	 0.0070FP_SHH_induction	 = 	 0.0070
+ATRA_secretion_constant	 = 	 0.0035FGF_secretion_constant	 = 	 0.0035
+WNT_secretion_constant	 = 	 0.0070WNT_ATRA_FGF_induction	 = 	 0.0070
+NOG_secretion_constant	 = 	 0.00025NOG_induction	 = 	 0.0060
+#	Dictionary	defining	expression	levels	for	various	genes	in	each	cellgene_status_dict	 = 	{				 "BMP4" :	 1.0 ,				 "SHH" :	 1.0 ,				 "WNT" :	 1.0 ,				 "ATRA" :	 1.0 ,				 "FGF" :	 1.0 ,				 "NOG" :	 1.0 ,				 "ZIC" :	 1.0 ,				 "PAX3" :	 1.0 ,				 "GLI2" :	 1.0 ,				 "CHD1" :	 1.0 ,				 "SNAI1" :	 1.0 ,				 "PTCH1_r" :	 1.0 ,				 "BMPR_r" :	 1.0 ,				 "FGR1_r" :	 1.0 ,				 "FZD1_r" :	 1.0}
+##	Toxicological	Perturbation	Parameters	##dose_toxic_substance	 = 	 False 		 #	Set	to	True	to	induce	a	toxic	field	affecting	NE	cells
+##	Apical	Constriction	FPP	Links	Parameters	###	Initial	and	apical	constriction	values	for	FPP	(Fixed	Point	Particles)	link	distancesinitial_lambda_distance	 = 	 20.0initial_target_distance	 = 	 5.0initial_max_distance	 = 	 20.0apical_constrict_lambda_distance	 = 	 40.0apical_constrict_target_distance	 = 	 0.0basal_constrict_target_distance	 = 	 9.0apical_constrict_max_distance	 = 	 15.0delta_distance	 = 	 0.005 		 #	Step	change	in	FPP	link	distance
+##	Cell	Layout	Parameters	##use_ECM	 = 	 True 		 #	Initialize	an	extra	ECM	layer	around	mesodermal	cells

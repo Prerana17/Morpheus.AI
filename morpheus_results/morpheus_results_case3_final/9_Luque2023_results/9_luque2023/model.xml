@@ -1,0 +1,103 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Bacterium-Bacteriophage Spatial Dynamics (Luque 2023)</Title>
+        <Details>Model of spatial virus-host dynamics with bacterial growth, viral infection, lysis, and viral decay based on Luque et al. 2023</Details>
+    </Description>
+    
+    <Global>
+        <Field symbol="B" name="bacteria" value="50.0">
+            <Diffusion rate="0.1"/>
+        </Field>
+        <Field symbol="V" name="virus" value="10.0">
+            <Diffusion rate="0.5"/>
+        </Field>
+        <Field symbol="I" name="infected" value="0.0">
+            <Diffusion rate="0.05"/>
+        </Field>
+        
+        <Constant symbol="r" name="bacterial_growth_rate" value="0.5"/>
+        <Constant symbol="K" name="carrying_capacity" value="1000.0"/>
+        <Constant symbol="beta" name="infection_rate" value="0.001"/>
+        <Constant symbol="tau" name="lysis_time" value="1.0"/>
+        <Constant symbol="burst" name="burst_size" value="50.0"/>
+        <Constant symbol="m" name="viral_decay" value="0.1"/>
+        
+        <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.1">
+            <DiffEqn symbol-ref="B">
+                <Expression>r * B * (1 - B/K) - beta * B * V</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="V">
+                <Expression>burst * tau * I - beta * B * V - m * V</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="I">
+                <Expression>beta * B * V - tau * I</Expression>
+            </DiffEqn>
+        </System>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="100, 100, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <NodeLength value="1.0"/>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="200"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="123"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <Analysis>
+        <Gnuplotter time-step="2.0" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Bacterial Density">
+                <Field symbol-ref="B" min="0" max="1000">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="500" color="yellow"/>
+                        <Color value="1000" color="green"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+            <Plot title="Viral Density">
+                <Field symbol-ref="V" min="0" max="100">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="50" color="orange"/>
+                        <Color value="100" color="red"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+            <Plot title="Infected Cells">
+                <Field symbol-ref="I" min="0" max="50">
+                    <ColorMap>
+                        <Color value="0" color="white"/>
+                        <Color value="25" color="purple"/>
+                        <Color value="50" color="blue"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="1.0">
+            <Input>
+                <Symbol symbol-ref="B"/>
+                <Symbol symbol-ref="V"/>
+                <Symbol symbol-ref="I"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+        </Logger>
+        
+        <ModelGraph format="dot" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

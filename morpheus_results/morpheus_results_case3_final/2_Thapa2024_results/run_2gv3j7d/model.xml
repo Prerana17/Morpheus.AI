@@ -1,0 +1,171 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Macrophage Recruitment and Tumor Cell Dispersion Model</Title>
+        <Details>Simulates tumor-associated macrophage (TAM) recruitment via CSF1/CSF1R signaling and subsequent tumor cell dispersion. Model represents two tumor cell states (non-disseminating NDs and leader cells LCs), macrophages (TAMs), and diffusible CSF1 field. Includes contact-dependent tumor cell migration and macrophage chemotaxis.</Details>
+    </Description>
+    
+    <Global>
+        <!-- CSF1 chemoattractant field -->
+        <Field value="0" name="CSF1" symbol="csf1">
+            <Diffusion rate="1.0"/>
+        </Field>
+        <System solver="Euler [fixed, O(1)]" time-step="1.0">
+            <DiffEqn symbol-ref="csf1">
+                <Expression>csf1_production - decay_csf1*csf1</Expression>
+            </DiffEqn>
+            <Constant value="0.05" name="CSF1 decay rate" symbol="decay_csf1"/>
+        </System>
+        <Constant value="0.1" name="CSF1 production rate" symbol="csf1_production"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="400, 400, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <NodeLength value="1.0"/>
+            <Neighborhood>
+                <Distance>2.5</Distance>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="0"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="medium" class="medium">
+            <Constant value="0.0" symbol="csf1_production"/>
+        </CellType>
+        
+        <!-- Non-disseminating tumor cells (NDs) -->
+        <CellType name="ND_cells" class="biological">
+            <Property value="0.05" name="CSF1 production" symbol="csf1_production"/>
+            <Property value="0" name="neighbor_TAM" symbol="neighbor_TAM"/>
+            <VolumeConstraint target="150" strength="1"/>
+            <SurfaceConstraint target="1.0" mode="aspherity" strength="1"/>
+            <NeighborhoodReporter>
+                <Input value="cell.type == celltype.TAM.id" scaling="cell"/>
+                <Output mapping="sum" symbol-ref="neighbor_TAM"/>
+            </NeighborhoodReporter>
+            <!-- NDs have low baseline motility -->
+            <Property value="2.0" name="motility" symbol="motility"/>
+            <DirectedMotion strength="motility" direction="rand_uni(-1,1), rand_uni(-1,1), 0"/>
+        </CellType>
+        
+        <!-- Leader tumor cells (LCs) - more motile, dispersive -->
+        <CellType name="LC_cells" class="biological">
+            <Property value="0.08" name="CSF1 production" symbol="csf1_production"/>
+            <Property value="0" name="neighbor_TAM" symbol="neighbor_TAM"/>
+            <VolumeConstraint target="150" strength="1"/>
+            <SurfaceConstraint target="0.9" mode="aspherity" strength="1"/>
+            <NeighborhoodReporter>
+                <Input value="cell.type == celltype.TAM.id" scaling="cell"/>
+                <Output mapping="sum" symbol-ref="neighbor_TAM"/>
+            </NeighborhoodReporter>
+            <!-- LCs have higher motility -->
+            <Property value="10.0" name="motility" symbol="motility"/>
+            <DirectedMotion strength="motility" direction="rand_uni(-1,1), rand_uni(-1,1), 0"/>
+        </CellType>
+        
+        <!-- Tumor-associated macrophages (TAMs) -->
+        <CellType name="TAM" class="biological">
+            <Property value="50.0" name="chemotactic strength" symbol="chemotax_strength"/>
+            <Constant value="0.0" symbol="csf1_production"/>
+            <VolumeConstraint target="120" strength="1"/>
+            <SurfaceConstraint target="0.95" mode="aspherity" strength="1"/>
+            <!-- TAMs chemotax toward CSF1 -->
+            <Chemotaxis field="csf1" strength="chemotax_strength" contact-inhibition="false" retraction="true"/>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0.0">
+            <!-- Tumor cell adhesion -->
+            <Contact value="10" type1="ND_cells" type2="medium"/>
+            <Contact value="2" type1="ND_cells" type2="ND_cells"/>
+            <Contact value="4" type1="LC_cells" type2="medium"/>
+            <Contact value="5" type1="LC_cells" type2="LC_cells"/>
+            <Contact value="3" type1="ND_cells" type2="LC_cells"/>
+            <!-- TAM interactions -->
+            <Contact value="12" type1="TAM" type2="medium"/>
+            <Contact value="6" type1="TAM" type2="TAM"/>
+            <!-- TAM-tumor cell interactions promote tumor dispersion -->
+            <Contact value="1" type1="TAM" type2="ND_cells"/>
+            <Contact value="0" type1="TAM" type2="LC_cells"/>
+        </Interaction>
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="5.0"/>
+        </MonteCarloSampler>
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Distance>2.5</Distance>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <!-- Initialize ND tumor cells in central cluster -->
+        <Population type="ND_cells" size="0">
+            <InitCircle mode="random" number-of-cells="30" center="200,200,0" radius="40"/>
+        </Population>
+        <!-- Initialize some LC cells -->
+        <Population type="LC_cells" size="0">
+            <InitCircle mode="random" number-of-cells="10" center="200,200,0" radius="40"/>
+        </Population>
+        <!-- Initialize TAMs scattered around -->
+        <Population type="TAM" size="0">
+            <InitCircle mode="random" number-of-cells="20" center="200,200,0" radius="100"/>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <!-- Generate PNG visualizations -->
+        <Gnuplotter time-step="50" decorate="true">
+            <Terminal name="png" persist="true"/>
+            <Plot title="Tumor-Macrophage Interaction Model">
+                <Field symbol-ref="csf1" isolines="5" min="0.0" max="5.0">
+                    <ColorMap>
+                        <Color value="0.0" color="white"/>
+                        <Color value="2.5" color="yellow"/>
+                        <Color value="5.0" color="red"/>
+                    </ColorMap>
+                </Field>
+                <Cells value="cell.type" opacity="0.8">
+                    <ColorMap>
+                        <Color value="1" color="blue"/>
+                        <Color value="2" color="green"/>
+                        <Color value="3" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Log cell populations over time -->
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="celltype.ND_cells.size"/>
+                <Symbol symbol-ref="celltype.LC_cells.size"/>
+                <Symbol symbol-ref="celltype.TAM.size"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+        </Logger>
+        
+        <!-- Generate model graph -->
+        <ModelGraph include-tags="#untagged" reduced="false" format="dot"/>
+    </Analysis>
+</MorpheusModel>

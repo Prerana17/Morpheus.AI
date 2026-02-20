@@ -1,0 +1,454 @@
+Setting output directory /Users/prerana/Desktop/morpheus/run_luque2023
+Initializing from file model.xml
+AutoFix: Moved 3 element(s)  matching /MorpheusModel/Global/System/DiffEqn/Expression to /MorpheusModel/Global/System/DiffEqn/Reaction
+AutoFix: Moved 3 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion[@rate!=~0(?:\.0+)?]/@rate to /MorpheusModel/Global/System/DiffEqn[@symbol-ref=%1]/Diffusion/@text
+AutoFix: Moved 3 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion to 
+Applied 9 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread Intitalize Thread 8 with seed 0 with seed 8415295761769707372
+
+Intitalize Thread Intitalize Thread Intitalize Thread Intitalize Thread 4 with seed Intitalize Thread 4119567574
+3Intitalize Thread 9 with seed 2651738809
+5 with seed Intitalize Thread 7 with seed 3793511514
+13266534974
+ with seed 857360952
+6 with seed 579290824
+ with seed 3775974216
+Intitalize Thread 2 with seed 1410529768
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread 8 with seed 4226128334
+Intitalize Thread 0 with seed 123
+Intitalize Thread 3 with seed 4068791613
+Intitalize Thread Intitalize Thread Intitalize Thread 2 with seed 256824811
+Intitalize Thread Intitalize Thread 4 with seed 71386903166
+6 with seed 1320940964
+Intitalize Thread 5 with seed 3850189868
+ with seed 2342964264
+1 with seed 2256526400
+Intitalize Thread 9 with seed 2111863253
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 100, 100, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [10] Global Plugins
+getXMLAttribute: seeking for Field->symbol: B
+Registering Symbol B of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: V
+Registering Symbol V of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: I
+Registering Symbol I of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Constant->name: bacterial_growth_rate
+getXMLAttribute: seeking for Constant->symbol: r
+getXMLAttribute: seeking for Constant->value: 0.5
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol r of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: carrying_capacity
+getXMLAttribute: seeking for Constant->symbol: K
+getXMLAttribute: seeking for Constant->value: 1000.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol K of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: infection_rate
+getXMLAttribute: seeking for Constant->symbol: beta
+getXMLAttribute: seeking for Constant->value: 0.001
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol beta of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: lysis_time
+getXMLAttribute: seeking for Constant->symbol: tau
+getXMLAttribute: seeking for Constant->value: 1.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol tau of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: burst_size
+getXMLAttribute: seeking for Constant->symbol: burst
+getXMLAttribute: seeking for Constant->value: 50.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol burst of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: viral_decay
+getXMLAttribute: seeking for Constant->symbol: m
+getXMLAttribute: seeking for Constant->value: 0.1
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol m of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for System->time-step: 0.1
+Creating subscope System in scope root
+getXMLAttribute: seeking for System->solver: Runge-Kutta [fixed, O(4)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: B
+getXMLAttribute: seeking for Reaction->text: r * B * (1 - B/K) - beta * B * V
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.1
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: V
+getXMLAttribute: seeking for Reaction->text: burst * tau * I - beta * B * V - m * V
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.5
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: I
+getXMLAttribute: seeking for Reaction->text: beta * B * V - tau * I
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.05
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 1
+Scope: Creating Accessor for symbol 'B' from Scope root
+Scope: Creating Accessor for symbol 'V' from Scope root
+Scope: Creating Accessor for symbol 'I' from Scope root
+Scope: Creating Accessor for symbol 'B' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'V' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'I' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'r' from Scope root
+Scope: Creating Accessor for symbol 'K' from Scope root
+Scope: Creating Accessor for symbol 'beta' from Scope root
+Scope: Creating Accessor for symbol 'burst' from Scope root
+Scope: Creating Accessor for symbol 'tau' from Scope root
+Scope: Creating Accessor for symbol 'm' from Scope root
+System::init: Reordering Initializers ...
+Loading Analysis tools [3]
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size .. not found
+getXMLAttribute: seeking for Gnuplotter->time-step: 2.0
+getXMLAttribute: seeking for Field->symbol-ref: B
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min: 0
+getXMLAttribute: seeking for Field->max: 1000
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Field->symbol-ref: V
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min: 0
+getXMLAttribute: seeking for Field->max: 100
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Field->symbol-ref: I
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min: 0
+getXMLAttribute: seeking for Field->max: 50
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: B
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: V
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: I
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format .. not found
+getXMLAttribute: seeking for Logger->time-step: 1.0
+getXMLAttribute: seeking for ModelGraph->format: dot
+getXMLAttribute: seeking for ModelGraph->reduced: false
+getXMLAttribute: seeking for ModelGraph->exclude-symbols .. not found
+getXMLAttribute: seeking for ModelGraph->include-tags: #untagged
+Scope: Creating Accessor for symbol 'B' from Scope root
+Scope: Creating Accessor for symbol 'V' from Scope root
+Scope: Creating Accessor for symbol 'I' from Scope root
+Scope: Creating Accessor for symbol 'B' from Scope root
+Scope: Creating Accessor for symbol 'V' from Scope root
+Scope: Creating Accessor for symbol 'I' from Scope root
+Plugin Logger: Registered input symbol dependencies B [root] ,V [root] ,I [root] ,
+Scope: Creating Accessor for symbol 'B' from Scope root
+Scope: Creating Accessor for symbol 'V' from Scope root
+Scope: Creating Accessor for symbol 'I' from Scope root
+Logger range:
+-> size 10000
+-> dataAxes X, Y, 
+-> data.sizes: 100, 100, 
+-> file separation: None
+System
+Gnuplotter
+Logger
+ModelGraph
+
+ TimeStepListener "System" propagates its time step 0.1
+
+ TimeStepListener "Gnuplotter" propagates its time step 2
+
+ TimeStepListener "Logger" propagates its time step 1
+
+ TimeStepListener "ModelGraph" propagates its time step 200
+TimeScheduler::init: Ordering instantaneous processes for sequential update ...
+ 
+======================================================
+ Time Schedule
+======================================================
+ Time precision patch is 0.0001
+
+=====|    Phase I     |===============================
+-----. Reactions .------------------------------------
+  + 0.1 => System [K,beta,burst,m,r,tau] -> [B,I,V]
+
+=====|    Phase II    |===============================
+-----. Reporters and Instantaneous Processes.---------
+
+=====|    Phase III   |===============================
+-----. Analysis .-------------------------------------
+  + 2 => Gnuplotter [B,I,V] 
+  + 1 => Logger [B,I,V] 
+  + 200 => ModelGraph [] 
+------------------------------------------------------
+======================================================
+
+model is up
+GnuPlotter: Saving plot_00000.png
+Time: 0.00 atu
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+GnuPlotter: Saving plot_00002.png
+Time: 2 
+GnuPlotter: Saving plot_00004.png
+Time: 4 
+GnuPlotter: Saving plot_00006.png
+Time: 6 
+GnuPlotter: Saving plot_00008.png
+Time: 8 
+GnuPlotter: Saving plot_00010.png
+Time: 10 
+GnuPlotter: Saving plot_00012.png
+Time: 12 
+GnuPlotter: Saving plot_00014.png
+Time: 14 
+GnuPlotter: Saving plot_00016.png
+Time: 16 
+GnuPlotter: Saving plot_00018.png
+Time: 18 
+GnuPlotter: Saving plot_00020.png
+Time: 20 
+GnuPlotter: Saving plot_00022.png
+Time: 22 
+GnuPlotter: Saving plot_00024.png
+Time: 24 
+GnuPlotter: Saving plot_00026.png
+Time: 26 
+GnuPlotter: Saving plot_00028.png
+Time: 28 
+GnuPlotter: Saving plot_00030.png
+Time: 30 
+GnuPlotter: Saving plot_00032.png
+Time: 32 
+GnuPlotter: Saving plot_00034.png
+Time: 34 
+GnuPlotter: Saving plot_00036.png
+Time: 36 
+GnuPlotter: Saving plot_00038.png
+Time: 38 
+GnuPlotter: Saving plot_00040.png
+Time: 40 
+GnuPlotter: Saving plot_00042.png
+Time: 42 
+GnuPlotter: Saving plot_00044.png
+Time: 44 
+GnuPlotter: Saving plot_00046.png
+Time: 46 
+GnuPlotter: Saving plot_00048.png
+Time: 48 
+GnuPlotter: Saving plot_00050.png
+Time: 50 
+GnuPlotter: Saving plot_00052.png
+Time: 52 
+GnuPlotter: Saving plot_00054.png
+Time: 54 
+GnuPlotter: Saving plot_00056.png
+Time: 56 
+GnuPlotter: Saving plot_00058.png
+Time: 58 
+GnuPlotter: Saving plot_00060.png
+Time: 60 
+GnuPlotter: Saving plot_00062.png
+Time: 62 
+GnuPlotter: Saving plot_00064.png
+Time: 64 
+GnuPlotter: Saving plot_00066.png
+Time: 66 
+GnuPlotter: Saving plot_00068.png
+Time: 68 
+GnuPlotter: Saving plot_00070.png
+Time: 70 
+GnuPlotter: Saving plot_00072.png
+Time: 72 
+GnuPlotter: Saving plot_00074.png
+Time: 74 
+GnuPlotter: Saving plot_00076.png
+Time: 76 
+GnuPlotter: Saving plot_00078.png
+Time: 78 
+GnuPlotter: Saving plot_00080.png
+Time: 80 
+GnuPlotter: Saving plot_00082.png
+Time: 82 
+GnuPlotter: Saving plot_00084.png
+Time: 84 
+GnuPlotter: Saving plot_00086.png
+Time: 86 
+GnuPlotter: Saving plot_00088.png
+Time: 88 
+GnuPlotter: Saving plot_00090.png
+Time: 90 
+GnuPlotter: Saving plot_00092.png
+Time: 92 
+GnuPlotter: Saving plot_00094.png
+Time: 94 
+GnuPlotter: Saving plot_00096.png
+Time: 96 
+GnuPlotter: Saving plot_00098.png
+Time: 98 
+GnuPlotter: Saving plot_00100.png
+Time: 100 
+GnuPlotter: Saving plot_00102.png
+Time: 102 
+GnuPlotter: Saving plot_00104.png
+Time: 104 
+GnuPlotter: Saving plot_00106.png
+Time: 106 
+GnuPlotter: Saving plot_00108.png
+Time: 108 
+GnuPlotter: Saving plot_00110.png
+Time: 110 
+GnuPlotter: Saving plot_00112.png
+Time: 112 
+GnuPlotter: Saving plot_00114.png
+Time: 114 
+GnuPlotter: Saving plot_00116.png
+Time: 116 
+GnuPlotter: Saving plot_00118.png
+Time: 118 
+GnuPlotter: Saving plot_00120.png
+Time: 120 
+GnuPlotter: Saving plot_00122.png
+Time: 122 
+GnuPlotter: Saving plot_00124.png
+Time: 124 
+GnuPlotter: Saving plot_00126.png
+Time: 126 
+GnuPlotter: Saving plot_00128.png
+Time: 128 
+GnuPlotter: Saving plot_00130.png
+Time: 130 
+GnuPlotter: Saving plot_00132.png
+Time: 132 
+GnuPlotter: Saving plot_00134.png
+Time: 134 
+GnuPlotter: Saving plot_00136.png
+Time: 136 
+GnuPlotter: Saving plot_00138.png
+Time: 138 
+GnuPlotter: Saving plot_00140.png
+Time: 140 
+GnuPlotter: Saving plot_00142.png
+Time: 142 
+GnuPlotter: Saving plot_00144.png
+Time: 144 
+GnuPlotter: Saving plot_00146.png
+Time: 146 
+GnuPlotter: Saving plot_00148.png
+Time: 148 
+GnuPlotter: Saving plot_00150.png
+Time: 150 
+GnuPlotter: Saving plot_00152.png
+Time: 152 
+GnuPlotter: Saving plot_00154.png
+Time: 154 
+GnuPlotter: Saving plot_00156.png
+Time: 156 
+GnuPlotter: Saving plot_00158.png
+Time: 158 
+GnuPlotter: Saving plot_00160.png
+Time: 160 
+GnuPlotter: Saving plot_00162.png
+Time: 162 
+GnuPlotter: Saving plot_00164.png
+Time: 164 
+GnuPlotter: Saving plot_00166.png
+Time: 166 
+GnuPlotter: Saving plot_00168.png
+Time: 168 
+GnuPlotter: Saving plot_00170.png
+Time: 170 
+GnuPlotter: Saving plot_00172.png
+Time: 172 
+GnuPlotter: Saving plot_00174.png
+Time: 174 
+GnuPlotter: Saving plot_00176.png
+Time: 176 
+GnuPlotter: Saving plot_00178.png
+Time: 178 
+GnuPlotter: Saving plot_00180.png
+Time: 180 
+GnuPlotter: Saving plot_00182.png
+Time: 182 
+GnuPlotter: Saving plot_00184.png
+Time: 184 
+GnuPlotter: Saving plot_00186.png
+Time: 186 
+GnuPlotter: Saving plot_00188.png
+Time: 188 
+GnuPlotter: Saving plot_00190.png
+Time: 190 
+GnuPlotter: Saving plot_00192.png
+Time: 192 
+GnuPlotter: Saving plot_00194.png
+Time: 194 
+GnuPlotter: Saving plot_00196.png
+Time: 196 
+GnuPlotter: Saving plot_00198.png
+Time: 198 
+GnuPlotter: Saving plot_00200.png
+Time: 200 
+Saving Bacterium-Bacteriophage Spatial Dynamics (Luque 2023)000200.xml.gz
+AutoFix: Moved 3 element(s)  matching /MorpheusModel/Global/System/DiffEqn/Reaction to /MorpheusModel/Global/System/DiffEqn/Expression
+AutoFix: Moved 3 element(s)  matching /MorpheusModel/Global/System/DiffEqn[(@symbol-ref)]/Diffusion/@text to /MorpheusModel/Global/Field[@symbol=%1]/Diffusion/@rate
+AutoFix: Moved 3 element(s)  matching /MorpheusModel/Global/System/DiffEqn/Diffusion to 
+saveToXML:: Applied 9 patches to set MorpheusML version  v4!
+sampler 0 layer 0
+
+=======================================================
+    SCHEDULER PERFORMANCE STATISTICS
+=======================================================
+
+    +  78.3% = 16.612s (6.647)  | Gnuplotter [B,I,V]
+    +  10.6% = 2.243s (10.883)  | System [K,beta,burst,m,r,tau -> B,I,V]
+           | 0.198s (0.650)  | Diffusion[B]
+           | 0.190s (0.634)  | Diffusion[I]
+           | 0.191s (0.639)  | Diffusion[V]
+           | 1.664s (8.960)  | Reaction
+    +   8.2% = 1.728s (1.687)  | Logger [B,I,V]
+    +   2.7% = 0.577s (0.012)  | Initialisation []
+    +   0.0% = 0.000s (0.000)  | ModelGraph []
+
+======================================================
+
+=== Simulation finished ===
+Wall Time   = 21s 202ms
+CPU Time    = 19s 908ms (10 threads)
+

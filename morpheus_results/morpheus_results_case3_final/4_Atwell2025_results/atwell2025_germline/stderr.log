@@ -1,0 +1,4 @@
+Error while initializing Plugin System
+Symbol 'GLP1_signal' is not defined in Scope System
+
+XMLPath: MorpheusModel/CellTypes/CellType[1]/System

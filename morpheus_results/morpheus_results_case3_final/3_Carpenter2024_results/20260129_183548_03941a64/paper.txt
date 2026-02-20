@@ -1,0 +1,706 @@
+Article
+Mechanical control of cell proliferation patterns in
+growing epithelial monolayers
+Logan C. Carpenter,1 Fernanda P/C19erez-Verdugo,1 and Shiladitya Banerjee1,*
+1Department of Physics, Carnegie Mellon University, Pittsburgh, Pennsylvania
+ABSTRACT Cell proliferation plays a crucial role in regulating tissue homeostasis and development. However, our under-
+standing of how cell proliferation is controlled in densely packed tissues is limited. Here we develop a computational framework
+to predict the patterns of cell proliferation in growing epithelial tissues, connecting single-cell behaviors and cell-cell interactions
+to tissue-level growth. Our model incorporates probabilistic rules governing cell growth, division, and elimination, also taking into
+account their feedback with tissue mechanics. In particular, cell growth is suppressed and apoptosis is enhanced in regions of
+high cell density. With these rules and model parameters calibrated using experimental data for epithelial monolayers, we predict
+how tissue conﬁnement inﬂuences cell size and proliferation dynamics and how single-cell physical properties inﬂuence the
+spatiotemporal patterns of tissue growth. In this model, mechanical feedback between tissue conﬁnement and cell growth leads
+to enhanced cell proliferation at tissue boundaries, whereas cell growth in the bulk is arrested, recapitulating experimental ob-
+servations in epithelial tissues. By tuning cellular elasticity and contact inhibition of proliferation we can regulate the emergent
+patterns of cell proliferation, ranging from uniform growth at low contact inhibition to localized growth at higher contact inhibition.
+We show that the cell size threshold at G1/S transition governs the homeostatic cell density and tissue turnover rate, whereas
+the mechanical state of the tissue governs the dynamics of tissue growth. In particular, we ﬁnd that the cellular parameters
+affecting tissue pressure play a signiﬁcant role in determining the overall growth rate. Our computational study thus underscores
+the impact of cell mechanical properties on the spatiotemporal patterns of cell proliferation in growing epithelial tissues.
+INTRODUCTION
+The regulation of cell proliferation is critical for tissue
+development, maintenance of homeostasis, and disease sup-
+pression ( 1,2). Uncontrolled proliferation results in hyper-
+plasia, a hallmark of cancerous mutations ( 3). Cell
+proliferation involves the coordinated processes of cell
+growth and division at the individual cell level. However,
+the precise coordination of cell growth and division within
+the multicellular context is still poorly understood. One
+mechanism implicated in the control of cell growth is con-
+tact inhibition of proliferation, where cellular growth is in-
+hibited in denser environments ( 4). In epithelial tissues,
+contact inhibition has been shown to be regulated by several
+factors, including intercellular signaling ( 5–7), cellular
+crowding ( 8,9) mechanical stress ( 10–12), and pressure
+(13). In particular, cells under compression grow slower
+than cells under stretch ( 10,14). However, cellular response
+to mechanical stress and intercellular signaling is inﬂuenced
+by various factors, such as cell-cell adhesion, cellular resis-
+tance to deformations, cytoskeletal tension, local cell den-
+sity, and cell-cycle phase. Manipulating these factors
+individually within tissues is challenging, leaving the
+Submitted July 26, 2023, and accepted for publication March 1, 2024.
+*Correspondence: shiladtb@andrew.cmu.edu
+Editor: Jennifer Schwarz.
+SIGNIFICANCE Control of cell proliferation in multicellular environments is crucial for tissue development and
+homeostasis. To understand the regulation of cell proliferation, we developed a multi-layered computational model that
+integrates physical interactions between cells with active cell behaviors governing cell fate decisions. Using this model, we
+investigated the impact of cellular crowding on cell size control, growth rate, and division dynamics. The multi-scale model
+enabled us to elucidate the role of single-cell properties in determining epithelial tissue homeostasis, growth kinetics, and
+spatial patterns of proliferation. Notably, we found that cellular elasticity and contact inhibition of proliferation governed the
+emergent dynamics of cell proliferation, emphasizing the impact of cellular mechanics on cell proliferation dynamics in
+epithelial tissues.
+Biophysical Journal 123, 909–919, April 2, 2024 909
+https://doi.org/10.1016/j.bpj.2024.03.002
+/C2112024 Biophysical Society.
+
+relative contributions of mechanical and biochemical pro-
+cesses in regulating cell growth largely unexplored.
+Cell proliferation relies crucially on the mechanism of
+cell division. Although cell growth and division are coupled
+in single cells ( 15,16), cell division can occur independently
+of growth in tissues ( 17). Various models of cell division
+control have been proposed in recent years for bacteria
+and eukaryotes, as reviewed in Refs. ( 15,18). These include
+the adder model ( 19–21), where cells grow by a ﬁxed vol-
+ume between successive divisions; the sizer model
+(22,23), where cell division occurs above a critical cell
+size threshold ( 8,24); as well as mixed models of cell size
+control ( 25,26). Recent studies on mammalian epithelial
+cells, however, suggested that the regulation of the cell cycle
+in both single cells and tissues can be well described by a G1
+sizer model ( 26,27). In this model, there is a cell-size-
+dependent transition from the growth (G1) phase to the
+mitosis (S/G2/M) phase. Cells spend a ﬁxed amount of
+time in S/G2/M phase before division occurs. Consequently,
+the rate of cell division is regulated by the time required to
+reach the critical size threshold at the G1/S transition,
+which, in turn, depends on cellular growth rate. Considering
+the diverse range of biophysical factors inﬂuencing cell size
+and growth rate, it remains to be determined how cell prolif-
+eration patterns in tissues are precisely controlled by these
+factors.
+Many cell-based models of epithelial tissue growth have
+been developed in recent years, which explored the effects
+of contact inhibition ( 28–30), cellular crowding ( 9,31), me-
+chanical stress ( 8,10,11), and intercellular adhesion ( 32)o n
+tissue-scale growth dynamics. In particular, it has been
+observed that contact inhibition of proliferation leads to
+enhanced cell proliferation at tissue boundaries while inhib-
+iting growth within the bulk of the tissue ( 8,10). Notably, ex-
+periments have revealed diverse patterns of tissue growth,
+including bulk epithelial growth in vitro ( 27,33) and in vivo
+(34), as well as spatially patterned growth in vitro ( 33,35).
+How the emergent patterns of cell proliferation are regulated
+by cell-cell mechanical interactions remains unclear.
+In this work, we developed a cell-based model for epithe-
+lial monolayer growth that aims to uncover how single-cell
+behaviors and mechanical properties govern tissue-scale
+proliferation patterns. Our integrative model couples the
+physical dynamics of cells with active cellular behaviors
+that determine their fates ( Fig. 1 ). The physical layer of
+the model is implemented using the cellular Potts model
+(36), whereas the active behaviors are implemented as rules
+for cell-cycle regulation, contact inhibition of proliferation,
+and cell elimination via apoptosis and extrusion. In
+contrast to previous cellular models for tissue growth
+(8,10,30,31,37,38), we incorporate a G1 sizer model for
+cell-cycle progression (
+27) that allows for tunable growth
+rates of individual cells based on the amount of crowding.
+Furthermore, our model implements contact inhibition
+through crowding-induced suppression of cellular growth
+rate and introduces a cell-density-dependent probability of
+apoptosis. Taken together, our model incorporates feedback
+between mechanical pressure and the rates of cell growth,
+division, and apoptosis within a tissue context.
+Using this model, we successfully recapitulated several
+single-cell behaviors observed experimentally, including
+the distribution of cell areas, the control of cell-cycle dura-
+tion, and the decrease in cell size over time. The latter is
+caused by a transition from a sizer-like to a timer-like con-
+trol of cell size that leads to volume-reductive cell division
+as local cell density is increased via tissue growth. Subse-
+quently, cell-cycle arrest occurs as cell size falls below the
+minimal size threshold required for G1/S transition.
+Notably, we found that the cell size threshold at the G1/S
+transition is the primary determinant of tissue properties
+in homeostasis, including homeostatic density and steady-
+state rates of cell division and elimination. In contrast, the
+rate of cell proliferation is predominantly regulated by the
+physical properties of cells, speciﬁcally cell elasticity,
+growth rate, and sensitivity to contact inhibition. Interest-
+ingly, spatial patterns of cell growth and cell cycle exhibit
+variations depending on the values of cell elastic modulus
+and sensitivity to contact inhibition. Tissues with moderate
+to high sensitivities to contact inhibition display boundary
+growth, whereas tissues with a higher cell elastic modulus
+exhibit bulk growth. For intermediate values of elastic
+modulus and contact inhibition, diverse patterns of cell pro-
+liferation emerge, emphasizing the inﬂuential role of
+Decision-Making Layer
+Rules Physical dynamics
+Physical Layer (CPM)
+(D1)(R1) Cell cycle progression
+(R2) Cell division
+(R3) Apoptosis
+(R4) Live cell extrusion
+(R1) (R2) (R3) (R4)
+apoptosis
+1
+divisionn
+1
+0
+extrude
+/4
+)e
+1
+(D2) Cell growth
+Cell-cell adhesion
+(D3) Shape maintenance
+(A) (B)
+feedback
+FIGURE 1 Overview of the computational modeling framework. ( A)
+Cell-autonomous decisions and their rules. ( R1) Cycle progression from
+G1 (sizer phase) to S/G2/M (timer phase) phase is triggered by the cell
+area exceeding a threshold value AS.( R2) Mitosis is triggered after a
+time t0 has elapsed since the beginning of the S/G2/M phase. ( R3)
+Apoptosis is triggered probabilistically as a function of local cell density.
+(R4) Cellular extrusion is triggered when the cell area reaches one fourth
+of the mean area for all cells in the tissue. ( B) The physical layer evolves
+via probabilistic minimization of cell mechanical energy using the cellular
+Potts model, which accounts for ( D1) contact energy at cell-cell and cell-
+medium interfaces, ( D2) growth in cell size by increasing cell target area
+and subsequent relaxation of area elastic energy, and ( D3) cell shape main-
+tenance by relaxing mechanical energy of the cell. To see this ﬁgure in co-
+lor, go online.
+Carpenter et al.
+910 Biophysical Journal 123, 909–919, April 2, 2024
+
+mechanical factors in governing tissue-scale proliferation
+dynamics. These ﬁndings provide new insights into the intri-
+cate interplay between mechanical and cellular factors in
+tissue growth regulation.
+MATERIALS AND METHODS
+Computational model
+To predict the emergent patterns of cell proliferation, we developed a two-
+dimensional cell-based model for epithelial monolayer tissue growth that
+integrates two distinct computational layers: 1) a physical layer that simu-
+lates mechanical interactions between cells and between cells and the
+external medium; and 2) a decision-making layer that encodes cell-autono-
+mous rules for growth, division, and apoptosis ( Fig. 1 ). For simplicity, we
+neglected cell motility and focused on the role of cell mechanics and
+cell-cycle regulation on tissue growth.
+In the physical layer, we used the lattice-based cellular Potts model
+(36,39) at a ﬁnite temperature, where cells are formed by a subset of lattice
+sites sharing the same identity. Each lattice site i is assigned a type s
+i ¼
+fc : cell; m : mediumg and an integer-valued identity ni, with ni ¼ 0 for
+the external medium and ni > 0 for a cell. The mechanical energy of cells
+in the cellular Potts model can be written in a simpliﬁed form as
+E ¼
+X
+i;j
+neighbors
+Jij
+/C0
+si; sj
+/C1
+þ l
+X
+a ˛cells
+b
+/C0
+Aa /C0 AT
+a
+/C1 2
+;
+(Equation 1)
+where the ﬁrst term represents interfacial energy arising from tension at cell-
+cell junctions, adhesion between cells, and between cells and the extracellular
+medium. The interfacial energy is summed over adjacent lattice sites i and j,
+with nisnj. The energy Jij can take two different values depending on the
+adjacent lattice types: Jijðc; cÞ¼ Jcc and Jijðc; mÞ¼ Jijðm; cÞ¼ Jcm.
+We assumed greater adhesion for cell-cell contact than cell-medium contact
+yielding the condition J
+cc %Jcm. The second energy term is summed over all
+the cells, representing an elastic energy that penalizes deviations of the cell
+areas Aa from their preferred (target) values AT
+a, with an area elastic modulus
+l. At each computational time step, the lattice site i can take the value of its
+adjacent site nj (with nisnj), inducing cell shape changes. These lattice
+moves are executed via the Metropolis-Hastings algorithm ( 40,41)t oe n s u r e
+that the moves minimize the mechanical energy.
+The decision-making layer implements cell-autonomous rules for cell-
+cycle progression, mitosis, apoptosis, extrusion, and changing the cell’s
+target area. Cell growth is implemented by increasing the cell’s target
+area AT
+a (31), as
+dAT
+a
+dt ¼ Ge/C0 kðAa /C0 AT
+aÞ
+2
+; (Equation 2)
+where the constant G represents the rate of growth in the absence of crowd-
+ing (when Aa /C24 AT
+a). We deﬁne k as a metric of cellular sensitivity to
+crowding. In crowded conditions, it is difﬁcult for cells to maintain their
+areas close to the growing target area, and hence DA
+a ¼ Aa /C0 AT
+a in-
+creases in magnitude. Under these conditions, Eq. 2 leads to an exponential
+decay in the rate of cell growth, resulting in longer cell-cycle times propor-
+tional to k. Contact inhibition in our model is thus a consequence of phys-
+ical constraint induced by tissue crowding ( 8), resulting in deviation of cell
+area from its preferred value in isolation ( 27).
+The number of cells in the tissue, N, changes in time due to the rules im-
+plemented in the decision-making layer. N can increase through cell divi-
+sions, which is regulated by a G1 sizer model ( 26,27). In this model, a
+cell is in the G1 phase until its area is greater than a threshold value AS
+(Fig. 1 A–R1), at which point it transitions to the S/G2/M phase, which lasts
+for a ﬁxed time period t0 (a timer). After a time t0 in the S/G2/M phase, the
+cell divides into two cells ( Fig. 1 A–R2), upon which the target area of each
+cell is set to the current area. Both t0 and AS are drawn from a Gaussian
+distribution, with mean and standard deviation deﬁned in Table 1 , based
+on data reported for Madin-Darby canine kidney (MDCK) cells ( 27).
+On the other hand, the number of cells in the tissue can decrease via
+cellular apoptosis and extrusion. The model considers a density-dependent
+probability of apoptosis, Papo, which increases with the local cell density r
+(9,42,43)( Fig. 1 A–R3)
+PapoðrÞ¼ papo;max
+1 þ e/C0 aðr /C0 r1=2Þ ; (Equation 3)
+where papo;max is the maximal probability of apoptosis, r1=2 is the cell den-
+sity at half-maximal probability, and a is the sensitivity to density-depen-
+dent apoptosis. The parameters papo;max, r1=2 and a are determined by
+ﬁtting apoptosis probabilities calculated from in vitro MDCK cell compe-
+tition experiments performed by Bove et al. ( 9). In our simulations, local
+cell density was deﬁned as the sum of inverse cell areas within the imme-
+diate neighborhood of a given cell a (9,31),
+ra ¼ 1
+Aa
+þ
+X
+i ˛neighbors of a
+1
+Ai
+; (Equation 4)
+where we deﬁned local neighborhood as the set of ﬁrst neighbors of a cell
+(i.e., all the cells in physical contact with a given cell). After entering
+apoptosis, the cell’s target area is set to zero, causing the cell to gradually
+decrease in area until being removed. Finally, a cell is eliminated via live-
+cell extrusion if its area is less than a quarter of the mean cellular area (i.e.,
+A
+aCAaD=4; Fig. 1 A–R4). This is handled computationally by immediately
+TABLE 1 Default Parameters Used in Model Simulations
+Parameter Numerical Value (units) Description
+kBT 1.95 /C2 10/C0 4ðlA2
+SÞ thermal energy scale of Metropolis-Hastings
+algorithm
+Jcc 1.17 /C2 10/C0 4ðlA3=2
+S Þ cell-cell contact energy
+Jcm 1.96 /C2 10/C0 4ðlA3=2
+S Þ cell-medium contact energy
+l 1 cell-area elastic modulus
+G 1.16 ( AS0 =t0) growth rate of an isolated cell
+k 1.897 /C2 105 (A/C0 2
+S ) sensitivity to crowding
+t0 225 5 5.625 (Monte Carlo steps) S/G2/M timer duration
+AS 1377 5 34.4 (pixels) G1 sizer threshold
+papo;max 0.0015 maximal probability of apoptosis
+r1=2 1.5015 ( A/C0 1
+S ) cell density at half-maximal probability of
+apoptosis
+a 0.968 ( AS) sensitivity to density-dependent apoptosis
+Mechanical control of cell proliferation
+Biophysical Journal 123, 909–919, April 2, 2024 911
+
+deleting the cell, which reassigns the deleted cell’s lattice sites to medium
+lattice sites. Taken together, the rate of cell proliferation in the tissue is
+given by _N ¼ kbirth /C0 kelim, where kbirth corresponds to the rate of cellular
+divisions and kelim corresponds to the rate of cell elimination via both
+apoptosis and extrusion. Combining the physical and decision-making
+layers results in a predictive cell-based model (see supporting material
+for details) that can simulate the spatiotemporal dynamics of a growing
+tissue in different biophysical contexts.
+RESULTS AND DISCUSSION
+Collective behaviors in growing epithelial
+monolayers
+To validate the predictive capacity of our model, we used it
+to recapitulate experimentally observed collective and sin-
+gle-cell behaviors in growing epithelial monolayers
+(8, 27). We simulated the growth of a planar epithelial tis-
+sue, conﬁned within a square box of area /C24 1600A
+S (Videos
+S1 and S2). The simulations were initialized with a single
+cell of area below the G1 sizer threshold AS. As a ﬁrst
+step, we performed two ensembles of simulations: 1) tissue
+growth without apoptosis ( Papo ¼ 0, Video S1), and 2) tis-
+sue growth with apoptosis, occurring with a density-depen-
+dent probability P
+apo as deﬁned in Eq. 3 (Video S2 ). Here,
+we considered the limit in which the scale of the elastic
+force, lA
+3=2
+S , is larger than the tension between cells, Jcc,
+and the tension between boundary cells and the external me-
+dium, J
+cm, with Jcm >J cc (see Table 1 for a list of default
+parameter values). Consequently, the tissues grew while
+maintaining their initial isotropic state, with a roughly circu-
+lar boundary, until they made contact with the simulation
+box ( Fig. 2 E and F; Videos S1 and S2).
+Our model accurately captured the experimentally
+measured trends in the dynamics of cell count and average
+cell density during epithelial colony growth and homeosta-
+sis (Figs. 2 A and B and S8)( 9). During the growth phase of
+the tissue, constituent cells exhibited nonuniform sizes and
+growth rates, with a slowly growing bulk region surrounded
+by a rapidly proliferating periphery ( Fig. 2 E and F). Rapid
+replication of cells near the boundary have previously been
+observed in several experiments on epithelial tissues
+(8,10,13,33). In our model, this results from crowding-
+induced suppression of growth in the bulk of the tissue,
+which results in smaller cell size in the bulk compared to
+the periphery ( Fig. 2 C and D). With or without apoptosis,
+the simulated tissues grew until they reached conﬂuence,
+ﬁlling the entire simulation box ( Fig. 2 E and F). This
+was followed by a state of homeostasis where the cell count
+and the average density did not change. In this state, the
+rates of cell division and elimination balanced to yield a
+net zero growth rate. Conﬂuence led to uniform crowding
+throughout the tissue, resulting in the homogenization of
+the cellular areas and density ( Fig. 2 A and B).
+In simulations without apoptosis, the rate of cell elimina-
+tion k
+elim arises from live-cell extrusions only. Homeostasis
+in these simulations is characterized by kbirth ¼ kelim ¼ 0,
+where all the cells are arrested in the G1 phase, with Aa <A S;
+ca. By contrast, in simulations with apoptosis, the elimina-
+tion rate is dependent on both live-cell extrusions and
+apoptosis, the latter being a density-dependent probabilistic
+process. Therefore, homeostasis is characterized by a dy-
+namic balance between birth and elimination, with
+k
+birth ¼ kelims0. Cell density-dependent apoptosis events
+induced cellular growth in the neighborhood of a dying
+cell ( Fig. 2 F), leading to increased cell size and lower
+values of cell count and average cell density ( Fig. 2 A
+and B). Furthermore, cell elimination events increased the
+time required to reach homeostasis ( Fig. 2 A), promoting
+continuous cell turnover and growth in the tissue.
+Single-cell dynamics underlying epithelial growth
+and homeostasis
+Spatial regulation of cell proliferation is a direct conse-
+quence of how cell cycle and growth are regulated across
+a tissue ( Figs. 2 E and F and S1). Here, we characterize
+the single-cell growth and size dynamics underlying the
+growth of an epithelial colony. A major regulator of sin-
+gle-cell growth rate is local crowding by other cells. Growth
+rate of cells in the bulk of the tissue reduced over time due to
+an increase in local cell density, leading to a transition in the
+mitotic behavior of cells. During the early phase of growth
+(up to tz7t
+0), cells exhibited timer-like behavior with divi-
+sions occurring at regular intervals of t0 due to the cell size
+being larger than the G1 sizer threshold AS (Fig. 3 A). Dur-
+ing this period, cell size distribution was unimodal ( Fig. 3 C
+and D), with a mean value A>A S. Mean cell area, A,
+decreased in time since the amount of growth accrued in
+the timer (S/G2/M) phase, Gt
+0 /C24 1:16AS < A, was less
+than the amount of cell size reduction via division. This phe-
+nomenon of size-reductive divisions recapitulates experi-
+mental observations in growing MDCK monolayers ( 8,27).
+Once cell size in the population fell below A
+S (Fig. 3 C
+and D, t> 7t0), two sub-population of cells emerged: one
+with mean size above AS that would divide after time t0
+in the G2 phase, and another with mean size below AS
+that would be growing in the G1 phase and therefore would
+divide in a time longer than t0. This behavior is evident in
+the cell area distribution, which changed from a unimodal
+to a bimodal shape (see t /C24 7:6t0 in Fig. 3 C and D). How-
+ever, as cell crowding increased via an increase in the local
+cell density ( Fig. 3 A and B), cell area decreased over several
+generations, narrowing the area distribution ( Fig. 3 C
+and D). A consequence of crowding-induced slowdown of
+single-cell growth is a negative correlation between cell
+area and interdivision time ( Fig. 3 E and F), as observed
+experimentally ( 8).
+In our analysis, the onset of conﬂuence is deﬁned as the
+time at which 99.5% of the simulated space is occupied by
+cells within the tissue. Post conﬂuence ( t> 35t
+0), cell growth
+Carpenter et al.
+912 Biophysical Journal 123, 909–919, April 2, 2024
+
+was either nonexistent or slow due to the lack of available
+free space. In simulations without apoptosis, cells underwent
+complete cycle arrest ( Fig. 3 A), as a result of the lack of tis-
+sue turnover to free up space. By contrast, in simulations with
+apoptosis, the rates of growth and division were limited by
+the available free space that appears after cell elimination.
+Consequently, the cell cycles progressed at a very slow rate
+(t R20t
+0 in Fig. 3 B), primarily determined by the rate of
+apoptosis within the tissue. These slowly growing cells
+were stuck in the G1 phase for the majority of the cell cycle
+and divided relatively fast after exceeding the G1 size
+threshold A
+S, thereby exhibiting sizer-like behavior.
+G1 sizer sets homeostatic cell density and
+turnover rate
+Having validated our model predictions for collective and
+single-cell behaviors against experimental observations,
+we turned to assessing the roles of cell-scale parameters
+on the emergent tissue-level properties during growth and
+homeostasis. To this end, we varied the model parameters
+regulating cell growth and division dynamics, including
+the growth rate G, area elastic modulus l, cell-cell adhesion
+energy J
+cc, sensitivity to crowding k, and the G1 sizer
+threshold AS. As a ﬁrst step, we studied the effect of these
+parameters on homeostatic tissue properties, including
+homeostatic cell density and turnover rate.
+Prior studies have demonstrated that epithelial tissues
+possess a speciﬁc density they tend to restore after perturba-
+tions, indicating their tendency to maintain a preferred ho-
+meostatic density ( 14,44,45). However, the mechanisms
+underlying the regulation of this homeostatic density, which
+plays a pivotal role in maintaining tissue homeostasis
+(14,43,46) and cell competition ( 31,42), remain poorly un-
+derstood. Our simulations revealed that the G1 sizer
+threshold A
+S is the only parameter that determines the ho-
+meostatic density ( Fig. 4 A and C). This can be intuitively
+understood from the fact that AS regulates cell size limit
+-
+-
+-
+-
+----
+0.5 
+Growth Rate
+0
+-0.5
+ffOsisotpopAnOsisotpopA
+B
+E t = 9τ t = 18τ
+Time (τ )
+t = 25τ t = 35τ
+C D
+F 
+9τ
+τ
+τ
+0
+18 0
+25 0
+τ0
+τ0
+τ0
+τ0
+τ0
+0 00
+0Time (τ )0
+0
+35
+9
+18
+25
+35
+A
+0
+1
+2
+0
+20 40
+9 0
+18 0
+25 0
+35 0
+x103
+Apoptosis on
+Apoptosis off
+(A1/2
+S )Distance from center
+0                  10                  20
+5/4 5/4
+1
+3/4
+(A1/2
+S )Distance from center
+aerAlleC
+tnuoClleC
+ytisneDlacoL
+ρ
+0                  10                  20
+1
+3/4
+(AS)
+aerAlleC (AS)
+0 20 40
+2
+6
+10(1/AS)
+Apoptosis on
+Apoptosis off
+G
+G
+FIGURE 2 Characterization of collective behaviors in growing epithelial monolayers. ( A and B) Cell count vs. time ( A) and average cell density vs. time
+(B) in colony growth simulations with apoptosis on ( orange) and off ( blue). The x axis represents time measured in factors of t0, the mean timer threshold. ( C
+and D) Spatial distribution of single-cell areas for monolayers at different time points during growth, without ( C) or with ( D) apoptosis. Each curve represents
+a colony’s spatially averaged cell area as a function of distance from the center of the colony. The vertical dashed line is position of the boundary of t he
+simulation box. In ( A)–(D), each data point is the average of ﬁve simulations with the shaded regions being the standard deviation. ( E and F) Time-lapse
+showing the morphologies of a growing epithelial colony without ( E) or with ( F) apoptosis. Cells are colored according to their growth rates. See Table 1
+for a list of parameter values. To see this ﬁgure in color, go online.
+Mechanical control of cell proliferation
+Biophysical Journal 123, 909–919, April 2, 2024 913
+
+2
+SUPPLEMENTAL METHODS
+Cellular Potts Model
+We used the Cellular Potts Model (CPM) [1] to simulate the dynamics of a growing tissue. Although
+alternative cell-based modeling frameworks exist for tissue modeling, such as vertex models [2], cell-center
+models [3], or particle-based models [4], our choice of CPM was motivated by its ease of implementation for
+key aspects of this study, including straightforward integration of agent-based rules, boundary conditions,
+and interactions between cells and the extracellular medium. Our simulation framework integrates two
+distinct computational components: (1) a physical layer that simulates cell mechanics with the Cellular
+Potts Model, and (2) a decision-making layer that deﬁnes rules for cell growth, division, and apoptosis.
+The CPM is a versatile computational framework for simulating biological systems such as cell growth,
+migration, and tissue formation. The CPM runs a Monte Carlo simulation with the Metropolis-Hastings
+algorithm [5, 6] to minimize the free energy of the system.
+A common choice of the Hamiltonian [1] includes terms that represent contact energies and an area
+elastic energy, as in
+E = ∑
+i, j
+neighbors
+Ji j(σi,σj) +λ ∑
+α∈cells
+(
+Aα −AT
+α
+)2
+, (S.1)
+The contact energy, Ji, j, is given by the difference between the cellular surface tension and intercellular
+adhesion energy. This energy is represented in the Hamiltonian by a component that is proportional to the
+number of pixels shared between cells or between a cell and the medium. The sum goes over all adjacent
+lattice sites i and j, ignoring self-adhesion. The inner term, σ, gives the cell type at the lattice site i and j
+respectively. A value for contact energy is deﬁned between each cell type, which for our simulations consists
+of interactions between cells and medium Jcell-cell = Jcc, Jcell-medium = Jcm, and Jmedium-medium = Jmm. The
+second term in the Hamiltonian is the area elastic energy. This is given by the product of the area elastic
+modulus, λ, with the sum of squared differences between the actual area of the cells, Aα , and their target
+areas, AT
+α . These two mechanical energy components regulate individual cell shape and size, in the absence
+of other rules.
+The CPM simulations were run using CompuCell3D [7], a software package that handles all of the
+computations necessary for the CPM and the Metropolis-Hastings algorithm. The version of CompuCell3D
+we used permits cell fragmentation proportional to the lattice temperature, which we setT = 10 in the units
+of lattice energy. We found that this temperature produced negligible fragmentation.
+
+3
+Rules for active cell behaviors
+The decision-making layer of the model encodes probabilistic rules for active cell behaviors including
+changes in cell target area, cell cycle regulation, and cell elimination.
+Dynamics of cell growth– Cell growth dynamics are implemented by increasing the cell’s target area as
+dAT
+α
+dt = Ge−k(Aα −AT
+α )2
+, (S.2)
+where G is the growth rate in the absence of crowding, k quantiﬁes cellular sensitivity to crowding, and Aα
+is the current area of cell α. In the presence of crowding, a cell’s area will deviate from its target area, and
+this deviation is directly proportional to the strength of contact inhibition. Consequently, cellular growth
+exhibits an exponential decline as crowding intensiﬁes, ultimately leading the tissue to enter an arrested
+state.
+Cell cycle regulation– We implemented a two-phase cell cycle model, comprising a G1 growth phase
+operating through a sizer mechanism, followed by an S/G2/M timer phase. When a cell is born, it is
+assigned a G1 area threshold AS and an S/G2/M phase timer τ. The cell remains in the G1 phase until
+its area exceeds AS. Afterward, it enters the S/G2/M phase, which lasts for a duration of τ. Since the
+S/G2/M phases are grouped into the singular timer phase, we decided to make the change in target area
+(eq S.2) independent of the cell cycle phase. The assumption of continuous growth through the cell cycle
+is informed by growth data on single epithelial cells [8]. Upon completion of the S/G2/M phase, the cell
+immediately undergoes division, perpendicular to the semi-major axis, resulting in two daughter cells, both
+of which enter the G1 phase.
+Mechanisms for cell elimination – In the simulation, cell elimination involves two mechanisms: pro-
+grammed cell death (apoptosis) and live-cell extrusion. Experimental data have shown that increasing cell
+density leads to a higher apoptosis rate [9–11]. We deﬁned the local cellular density as the sum of inverse
+cell areas within a local neighborhood of a cell. The density of cell α is given by:
+ρα = 1
+Aα
++ ∑
+i∈neighbors of α
+1
+Ai
+. (S.3)
+To model the probability of apoptosis in wild-type MDCK cells as a function of local cell density [11], we
+ﬁt the data to a sigmoid curve:
+Papo(ρ) = papo,max
+1 + e−α(ρ−ρ1/2) . (S.4)
+In the simulations, the probability of apoptosis is calculated every 10 Monte Carlo steps, which, on the time
+scale of the timer threshold, reproduces the experimentally observed probabilities. When a cell is eliminated
+
+4
+through apoptosis, its target area is set to zero, causing it to shrink rapidly. During this process, surrounding
+cells grow to occupy the space left by the apoptotic cell. Within the simulation, this is implemented as:
+1. Loop over every cell
+(a) Calculate the local density, ρc (eq S.3), for a cell.
+(b) Check if the cell dies with probability P(ρc) (eq S.4)
+i. If the cell dies the target area and elastic modulus are set to AT = 0 and λ = 5 in order to
+encourage rapid (but not instantaneous) shrinking of the dying cell.
+In addition to apoptosis, cells can also be eliminated via live cell extrusions. This occurs when a cell’s
+area signiﬁcantly decreases compared to the average population area. In experiments [9], extrusion happens
+when tissue experiences compressive stress, causing a cell to delaminate from the substrate and eject from
+the monolayer. In our simulations, a cell whose area falls below⟨A⟩/4 (where ⟨A⟩is the average area of the
+colony) is immediately removed to capture the short time scale over which extrusion occurs [9, 12]. Within
+the simulation, this is implemented as:
+1. Calculate the average cellular area, ⟨A⟩, within the tissue.
+2. Loop over every cell to see if a cell’s area, Ac, satisﬁes Ac < ⟨A⟩/4.
+(a) Each cell whose area satisﬁes the above condition is immediately ejected. This is done by
+converting each lattice site the cell occupied into medium sites.
+Choice of Default Model Parameters
+Converting lattice units in the CPM framework to physical units is essential for comparing our simula-
+tions with experimental observations. There are two key conversions: translating pixels and Monte Carlo
+Steps (mcs) into SI units for distance and time. To achieve this, we compared the experimentally reported
+values for average cell volume during subconﬂuence for MDCK cells [8, 13, 14] with the value for average
+subconﬂuent colony area in our simulations, ¯ASC = 3200 pixels. This comparison yielded the conversion
+factor: 1 pixel = (0.13±0.03)µm2. Applying this factor to the G1/S size threshold, we obtainedAS = 1377
+pixels = (179.01±41.31)µm2. We normalized simulation time with the average cycle time of an uncrowded
+cell, i.e., the cell’s timer durationτ0. Experimental data for typical epithelial cell types suggest that the time
+
+5
+for the S/G2/M phase is approximately τ0 ≈10 hours [8, 14]. This provides the timescale conversion from
+Monte Carlo steps to hours, τ0 = 225 mcs ≈10 hr (or 1 mcs ≈2.67 min).
+The single-cell growth rate G is sampled from a Gaussian distribution to determine the change in the
+target area at each Monte Carlo step (Eq. (S.2)). The mean value ofG is set such that isolated cells maintain
+the average subconﬂuent area ¯ASC, G0 = 1
+2
+¯ASC
+τ0
+, and the standard deviation is set to 0 .05 G0. While G sets
+cellular growth rate (d AT /dt) in an isolated state, tissue crowding reduces the available space for growth
+to bulk cells, causing their actual area to deviate from the target area. This results in the domination of
+the exponential term of Eq. (S.2), e−k(A−AT )2
+, and drives the growth d AT /dt to zero until the cell’s area
+increases. The sensitivity to crowding, represented by the heuristic parameter k, quantiﬁes the allowable
+deviation between a cell’s area and its target area. The default value, k = 0.1 pixels−2, was determined
+empirically to ensure the tissue growth rate captures the expected growth dynamics over several cell cycles.
+In our implementation of the CPM, there are four parameters within the Hamiltonian that set the energy
+scale; elastic energy has λ and contact energy has Jcc, Jcm, and Jmm. The parameter λ represents the area
+elastic modulus for the cell, and we choose a default value λ = 1. The parameter J represents the disparity
+between cell surface tension and intercellular adhesion, implying that higher J values indicate lower cell-
+cell adhesion. Consequently, we chose Jcc = 6 and Jcm = Jmm = 10, which allowed cells to adhere more
+strongly to each other than the medium, resulting in a circular morphology for the growing colony.
+Video Legends
+Video S1. Simulation of a growing epithelial colony with apoptosis turned off. The simulation uses default
+parameters as listed in Table 1. Individual cells are color coded by their growth rates.
+Video S2. Simulation of a growing epithelial colony with apoptosis turned on. The simulation uses default
+parameters as listed in Table 1. Individual cells are color coded by their growth rates. Dying cells are
+colored yellow to highlight them within the tissue.
+Video S3. Simulation of a growing epithelial colony exhibiting boundary growth due to strong contact
+inhibition. The simulation uses default parameters as listed in Table 1, except elastic modulus λ = 1 and
+sensitivity to crowdingk = 1. Left: Cells are color coded by their growth rates, Right: Cells are color-coded
+by the cell cycle phase (blue: G1 phase, fuchsia: S/G2/M phase).
+Video S4. Simulation of a growing epithelial colony exhibiting uniform bulk growth due to weak contact

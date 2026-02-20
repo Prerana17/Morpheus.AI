@@ -1,0 +1,105 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+CPM_0_1 [shape=record, label="{CPM|1}", URL="morph://MorpheusModel/CPM" ]
+cell_center_0[label="cell.center", fillcolor="#b5b426",peripheries=2]
+cell_type_0[label="cell.type", fillcolor="#d3d247",peripheries=2]
+celltype_cancer_cells_id_0[label="celltype.cancer_cells.id", fillcolor="#d3d247"]
+celltype_senescent_mesothelia_id_0[label="celltype.senescent_mesothelia.id", fillcolor="#d3d247"]
+subgraph cluster_1 {
+label="CellType[senescent_mesothelia]";
+CellDeath_1_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>CellDeath</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[0]/CellDeath" ]
+NeighborhoodReporter_1_0[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>NeighborhoodReporter</td></tr>
+<hr/>
+<tr><td>-1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[0]/NeighborhoodReporter" ]
+cell_center_1[label="cell.center", fillcolor="#b5b426"]
+cell_surface_1[label="cell.surface", fillcolor="#d3d247"]
+cell_type_1[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]"]
+neighbors_cancer_1[label="neighbors_cancer", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[1]"]
+}
+subgraph cluster_2 {
+label="CellType[nonsenescent_mesothelia]";
+NeighborhoodReporter_2_0[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>NeighborhoodReporter</td></tr>
+<hr/>
+<tr><td>-1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[1]/NeighborhoodReporter" ]
+cell_center_2[label="cell.center", fillcolor="#b5b426"]
+cell_type_2[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+neighbors_cancer_2[label="neighbors_cancer", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[1]"]
+}
+subgraph cluster_3 {
+label="CellType[cancer_cells]";
+CellDivision_3_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>CellDivision</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[2]/CellDivision" ]
+NeighborhoodReporter_3_0[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>NeighborhoodReporter</td></tr>
+<hr/>
+<tr><td>-1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[2]/NeighborhoodReporter" ]
+cell_center_3[label="cell.center", fillcolor="#b5b426"]
+cell_type_3[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+cell_volume_3[label="cell.volume", fillcolor="#d3d247"]
+senescent_contacts_3[label="senescent_contacts", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[1]"]
+}
+subgraph cluster_4 {
+label="CellType[medium]";
+}
+}
+CPM_0_1 -> cell_center_0 [penwidth=3, color="#8f100d"] 
+
+CPM_0_1 -> cell_type_0 [penwidth=3, color="#8f100d"] 
+
+CellDeath_1_1 -> cell_center_1 [penwidth=3, color="#8f100d"] 
+
+CellDivision_3_1 -> cell_center_3 [penwidth=3, color="#8f100d"] 
+
+NeighborhoodReporter_1_0 -> neighbors_cancer_1 [penwidth=3, color="#8f100d"] 
+
+NeighborhoodReporter_2_0 -> neighbors_cancer_2 [penwidth=3, color="#8f100d"] 
+
+NeighborhoodReporter_3_0 -> senescent_contacts_3 [penwidth=3, color="#8f100d"] 
+
+cell_center_1 -> NeighborhoodReporter_1_0 [penwidth=2, color="#112c5f"] 
+
+cell_center_1 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_2 -> NeighborhoodReporter_2_0 [penwidth=2, color="#112c5f"] 
+
+cell_center_2 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_3 -> NeighborhoodReporter_3_0 [penwidth=2, color="#112c5f"] 
+
+cell_center_3 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_surface_1 -> CellDeath_1_1 [penwidth=2, color="#112c5f"] 
+
+cell_type_0 -> NeighborhoodReporter_1_0 [penwidth=2, color="#112c5f"] 
+
+cell_type_0 -> NeighborhoodReporter_2_0 [penwidth=2, color="#112c5f"] 
+
+cell_type_0 -> NeighborhoodReporter_3_0 [penwidth=2, color="#112c5f"] 
+
+cell_type_1 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_2 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_3 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_volume_3 -> CellDivision_3_1 [penwidth=2, color="#112c5f"] 
+
+celltype_cancer_cells_id_0 -> NeighborhoodReporter_1_0 [penwidth=2, color="#112c5f"] 
+
+celltype_cancer_cells_id_0 -> NeighborhoodReporter_2_0 [penwidth=2, color="#112c5f"] 
+
+celltype_senescent_mesothelia_id_0 -> NeighborhoodReporter_3_0 [penwidth=2, color="#112c5f"] 
+
+neighbors_cancer_1 -> CellDeath_1_1 [penwidth=2, color="#112c5f"] 
+
+}

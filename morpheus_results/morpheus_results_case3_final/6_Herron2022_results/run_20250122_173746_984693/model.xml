@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Delta-Notch Lateral Inhibition on Hexagonal Lattice</Title>
+        <Details>Model based on Berkemeier et al. 2023: Hexagonal pattern formation in laterally inhibited cell monolayers.
+        
+        Implements Delta-Notch signaling with:
+        - Lateral inhibition through neighbor averaging
+        - Hexagonal lattice structure
+        - Oscillatory dynamics leading to pattern formation
+        
+        Reference: Berkemeier, L., Plock, A., Dahlem, M. A., &amp; Voigt, A. (2023). 
+        Hexagonal pattern formation in laterally inhibited cell monolayers. Phys. Rev. E, 107(1), 014404.</Details>
+    </Description>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size symbol="size" value="30, 30, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="100"/>
+        <TimeSymbol symbol="t"/>
+        <RandomSeed value="123"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="cells">
+            <Property symbol="Delta" value="0.5" name="Delta ligand"/>
+            <Property symbol="Notch" value="0.5" name="Notch receptor"/>
+            <Property symbol="Delta_neighbors" value="0.0" name="Average Delta in neighbors"/>
+            <Property symbol="Notch_neighbors" value="0.0" name="Average Notch in neighbors"/>
+            
+            <!-- Neighborhood averaging for lateral signaling -->
+            <NeighborhoodReporter>
+                <Input scaling="cell" symbol-ref="Delta"/>
+                <Output mapping="average" symbol-ref="Delta_neighbors"/>
+            </NeighborhoodReporter>
+            
+            <NeighborhoodReporter>
+                <Input scaling="cell" symbol-ref="Notch"/>
+                <Output mapping="average" symbol-ref="Notch_neighbors"/>
+            </NeighborhoodReporter>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="0.1">
+                <!-- Parameters from paper -->
+                <Constant symbol="k_d" value="1.0" name="Delta production rate"/>
+                <Constant symbol="k_n" value="1.0" name="Notch production rate"/>
+                <Constant symbol="gamma_d" value="1.0" name="Delta degradation rate"/>
+                <Constant symbol="gamma_n" value="1.0" name="Notch degradation rate"/>
+                <Constant symbol="k_dn" value="2.0" name="Delta-Notch interaction strength"/>
+                <Constant symbol="K" value="0.5" name="Michaelis-Menten constant"/>
+                <Constant symbol="n" value="2" name="Hill coefficient"/>
+                
+                <!-- Delta dynamics: lateral inhibition by neighbor Notch -->
+                <DiffEqn symbol-ref="Delta">
+                    <Expression>k_d / (1 + k_dn * (Delta_neighbors^n) / (K^n + Delta_neighbors^n)) - gamma_d * Delta</Expression>
+                </DiffEqn>
+                
+                <!-- Notch dynamics: activated by neighbor Delta -->
+                <DiffEqn symbol-ref="Notch">
+                    <Expression>k_n * (Delta_neighbors^n) / (K^n + Delta_neighbors^n) - gamma_n * Notch</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="0" type="cells">
+            <InitCellLattice/>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="2" decorate="true">
+            <Terminal name="png" size="800 400 0"/>
+            <Plot title="Delta Expression">
+                <Cells value="Delta" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="1.0" color="red"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Notch Expression">
+                <Cells value="Notch" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="1.0" color="blue"/>
+                        <Color value="0.5" color="light-blue"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="0.5">
+            <Input>
+                <Symbol symbol-ref="Delta"/>
+                <Symbol symbol-ref="Notch"/>
+                <Symbol symbol-ref="Delta_neighbors"/>
+                <Symbol symbol-ref="Notch_neighbors"/>
+            </Input>
+            <Output>
+                <TextOutput file-separation="cell"/>
+            </Output>
+            <Plots>
+                <Plot time-step="-1">
+                    <Style style="lines" line-width="2"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="t"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="Delta"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="Notch"/>
+                    </Color-bar>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <HistogramLogger time-step="10" normalized="true" minimum="0.0" maximum="1.0" number-of-bins="20">
+            <Plot terminal="png" minimum="0" maximum="1.0"/>
+            <Column celltype="cells" symbol-ref="Delta"/>
+            <Column celltype="cells" symbol-ref="Notch"/>
+        </HistogramLogger>
+        
+        <ModelGraph include-tags="#untagged" format="dot" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

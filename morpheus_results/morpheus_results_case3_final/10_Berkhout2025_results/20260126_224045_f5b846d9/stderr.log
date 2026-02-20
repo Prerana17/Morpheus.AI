@@ -1,0 +1,4 @@
+Error in Plugin Logger
+Composite symbol 'signal_strength' is not defined in all subscopes and has no global default.
+
+XMLPath: MorpheusModel/Analysis/Logger[0]

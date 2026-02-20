@@ -1,0 +1,404 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Neural Tube Closure Simplified Model</Title>
+        <Details>
+            Simplified computational model of mammalian neural tube closure based on Berkhout et al. (2025).
+            Models multiple cell types, signaling gradients, and morphogenetic processes.
+        </Details>
+    </Description>
+    
+    <Global>
+        <!-- Signaling molecules as fields -->
+        <Field name="SHH" symbol="shh" value="0.0">
+            <Diffusion rate="0.1"/>
+        </Field>
+        <Field name="BMP4" symbol="bmp4" value="0.0">
+            <Diffusion rate="0.08"/>
+        </Field>
+        <Field name="FGF8" symbol="fgf8" value="1.0">
+            <Diffusion rate="0.05"/>
+        </Field>
+        <Field name="WNT" symbol="wnt" value="0.0">
+            <Diffusion rate="0.06"/>
+        </Field>
+        
+        <!-- Simple reaction-diffusion dynamics -->
+        <System time-step="2.0" solver="euler">
+            <Constant symbol="k_prod" value="0.2"/>
+            <Constant symbol="k_decay" value="0.01"/>
+            
+            <DiffEqn symbol-ref="shh">
+                <Expression>k_prod - k_decay * shh</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="bmp4">
+                <Expression>k_prod * (1.0 - fgf8*0.5) - k_decay * bmp4</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="fgf8">
+                <Expression>-0.005 * fgf8</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="wnt">
+                <Expression>k_prod - k_decay * wnt</Expression>
+            </DiffEqn>
+        </System>
+        
+        <!-- Counters -->
+        <Variable symbol="cell_count" value="0"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size value="200, 80, 0" symbol="size"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="1500"/>
+        <SaveInterval value="30"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    
+    <CellTypes>
+        <!-- Notochord cells - source of SHH -->
+        <CellType class="biological" name="notochord">
+            <VolumeConstraint target="120" strength="2"/>
+            <SurfaceConstraint target="1.0" strength="1" mode="aspherity"/>
+            
+            <Property symbol="shh_production" value="2.0"/>
+            <Property symbol="cell_fate" value="1"/>
+            <Property symbol="signal_strength" value="0.0"/>
+            
+            <!-- Local SHH production -->
+            <System time-step="3.0" solver="euler">
+                <DiffEqn symbol-ref="signal_strength">
+                    <Expression>shh_production * 0.5 - signal_strength * 0.02</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+        
+        <!-- Neuroectoderm cells - neural plate -->
+        <CellType class="biological" name="neuroectoderm">
+            <VolumeConstraint target="100" strength="1.5"/>
+            <SurfaceConstraint target="1.2" strength="1" mode="aspherity"/>
+            
+            <Property symbol="ptch1_response" value="0.0"/>
+            <Property symbol="apical_constriction" value="0.0"/>
+            <Property symbol="cell_fate" value="2"/>
+            <Property symbol="signal_strength" value="0.0"/>
+            
+            <!-- Response to SHH signaling -->
+            <System time-step="4.0" solver="euler">
+                <DiffEqn symbol-ref="ptch1_response">
+                    <Expression>shh * 1.5 - ptch1_response * 0.08</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="apical_constriction">
+                    <Expression>(ptch1_response - 0.2) * 0.3 * (ptch1_response > 0.2 ? 1 : 0)</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="signal_strength">
+                    <Expression>ptch1_response * 0.4 - signal_strength * 0.03</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+        
+        <!-- Surface ectoderm - source of BMP4 and WNT -->
+        <CellType class="biological" name="surface_ectoderm">
+            <VolumeConstraint target="90" strength="1.8"/>
+            <SurfaceConstraint target="1.1" strength="1" mode="aspherity"/>
+            
+            <Property symbol="bmp4_production" value="1.5"/>
+            <Property symbol="wnt_production" value="1.2"/>
+            <Property symbol="cell_fate" value="3"/>
+            <Property symbol="signal_strength" value="0.0"/>
+            
+            <System time-step="3.0" solver="euler">
+                <DiffEqn symbol-ref="signal_strength">
+                    <Expression>(bmp4_production + wnt_production) * 0.25 - signal_strength * 0.02</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+        
+        <!-- Mesoderm cells -->
+        <CellType class="biological" name="mesoderm">
+            <VolumeConstraint target="110" strength="1.4"/>
+            <SurfaceConstraint target="1.0" strength="1" mode="aspherity"/>
+            
+            <Property symbol="bmpr_activity" value="0.0"/>
+            <Property symbol="cell_fate" value="4"/>
+            <Property symbol="signal_strength" value="0.0"/>
+            
+            <System time-step="5.0" solver="euler">
+                <DiffEqn symbol-ref="bmpr_activity">
+                    <Expression>bmp4 * 1.0 - bmpr_activity * 0.06</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="signal_strength">
+                    <Expression>bmpr_activity * 0.3 - signal_strength * 0.02</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+        
+        <!-- Neural crest precursors -->
+        <CellType class="biological" name="neural_crest">
+            <VolumeConstraint target="70" strength="1.2"/>
+            <SurfaceConstraint target="1.3" strength="0.8" mode="aspherity"/>
+            
+            <Property symbol="wnt_response" value="0.0"/>
+            <Property symbol="migration_signal" value="0.0"/>
+            <Property symbol="cell_fate" value="5"/>
+            <Property symbol="signal_strength" value="0.0"/>
+            
+            <System time-step="6.0" solver="euler">
+                <DiffEqn symbol-ref="wnt_response">
+                    <Expression>wnt * 1.2 * (1.0 - fgf8*0.4) - wnt_response * 0.1</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="migration_signal">
+                    <Expression>wnt_response * 0.6 - migration_signal * 0.04</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="signal_strength">
+                    <Expression>migration_signal * 0.5 - signal_strength * 0.02</Expression>
+                </DiffEqn>
+            </System>
+            
+            <PersistentMotion strength="1.5" decay-time="40">
+                <Condition>migration_signal > 0.3 and time > 600</Condition>
+            </PersistentMotion>
+        </CellType>
+        
+        <!-- Medium -->
+        <CellType class="medium" name="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0.0">
+            <!-- Cell-medium interactions -->
+            <Contact type1="notochord" type2="medium" value="8"/>
+            <Contact type1="neuroectoderm" type2="medium" value="6"/>
+            <Contact type1="surface_ectoderm" type2="medium" value="10"/>
+            <Contact type1="mesoderm" type2="medium" value="7"/>
+            <Contact type1="neural_crest" type2="medium" value="5"/>
+            
+            <!-- Cell-cell interactions -->
+            <Contact type1="notochord" type2="neuroectoderm" value="2"/>
+            <Contact type1="neuroectoderm" type2="surface_ectoderm" value="4"/>
+            <Contact type1="neuroectoderm" type2="mesoderm" value="3"/>
+            <Contact type1="surface_ectoderm" type2="mesoderm" value="5"/>
+            <Contact type1="neural_crest" type2="neuroectoderm" value="3"/>
+            <Contact type1="neural_crest" type2="surface_ectoderm" value="6"/>
+            
+            <!-- Same type interactions -->
+            <Contact type1="notochord" type2="notochord" value="1"/>
+            <Contact type1="neuroectoderm" type2="neuroectoderm" value="2"/>
+            <Contact type1="surface_ectoderm" type2="surface_ectoderm" value="3"/>
+            <Contact type1="mesoderm" type2="mesoderm" value="2"/>
+            <Contact type1="neural_crest" type2="neural_crest" value="4"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="8"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <!-- Initialize notochord at bottom -->
+        <Population type="notochord" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="6,1,0" displacements="20,0,0">
+                    <Ellipsoid center="20,12,0" size="18,8,0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <!-- Initialize neuroectoderm - neural plate -->
+        <Population type="neuroectoderm" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="8,2,0" displacements="18,12,0">
+                    <Ellipsoid center="20,25,0" size="14,10,0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <!-- Initialize surface ectoderm at edges -->
+        <Population type="surface_ectoderm" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="2,2,0" displacements="12,12,0">
+                    <Ellipsoid center="15,55,0" size="10,10,0"/>
+                </Arrangement>
+                <Arrangement repetitions="2,2,0" displacements="12,12,0">
+                    <Ellipsoid center="170,55,0" size="10,10,0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <!-- Initialize mesoderm -->
+        <Population type="mesoderm" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="6,1,0" displacements="20,0,0">
+                    <Ellipsoid center="20,40,0" size="16,8,0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+        
+        <!-- Initialize neural crest precursors -->
+        <Population type="neural_crest" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="4,1,0" displacements="30,0,0">
+                    <Ellipsoid center="30,50,0" size="12,6,0"/>
+                </Arrangement>
+            </InitCellObjects>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <!-- Generate PNG visualizations -->
+        <Gnuplotter time-step="60" decorate="true">
+            <Terminal name="png" size="800,600,0"/>
+            
+            <!-- Cell type visualization -->
+            <Plot title="Neural Tube Closure - Cell Types">
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="1" color="brown"/>      <!-- notochord -->
+                        <Color value="2" color="green"/>      <!-- neuroectoderm -->
+                        <Color value="3" color="blue"/>       <!-- surface ectoderm -->
+                        <Color value="4" color="red"/>        <!-- mesoderm -->
+                        <Color value="5" color="purple"/>     <!-- neural crest -->
+                        <Color value="6" color="white"/>      <!-- medium -->
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            
+            <!-- SHH signaling gradient -->
+            <Plot title="SHH Signaling Gradient">
+                <Field symbol-ref="shh"/>
+                <Cells value="cell.type" opacity="0.4"/>
+            </Plot>
+            
+            <!-- BMP4 signaling -->
+            <Plot title="BMP4 Signaling">
+                <Field symbol-ref="bmp4"/>
+                <Cells value="cell.type" opacity="0.4"/>
+            </Plot>
+            
+            <!-- FGF8 levels -->
+            <Plot title="FGF8 Levels">
+                <Field symbol-ref="fgf8"/>
+                <Cells value="cell.type" opacity="0.4"/>
+            </Plot>
+            
+            <!-- Cell fate and signal strength -->
+            <Plot title="Signal Strength in Cells">
+                <Cells value="signal_strength">
+                    <ColorMap>
+                        <Color value="0.0" color="black"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="1.0" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            
+            <!-- Apical constriction in neuroectoderm -->
+            <Plot title="Apical Constriction">
+                <Cells value="apical_constriction">
+                    <ColorMap>
+                        <Color value="0.0" color="blue"/>
+                        <Color value="0.3" color="yellow"/>
+                        <Color value="0.6" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Data logging -->
+        <Logger time-step="30">
+            <Input>
+                <Symbol symbol-ref="time"/>
+                <Symbol symbol-ref="shh"/>
+                <Symbol symbol-ref="bmp4"/>
+                <Symbol symbol-ref="fgf8"/>
+                <Symbol symbol-ref="wnt"/>
+                <Symbol symbol-ref="cell_count"/>
+                <Symbol symbol-ref="cell.center.x"/>
+                <Symbol symbol-ref="cell.center.y"/>
+                <Symbol symbol-ref="cell.type"/>
+                <Symbol symbol-ref="signal_strength"/>
+                <Symbol symbol-ref="apical_constriction"/>
+                <Symbol symbol-ref="cell_fate"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            
+            <!-- Time series plots -->
+            <Plots>
+                <Plot time-step="150">
+                    <Style style="linespoints"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="shh"/>
+                    </Y-axis>
+                </Plot>
+                
+                <Plot time-step="150">
+                    <Style style="linespoints"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="bmp4"/>
+                    </Y-axis>
+                </Plot>
+                
+                <Plot time-step="150">
+                    <Style style="linespoints"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="fgf8"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <!-- Cell tracking over time -->
+        <Logger time-step="60">
+            <Input>
+                <Symbol symbol-ref="cell.id"/>
+                <Symbol symbol-ref="cell.center.x"/>
+                <Symbol symbol-ref="cell.center.y"/>
+                <Symbol symbol-ref="cell.volume"/>
+                <Symbol symbol-ref="signal_strength"/>
+                <Symbol symbol-ref="cell_fate"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv" file-separation="cell"/>
+            </Output>
+        </Logger>
+        
+        <!-- Model graph -->
+        <ModelGraph include-tags="#untagged" format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

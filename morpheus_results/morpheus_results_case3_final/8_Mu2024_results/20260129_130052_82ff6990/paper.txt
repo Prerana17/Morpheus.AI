@@ -1,0 +1,512 @@
+Mathematical Biosciences 360 (2023) 109012
+Contents lists available at ScienceDirect
+Mathematical Biosciences
+journal homepage: www.elsevier.com/locate/mbs
+Original Research Article
+Coupling dynamics of 2D Notch-Delta signalling
+Francisco Berkemeiera,∗, Karen M. Pageb
+a Department of Pathology, University of Cambridge, UK
+b Department of Mathematics and IPLS, University College London, UK
+A R T I C L E I N F O
+Keywords:
+Notch
+Signalling
+Stability
+Protrusions
+Lateral inhibition
+A B S T R A C T
+Understanding pattern formation driven by cell–cell interactions has been a significant theme in cellular
+biology for many years. In particular, due to their implications within many biological contexts, lateral-
+inhibition mechanisms present in the Notch-Delta signalling pathway led to an extensive discussion between
+biologists and mathematicians. Deterministic and stochastic models have been developed as a consequence
+of this discussion, some of which address long-range signalling by considering cell protrusions reaching non-
+neighbouring cells. The dynamics of such signalling systems reveal intricate properties of the coupling terms
+involved in these models. In this work, we investigate the advantages and drawbacks of a single-parameter
+long-range signalling model across diverse scenarios. By employing linear and multi-scale analyses, we discover
+that pattern selection is not only partially explained but also depends on nonlinear effects that extend beyond
+the scope of these analytical techniques.
+1. Introduction
+In epithelial tissue, depending on the nature of the contact between
+cells, the Notch-Delta signalling pathway leads to fundamentally differ-
+ent patterns [1–3]. In highly packed epithelial layers, some cells have
+the ability to create extensions of themselves, developing protrusions
+that reach non-neighbouring cells and yielding a new and fundamental
+factor in the signalling dynamics. These basal actin-based filopodia are
+elongated and oriented in different directions, extending signalling to
+second or third neighbour cells [4–8].
+In recent years, long-range signalling via filopodia has been shown
+to significantly impact the distribution and sparse patterning of sensory
+organ precursor (SOP) cells in the fly notum [9–11]. In other work,
+spatiotemporal patterns of spinal neuron differentiation were revealed
+to be mediated by basal protrusions [12]. In contrast to the frequently
+observed short-ranged patterns induced by short-range signalling, cell
+protrusions result in sparser SOP cell patterning.
+The stochastic nature of these biological systems crucially affects
+patterning. For example, noise arising from dynamic protrusions has
+been shown to have a significant role in pattern refinement when
+studying the organisation of bristles on the Drosophila melanogaster
+notum [9]. A cellular automaton model of cell–cell signalling revealed
+that rule-dependent structured noise also triggers refined and biased
+patterning [10], hinting at the self-organising nature of such systems.
+Intrinsic noise, driven by stochastic gene expression, has been studied
+via the Chemical Langevin Equation [13] and shown to directly affect
+juxtacrine-based pattern formation [14].
+∗ Correspondence to: Department of Pathology, University of Cambridge, 10 Tennis Court Road, Cambridge, CB2 1QP, UK.
+E-mail address: fp409@cam.ac.uk (F. Berkemeier).
+In addition to constructing realistic long-range signalling models
+capable of numerically describing long-range patterning, linear stability
+analysis (LSA) has revealed inherent characteristics of lateral inhibition
+models [15–17]. Biased and long-range signalling was also studied
+in [18], where weight-based coupling functions were considered for
+several one-dimensional signalling systems. We aim to partially extend
+this work by studying the two-dimensional hexagonal array under
+specific signalling weights.
+In 1996, Joanne Collier and colleagues developed the first model
+of Notch-mediated lateral inhibition [19]. In this work, the authors
+considered purely juxtacrine signalling dynamics, where the signalling
+cell and the target cell are in direct physical contact. We define a model
+of long-range Notch-Delta signalling, which is a relative weight-based
+extension of the original Collier model, and name it the𝜖-Collier model.
+We introduce a weighting parameter𝜖that relatively weights juxtacrine
+and long-range signalling contributions, creating a complex non-local
+signalling network.
+Under different filopodium behaviour and lifespan assumptions, one
+can explore the robustness of the extended Collier model via LSA,
+providing a general framework for analysing autonomous systems of
+signalling cells, as detailed in Supplementary Note 1 (SN1). Further-
+more, such a parameterised model allows us to investigate the limits
+on cell coupling sufficient to obtain long-range patterns. In parallel,
+we explore the effects of stochastic filopodium dynamics on patterning.
+Finally, we expand some of the techniques from LSA to describe a
+general framework for multiple-scale methods and weakly nonlinear
+https://doi.org/10.1016/j.mbs.2023.109012
+Available online 2 May 2023
+0025-5564/© 2023 The Author(s). Published by Elsevier Inc. This is an open access article under the CC BY license
+(http://creativecommons.org/licenses/by/4.0/).
+
+F. Berkemeier and K.M. Page Mathematical Biosciences 360 (2023) 109012
+stability analysis (WNSA) of coupled and decoupled dynamical systems
+(SN2).
+In this paper, we first present the Collier model of Notch-Delta
+signalling, followed by its extension to long-range signalling, which we
+call the 𝜖-Collier model. We then perform a linear stability analysis
+of this system. The results of the LSA are compared with numerical
+simulations. The cases of longer/oriented protrusions and stochastic
+protrusions are analysed. In the latter case, we assume that protrusions
+link and unlink at random. Stochastic protrusions can lead to pattern
+refinement over time. We perform a numerical bifurcation analysis of
+the 𝜖-Collier model, showing which modes are expected to grow near
+a bifurcation, and show that these accurately predict the results of
+numerical simulations there. Finally, we present a multiscale method
+for analysing weakly nonlinear dynamics, and show that it is difficult
+to apply to this system.
+2. Main methods
+2.1. Lateral inhibition
+We consider a periodic 𝑁× 𝑀 hexagonal lattice (hexagonal torus),
+where each cell has6 neighbouring cells (see Fig. 1(a)). For a given cell,
+we assume juxtacrine signalling occurs with all 6 of its neighbours via
+the usual Collier model [19]. Here, the authors used experimental data
+to build an ordinary differential equation (ODE) model of the feedback
+loop between two adjacent cells induced by Notch signalling (lateral
+inhibition). The model consists of a system of coupled ODEs per cell.
+Denoting by 𝑛𝑖 and 𝑑𝑖 the levels of Notch and Delta activity in cell 𝑖,
+we have the following system
+𝑑
+𝑑𝑡𝑛𝑖 = 𝑓(⟨𝑑𝑖⟩) −𝑛𝑖 (1)
+𝑑
+𝑑𝑡𝑑𝑖 = 𝜈(𝑔(𝑛𝑖) −𝑑𝑖), (2)
+where 𝑓,𝑔 ∶ [0,∞) → [0,∞) are continuous increasing and decreasing
+functions, respectively, often taken to be Hill functions
+𝑓(𝑥) = 𝑥𝑘
+𝑎+ 𝑥𝑘 (3)
+𝑔(𝑥) = 1
+1 +𝑏𝑥ℎ (4)
+for 𝑥≥ 0 and ℎ,𝑘 ≥ 1. 𝑟𝑡 ≡ 1∕𝑎and 𝑏are the trans-interactions strength
+and ligand inhibition strength parameters, respectively 1. 𝜈 >0 is the
+ratio between Notch and Delta decay rates, determining the strength
+of decay. Finally, ⟨𝑑𝑖⟩ is the average level of Delta activity in the cells
+adjacent to cell 𝑖, that is,
+⟨𝑑𝑖⟩ = 1
+|𝐧𝐧(𝑖)|
+∑
+𝑗∈𝐧𝐧(𝑖)
+𝑑𝑗, (5)
+where the sum is taken over the nearest neighbours 𝐧𝐧(𝑖) of cell 𝑖 and
+|𝐧𝐧(𝑖)| is the total number of neighbours. In general, depending on the
+hexagonal lattice orientation, either 𝑁 or 𝑀 must be even to ensure
+periodicity. From the previous equations, one can see that the rate of
+production of Notch activity is an increasing function of the level of
+Delta activity in neighbouring cells. In contrast, the rate of production
+of Delta activity is a decreasing function of the level of activated Notch
+within the same cell. The production of Notch and Delta activity is
+balanced by decay.
+1 The quantity 𝑎1∕𝑘 is the neighbour Delta activity level necessary for half-
+maximal Notch activation, while 𝑏−1∕ℎ is the Notch activity level necessary for
+half-maximal Delta inhibition.
+2.2. Long-range signalling
+In addition to lateral cell–cell signalling, we also consider the pos-
+sibility of long-range signalling with respect to non-neighbouring cells.
+We loosely refer to cell protrusions as the main mechanism for general,
+isotropic long-range signalling, interchangeably using these terms. A
+detailed discussion of protrusion dynamics is presented in [20]. For
+now, our notion of protrusions remains relatively abstract. There are
+several ways to implement protrusion-cell signalling. As a first simplifi-
+cation, we assume⟨𝑑𝑖⟩is the only term affected by long-range signalling
+and extend its definition to include non-neighbouring cells that contact
+cell 𝑖. We also investigate the cases where ligand density decays with
+distance and protrusions are stochastic.
+In general, we consider the approach suggested in [18]. Here, the
+authors used a weighting function 𝜔(𝑠,𝑟) defining the signalling level
+from a signaller cell 𝑠to a receiver cell 𝑟. 𝜔determines which cells are
+connected through protrusions, defining a connectivity matrix whose
+entries yield the signalling intensity. In a simplistic protrusion model,
+all non-zero entries of such a matrix are equal. The weighting function
+𝜔captures the matrix information, and we may rewrite the interaction
+term as follows
+⟨𝑑𝑖⟩ =
+∑
+𝑗∈𝐧(𝑖)
+𝜔(𝑖,𝑗)𝑑𝑗, (6)
+where the sum is made over the neighbours of 𝑖, 𝐧𝐧(𝑖), and the non-
+neighbouring cells that are reached by the protrusions, 𝐧𝐩(𝑖), of cell
+𝑖. Such an array of indexes is defined as 𝐧(𝑖) = 𝐧𝐧(𝑖) ∪ 𝐧𝐩(𝑖). The
+further assumption that each cell has a finite amount of active ligand
+to distribute at any given time point results in the following restriction
+∑
+𝑗∈𝐧(𝑖)
+𝜔(𝑖,𝑗) =𝜔< +∞. (7)
+Although there is some freedom in the interpretation of 𝜔, we assume
+𝜔= 1for simplicity.
+2.3. The 𝜖-Collier model
+Our model, hereafter named the 𝜖-Collier model, extends the math-
+ematical systems in [19] by considering the inclusion of long-range
+signalling via protrusions balanced by the relative weighting factor 𝜖∈
+[0,1]. We begin by weighting each signalling contribution, juxtacrine
+(𝜔𝐽) and protrusion-based (𝜔𝑃), by the factor 𝜖, to define the combined
+weighting function
+𝜔≡ (1 −𝜖)𝜔𝐽 + 𝜖𝜔𝑃. (8)
+Eq. (6)–Eq. (8) define the 𝜖-Collier model, considering protrusions of
+relative signalling intensity𝜖. Naturally, Eq. (8) is only interesting when
+𝜔𝐽 and 𝜔𝑃 are restricted to 𝐧𝐧(𝑖) and 𝐧𝐩(𝑖), respectively. For example,
+the case 𝜖 = 0 and 𝜔𝐽(𝑖,𝑗) = 𝜒𝐧𝐧(𝑖)(𝑗)∕6, where 𝜒𝐧𝐧(𝑖) is the indicator
+(or characteristic) function of the set 𝐧𝐧(𝑖), corresponds to the original
+Collier model.
+2.4. Coupling dynamics
+We perform a linear stability analysis to understand the criteria for
+pattern formation driven by Notch-Delta signalling. This is a useful tool
+to not only identify the regions of the parameter space for which spon-
+taneous patterning of SOP cells occurs but also to determine the typical
+spacing between Delta-expressing cells, often called the characteristic
+length of the pattern or pattern wavelength [15,17,19]. Our analysis
+closely follows the methods outlined in [18,19,21] and Murray [22], for
+the two-dimensional hexagonal array, and is based on the framework
+presented in SN1.
+Eq. (1)–Eq. (2) possesses a single positive homogeneous steady state
+(𝑛∗,𝑑∗). At this state, we have 𝑓(𝑔(𝑛∗)) = 𝑛∗ and 𝑔(𝑛∗) = 𝑑∗, which is
+unique because 𝑓(𝑔(𝑛)) is monotonically decreasing for all 𝑛≥ 0. Then,
+2
+
+F. Berkemeier and K.M. Page Mathematical Biosciences 360 (2023) 109012
+Fig. 1. Long-range Notch-Delta signalling on hexagonal lattices.
+(a) Hexagonal torus. Periodic hexagonal lattices can be seen as hexagonal tori. (b) Hexagonal lattice main directions ( 𝑗,𝑘 axes) and cell position indexation relative to a focal cell
+(0,0). Different cell labelling schemes yield equivalent formulations of 𝛺̄ 𝑞,̄ 𝑝, as defined in Eq. (17). (c–f) Notch-Delta patterns on a 14 × 14 periodic lattice for varying 𝜖. SOP cells
+(white, high Delta, low Notch) contrast with non-SOP cells (green, low Delta, high Notch). Here, ℎ = 𝑘 = 6, 𝑎 = 10−8, 𝑏 = 102, and 𝜈 = 1. Initial conditions 𝑛𝑖(0) and 𝑑𝑖(0) have
+arbitrary values close to the homogeneous steady state (𝑛∗,𝑑∗) ≃ (0.744,0.055).
+for small perturbations ̃ 𝑛𝑖 = 𝑛𝑖 − 𝑛∗ and ̃𝑑𝑖 = 𝑑𝑖 − 𝑑∗, linearisation leads
+to
+𝑑
+𝑑𝑡 ̃ 𝑛𝑖 = 𝐴⟨ ̃𝑑𝑖⟩− ̃ 𝑛𝑖 (9)
+𝑑
+𝑑𝑡
+̃𝑑𝑖 = 𝜈𝐵̃ 𝑛𝑖 − 𝜈 ̃𝑑𝑖, (10)
+where 𝐴 = 𝑓′(𝑔(𝑛∗)) is the signal trans-activation by the ligand and
+𝐵= 𝑔′(𝑛∗) is the ligand inhibition by the signal. For a 𝑁× 𝑀 periodic
+hexagonal lattice, with 1 ≤ 𝑗 ≤ 𝑁 and 1 ≤ 𝑘 ≤ 𝑀, the perturbations
+can be written as a discrete Fourier series
+̃ 𝑛𝑖 ≡ ̃ 𝑛𝑗,𝑘 =
+𝑁∑
+𝑞=1
+𝑀∑
+𝑝=1
+𝜉𝑞,𝑝𝑒2𝜋i(𝑞𝑗∕𝑁+𝑝𝑘∕𝑀) (11)
+̃𝑑𝑖 ≡ ̃𝑑𝑗,𝑘 =
+𝑁∑
+𝑞=1
+𝑀∑
+𝑝=1
+𝜂𝑞,𝑝𝑒2𝜋i(𝑞𝑗∕𝑁+𝑝𝑘∕𝑀), (12)
+where two subindexes have been used to refer to the spatial position of
+cell 𝑖 within the two-dimensional hexagonal lattice (see Fig. 1(b)). For
+1 ≤ 𝑞≤ 𝑁 and 1 ≤ 𝑝≤ 𝑀, the inverted transform is
+𝜉𝑞,𝑝 = 1
+𝑀𝑁
+𝑀∑
+𝑘=1
+𝑁∑
+𝑗=1
+̃ 𝑛𝑗,𝑘𝑒−2𝜋i(𝑞𝑗∕𝑁+𝑝𝑘∕𝑀) (13)
+𝜂𝑞,𝑝 = 1
+𝑀𝑁
+𝑀∑
+𝑘=1
+𝑁∑
+𝑗=1
+̃𝑑𝑗,𝑘𝑒−2𝜋i(𝑞𝑗∕𝑁+𝑝𝑘∕𝑀). (14)
+Finally, applying this change of variables to Eq. (9)–Eq. (10) leads to
+the following linear system of coupled ordinary differential equations
+𝑑
+𝑑𝑡
+(𝜉𝑞,𝑝
+𝜂𝑞,𝑝
+)
+= 𝐿
+(𝜉𝑞,𝑝
+𝜂𝑞,𝑝
+)
+, (15)
+where matrix 𝐿is a specification of matrix 𝐋̄ 𝑞,̄ 𝑝in Eq. (S43), defined as
+𝐿=
+(−1 𝐴𝛺̄ 𝑞,̄ 𝑝
+𝜈𝐵 −𝜈
+)
+(16)
+and 𝛺̄ 𝑞,̄ 𝑝is the function that takes into account the spatial coupling
+terms of Eq. (9)–Eq. (10) within the hexagonal lattice (in this case,
+𝛺̄ 𝑞,̄ 𝑝∝ [𝜴̄ 𝑞,̄ 𝑝
+]
+12, defined by Eq. (S42)). We have then turned Eq. (1)–
+Eq. (2) into a system of constant-coefficient linear differential equations
+described by Eq. (15), which has a straightforward family of solutions.
+For now, however, we focus on the coupling function𝛺̄ 𝑞,̄ 𝑝, which holds
+the main mechanisms behind the dynamics of juxtacrine and long-range
+signalling in our system.
+𝛺̄ 𝑞,̄ 𝑝varies according to the weighting function 𝜔. Here, ̄ 𝑞= 𝑞∕𝑁
+and ̄ 𝑝= 𝑝∕𝑀 define the discrete wavenumbers (Fourier modes) and
+thus solutions for 0 < ̄ 𝑞, ̄ 𝑝≤ 1 correspond to patterned solutions
+with corresponding pattern wavelengths (1∕ ̄ 𝑞,1∕ ̄ 𝑝). We assume that
+connections between cells depend only on their relative positions in the
+lattice (Fig. 1(b)) and therefore, for a sender cell 𝑠in position (𝑗,𝑘) and
+a receiver cell 𝑟in position (𝑗′,𝑘′), we set 𝜔(𝑠𝑗,𝑘,𝑟𝑗′,𝑘′ ) ≡ 𝜔(𝑗′ −𝑗,𝑘′ −𝑘) =
+𝜔(𝛥𝑗,𝛥𝑘). Hence, 𝛺̄ 𝑞,̄ 𝑝is, in general, given by
+𝛺̄ 𝑞,̄ 𝑝=
+∑
+𝛥𝑗𝑘∈𝑆
+𝜔(𝛥𝑗,𝛥𝑘)𝑒2𝜋i( ̄ 𝑞𝛥𝑗+ ̄ 𝑝𝛥𝑘), (17)
+where 𝛥𝑗𝑘 = (𝛥𝑗,𝛥𝑘). Now, if we assume connections are symmetric,
+i.e, 𝜔(𝛥𝑗,𝛥𝑘) =𝜔(−𝛥𝑗,−𝛥𝑘), we have, by Example 1.1 in SN1,
+𝛺̄ 𝑞,̄ 𝑝=
+∑
+𝛥𝑗𝑘∈𝑆
+𝜔(𝛥𝑗,𝛥𝑘) cos(2𝜋( ̄ 𝑞𝛥𝑗+ ̄ 𝑝𝛥𝑘)). (18)
+The diagonalisation of 𝐿 leads to the temporal eigenvalues
+𝜆±
+̄ 𝑞,̄ 𝑝= 1
+2
+[
+−(1 +𝜈) ±
+√
+(1 +𝜈)2 − 4𝜈(1 −𝐴𝐵𝛺̄ 𝑞,̄ 𝑝)
+]
+. (19)
+3
+
+F. Berkemeier and K.M. Page Mathematical Biosciences 360 (2023) 109012
+Then, since 𝜈 >0, 𝜆+
+̄ 𝑞,̄ 𝑝is a positive real number if and only if 𝐴𝐵𝛺̄ 𝑞,̄ 𝑝>
+1. 𝐴 and 𝐵 are the slopes of the feedback functions 𝑓 and 𝑔 at the
+homogeneous steady state and |𝐴𝐵|is defined as the feedback strength.
+If |𝐴𝐵| = 0, then the homogeneous solution is linearly stable, Re(𝜆±
+̄ 𝑞,̄ 𝑝) <
+0, and thus no periodic pattern is expected to emerge. On the other
+hand, the feedback strength has to be sufficiently high for patterns to
+arise, that is, |𝐴𝐵| >||1∕𝛺min||, where 𝛺min denotes the minimum of the
+real function 𝛺̄ 𝑞,̄ 𝑝, so that Re (𝜆+
+̄ 𝑞,̄ 𝑝) is maximal. With 𝐴 >0, 𝐵 <0 and
+assuming 𝛺min <0, we expect patterned solutions provided
+𝐴𝐵 < 1
+𝛺min
+. (20)
+In particular, this feedback is controlled by the tuple (𝑎,𝑏,ℎ,𝑘 ) as
+follows
+𝐴= 𝑓′(𝑔(𝑛∗)) = 𝑎𝑘𝑑∗𝑘−1
+(𝑎+ 𝑑∗𝑘)2 (21)
+𝐵= 𝑔′(𝑛∗) = − 𝑏ℎ𝑛∗ℎ−1
+(1 +𝑏𝑛∗ℎ)2 , (22)
+where, again, (𝑛∗,𝑑∗) is the homogeneous steady state, 𝑟𝑡 = 1∕𝑎 is
+the trans-interactions strength and 𝑏 is the ligand inhibition strength.
+(𝑛∗,𝑑∗) can be found by setting ⟨𝑑𝑖⟩ = 𝑑𝑖 and finding the intersection
+of the nullclines 𝑛𝑖 = 𝑓(𝑑𝑖) and 𝑑𝑖 = 𝑔(𝑛𝑖). Assuming for convenience
+ℎ= 𝑘, this can be rewritten as
+𝑛∗ = 𝑓(𝑔(𝑛∗)) (23)
+𝑑∗ = 𝑔(𝑛∗), (24)
+which can be numerically solved for each triple (ℎ,𝑟𝑡,𝑏) in the param-
+eter space. Such a solution, together with Eq. (20), defines the discrete
+analogues of Turing spaces consisting of 𝑟𝑡 − 𝑏 = ℎ parameter regions
+where spontaneous patterns occur. Outside such regions, pattern forma-
+tion is not expected, since all of the linear modes have negative growth
+rates.
+We now explore different weighting functions to capture the effects
+of juxtacrine signalling and protrusions, and discuss what features
+of 𝜔 affect 𝛺min. We recall that 𝜔 determines the family of systems
+Eq. (1)–Eq. (2) via the weighting dynamics defined by Eq. (6)–Eq. (8).
+For a given cell on a hexagonal lattice, we denote the closest ring
+of order 𝑘 ∈ N0 by 𝑅𝑘, such that 𝑅0 is the cell itself, 𝑅1 are its 6
+neighbouring cells, 𝑅2 is the ring of 12 second-neighbour cells, and so
+forth. Notice that |𝑅𝑘| = 6𝑘 (𝑘 >0). We further expand the definition
+of 𝑆 in SN1 by defining 𝑆𝑘 as the relative index set of cells in 𝑅𝑘
+(according to Fig. 1(b)), that is,
+⎧
+⎪
+⎪
+⎪
+⎨
+⎪
+⎪
+⎪⎩
+𝑆0 = {(0,0)}
+𝑆1 = {(±1,0),(0,±1),±(1,1)}
+𝑆2 = {(0,±2),(±2,0),±(1,−1),
+± (1,2),±(2,1),±(2,2)}
+⋮
+. (25)
+This notation will be used throughout this work. Notice that such
+a definition can be ambiguous in different contexts, as discussed in
+Remark 1.2 (SN1).
+3. Results
+3.1. Juxtacrine signalling and simplistic protrusions
+For juxtacrine signalling on a hexagonal lattice, without protrusions,
+we set
+𝜔𝐽(𝛥𝑗,𝛥𝑘) =
+{1
+6 if (𝛥𝑗,𝛥𝑘) ∈𝑆1,
+0 otherwise,
+(26)
+so that
+𝛺̄ 𝑞,̄ 𝑝= 1
+3 [cos (2𝜋̄ 𝑞) + cos(2𝜋̄ 𝑝) + cos(2𝜋( ̄ 𝑞+ ̄ 𝑝))] . (27)
+Notice that 𝛺̄ 𝑞,̄ 𝑝takes discrete values within the interval [−0.5,1].
+The modes that minimise Eq. (27) are those for which 𝑁 and 𝑀
+are multiples of 3, thus ( ̄ 𝑞, ̄ 𝑝) ∈ {(1∕3,1∕3),(2∕3,2∕3)} and a pattern
+with wavelength 3 along the main directions of the hexagonal lattice
+emerges, provided 𝐴𝐵 <−2. In general, and depending on the initial
+conditions, such patterns may yield 1, 2 or 3 different cell types, as
+discussed in more detail below.
+Considering protrusions, we first look at the more straightfor-
+ward case where only the first ring of 12 non-neighbouring cells, 𝑅2,
+is reached by protrusions. Here, signalling is weighted laterally by
+Eq. (26) and on 𝑅2 by
+𝜔𝑃(𝛥𝑗,𝛥𝑘) =
+{ 1
+12 if (𝛥𝑗,𝛥𝑘) ∈𝑆2,
+0 otherwise.
+(28)
+Figs. 1(c)–1(f) show the observable patterns for different values of 𝜖,
+with initial conditions near the homogeneous steady state, obtained
+by solving Eq. (23)–Eq. (24). Notice that the limit case 𝜖 = 1 has the
+extreme feature of no juxtacrine signalling, hence the small clusters of
+Delta-expressing cells in Fig. 1(f). Even for small values of 𝜖, sparse
+patterns are evident.
+We may then weight each signalling contribution with a factor𝜖 >0
+and define the combined weighting function 𝜔= (1 −𝜖)𝜔𝐽 +𝜖𝜔𝑃. Using
+this leads to
+𝛺̄ 𝑞,̄ 𝑝= (1 −𝜖)
+3 [cos (2𝜋̄ 𝑞) + cos(2𝜋̄ 𝑝) + cos(2𝜋( ̄ 𝑞+ ̄ 𝑝))]
++ 𝜖
+6
+[
+cos (4𝜋̄ 𝑞) + cos(2𝜋( ̄ 𝑝− ̄ 𝑞)) + cos(4𝜋̄ 𝑝)
++ cos(2𝜋(2 ̄ 𝑞+ ̄ 𝑝)) + cos(2𝜋( ̄ 𝑞+ 2̄ 𝑝))
++ cos(4𝜋( ̄ 𝑞+ ̄ 𝑝))
+]
+. (29)
+In this case, minimising 𝛺̄ 𝑞,̄ 𝑝is trickier and therefore we consider
+a numerical approach. For different values of the long-range signalling
+strength 𝜖, Fig. 2(a) shows the change of 1∕|𝛺min| for increasing values
+of 𝜖. Notice that 𝛺max = 1 for all 𝜖. Equal juxtacrine-protrusion
+weighting occurs when 𝜖 = 2∕3 (𝛺min(2∕3) ≃ −0.24). For each 𝜖, the
+number of modes varies, as seen in Fig. 2(b). Notice that𝛺̄ 𝑞,̄ 𝑝= 𝛺1− ̄ 𝑞,1− ̄ 𝑝
+and, in fact, 𝛺̄ 𝑞,̄ 𝑝is symmetric with respect to the planes ̄ 𝑞= ̄ 𝑝and
+̄ 𝑞= 1 −̄ 𝑝for all 𝜖. An interesting observation is that at around 𝜖 = 0.4
+there are a total of8 minimising modes, contrasting to the single pair of
+modes for 𝜖 <0.4 and the 6 distinct modes for 𝜖 >0.4 (Figs. 2(d)–2(f),
+Video S1). The bifurcation observed in Fig. 2(b) at 𝜖= 0.4 is predicted
+independently of the Hill functions, and can be mathematically shown
+by solving, for 𝜖,
+𝛺1
+3 ,1
+3
+(𝜖) =𝛺̄ 𝑞,̄ 𝑝(𝜖) (30)
+and a minimising pair ( ̄ 𝑞, ̄ 𝑝) ∉ {(1∕3 ,1∕3),(2∕3,2∕3)} (see SN1 for
+details). Figs. 2(g)–2(i) show some of the simulations for corresponding
+values of 𝜖.
+As discussed before, the critical wave numbers maximise the real
+part of the temporal eigenvectors. Equivalently, Fig. 2(c) shows
+max ̄ 𝑞,̄ 𝑝Re(𝜆±
+̄ 𝑞,̄ 𝑝) as a function of the relative weight parameter 𝜖, cor-
+responding to the critical 𝐴𝐵 = 1∕(max 𝜖 𝛺min) ≃ −5 .207. Here,
+max ̄ 𝑞,̄ 𝑝(Re(𝜆±
+̄ 𝑞,̄ 𝑝)) >0 for all 𝜖, and thus patterns are expected to emerge
+with the maximising wavelength modes. As suggested by Eq. (21)–
+Eq. (24), we may go a step further and work out the specific parameter
+regions for which |𝐴𝐵| yields pattern formation. The phase diagrams
+in Fig. 3 (Video S2) represent the regions in the 𝑟𝑡 − 𝑏 plane such that
+𝐴𝐵 <1∕𝛺min(𝜖), or more specifically,
+𝑛∗1−ℎ𝑑∗1−𝑘((1 +𝑏𝑛∗ℎ)(𝑎+ 𝑑∗𝑘))2 <−𝑎𝑏ℎ𝑘𝛺min(𝜖) (31)
+for different values of 𝛺min and corresponding 𝜖. The 𝜖-Collier model
+is robust with respect to the pair (𝑟𝑡,𝑏), corresponding to the trans-
+interactions strength and ligand inhibition strength parameters, respec-
+tively. Increasing 𝜖 from zero initially reduces the size of the discrete
+4
+
+Supplementary Note 3: Simulation parameters
+Table 1 shows the model parameters used in the simulations shown in the main text. In all simulations, h= k= 6,
+ν= 1, and the initial conditions ni(0) and di(0) have arbitrary values around the respective homogeneous steady
+state (n∗,d∗): ni(0) ∼N(n∗,0.01) and di(0) ∼N(d∗,0.01).
+Figures pℓ ϵ log10 rt log10 b (n∗,d∗)
+1c-1f 2.1 {0,0.2,0.6,1} 8 2 (0.744,0.055)
+2g-2i 2.1 {0.2,0.4,0.6} 8 2 (0.744,0.055)
+3 2.1 {0,0.2,0.4,0.8,1} 8 2 (0.744,0.055)
+4 2.1 {0.09,0.78} 8 2 (0.744,0.055)
+5a-5c 4 {0.2,0.4,0.6} 8 2 (0.744,0.055)
+6a-6c {2,3,4} 0.6 8 2 (0.744,0.055)
+7b-7e 2.1 0.6 8 2 (0.744,0.055)
+8 - {0,0.2,0.4,0.6,0.8,1} - - -
+9 - {0,0.2,0.4,0.6,0.8,1} - - -
+10 (row 1) 2.1 {0,0.2,0.4,0.6,0.8,1} 1 2 (0.420,0.646)
+10 (row 2) 2.1 {0,0.2,0.4,0.6,0.8,1} 2 1 (0.671,0.523)
+10 (row 3) 2.1 {0,0.2,0.4,0.6,0.8,1} 5 1.3 (0.781,0.181)
+Table 1. Simulation parameters.
+References
+Aranson, I. S. and Kramer, L. The world of the complex Ginzburg–Landau equation. Reviews of Modern Physics, 74(1):99, 2002.
+Binshtok, U. and Sprinzak, D. Modeling the Notch response. Springer, 2018.
+Bozzini, B., Gambino, G., Lacitignola, D., Lupo, S., Sammartino, M., and Sgura, I. Weakly nonlinear analysis of Turing patterns in a morphochemical model for metal growth. Computers &
+Mathematics with Applications, 70(8):1948–1969, 2015.
+Bracewell, R. N. and Bracewell, R. N. The Fourier transform and its applications, volume 31999. McGraw-Hill New Y ork, 1986.
+Collier, J. R., Monk, N. A., Maini, P . K., and Lewis, J. H. Pattern formation by lateral inhibition with feedback: a mathematical model of Delta-Notch intercellular signalling. Journal of Theoretical
+Biology, 183(4):429–446, 1996.
+Doelman, A., Kaper, T. J., and Zegeling, P . A. Pattern formation in the one-dimensional Gray–Scott model.Nonlinearity, 10(2):523, 1997.
+Hamada, H., Watanabe, M., Lau, H. E., Nishida, T., Hasegawa, T., Parichy, D. M., and Kondo, S. Involvement of Delta/Notch signaling in zebrafish adult pigment stripe patterning.Development,
+141(2):318–324, 2014.
+Kondo, S. How animals get their skin patterns: fish pigment pattern as a live Turing wave. Systems Biology, pages 37–46, 2009.
+Lawrence, P . A. and Struhl, G. Morphogens, compartments, and pattern: lessons from Drosophila? Cell, 85(7):951–961, 1996.
+Liu, S., Xia, S.-N., Y an, R., Wan, Z.-H., and Sun, D.-J. Linear and weakly nonlinear analysis of Rayleigh–Bénard convection of perfect gas with non-Oberbeck–Boussinesq effects. Journal of
+Fluid Mechanics, 845:141–169, 2018.
+McGough, J. S. and Riley, K. Pattern formation in the Gray–Scott model. Nonlinear Analysis: Real World Applications, 5(1):105–121, 2004.
+Meinhardt, H. Models of biological pattern formation: common mechanism in plant and animal development. International Journal of Developmental Biology, 40(1):123–134, 2003.
+Meinhardt, H. Models of biological pattern formation: from elementary steps to the organization of embryonic axes. Current Topics in Developmental Biology, 81:1–63, 2008.
+O’Dea, R. D. and King, J. R. Multiscale analysis of pattern formation via intercellular signalling. Mathematical biosciences, 231(2):172–185, 2011.
+Stephenson, L. E. and Wollkind, D. J. Weakly nonlinear stability analyses of one-dimensional Turing pattern formation in activator-inhibitor/immobilizer model systems. Journal of Mathematical
+Biology, 33(8):771–815, 1995.
+Stuart, J. On the non-linear mechanics of wave disturbances in stable and unstable parallel flows part 1. the basic behaviour in plane Poiseuille flow. Journal of Fluid Mechanics, 9(3):353–370,
+1960.
+Tabata, T. and Takei, Y .Morphogens, their identification and regulation. Oxford University Press for The Company of Biologists Limited, 2004.
+Turing, A. The chemical basis of morphogenesis. Philosophical Transactions of the Royal Society of London. Series B, Biological Sciences, 237(641):37–72, 1952.
+Vincent, J.-P . and Briscoe, J. Morphogens.Current Biology, 11(21):R851–R854, 2001.
+Watson, J. On the non-linear mechanics of wave disturbances in stable and unstable parallel flows Part 2. The development of a solution for plane Poiseuille flow and for plane Couette flow.
+Journal of Fluid Mechanics, 9(3):371–389, 1960.
+Wollkind, D. J. and Segel, L. A. A nonlinear stability analysis of the freezing of a dilute binary alloy. Philosophical Transactions of the Royal Society of London. Series A, Mathematical and
+Physical Sciences, 268(1191):351–380, 1970.
+Wollkind, D. J. and Vislocky, M. An interfacial model equation for the bifurcation of solidification patterns during lpee processes. Earth-Science Reviews, 29(1-4):349–368, 1990.
+Wollkind, D., Oulton, D., and Sriranganathan, R. A nonlinear stability analysis of a model equation for alloy solidification. Journal de Physique, 45(3):505–516, 1984.
+Wollkind, D. J., Manoranjan, V. S., and Zhang, L. Weakly nonlinear stability analyses of prototype reaction-diffusion model equations. Siam Review, 36(2):176–214, 1994.
+Berkemeier & Page | Coupling dynamics of 2D Notch-Delta signalling Supplementary Information | 19

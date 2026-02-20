@@ -1,0 +1,260 @@
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 0: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 0: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 3599: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 3599: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 7198: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 7198: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 10797: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 10797: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 14396: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 14396: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 17995: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 17995: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 21594: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 21594: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 25193: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 25193: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 28792: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 28792: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 32391: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 32391: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 35990: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 35990: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 39589: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 39589: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 43188: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 43188: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 46787: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 46787: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 50386: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 50386: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 53985: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 53985: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 57584: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 57584: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 61183: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 61183: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 64782: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 64782: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 68381: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 68381: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 71980: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 71980: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 75579: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 75579: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 79178: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 79178: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 82777: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 82777: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 86376: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 86376: unrecognized option - see 'help set'.
+
+
+multiplot> set cbtics; set palette defined (0 'white' , 0.5 'blue' , 1 'darkblue' );
+                                                                       ^
+           line 89975: Unknown color name.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 89975: unrecognized option - see 'help set'.
+

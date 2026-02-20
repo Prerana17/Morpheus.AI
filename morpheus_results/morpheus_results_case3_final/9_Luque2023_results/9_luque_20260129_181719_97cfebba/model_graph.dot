@@ -1,0 +1,173 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+CPM_0_1 [shape=record, label="{CPM|1}", URL="morph://MorpheusModel/CPM" ]
+Gnuplotter_0_200[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>200</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter" ]
+Logger_0_100[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>100</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger" ]
+S_0[label="S", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field"]
+cell_center_0[label="cell.center", fillcolor="#b5b426",peripheries=2]
+cell_type_0[label="cell.type", fillcolor="#d3d247",peripheries=2]
+celltype_cancer_cell_size_0[label="celltype.cancer_cell.size", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+celltype_hepatocyte_size_0[label="celltype.hepatocyte.size", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+division_counter_0[label="division_counter", fillcolor="#d3d247",peripheries=2]
+recent_division_0[label="recent_division", fillcolor="#d3d247",peripheries=2]
+time_0[label="time", fillcolor="#d3d247", URL="morph://MorpheusModel/Time/TimeSymbol"]
+subgraph cluster_1 {
+label="";
+System_1_1877511081674861593_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<tr><td><i>'SubstrateDynamics'</i></td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/Global/System" ]
+decay_rate_1[label="decay_rate", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[1]"]
+production_rate_1[label="production_rate", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[0]"]
+}
+subgraph cluster_2 {
+label="CellType[medium]";
+}
+subgraph cluster_3 {
+label="CellType[hepatocyte]";
+CellDivision_3_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>CellDivision</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[1]/CellDivision" ]
+subgraph cluster_cpm3 {
+label="CPM components";
+Chemotaxis_3[ shape=Mrecord, label=" Chemotaxis", URL="morph://MorpheusModel/CellTypes/CellType[1]/Chemotaxis"];
+}
+cell_center_3[label="cell.center", fillcolor="#b5b426"]
+cell_type_3[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+division_counter_3[label="division_counter", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[1]"]
+local_substrate_3[label="local_substrate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[3]"]
+proliferation_rate_3[label="proliferation_rate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[0]"]
+recent_division_3[label="recent_division", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[2]"]
+subgraph cluster_5 {
+label="";
+System_5_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[1]/System" ]
+}
+subgraph cluster_6 {
+label="";
+}
+}
+subgraph cluster_4 {
+label="CellType[cancer_cell]";
+CellDivision_4_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>CellDivision</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[2]/CellDivision" ]
+subgraph cluster_cpm4 {
+label="CPM components";
+Chemotaxis_4[ shape=Mrecord, label=" Chemotaxis", URL="morph://MorpheusModel/CellTypes/CellType[2]/Chemotaxis"];
+}
+cell_center_4[label="cell.center", fillcolor="#b5b426"]
+cell_type_4[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]"]
+division_counter_4[label="division_counter", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[1]"]
+local_substrate_4[label="local_substrate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[3]"]
+proliferation_rate_4[label="proliferation_rate", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[0]"]
+recent_division_4[label="recent_division", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[2]/Property[2]"]
+subgraph cluster_7 {
+label="";
+System_7_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[2]/System" ]
+}
+subgraph cluster_8 {
+label="";
+}
+}
+}
+CPM_0_1 -> Chemotaxis_3 [dir=none, style="dashed", penwidth=1, color="#38568c",lhead=cluster_cpm3] 
+
+CPM_0_1 -> Chemotaxis_4 [dir=none, style="dashed", penwidth=1, color="#38568c",lhead=cluster_cpm4] 
+
+CPM_0_1 -> cell_center_0 [penwidth=3, color="#8f100d"] 
+
+CPM_0_1 -> cell_type_0 [penwidth=3, color="#8f100d"] 
+
+CellDivision_3_1 -> cell_center_3 [penwidth=3, color="#8f100d"] 
+
+CellDivision_3_1 -> division_counter_3 [penwidth=3, color="#8f100d"] 
+
+CellDivision_3_1 -> recent_division_3 [penwidth=3, color="#8f100d"] 
+
+CellDivision_4_1 -> cell_center_4 [penwidth=3, color="#8f100d"] 
+
+CellDivision_4_1 -> division_counter_4 [penwidth=3, color="#8f100d"] 
+
+CellDivision_4_1 -> recent_division_4 [penwidth=3, color="#8f100d"] 
+
+S_0 -> Chemotaxis_3 [penwidth=2, color="#112c5f"] 
+
+S_0 -> Chemotaxis_4 [penwidth=2, color="#112c5f"] 
+
+S_0 -> Gnuplotter_0_200 [penwidth=2, color="#112c5f"] 
+
+S_0 -> Logger_0_100 [penwidth=2, color="#112c5f"] 
+
+S_0 -> System_5_1 [penwidth=2, color="#112c5f"] 
+
+S_0 -> System_7_1 [penwidth=2, color="#112c5f"] 
+
+System_1_1877511081674861593_1 -> S_0 [penwidth=3, color="#8f100d"] 
+
+System_5_1 -> local_substrate_3 [penwidth=3, color="#8f100d"] 
+
+System_5_1 -> recent_division_3 [penwidth=3, color="#8f100d"] 
+
+System_7_1 -> local_substrate_4 [penwidth=3, color="#8f100d"] 
+
+System_7_1 -> recent_division_4 [penwidth=3, color="#8f100d"] 
+
+cell_center_3 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_4 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_0 -> Gnuplotter_0_200 [penwidth=2, color="#112c5f"] 
+
+cell_type_3 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_4 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+celltype_cancer_cell_size_0 -> Logger_0_100 [penwidth=2, color="#112c5f"] 
+
+celltype_hepatocyte_size_0 -> Logger_0_100 [penwidth=2, color="#112c5f"] 
+
+decay_rate_1 -> System_1_1877511081674861593_1 [penwidth=2, color="#112c5f"] 
+
+division_counter_0 -> Gnuplotter_0_200 [penwidth=2, color="#112c5f"] 
+
+division_counter_3 -> division_counter_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+division_counter_4 -> division_counter_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+local_substrate_3 -> CellDivision_3_1 [penwidth=2, color="#112c5f"] 
+
+local_substrate_4 -> CellDivision_4_1 [penwidth=2, color="#112c5f"] 
+
+production_rate_1 -> System_1_1877511081674861593_1 [penwidth=2, color="#112c5f"] 
+
+proliferation_rate_3 -> CellDivision_3_1 [penwidth=2, color="#112c5f"] 
+
+proliferation_rate_4 -> CellDivision_4_1 [penwidth=2, color="#112c5f"] 
+
+recent_division_0 -> Gnuplotter_0_200 [penwidth=2, color="#112c5f"] 
+
+recent_division_3 -> recent_division_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+recent_division_4 -> recent_division_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+time_0 -> Logger_0_100 [penwidth=2, color="#112c5f"] 
+
+}

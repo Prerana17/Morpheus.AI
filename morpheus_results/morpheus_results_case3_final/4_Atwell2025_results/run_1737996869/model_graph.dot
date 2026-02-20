@@ -1,0 +1,102 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Gnuplotter_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[0]" ]
+Gnuplotter_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[1]" ]
+Logger_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger" ]
+CPM_0_1 [shape=record, label="{CPM|1}", URL="morph://MorpheusModel/CPM" ]
+casp9_active_0[label="casp9_active", fillcolor="#d3d247",peripheries=2]
+casp9_inactive_0[label="casp9_inactive", fillcolor="#d3d247",peripheries=2]
+cell_center_0[label="cell.center", fillcolor="#b5b426",peripheries=2]
+cell_type_0[label="cell.type", fillcolor="#d3d247",peripheries=2]
+cytc_released_0[label="cytc_released", fillcolor="#d3d247",peripheries=2]
+k_act_0[label="k_act", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[1]"]
+k_deg_0[label="k_deg", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[2]"]
+time_0[label="time", fillcolor="#d3d247", URL="morph://MorpheusModel/Time/TimeSymbol"]
+subgraph cluster_1 {
+label="CellType[medium]";
+}
+subgraph cluster_2 {
+label="CellType[cell]";
+casp9_active_2[label="casp9_active", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[1]"]
+casp9_inactive_2[label="casp9_inactive", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[0]"]
+cell_center_2[label="cell.center", fillcolor="#b5b426"]
+cell_center_x_2[label="cell.center.x", fillcolor="#d3d247"]
+cell_center_y_2[label="cell.center.y", fillcolor="#d3d247"]
+cell_type_2[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+cytc_released_2[label="cytc_released", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[2]"]
+subgraph cluster_3 {
+label="";
+System_3_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[1]/System" ]
+}
+subgraph cluster_4 {
+label="";
+Event_4_6342378267850270191_50[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Event</td></tr>
+<tr><td><i>'CytC_Release'</i></td></tr>
+<hr/>
+<tr><td>50</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[1]/Event" ]
+}
+}
+}
+CPM_0_1 -> cell_center_0 [penwidth=3, color="#8f100d"] 
+
+CPM_0_1 -> cell_type_0 [penwidth=3, color="#8f100d"] 
+
+Event_4_6342378267850270191_50 -> cytc_released_2 [penwidth=3, color="#8f100d"] 
+
+System_3_5 -> casp9_active_2 [penwidth=3, color="#8f100d"] 
+
+System_3_5 -> casp9_inactive_2 [penwidth=3, color="#8f100d"] 
+
+casp9_active_0 -> Gnuplotter_0_5 [penwidth=2, color="#112c5f"] 
+
+casp9_active_0 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+casp9_active_2 -> casp9_active_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+casp9_inactive_0 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+casp9_inactive_2 -> casp9_inactive_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_2 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_2 -> cell_center_x_2 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_2 -> cell_center_y_2 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_center_x_2 -> Event_4_6342378267850270191_50 [penwidth=2, color="#112c5f"] 
+
+cell_center_y_2 -> Event_4_6342378267850270191_50 [penwidth=2, color="#112c5f"] 
+
+cell_type_2 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cytc_released_0 -> Gnuplotter_0_5 [penwidth=2, color="#112c5f"] 
+
+cytc_released_0 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+cytc_released_2 -> System_3_5 [penwidth=2, color="#112c5f"] 
+
+cytc_released_2 -> cytc_released_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+k_act_0 -> System_3_5 [penwidth=2, color="#112c5f"] 
+
+k_deg_0 -> System_3_5 [penwidth=2, color="#112c5f"] 
+
+time_0 -> Event_4_6342378267850270191_50 [penwidth=2, color="#112c5f"] 
+
+}

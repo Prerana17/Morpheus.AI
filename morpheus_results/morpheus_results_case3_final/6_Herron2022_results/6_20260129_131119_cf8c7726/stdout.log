@@ -1,0 +1,431 @@
+Setting output directory /Users/prerana/Desktop/morpheus/20260129_131119_cf8c7726
+Initializing from file model.xml
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/System/DiffEqn/Expression to /MorpheusModel/Global/System/DiffEqn/Reaction
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion[@rate!=~0(?:\.0+)?]/@rate to /MorpheusModel/Global/System/DiffEqn[@symbol-ref=%1]/Diffusion/@text
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion to 
+Applied 12 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 0 with seed 1769688751
+Intitalize Thread Intitalize Thread 8 with seed 4114016246Intitalize Thread 4 with seed 1150670972
+Intitalize Thread 6 with seed 1699774281
+Intitalize Thread 5 with seed 501341541
+
+3 with seed 2159831278
+Intitalize Thread Intitalize Thread 9 with seed 7 with seed Intitalize Thread 2906012424
+2405949943
+2 with seed 882283527
+Intitalize Thread 1 with seed 1499111286
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread 8 with seed 3891735340
+Intitalize Thread Intitalize Thread 3 with seed Intitalize Thread 40153274854 with seed 0 with seed 12345
+Intitalize Thread 5 with seed 3604679076
+1337836834
+
+Intitalize Thread 2 with seed 553599097
+Intitalize Thread 9 with seed 3925872341
+Intitalize Thread 7 with seed Intitalize Thread 3934633528
+Intitalize Thread 6 with seed 2406237125
+1 with seed 3793882298
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 200, 200, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [5] Global Plugins
+getXMLAttribute: seeking for Field->symbol: u
+Registering Symbol u of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: v
+Registering Symbol v of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: G
+Registering Symbol G of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: g
+Registering Symbol g of linktype FieldLink in Scope root
+getXMLAttribute: seeking for System->time-step: 0.1
+Creating subscope System in scope root
+getXMLAttribute: seeking for System->solver: Runge-Kutta [fixed, O(4)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Constant->name: basal GTPase activation rate
+getXMLAttribute: seeking for Constant->symbol: b
+getXMLAttribute: seeking for Constant->value: 0.001
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol b of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: max self-positive feedback rate
+getXMLAttribute: seeking for Constant->symbol: gamma
+getXMLAttribute: seeking for Constant->value: 0.05
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol gamma of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: half-maximal GTPase concentration
+getXMLAttribute: seeking for Constant->symbol: K
+getXMLAttribute: seeking for Constant->value: 0.2
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol K of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: Hill coefficient
+getXMLAttribute: seeking for Constant->symbol: n
+getXMLAttribute: seeking for Constant->value: 3
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol n of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: basal GTPase inactivation rate
+getXMLAttribute: seeking for Constant->symbol: sigma
+getXMLAttribute: seeking for Constant->value: 1.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol sigma of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: GAP-mediated negative feedback rate
+getXMLAttribute: seeking for Constant->symbol: e
+getXMLAttribute: seeking for Constant->value: 5.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol e of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: GAP activation rate
+getXMLAttribute: seeking for Constant->symbol: c
+getXMLAttribute: seeking for Constant->value: 0.1
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol c of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: GAP inactivation rate
+getXMLAttribute: seeking for Constant->symbol: d
+getXMLAttribute: seeking for Constant->value: 0.5
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol d of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for DiffEqn->symbol-ref: u
+getXMLAttribute: seeking for Reaction->text: b*v + gamma*v*(u^n)/(K^n + u^n) - sigma*u - e*G*u
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 0.04
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: v
+getXMLAttribute: seeking for Reaction->text: -b*v - gamma*v*(u^n)/(K^n + u^n) + sigma*u + e*G*u
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 4.0
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: G
+getXMLAttribute: seeking for Reaction->text: c*u*g - d*G
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 4.0
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: g
+getXMLAttribute: seeking for Reaction->text: -c*u*g + d*G
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 4.0
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 1
+Scope: Creating Accessor for symbol 'u' from Scope root
+Scope: Creating Accessor for symbol 'v' from Scope root
+Scope: Creating Accessor for symbol 'G' from Scope root
+Scope: Creating Accessor for symbol 'g' from Scope root
+Scope: Creating Accessor for symbol 'u' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'v' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'G' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'g' from Scope root
+Creating FwdEulerADSolver
+Scope: Creating Accessor for symbol 'b' from Scope System
+Scope: Creating Accessor for symbol 'gamma' from Scope System
+Scope: Creating Accessor for symbol 'n' from Scope System
+Scope: Creating Accessor for symbol 'K' from Scope System
+Scope: Creating Accessor for symbol 'sigma' from Scope System
+Scope: Creating Accessor for symbol 'e' from Scope System
+Scope: Creating Accessor for symbol 'c' from Scope System
+Scope: Creating Accessor for symbol 'd' from Scope System
+System::init: Reordering Initializers ...
+Loading Analysis tools [4]
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size: 600 600 0
+getXMLAttribute: seeking for Gnuplotter->time-step: 50
+getXMLAttribute: seeking for Field->symbol-ref: u
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min: 0
+getXMLAttribute: seeking for Field->max: 1.0
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Field->symbol-ref: G
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min: 0
+getXMLAttribute: seeking for Field->max: 0.5
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Field->symbol-ref: v
+getXMLAttribute: seeking for Field->coarsening .. not found
+getXMLAttribute: seeking for Field->min: 0
+getXMLAttribute: seeking for Field->max: 3.0
+getXMLAttribute: seeking for Field->isolines .. not found
+getXMLAttribute: seeking for Field->surface .. not found
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: u
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: v
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: G
+getXMLAttribute: seeking for Input/Symbol[3]->symbol-ref: g
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format: csv
+getXMLAttribute: seeking for Plots/Plot[0]->time-step: 500
+getXMLAttribute: seeking for Plots/Plot[0]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->style: lines
+getXMLAttribute: seeking for Plots/Plot[0]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->line-width: 2.0
+getXMLAttribute: seeking for Plots/Plot[0]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[0]->symbol-ref: u
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[1]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[2]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->minimum: 0
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->maximum: 3.0
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->time-step: 500
+getXMLAttribute: seeking for Plots/Plot[1]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[1]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->style: lines
+getXMLAttribute: seeking for Plots/Plot[1]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->line-width: 2.0
+getXMLAttribute: seeking for Plots/Plot[1]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[0]->symbol-ref: G
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[1]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[2]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->minimum: 0
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->maximum: 1.0
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Logger->time-step: 50
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: u
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format: matrix
+getXMLAttribute: seeking for Logger->time-step: 100
+getXMLAttribute: seeking for ModelGraph->format: dot
+getXMLAttribute: seeking for ModelGraph->reduced: false
+getXMLAttribute: seeking for ModelGraph->exclude-symbols .. not found
+getXMLAttribute: seeking for ModelGraph->include-tags: #untagged
+Scope: Creating Accessor for symbol 'u' from Scope root
+Scope: Creating Accessor for symbol 'G' from Scope root
+Scope: Creating Accessor for symbol 'v' from Scope root
+Scope: Creating Accessor for symbol 'u' from Scope root
+Scope: Creating Accessor for symbol 'v' from Scope root
+Scope: Creating Accessor for symbol 'G' from Scope root
+Scope: Creating Accessor for symbol 'g' from Scope root
+Plugin Logger: Registered input symbol dependencies u [root] ,v [root] ,G [root] ,g [root] ,
+Scope: Creating Accessor for symbol 'u' from Scope root
+Scope: Creating Accessor for symbol 'v' from Scope root
+Scope: Creating Accessor for symbol 'G' from Scope root
+Scope: Creating Accessor for symbol 'g' from Scope root
+Logger range:
+-> size 40000
+-> dataAxes X, Y, 
+-> data.sizes: 200, 200, 
+-> file separation: None
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'space.x' from Scope root
+Scope: Creating Accessor for symbol 'space.y' from Scope root
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'u' from Scope root
+Plugin Logger: Registered input symbol dependencies u [root] ,
+Scope: Creating Accessor for symbol 'u' from Scope root
+Logger range:
+-> size 40000
+-> dataAxes X, Y, 
+-> data.sizes: 200, 200, 
+-> file separation: None
+System
+Gnuplotter
+Logger
+Logger
+ModelGraph
+
+ TimeStepListener "System" propagates its time step 0.1
+
+ TimeStepListener "Gnuplotter" propagates its time step 50
+
+ TimeStepListener "Logger" propagates its time step 50
+
+ TimeStepListener "Logger" propagates its time step 100
+
+ TimeStepListener "ModelGraph" propagates its time step 5000
+TimeScheduler::init: Ordering instantaneous processes for sequential update ...
+ 
+======================================================
+ Time Schedule
+======================================================
+ Time precision patch is 0.0001
+
+=====|    Phase I     |===============================
+-----. Reactions .------------------------------------
+  + 0.1 => System [WPGAP] [K,b,c,d,e,gamma,n,sigma] -> [G,g,u,v]
+
+=====|    Phase II    |===============================
+-----. Reporters and Instantaneous Processes.---------
+
+=====|    Phase III   |===============================
+-----. Analysis .-------------------------------------
+  + 50 => Gnuplotter [G,u,v] 
+  + 50 => Logger [G,g,time,u,v] 
+  + 100 => Logger [u] 
+  + 5000 => ModelGraph [] 
+------------------------------------------------------
+======================================================
+
+model is up
+GnuPlotter: Saving plot_00000.png
+Time: 0.00 atu
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+GnuPlotter: Saving plot_00050.png
+Time: 50 
+GnuPlotter: Saving plot_00100.png
+Time: 100 
+GnuPlotter: Saving plot_00150.png
+Time: 150 
+GnuPlotter: Saving plot_00200.png
+Time: 200 
+GnuPlotter: Saving plot_00250.png
+Time: 250 
+GnuPlotter: Saving plot_00300.png
+Time: 300 
+GnuPlotter: Saving plot_00350.png
+Time: 350 
+GnuPlotter: Saving plot_00400.png
+Time: 400 
+GnuPlotter: Saving plot_00450.png
+Time: 450 
+GnuPlotter: Saving plot_00500.png
+Time: 500 
+GnuPlotter: Saving plot_00550.png
+Time: 550 
+GnuPlotter: Saving plot_00600.png
+Time: 600 
+GnuPlotter: Saving plot_00650.png
+Time: 650 
+GnuPlotter: Saving plot_00700.png
+Time: 700 
+GnuPlotter: Saving plot_00750.png
+Time: 750 
+GnuPlotter: Saving plot_00800.png
+Time: 800 
+GnuPlotter: Saving plot_00850.png
+Time: 850 
+GnuPlotter: Saving plot_00900.png
+Time: 900 
+GnuPlotter: Saving plot_00950.png
+Time: 950 
+GnuPlotter: Saving plot_01000.png
+Time: 1000 
+GnuPlotter: Saving plot_01050.png
+Time: 1050 
+GnuPlotter: Saving plot_01100.png
+Time: 1100 
+GnuPlotter: Saving plot_01150.png
+Time: 1150 
+GnuPlotter: Saving plot_01200.png
+Time: 1200 
+GnuPlotter: Saving plot_01250.png
+Time: 1250 
+GnuPlotter: Saving plot_01300.png
+Time: 1300 
+GnuPlotter: Saving plot_01350.png
+Time: 1350 
+GnuPlotter: Saving plot_01400.png
+Time: 1400 
+GnuPlotter: Saving plot_01450.png
+Time: 1450 
+GnuPlotter: Saving plot_01500.png
+Time: 1500 
+GnuPlotter: Saving plot_01550.png
+Time: 1550 
+GnuPlotter: Saving plot_01600.png
+Time: 1600 
+GnuPlotter: Saving plot_01650.png
+Time: 1650 

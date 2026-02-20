@@ -1,0 +1,505 @@
+Setting output directory /Users/prerana/Desktop/morpheus/20260129_183902_8b454efd
+Initializing from file model.xml
+AutoFix: Moved 3 element(s)  matching /MorpheusModel/CellTypes/CellType/System/DiffEqn/Expression to /MorpheusModel/CellTypes/CellType/System/DiffEqn/Reaction
+Applied 3 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 0 with seed 1769708580
+Intitalize Thread 3 with seed 2581992894
+Intitalize Thread Intitalize Thread Intitalize Thread 5 with seed Intitalize Thread 1805512756
+Intitalize Thread 8 with seed 919579501
+Intitalize Thread Intitalize Thread 2 with seed 3613803970
+9 with seed 2008399523
+4 with seed 26773354111 with seed 1455882539
+7 with seed 3414635850
+Intitalize Thread 
+6 with seed 1108913951
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread 0 with seed 123
+Intitalize Thread Intitalize Thread Intitalize Thread Intitalize Thread 6 with seed 1320940964
+49 with seed 2111863253Intitalize Thread Intitalize Thread 8 with seed Intitalize Thread 5 with seed 3850189868
+7 with seed 42261283342342964264
+Intitalize Thread 2 with seed 256824811
+ with seed 1386903166
+
+Intitalize Thread 1 with seed 2256526400
+3 with seed 4068791613
+
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: hexagonal
+getXMLAttribute: seeking for Size->value: 20, 20, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [1] Global Plugins
+getXMLAttribute: seeking for Constant->name: Long-range coupling parameter
+getXMLAttribute: seeking for Constant->symbol: kappa_param
+getXMLAttribute: seeking for Constant->value: 0.3
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol kappa_param of linktype ConstantLink in Scope root
+Creating subscope CellType[cells] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[cells]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[cells]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[cells]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[cells]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[cells]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[cells]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[cells]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[cells]
+Registering Symbol celltype.cells.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.cells.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for Property->name: Delta activity
+getXMLAttribute: seeking for Property->symbol: D
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol D of linktype CellPropertyLink in Scope CellType[cells]
+Registering Symbol D of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Notch activity
+getXMLAttribute: seeking for Property->symbol: N
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol N of linktype CellPropertyLink in Scope CellType[cells]
+Registering Symbol N of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Average Delta from neighbors
+getXMLAttribute: seeking for Property->symbol: D_neighbors
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol D_neighbors of linktype CellPropertyLink in Scope CellType[cells]
+Registering Symbol D_neighbors of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Average Delta from long-range
+getXMLAttribute: seeking for Property->symbol: D_longrange
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol D_longrange of linktype CellPropertyLink in Scope CellType[cells]
+Registering Symbol D_longrange of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Combined Delta signal
+getXMLAttribute: seeking for Property->symbol: D_combined
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol D_combined of linktype CellPropertyLink in Scope CellType[cells]
+Registering Symbol D_combined of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Input->scaling: cell
+getXMLAttribute: seeking for Input->value: D
+getXMLAttribute: seeking for Input->noflux-cell-medium .. not found
+getXMLAttribute: seeking for Output[0]->mapping: average
+getXMLAttribute: seeking for Output[0]->symbol-ref: D_neighbors
+getXMLAttribute: seeking for Input->scaling: cell
+getXMLAttribute: seeking for Input->value: D
+getXMLAttribute: seeking for Input->noflux-cell-medium .. not found
+getXMLAttribute: seeking for Output[0]->mapping: average
+getXMLAttribute: seeking for Output[0]->symbol-ref: D_longrange
+getXMLAttribute: seeking for System->time-step: 0.05
+Creating subscope System in scope CellType[cells]
+getXMLAttribute: seeking for System->solver: runge-kutta
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Constant->name: Delta inhibition strength
+getXMLAttribute: seeking for Constant->symbol: a
+getXMLAttribute: seeking for Constant->value: 100
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol a of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: Hill coefficient
+getXMLAttribute: seeking for Constant->symbol: n
+getXMLAttribute: seeking for Constant->value: 2
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol n of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: Hill coefficient for Delta production
+getXMLAttribute: seeking for Constant->symbol: k
+getXMLAttribute: seeking for Constant->value: 3
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol k of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: Trans-activation parameter
+getXMLAttribute: seeking for Constant->symbol: a_param
+getXMLAttribute: seeking for Constant->value: 0.001
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol a_param of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for Constant->name: Decay rate ratio
+getXMLAttribute: seeking for Constant->symbol: gamma
+getXMLAttribute: seeking for Constant->value: 1.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol gamma of linktype ConstantLink in Scope System
+getXMLAttribute: seeking for DiffEqn->symbol-ref: D_combined
+getXMLAttribute: seeking for Reaction->text: (1.0 - kappa_param) * D_neighbors + kappa_param * D_longrange - D_combined
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: N
+getXMLAttribute: seeking for Reaction->text: D_combined^k / (a_param + D_combined^k) - N
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: D
+getXMLAttribute: seeking for Reaction->text: gamma * (1.0 / (1.0 + a*N^n) - D)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Property->name: Delta
+getXMLAttribute: seeking for Property->symbol: D
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol D of linktype CellPropertyLink in Scope CellType[medium]
+CellTypes defined: 'cells' 'medium' 
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 2
+Creating cell layer of size 0.0175781 MB
+with initial state set to CellType 'medium'
+Initializing celltype 'cells'
+Scope: Creating Accessor for symbol 'D' from Scope root
+Scope: Creating Accessor for symbol 'D_neighbors' from Scope CellType[cells]
+Plugin NeighborhoodReporter: Registered input symbol dependencies D [root] ,
+PluginNeighborhoodReporter: Registered output symbol dependencies D_neighbors [CellType[cells]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[cells]
+noflux_cell_medium_interface.isDefined()
+Scope: Creating Accessor for symbol 'D' from Scope root
+Scope: Creating Accessor for symbol 'D_longrange' from Scope CellType[cells]
+Plugin NeighborhoodReporter: Registered input symbol dependencies D [root] ,
+PluginNeighborhoodReporter: Registered output symbol dependencies D_longrange [CellType[cells]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[cells]
+noflux_cell_medium_interface.isDefined()
+Scope: Creating Accessor for symbol 'D_combined' from Scope CellType[cells]
+Scope: Creating Accessor for symbol 'N' from Scope CellType[cells]
+Scope: Creating Accessor for symbol 'D' from Scope CellType[cells]
+Scope: Creating Accessor for symbol 'kappa_param' from Scope root
+Scope: Creating Accessor for symbol 'D_neighbors' from Scope CellType[cells]
+Scope: Creating Accessor for symbol 'D_longrange' from Scope CellType[cells]
+Scope: Creating Accessor for symbol 'k' from Scope System
+Scope: Creating Accessor for symbol 'a_param' from Scope System
+Scope: Creating Accessor for symbol 'gamma' from Scope System
+Scope: Creating Accessor for symbol 'a' from Scope System
+Scope: Creating Accessor for symbol 'n' from Scope System
+System::init: Reordering Initializers ...
+InitCellLattice: Initializing cells on lattice (each dot is a created cell)
+................................................................................................................................................................................................................................................................................................................................................................................................................
+InitCellLattice: 400 cells created.
+Cells 400 requested 0
+Initproperty refers to symbol 'D' of type CellPropertyLink
+Scope: Creating Accessor for symbol 'D' from Scope CellType[cells]
+Initproperty refers to symbol 'N' of type CellPropertyLink
+Scope: Creating Accessor for symbol 'N' from Scope CellType[cells]
+Initializing celltype 'medium'
+Loading Analysis tools [4]
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size: 600, 600, 0
+getXMLAttribute: seeking for Gnuplotter->time-step: 2.0
+getXMLAttribute: seeking for Cells->value: D
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size: 600, 600, 0
+getXMLAttribute: seeking for Gnuplotter->time-step: 2.0
+getXMLAttribute: seeking for Cells->value: N
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: D
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: N
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: D_combined
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format: csv
+getXMLAttribute: seeking for Logger->time-step: 0.5
+getXMLAttribute: seeking for ModelGraph->format: dot
+getXMLAttribute: seeking for ModelGraph->reduced: false
+getXMLAttribute: seeking for ModelGraph->exclude-symbols .. not found
+getXMLAttribute: seeking for ModelGraph->include-tags: #untagged
+Scope: Creating Accessor for symbol 'D' from Scope root
+Scope: Creating Accessor for symbol 'N' from Scope root
+Scope: Creating Accessor for symbol 'D' from Scope root
+Scope: Creating Accessor for symbol 'N' from Scope root
+Scope: Creating Accessor for symbol 'D_combined' from Scope root
+Plugin Logger: Registered input symbol dependencies D [root] ,N [root] ,D_combined [root] ,
+Logger range:
+-> size 400
+-> dataAxes CELL, 
+-> data.sizes: 400, 
+-> file separation: None
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'cell.id' from Scope CellType[cells]
+NeighborhoodReporter
+NeighborhoodReporter
+System
+Gnuplotter
+Gnuplotter
+Logger
+ModelGraph
+
+ TimeStepListener "System" propagates its time step 0.05
+
+ TimeStepListener "Gnuplotter" propagates its time step 2
+
+ TimeStepListener "Gnuplotter" propagates its time step 2
+
+ TimeStepListener "Logger" propagates its time step 0.5
+
+ TimeStepListener "ModelGraph" propagates its time step 50
+TimeScheduler::init: Ordering instantaneous processes for sequential update ...
+ 
+======================================================
+ Time Schedule
+======================================================
+ Time precision patch is 5e-05
+
+=====|    Phase I     |===============================
+-----. Reactions .------------------------------------
+  + 0.05 => System [D_longrange,D_neighbors,a,a_param,gamma,k,kappa_param,n] -> [D,D_combined,N]
+
+=====|    Phase II    |===============================
+-----. Reporters and Instantaneous Processes.---------
+  + 0.05 => NeighborhoodReporter [D,cell.center] -> [D_neighbors]
+  + 0.05 => NeighborhoodReporter [D,cell.center] -> [D_longrange]
+
+=====|    Phase III   |===============================
+-----. Analysis .-------------------------------------
+  + 2 => Gnuplotter [D] 
+  + 2 => Gnuplotter [N] 
+  + 0.5 => Logger [D,D_combined,N] 
+  + 50 => ModelGraph [] 
+------------------------------------------------------
+======================================================
+
+model is up
+GnuPlotter: Saving plot-1_000.0.png
+GnuPlotter: Saving plot-2_000.0.png
+Time: 0.00 atu
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+Time: 0.5 
+Time: 1 
+Time: 1.5 
+GnuPlotter: Saving plot-1_002.0.png
+GnuPlotter: Saving plot-2_002.0.png
+Time: 2 
+Time: 2.5 
+Time: 3 
+Time: 3.5 
+GnuPlotter: Saving plot-1_004.0.png
+GnuPlotter: Saving plot-2_004.0.png
+Time: 4 
+Time: 4.5 
+Time: 5 
+Time: 5.5 
+GnuPlotter: Saving plot-1_006.0.png
+GnuPlotter: Saving plot-2_006.0.png
+Time: 6 
+Time: 6.5 
+Time: 7 
+Time: 7.5 
+GnuPlotter: Saving plot-1_008.0.png
+GnuPlotter: Saving plot-2_008.0.png
+Time: 8 
+Time: 8.5 
+Time: 9 
+Time: 9.5 
+GnuPlotter: Saving plot-1_010.0.png
+GnuPlotter: Saving plot-2_010.0.png
+Time: 10 
+Time: 10.5 
+Time: 11 
+Time: 11.5 
+GnuPlotter: Saving plot-1_012.0.png
+GnuPlotter: Saving plot-2_012.0.png
+Time: 12 
+Time: 12.5 
+Time: 13 
+Time: 13.5 
+GnuPlotter: Saving plot-1_014.0.png
+GnuPlotter: Saving plot-2_014.0.png
+Time: 14 
+Time: 14.5 
+Time: 15 
+Time: 15.5 
+GnuPlotter: Saving plot-1_016.0.png
+GnuPlotter: Saving plot-2_016.0.png
+Time: 16 
+Time: 16.5 
+Time: 17 
+Time: 17.5 
+GnuPlotter: Saving plot-1_018.0.png
+GnuPlotter: Saving plot-2_018.0.png
+Time: 18 
+Time: 18.5 
+Time: 19 
+Time: 19.5 
+GnuPlotter: Saving plot-1_020.0.png
+GnuPlotter: Saving plot-2_020.0.png
+Time: 20 
+Time: 20.5 
+Time: 21 
+Time: 21.5 
+GnuPlotter: Saving plot-1_022.0.png
+GnuPlotter: Saving plot-2_022.0.png
+Time: 22 
+Time: 22.5 
+Time: 23 
+Time: 23.5 
+GnuPlotter: Saving plot-1_024.0.png
+GnuPlotter: Saving plot-2_024.0.png
+Time: 24 
+Time: 24.5 
+Time: 25 
+Time: 25.5 
+GnuPlotter: Saving plot-1_026.0.png
+GnuPlotter: Saving plot-2_026.0.png
+Time: 26 
+Time: 26.5 
+Time: 27 
+Time: 27.5 
+GnuPlotter: Saving plot-1_028.0.png
+GnuPlotter: Saving plot-2_028.0.png
+Time: 28 
+Time: 28.5 
+Time: 29 
+Time: 29.5 
+GnuPlotter: Saving plot-1_030.0.png
+GnuPlotter: Saving plot-2_030.0.png
+Time: 30 
+Time: 30.5 
+Time: 31 
+Time: 31.5 
+GnuPlotter: Saving plot-1_032.0.png
+GnuPlotter: Saving plot-2_032.0.png
+Time: 32 
+Time: 32.5 
+Time: 33 
+Time: 33.5 
+GnuPlotter: Saving plot-1_034.0.png
+GnuPlotter: Saving plot-2_034.0.png
+Time: 34 
+Time: 34.5 
+Time: 35 
+Time: 35.5 
+GnuPlotter: Saving plot-1_036.0.png
+GnuPlotter: Saving plot-2_036.0.png
+Time: 36 
+Time: 36.5 
+Time: 37 
+Time: 37.5 
+GnuPlotter: Saving plot-1_038.0.png
+GnuPlotter: Saving plot-2_038.0.png
+Time: 38 
+Time: 38.5 
+Time: 39 
+Time: 39.5 
+GnuPlotter: Saving plot-1_040.0.png
+GnuPlotter: Saving plot-2_040.0.png
+Time: 40 
+Time: 40.5 
+Time: 41 
+Time: 41.5 
+GnuPlotter: Saving plot-1_042.0.png
+GnuPlotter: Saving plot-2_042.0.png
+Time: 42 
+Time: 42.5 
+Time: 43 
+Time: 43.5 
+GnuPlotter: Saving plot-1_044.0.png
+GnuPlotter: Saving plot-2_044.0.png
+Time: 44 
+Time: 44.5 
+Time: 45 
+Time: 45.5 
+GnuPlotter: Saving plot-1_046.0.png
+GnuPlotter: Saving plot-2_046.0.png
+Time: 46 
+Time: 46.5 
+Time: 47 
+Time: 47.5 
+GnuPlotter: Saving plot-1_048.0.png
+GnuPlotter: Saving plot-2_048.0.png
+Time: 48 
+Time: 48.5 
+Time: 49 
+Time: 49.5 
+GnuPlotter: Saving plot-1_050.0.png
+GnuPlotter: Saving plot-2_050.0.png
+Time: 50 
+sampler 0 layer 408
+
+=======================================================
+    SCHEDULER PERFORMANCE STATISTICS
+=======================================================
+
+    +  47.3% = 1.5622s (0.0138)  | Initialisation []
+    +  30.2% = 0.9987s (0.1053)  | Gnuplotter [D]
+    +   6.4% = 0.2100s (0.9994)  | NeighborhoodReporter [D,cell.center -> D_neighbors]
+    +   6.1% = 0.2013s (0.8821)  | NeighborhoodReporter [D,cell.center -> D_longrange]
+    +   2.5% = 0.0821s (0.2850)  | System [D_longrange,D_neighbors,a,a_param,gamma,k,kappa_param,n -> D,D_combined,N]
+    +   2.0% = 0.0649s (0.0652)  | Logger [D,D_combined,N]
+    +   1.9% = 0.0645s (0.0644)  | Gnuplotter [N]
+    +   0.0% = 0.0004s (0.0004)  | ModelGraph []
+
+======================================================
+
+=== Simulation finished ===
+Wall Time   = 3s 301ms
+CPU Time    = 2s 423ms (10 threads)
+

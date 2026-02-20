@@ -1,0 +1,34 @@
+{
+  "run_id": "run_1737672066953",
+  "total_score": 1,
+  "max_possible_score": 6,
+  "score_percentage": 16.67,
+  "breakdown": {
+    "xml_error_count": 0,
+    "xml_error_penalty": 0,
+    "xml_err_file_exists": false,
+    "model_graph_present": true,
+    "model_graph_files": [
+      "model_graph.dot"
+    ],
+    "model_graph_score": 1,
+    "time_lines_count": 0,
+    "time_score": 0,
+    "time_values_sample": [],
+    "last_time_value": null,
+    "out_file_exists": false,
+    "stop_time": 2000.0,
+    "last_simulation_time": null,
+    "stop_time_match": false,
+    "stop_time_score": 0,
+    "results_generated": false,
+    "has_png_files": false,
+    "has_csv_files": false,
+    "png_files": [],
+    "csv_files": [],
+    "png_count": 0,
+    "csv_count": 0,
+    "results_score": 0
+  },
+  "timestamp": "2026-01-27T12:48:00.660026"
+}

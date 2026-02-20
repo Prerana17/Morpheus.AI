@@ -1,0 +1,22 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+subgraph cluster_1 {
+label="CellType[cancer_cell]";
+subgraph cluster_3 {
+label="";
+}
+subgraph cluster_4 {
+label="";
+}
+subgraph cluster_5 {
+label="";
+}
+}
+subgraph cluster_2 {
+label="CellType[medium]";
+}
+}
+}

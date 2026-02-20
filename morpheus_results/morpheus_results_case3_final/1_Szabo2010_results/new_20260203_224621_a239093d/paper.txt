@@ -1,0 +1,490 @@
+IOP PUBLISHING PHYSICAL BIOLOGY
+Phys. Biol. 7 (2010) 046007 (14pp) doi:10.1088/1478-3975/7/4/046007
+Collective cell motion in endothelial
+monolayers
+AS z a b´o1,R ¨Unnep1,EM ´ehes1, W O Twal2,WSA r g r a v e s2, Y Cao3
+and A Czir´ok1,4, 5
+1 Department of Biological Physics, Eotvos University, Budapest, Hungary
+2 Department of Regenerative Medicine and Cell Biology, Medical University of South Carolina,
+Charleston, SC, USA
+3 Karolinska Institute, Stockholm, Sweden
+4 Department of Anatomy and Cell Biology, University of Kansas Medical Center, Kansas City, KS, USA
+E-mail: andras@biol-phys.elte.hu
+Received 10 September 2010
+Accepted for publication 15 October 2010
+Published 12 November 2010
+Online at stacks.iop.org/PhysBio/7/046007
+Abstract
+Collective cell motility is an important aspect of several developmental and pathophysiological
+processes. Despite its importance, the mechanisms that allow cells to be both motile and
+adhere to one another are poorly understood. In this study we establish statistical properties of
+the random streaming behavior of endothelial monolayer cultures. To understand the reported
+empirical ﬁndings, we expand the widely used cellular Potts model to include active cell
+motility. For spontaneous directed motility we assume a positive feedback between cell
+displacements and cell polarity. The resulting model is studied with computer simulations and
+is shown to exhibit behavior compatible with experimental ﬁndings. In particular, in
+monolayer cultures both the speed and persistence of cell motion decreases, transient cell
+chains move together as groups and velocity correlations extend over several cell diameters.
+As active cell motility is ubiquitous both in vitroand in vivo, our model is expected to be a
+generally applicable representation of cellular behavior.
+S Online supplementary data available from stacks.iop.org/PhysBio/7/046007/mmedia
+1. Introduction
+Cell motility is instrumental both in development and certain
+pathophysiologies [ 1, 2]. Collective motility of interacting
+cells is a poorly understood but fundamental aspect of these
+phenomena [3]. Such movements are required for important
+morphogenetic and pathological processes, for example,
+gastrulation, vasculogenesis, tumor growth, wound healing
+and revascularization of damaged tissues.
+Arguably, cell sorting is the best studied process involving
+simultaneous displacement of closely packed cells [ 4, 5].
+The differential adhesion hypothesis and its computational
+representations—based on the Potts model [ 6] or analogous
+lattice-free variants [7, 8]—successfully explain the outcome
+as well as the time course of cell sorting experiments. The
+cell types used in sorting experiments move diffusively within
+5 Author to whom any correspondence should be addressed.
+bulk uniform environments far from cell type boundaries [ 4],
+although some temporal and spatial correlations are detectable
+[5].
+Less is known how polarized cells, which maintain their
+migratory direction in time, move in high-density cultures.
+Most studies addressing this problem have investigated the
+expansion of epithelial cell sheets or other monolayers into
+an empty area or ‘wound’. During the expansion, cells at the
+monolayer boundary [ 9] or within a broader layer [ 10] exert
+substantial traction forces and are thought to pull the passive
+bulk of the sheet forward [4, 11].
+Recent studies on the motion of kidney epithelial (MDCK
+[12]) or endothelial (HUVEC [ 13]) cells within monolayers,
+as well as immune cells in explanted lymph nodes [ 14],
+have indicated an intriguing motion pattern. These cells
+exhibit an apparently undirected, albeit correlated, streaming
+behavior even in the absence of directed expansion of the
+1478-3975/10/046007+14$30.00 1 © 2010 IOP Publishing Ltd Printed in the UK
+
+Phys. Biol. 7 (2010) 046007 A Szab´o et al
+holds asymptotically. Therefore, in ﬁgure 5(c) the asymptotic
+linear relation between the average cell displacement and
+neighbor separation with a slope of
+√
+2 indicates a substantial
+mixing and an uncorrelated long-term behavior within the
+monolayer.
+Our statistical characterization thus revealed that
+endothelial monolayers move in locally anisotropic, 50–
+100 μm wide and 200–300 μm long streams, which form
+and disappear at random positions. In low density cell cultures
+cells in front of a moving cell tend to move in similar direction,
+but cell movements in lateral directions are uncorrelated.
+Despite the presence of streams, cell mixing is substantial
+in the monolayers: with a good approximation, movement
+of adjacent cells can be considered as independent persistent
+random walks.
+3. Model deﬁnition
+3.1. Cellular Potts model
+To explain and model the emergence of collective ﬂow patterns
+in cell monolayers, we adopted the two-dimensional cellular
+Potts model (CPM) approach. In theoretical studies the CPM is
+a frequently used method to represent the movement of closely
+packed cells [6, 14, 17–20]. The main advantage of the CPM
+approach is that cell shape is explicitly represented; thus, the
+simulation has the potential to describe dynamics in which
+controlled cell shape plays an important role [ 17, 21]. To
+obtain a biologically plausible, yet simple, model we consider
+below a positive feedback loop between cell polarity and cell
+movement in addition to the surface tension-like intercellular
+adhesion and cell compressibility. As we explain in detail
+below, the model assumptions are as follows.
+(A1) Cells form a monolayer and each cell is simply connected.
+(A2) Each cell has an approximately constant, pre-set size.
+(A3) Cells adhere to their neighbors.
+(A4) Each cell is capable of autonomous biased random motion.
+The direction bias (in a homogeneous environment) is set
+by an internal polarity vector.
+(A5) The polarity vector has a ﬁnite lifetime, but it is reinforced
+by co-directional displacements of the cell.
+In the CPM a non-negative integer value σ is assigned
+to each lattice site
+x of a two-dimensional grid. Two lattice
+sites are considered neighbors if they share a side (primary
+neighbors) or connect via a corner (secondary neighbors).
+Cells are represented as simply connected domains, i.e. a set
+of adjacent lattice sites sharing the same label σ. The label is
+equal to the cell index i (0 <i ⩽ N, where N is the number
+of cells in the simulation). Sites that belong to the irregularly
+shaped area devoid of cells are marked by the special value
+σ = 0.
+Cell movement is the result of a series of elementary
+steps. Each step is an attempt to copy the spin value onto
+a random lattice site
+b from a randomly chosen adjacent site
+a, where σ(a) ̸= σ(b). This elementary step is executed
+with a probability p(a → b). If the domains remain simply
+connected (A1), and thus cells do not break apart or form voids,
+the probability assignment rule ensures the maintenance of a
+target cell size (A2), adhesion of cells (A3) and active cell
+motion (A4, A5). For convenience and historical reasons p is
+given as
+ln p(a → b) = min[0,−/Delta1u(a → b) + w(a → b)], (6)
+where, as speciﬁed below in detail, w represents a bias
+responsible for the cell-speciﬁc active behavior considered,
+u represents a goal function to be minimized and /Delta1u(
+a → b)
+represents its change during the elementary step considered.
+Since updating each lattice position takes more steps in
+a larger system, the elementary step cannot be chosen as the
+measure of time. The usual choice for the time unit is the
+Monte Carlo step (MCS), deﬁned as L
+2 elementary steps,
+where L is the linear system size [21].
+3.2. Evaluating conﬁgurations
+In the CPM approach, a goal function (‘energy’) is assigned
+[6] to each conﬁguration. The goal function guides the cell
+behavior by distinguishing between favorable (low u) and
+unfavorable (high u) conﬁgurations as
+u =
+∑
+⟨x,x′⟩
+Jσ(x),σ(x′) + λ
+N∑
+i=1
+δA2
+i . (7)
+The ﬁrst term in ( 7) enumerates cell boundary lengths.
+The summation goes over adjacent lattice sites. For a
+homogeneous cell population, the J
+i,j interaction matrix
+(0 ⩽ i, j ⩽ N) is given as
+Ji,j =
+⎧
+⎨
+⎩
+0f o ri = j
+α for ij > 0 and i ̸= j (intercellular boundary)
+β for ij = 0 and i ̸= j (free cell boundary).
+(8)
+The surface energy-like parameters α and β characterize
+both intercellular adhesiveness and cell surface ﬂuctuations
+in the model. The magnitude of these values determines
+the roughness of cell boundaries: small magnitudes allow
+dynamic, long and hence curvy boundaries, while large
+magnitudes restrict boundaries to straight lines and thus freeze
+the dynamics. In addition to cell boundary roughness, the
+parameters α and β also specify the preference of intercellular
+connections over free cell surfaces (A3). If two adhering cells
+are separated by inserting a layer of empty sites between them,
+then the change inu is proportional to 2β−α at each site along
+the boundary line affected. Therefore, for 2 β>α free cell
+boundaries are penalized and the cells are adhesive [22].
+The second term in expression ( 7) is responsible for
+maintaining a preferred cell area (A2). For each cell i,t h e
+deviation of its area from a pre-set value is denoted by δA
+i.
+Parameter λ adjusts the tolerance for deviation. Thus, λ is
+related to the compressibility of cells in the 2D plane and also
+determines the magnitude of cell area ﬂuctuations.
+3.3. Cell polarity and active motility
+While u evaluates conﬁgurations, w is assigned directly to
+the elementary steps and therefore allows the speciﬁcation
+of a broader spectrum of cellular behavior [ 23]. Active cell
+motility involves cell polarity, a morphological, dynamical and
+biochemical difference between the cell’s leading edge and tail
+5
+
+Phys. Biol. 7 (2010) 046007 A Szab´o et al
+Table 2. Parameters used in the model.
+Parameter name Symbol Value Range Main, experimentally detectable effect(s)
+Cell–cell boundary cost α 2 1–4 Cell boundary ﬂexibility, cell shape
+Free cell boundary cost (relevant β 1 – Cell boundary ﬂexibility, cell shape,
+only in single-cell simulations) surface tension of aggregates.
+Target cell area A 50 – Cell–cell distance
+Area constraint coefﬁcient λ 1 0.5–2 Cell size ﬂuctuations
+Self-propulsion coefﬁcient P 2 0.5–4 Average cell speed
+Decay rate of cell polarity r 0.2 0.8–0.02 Persistence time of cell motion
+[24, 25]. In this study we model active cell motility by ﬁrst
+assigning a cell polarity vectorpk to each cell k (A4). We then
+increase the probability of those elementary conversion steps
+that advance the cell center in the direction parallel to
+pk,a s
+w(a → b) = P
+∑
+k=σ(a),σ(b)
+/Delta1Xk(a → b)pk
+|pk| . (9)
+Parameter P sets the magnitude of the bias and/Delta1Xk represents
+the displacement of the center of cell k during the elementary
+step considered.
+The cell polarity vector is an attempt to represent
+the localization and magnitude of the biochemical changes
+characterizing the leading edge of a migratory cell. It is
+not yet clear what is the molecular polarization mechanism
+in endothelial cells. The best documented front /rear
+polarization mechanisms involve either the mutual inhibition
+of Rac and Rho, key GTPase ‘switches’ of cell motility
+[1, 26] and/or the accumulation of the phosphatidylinositol
+membrane component PIP
+3 [27, 28]. The accumulation
+of active Rac1 (and PIP 3) at the leading edge is thought
+to activate a biochemical cascade that involves the Arp2/3
+complex providing new actin nucleation sites. The Rac1-
+Arp2/3 cascade eventually results in a local increase in
+actin polymerization, pushing the plasma membrane forward
+[1, 27]. Through positive feedback loops, both the
+Rac/Rho and PIP
+2/PIP3 systems are thought to be able to
+amplify slight spatial differences in upstream inputs and even
+develop a spontaneous polarity [ 27, 28]. This ampliﬁcation
+of presumably random receptor activity and the related
+spontaneous symmetry breaking could explain the onset of
+spontaneous cell motility in a homogeneous environment and
+motivates the use of a unit vector in rule (9).
+Even less molecular details are known about what drives
+changes in cell polarity in the absence of external cues such
+as chemoattractant gradients. However, in a motile cell the
+polarization direction must change eventually. For instance,
+when the advance of the leading process is impaired and
+the process collapses, a new migration direction is selected
+and cell polarity is altered. We propose to update the cell
+polarity vectors by considering a spontaneous decay and a
+reinforcement from cell displacements (A5). In each MCS the
+change in
+pk is
+/Delta1pk =− rpk + /Delta1Xk, (10)
+where r is the rate of spontaneous decay and /Delta1Xk is the
+displacement of the center of cellk during the MCS considered.
+A characteristic memory length T of the polarization vector is
+deﬁned as T = 1/r.
+Rules (9) and (10) together constitute a positive feedback
+loop. In this model, steric constraints may result in co-
+migration of adjacent cells as the retraction of one cell allows
+for the expansion of the other. The resulting expansion of cell
+bodies (like the actin polymerization process in real cells) can
+therefore alter and synchronize cell polarity. The molecular
+mechanism for cell polarity reinforcement by cell motility
+may involve either the stabilization of PIP
+3 accumulation by
+actin polymerization [ 29–31] or the activation of Rac1 by
+microtubule dynamics [32, 33].
+4. Simulation results
+We have chosen the open source tissue simulation toolkit
+[21, 34] as our CPM framework, in which we implemented
+our extensions as C++ codes. We refrain from using a
+temperature-like parameter, as rule (3) of [ 6], analogous to
+our rule (6), simply scales each CPM parameter α, β and λ by
+the temperature, a constant. Thus, when comparing our studies
+with those that include a temperature in the simulations, our
+parameter values are to be compared with the corresponding
+values divided by the temperature.
+Model simulations with N = 1000 cells were performed
+in a 200 × 200 lattice, with parameters α = 2, λ = 1 and
+P = 2, T = 5 MCS (see table2 for a summary of the parameter
+values used). After scaling by temperature, our parameters
+are within the same range as those in previous studies [ 6, 20,
+21, 35]. We applied closed boundary conditions (immutable
+empty sites at the border) in the simulations.
+The spatial scale of the model is easily determined by
+comparing the empirical and simulated cell sizes. The target
+cell area was set to 50 lattice sites, yielding a distance of about
+7 sites between cell centers in the monolayer. This compares
+to the experimentally observed 35 μm, calibrating a distance
+of one lattice site to 5μm. The duration of a MCS is calibrated
+by comparing empirical and simulated cell speeds (see below)
+resulting in one MCS to correspond to 1 min, a value similar
+to the ones used in other CPM studies [20, 21].
+4.1. Individual cells perform a persistent random walk
+Model simulations of single cells were performed with Potts
+parameters β = 1 and λ = 1 (the parameter α is irrelevant
+under these conditions). Figure 6(a) reveals that in the absence
+of active motility (P = 0) the average displacementd(t) grows
+with time t as
+d(t,P = 0) ∼
+√
+t. (11)
+6
+
+Phys. Biol. 7 (2010) 046007 A Szab´o et al
+(a)( b)
+(c)( d)
+Figure 6. Motion statistics of individual, non-interacting cells in model simulations. (a) Average displacement d(t) versus time t.V a l u e so f
+P are shown in the key, β = 1, λ = 1, T = 5 min. Gray solid lines are ﬁts by the persistent random walk formula ( 2) and a square-root
+function in the case of P = 0. (b) The speed S of directed motion is set by the parameterP.( c) Average displacement versus time curves and
+the corresponding ﬁts, obtained from simulations with various polarization memory lengths. Values ofT are shown in the key,β = 1, λ = 1,
+P = 2. (d) The persistence time of the random walk behavior, Tp, mostly depends on T through a nonlinear relation, and to a lesser extent
+also on the active motion parameter P.
+Thus, as in the original CPM [4, 5], cell movement is diffusive
+for P = 0. Large values of P result in unrealistic cell shapes
+and behavior as the effects of the other constraining terms
+in expression (7) diminish. The active motility rules ( 9) and
+(10) with 0 <P< 4 result in individual cells performing a
+persistent random walk: as ﬁgures 6(a) and (c) demonstrate,
+the average displacements are well ﬁtted by equation ( 2)f o r
+d(t,P) > 1.
+As ﬁgure 6(b) reveals, the speed of active motion S is
+proportional to P in the 0 <P< 4 range (the parameter
+P is bounded by the connectivity constrains of the model).
+Because of the positive feedback between directed cell motion
+and maintenance of cell polarity in our model, the persistence
+time T
+p increases strongly both with P and the duration of the
+memory T (ﬁgure 6(d)).
+4.2. Streaming behavior in monolayer simulations
+Monolayer simulations result in behavior similar to the ex-
+perimentally observed streaming motion, with shear lines
+and vortices present (ﬁgure 7(a) and movie 2 (available at
+stacks.iop.org/PhysBio/7/046007)). Motion within the mono-
+layer is somewhat hindered when compared with individual
+cells, as the speed and persistence time decrease by 20%
+(ﬁgure 7(b)). In addition to qualitative similarity, the calcula-
+tion of ﬂow ﬁelds allows for a more rigorous comparison of
+model simulations to empirical data (ﬁgure 8, to be compared
+with ﬁgures 3 and 4). Lateral correlations and back-ﬂow are
+reduced when non-adherent cells are simulated at lower cell
+densities (ﬁgure 8(b)). At subconﬂuent densities the average
+ﬂow ﬁeld still reveals the ‘steric’ repulsion of cells in the path
+of an actively moving cell.
+4.3. Parameters
+We introduced two new parameters, P and T, in addition to
+the usual CPM parameters describing free and intercellular
+boundaries (α and β) and compressibility λ. In monolayer
+simulations there are no free cell boundaries; therefore, the
+parameter β is irrelevant. Parameter sensitivity analysis
+revealed that the model can also exhibit an ordered
+phase. In this phase, responding to the closed boundary
+conditions, all cells participate in a single, system-wide
+rotational movement. This state is reached by increasing
+the memory duration T. For increasing T (but still below
+the threshold needed for the formation of a single vortex),
+the streams become wider (ﬁgure 9(a) and movie 3
+(available at stacks.iop.org/PhysBio/7/046007)). Conversely,
+by decreasing either T or P, a diffusive state is recovered,
+where the persistence length is smaller than the size of a cell
+(movie 4 available at stacks.iop.org/PhysBio/7/046007). In
+this limit
+V (x) is well approximated by the ﬂow ﬁeld of an
+incompressible ﬂuid around a moving disk: Vx decays as x−2
+and −y−2 along the x and y axes, respectively. Increasing P or
+T results in wider and longer streams (ﬁgure 9(e)–(h)).
+The d2 separation of adjacent cell pairs, when plotted
+against the mean cell displacement d (ﬁgure 9(b) and ( d)),
+reveals the system-wide ordered ﬂow, when cells can cover
+7
+
+Phys. Biol. 7 (2010) 046007 A Szab´o et al
+300   mμ
+(a) (b)
+*
+*
+Figure 7. Motion characteristics in monolayer simulations. A representative parameter setting was chosen as P = 2, T = 5 min, α = 2,
+β = 1a n dλ = 1. (a) Model cell trajectories, from a 40 min long time interval, reveal streams formed by several cells (blue arrows). The
+inset shows trajectories from a 90 min long interval, color-coded progressively from older to newer as red to green to blue. A shear line
+separating streams moving in opposite directions (black line) and two vortices (asterisks) are indicated. (b) Average displacements of single,
+unconstrained cells are greater than those in a monolayer. Persistence time and cell speed in a monolayer fall from 40 to 30 min and from
+55 μmh
+−1 to 40 μmh −1, respectively.
+μ
+μ100   m
+100   m
+(c)
+(d)
+(a)
+(b)    = 0.25ρ
+monolayer
+Figure 8. Flow ﬁelds V (x) around a moving cell within a monolayer (a) and a subconﬂuent culture (b) simulation. The corresponding
+parallel and perpendicular velocity proﬁles are shown in panels (c)a n d(d), respectively. Cell density values speciﬁed in the keys are
+normalized to conﬂuent culture density (ρ = 1). In low density cultures correlations are reduced in the lateral direction. Velocity vectors
+represent 1 h displacements; the green arrow indicates the average velocity of the cells. As in ﬁgure 3, the color code in panels (a)a n d(b)
+indicates the estimated relative SEM, and the color scale represents the interval [0 : 1].
+large displacements without changing their neighbors ( d ≫
+d2/
+√
+2). In the streaming regime the asymptotic relation ( 5)
+holds indicating uncorrelated motion within the monolayer.
+Depending on the values of P and T, increasing α can
+result in a multitude of changes. Reﬂecting its deﬁnition, a
+simulation with higher α values yields cells with smoother
+boundaries (ﬁgures 10(b) and ( d)). In general, reducing the
+freedom of cell boundary movement hinders cell intercalation,
+and thus movement within a monolayer. This is indicated
+by decreasing speeds with increasing α (data not shown).
+However, if self-propulsion is strong enough, the reduced
+intercalation can also yield wider streams as demonstrated
+by ﬁgures 10(c), (e) and (f ).
+Our model for actively moving cells in a monolayer
+culture is thus capable of explaining most experimental
+observations presented in section 2. Furthermore, the simple
+model structure allows a thorough mapping of the parameter
+space. We ﬁnd it remarkable that a given pair of (P, T )
+parameters yield individual cell speeds, persistence times in
+the correct range as well as a collective behavior comparable
+with the observed streaming. In particular, T = 5 min is
+a plausible value for the time needed to alter cell polarity.
+8
+
+Phys. Biol. 7 (2010) 046007 A Szab´o et al
+100  mμ
+100  mμ
+(a)
+(c)
+(b)
+(d)
+T=50 min
+T=1.25 min
+(h)(g)
+(e)( f )
+Figure 9. The self propulsion parameters, P and T, play a crucial role in deﬁning the collective behavior of the monolayer. Flow ﬁelds V (x)
+are shown for long ((a) T = 50 min) and short ((c) T = 1.25 min) memory duration of cell polarity. The remaining parameters are the same
+as in ﬁgure 7. Flow ﬁelds are presented as in ﬁgure 8. The corresponding parallel and perpendicular velocity proﬁles are shown in panels (e)
+and (f ), respectively. Increasing T results in wider, longer and faster streams. Similar but less dramatic tendencies are seen when changing
+P (panels (g)a n d(h)). For large enough T, the system organizes into a phase where the correlation length is comparable to the system size.
+Movement within the monolayer is diffusive in the streaming regime as the average neighbor separation versus cell displacement curves
+(panels (b)a n d(d)) are consistent with the asymptotic behavior of equation (5), shown as the solid line. In the globally ordered (rotating)
+regime cells move further without separating. The asterisk marks the parameter values used in ﬁgure 7.
+With this value, it is possible to obtain cell speeds in the
+range of 20–40 μmh −1 within monolayers and 50 μmh −1 for
+individual cells. Our empirical data show cell speeds between
+10 and 30 μmh −1 for monolayers. A similarly close and
+independent agreement is obtained for the persistence times,
+at approximately 1 h both in the model and in the experiments.
+The spatial structure of streams is strongly anisotropic, being
+approximately 200–300 μm long and 100 μmw i d ei nb o t h
+the experiments and in the simulations.
+5. Discussion
+While correlated cell velocities and streams in MDCK and
+HUVEC monolayers were recently reported [ 12, 13], their
+9
+
+Phys. Biol. 7 (2010) 046007 A Szab´o et al
+(a)
+(c)
+100   mμ
+μ100   m
+(b)
+(d)
+( f )(e)
+α=1
+α=4
+*
+* *
+*
+Figure 10. Role of cell adhesion parameter α. Simulation results are compared for α = 1 (panels (a), (b)) and α = 4 (panels (c), (d)).
+Self-propulsion is strong (P = 3), while the remaining parameters are the same as in ﬁgure 7. As the conﬁgurations demonstrate (panels
+(b), (d)), parameter α controls the cell shape and cell boundary smoothness. The V (x) ﬂow ﬁelds (panels (a), (c)) and their proﬁles along
+the parallel (e) and perpendicular (f ) axes reveal that the streams get wider with increasing α as cells cannot easily intercalate. Flow ﬁelds
+are presented as in ﬁgure 8. The insets in panels (b)a n d(d) demonstrate cell trajectories, comparable with similar plots in ﬁgures 1 and 7.
+The asterisk marks the parameter values used in ﬁgure 7.
+dynamics remained largely unexplained. To obtain further
+empirical data to test our model, we systematically investigated
+monolayer cultures of three different endothelial cell lines.
+Our ﬁnding that 5–20 cells move together in narrow, chain-like
+groups is in accord with previous reports. Because our cultures
+were grown in a monolayer, our measured cell speeds and
+persistence times (S ≈ 10 − 30 μmh
+−1, T ≈ 1 h) somewhat
+differ from the values previously reported for individual
+endothelial cells ( S ≈ 40 μmh −1, T ≈ 3h[ 36]; S ≈
+50 μmh −1, T ≈ 0.6h[ 37]).
+5.1. Models for collective cell movements
+Previous theoretical studies on cell movement include a multi-
+particle model that was proposed to explain the collective
+10

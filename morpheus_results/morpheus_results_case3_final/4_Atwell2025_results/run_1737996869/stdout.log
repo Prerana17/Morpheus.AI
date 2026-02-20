@@ -1,0 +1,660 @@
+Setting output directory /Users/prerana/Desktop/morpheus/run_1737996869
+Initializing from file model.xml
+AutoFix: Moved 2 element(s)  matching /MorpheusModel/CellTypes/CellType/System/DiffEqn/Expression to /MorpheusModel/CellTypes/CellType/System/DiffEqn/Reaction
+Applied 2 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 0 with seed 1769628990
+Intitalize Thread Intitalize Thread Intitalize Thread 5 with seed 2255278472
+Intitalize Thread 1 with seed 3249938709
+Intitalize Thread 2 with seed 380001365
+Intitalize Thread Intitalize Thread 7Intitalize Thread 3 with seed 2003308104
+6 with seed 2309960852
+ with seed 36101098
+9 with seed 3205022997
+Intitalize Thread 8 with seed 1271241664
+4 with seed 1546171282
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread 8 with seed 1166165736
+Intitalize Thread Intitalize Thread Intitalize Thread 7 with seed 2Intitalize Thread 4 with seed 3471047918
+Intitalize Thread 1 with seed 3410091070
+9 with seed Intitalize Thread 186857968669919023
+
+Intitalize Thread  with seed 1044445579
+6 with seed Intitalize Thread 4250921454
+5 with seed 990324140
+0 with seed 0
+Intitalize Thread 3 with seed 4029868217
+Registering Symbol l of linktype LocationLink in Scope root
+Registering Symbol l.x of linktype VectorComponentLink in Scope root
+Registering Symbol l.y of linktype VectorComponentLink in Scope root
+Registering Symbol l.z of linktype VectorComponentLink in Scope root
+Registering Symbol l.phi of linktype VectorComponentLink in Scope root
+Registering Symbol l.theta of linktype VectorComponentLink in Scope root
+Registering Symbol l.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 200, 200, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [4] Global Plugins
+getXMLAttribute: seeking for Constant->name: Diffusion coefficient of caspase-9
+getXMLAttribute: seeking for Constant->symbol: D_casp9
+getXMLAttribute: seeking for Constant->value: 10.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol D_casp9 of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: Activation rate of caspase-9
+getXMLAttribute: seeking for Constant->symbol: k_act
+getXMLAttribute: seeking for Constant->value: 0.5
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol k_act of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: Degradation rate
+getXMLAttribute: seeking for Constant->symbol: k_deg
+getXMLAttribute: seeking for Constant->value: 0.1
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol k_deg of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name: Activation threshold
+getXMLAttribute: seeking for Constant->symbol: threshold
+getXMLAttribute: seeking for Constant->value: 0.3
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol threshold of linktype ConstantLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[cell] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[cell]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[cell]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[cell]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[cell]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[cell]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[cell]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[cell]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[cell]
+Registering Symbol celltype.cell.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.cell.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: 200
+getXMLAttribute: seeking for VolumeConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->target: 180
+getXMLAttribute: seeking for SurfaceConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name: Inactive caspase-9
+getXMLAttribute: seeking for Property->symbol: casp9_inactive
+getXMLAttribute: seeking for Property->value: 1.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol casp9_inactive of linktype CellPropertyLink in Scope CellType[cell]
+Registering Symbol casp9_inactive of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Active caspase-9
+getXMLAttribute: seeking for Property->symbol: casp9_active
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol casp9_active of linktype CellPropertyLink in Scope CellType[cell]
+Registering Symbol casp9_active of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Cytochrome c release status
+getXMLAttribute: seeking for Property->symbol: cytc_released
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cytc_released of linktype CellPropertyLink in Scope CellType[cell]
+Registering Symbol cytc_released of linktype CompositeLink in Scope root
+Creating subscope System in scope CellType[cell]
+getXMLAttribute: seeking for System->solver: Dormand-Prince [adaptive, O(5)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: casp9_active
+getXMLAttribute: seeking for Reaction->text: k_act * casp9_inactive * (cytc_released + casp9_active^2/(1 + casp9_active^2)) - k_deg * casp9_active
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: casp9_inactive
+getXMLAttribute: seeking for Reaction->text: -k_act * casp9_inactive * (cytc_released + casp9_active^2/(1 + casp9_active^2))
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Event->delay .. not found
+getXMLAttribute: seeking for Event->compute-time .. not found
+getXMLAttribute: seeking for Event->trigger: when true
+getXMLAttribute: seeking for Condition->history .. not found
+getXMLAttribute: seeking for Event->persistent .. not found
+getXMLAttribute: seeking for Event->time-step: 50
+Scope: Creating Accessor for symbol 'time' from Scope root
+Creating subscope System in scope CellType[cell]
+getXMLAttribute: seeking for Rule->symbol-ref: cytc_released
+getXMLAttribute: seeking for Expression->text: 1.0
+CellTypes defined: 'cell' 'medium' 
+getXMLAttribute: seeking for MonteCarloSampler/MCSDuration->value: 1
+getXMLAttribute: seeking for MonteCarloSampler->stepper: edgelist
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->temperature: 2
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->yield .. not found
+getXMLAttribute: seeking for Contact->value: 12
+getXMLAttribute: seeking for Contact->value: 6
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 2
+Assigning Shape Neighborhood of size 3 -> 28 neighbors.
+Setting boundary neighborhood to order 6
+Creating cell layer of size 1.13281 MB
+with initial state set to CellType 'medium'
+getXMLAttribute: seeking for InitCircle->number-of-cells: 50
+getXMLAttribute: seeking for InitCircle->mode: random
+getXMLAttribute: seeking for Dimensions->center: size.x/2, size.y/2, 0
+getXMLAttribute: seeking for Dimensions->radius: size.x/3
+Initializing celltype 'medium'
+Initializing celltype 'cell'
+Scope: Creating Accessor for symbol 'casp9_active' from Scope CellType[cell]
+Scope: Creating Accessor for symbol 'casp9_inactive' from Scope CellType[cell]
+Scope: Creating Accessor for symbol 'k_act' from Scope root
+Scope: Creating Accessor for symbol 'cytc_released' from Scope CellType[cell]
+Scope: Creating Accessor for symbol 'k_deg' from Scope root
+System::init: Reordering Initializers ...
+Plugin Event: Registered input symbol dependencies time [root] ,
+Scope: Creating Accessor for symbol 'cytc_released' from Scope CellType[cell]
+System::init: Reordering Initializers ...
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'cell.center.x' from Scope CellType[cell]
+Scope: Creating Accessor for symbol 'cell.center.y' from Scope CellType[cell]
+Scope: Creating Accessor for symbol 'size.x' from Scope root
+Scope: Creating Accessor for symbol 'size.y' from Scope root
+Scope: Creating Accessor for symbol 'size.x' from Scope root
+Plugin InitCircle: Registered input symbol dependencies size.x [root] ,size.y [root] ,
+Cells 50 requested 0
+Scope: Creating Accessor for symbol 'cell.center' from Scope root
+Scope: Creating Accessor for symbol 'cell.volume' from Scope root
+Scope: Creating Accessor for symbol 'cell.surface' from Scope root
+Scope: Creating Accessor for symbol 'cell.length' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+creating Edge tracker 
+
+ thread_id = 
+ thread_id = 0x1713c70000x173bef000, register_thread_index = , register_thread_index = 1, shared_locks_array[cur_index].value = 0, shared_locks_array[cur_index].value = 
+ thread_id = 1
+
+ thread_id = 
+ thread_id = 
+ thread_id = 
+ thread_id = 
+ thread_id = 0x171bcf000, register_thread_index = 
+ thread_id = 3, shared_locks_array[cur_index].value = 
+ thread_id = 0x172bdf000, register_thread_index = 9, shared_locks_array[cur_index].value = 1
+0x1723d7000, register_thread_index = 0x170bbf0001, register_thread_index = 0x1703b7000, register_thread_index = 0x1743f7000, register_thread_index = 74, shared_locks_array[cur_index].value = 6, shared_locks_array[cur_index].value = 1
+0x20227ec40, register_thread_index = 2, shared_locks_array[cur_index].value = , shared_locks_array[cur_index].value = 1
+1
+1
+0x1733e7000, register_thread_index = 
+5, shared_locks_array[cur_index].value = 1
+8, shared_locks_array[cur_index].value = 11
+
+EdgeListTracker::init() : Created Tracker with Neighborhood size 8 of size 0.933594 MB
+EdgeListTracker::init() : Found 400 initial edges, wherof 400 can be modified.
+CPM: InteractionEnergy has 28 neighbors
+CPM: InteractionEnergy was initialized with  IA_COLLAPSE 
+Loading Analysis tools [4]
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size .. not found
+getXMLAttribute: seeking for Gnuplotter->time-step: 5
+getXMLAttribute: seeking for Cells->value: casp9_active
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size .. not found
+getXMLAttribute: seeking for Gnuplotter->time-step: 5
+getXMLAttribute: seeking for Cells->value: cytc_released
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: casp9_active
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: casp9_inactive
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: cytc_released
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format .. not found
+getXMLAttribute: seeking for Logger->time-step: 5
+getXMLAttribute: seeking for ModelGraph->format: dot
+getXMLAttribute: seeking for ModelGraph->reduced: false
+getXMLAttribute: seeking for ModelGraph->exclude-symbols .. not found
+getXMLAttribute: seeking for ModelGraph->include-tags: #untagged
+Scope: Creating Accessor for symbol 'casp9_active' from Scope root
+Scope: Creating Accessor for symbol 'cytc_released' from Scope root
+Scope: Creating Accessor for symbol 'casp9_active' from Scope root
+Scope: Creating Accessor for symbol 'casp9_inactive' from Scope root
+Scope: Creating Accessor for symbol 'cytc_released' from Scope root
+Plugin Logger: Registered input symbol dependencies casp9_active [root] ,casp9_inactive [root] ,cytc_released [root] ,
+Logger range:
+-> size 50
+-> dataAxes CELL, 
+-> data.sizes: 50, 
+-> file separation: None
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'cell.id' from Scope CellType[cell]
+System
+Event
+CPM
+Gnuplotter
+Gnuplotter
+Logger
+ModelGraph
+
+ TimeStepListener "System" propagates its time step 500
+
+ TimeStepListener "Event" propagates its time step 50
+
+ TimeStepListener "CPM" propagates its time step 1
+
+ TimeStepListener "Gnuplotter" propagates its time step 5
+
+ TimeStepListener "Gnuplotter" propagates its time step 5
+
+ TimeStepListener "Logger" propagates its time step 5
+
+ TimeStepListener "ModelGraph" propagates its time step 500
+TimeScheduler::init: Ordering instantaneous processes for sequential update ...
+ 
+======================================================
+ Time Schedule
+======================================================
+ Time precision patch is 0.001
+
+=====|    Phase I     |===============================
+-----. CPM .------------------------------------
+  + 1 => CPM [] -> [cell.center,cell.length,cell.surface,cell.type,cell.volume]
+-----. Reactions .------------------------------------
+  + 5 => System [cytc_released,k_act,k_deg] -> [casp9_active,casp9_inactive]
+
+=====|    Phase II    |===============================
+-----. Reporters and Instantaneous Processes.---------
+  + 50 => Event [CytC_Release] [cell.center.x,cell.center.y,time] -> [cytc_released]
+
+=====|    Phase III   |===============================
+-----. Analysis .-------------------------------------
+  + 5 => Gnuplotter [casp9_active] 
+  + 5 => Gnuplotter [cytc_released] 
+  + 5 => Logger [casp9_active,casp9_inactive,cytc_released] 
+  + 500 => ModelGraph [] 
+------------------------------------------------------
+======================================================
+
+model is up
+GnuPlotter: Saving plot-1_00000.png
+GnuPlotter: Saving plot-2_00000.png
+Time: 0.00 atu
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+GnuPlotter: Saving plot-1_00005.png
+GnuPlotter: Saving plot-2_00005.png
+Time: 5 
+GnuPlotter: Saving plot-1_00010.png
+GnuPlotter: Saving plot-2_00010.png
+Time: 10 
+GnuPlotter: Saving plot-1_00015.png
+GnuPlotter: Saving plot-2_00015.png
+Time: 15 
+GnuPlotter: Saving plot-1_00020.png
+GnuPlotter: Saving plot-2_00020.png
+Time: 20 
+GnuPlotter: Saving plot-1_00025.png
+GnuPlotter: Saving plot-2_00025.png
+Time: 25 
+GnuPlotter: Saving plot-1_00030.png
+GnuPlotter: Saving plot-2_00030.png
+Time: 30 
+GnuPlotter: Saving plot-1_00035.png
+GnuPlotter: Saving plot-2_00035.png
+Time: 35 
+GnuPlotter: Saving plot-1_00040.png
+GnuPlotter: Saving plot-2_00040.png
+Time: 40 
+GnuPlotter: Saving plot-1_00045.png
+GnuPlotter: Saving plot-2_00045.png
+Time: 45 
+GnuPlotter: Saving plot-1_00050.png
+GnuPlotter: Saving plot-2_00050.png
+Time: 50 
+GnuPlotter: Saving plot-1_00055.png
+GnuPlotter: Saving plot-2_00055.png
+Time: 55 
+GnuPlotter: Saving plot-1_00060.png
+GnuPlotter: Saving plot-2_00060.png
+Time: 60 
+GnuPlotter: Saving plot-1_00065.png
+GnuPlotter: Saving plot-2_00065.png
+Time: 65 
+GnuPlotter: Saving plot-1_00070.png
+GnuPlotter: Saving plot-2_00070.png
+Time: 70 
+GnuPlotter: Saving plot-1_00075.png
+GnuPlotter: Saving plot-2_00075.png
+Time: 75 
+GnuPlotter: Saving plot-1_00080.png
+GnuPlotter: Saving plot-2_00080.png
+Time: 80 
+GnuPlotter: Saving plot-1_00085.png
+GnuPlotter: Saving plot-2_00085.png
+Time: 85 
+GnuPlotter: Saving plot-1_00090.png
+GnuPlotter: Saving plot-2_00090.png
+Time: 90 
+GnuPlotter: Saving plot-1_00095.png
+GnuPlotter: Saving plot-2_00095.png
+Time: 95 
+GnuPlotter: Saving plot-1_00100.png
+GnuPlotter: Saving plot-2_00100.png
+Time: 100 
+GnuPlotter: Saving plot-1_00105.png
+GnuPlotter: Saving plot-2_00105.png
+Time: 105 
+GnuPlotter: Saving plot-1_00110.png
+GnuPlotter: Saving plot-2_00110.png
+Time: 110 
+GnuPlotter: Saving plot-1_00115.png
+GnuPlotter: Saving plot-2_00115.png
+Time: 115 
+GnuPlotter: Saving plot-1_00120.png
+GnuPlotter: Saving plot-2_00120.png
+Time: 120 
+GnuPlotter: Saving plot-1_00125.png
+GnuPlotter: Saving plot-2_00125.png
+Time: 125 
+GnuPlotter: Saving plot-1_00130.png
+GnuPlotter: Saving plot-2_00130.png
+Time: 130 
+GnuPlotter: Saving plot-1_00135.png
+GnuPlotter: Saving plot-2_00135.png
+Time: 135 
+GnuPlotter: Saving plot-1_00140.png
+GnuPlotter: Saving plot-2_00140.png
+Time: 140 
+GnuPlotter: Saving plot-1_00145.png
+GnuPlotter: Saving plot-2_00145.png
+Time: 145 
+GnuPlotter: Saving plot-1_00150.png
+GnuPlotter: Saving plot-2_00150.png
+Time: 150 
+GnuPlotter: Saving plot-1_00155.png
+GnuPlotter: Saving plot-2_00155.png
+Time: 155 
+GnuPlotter: Saving plot-1_00160.png
+GnuPlotter: Saving plot-2_00160.png
+Time: 160 
+GnuPlotter: Saving plot-1_00165.png
+GnuPlotter: Saving plot-2_00165.png
+Time: 165 
+GnuPlotter: Saving plot-1_00170.png
+GnuPlotter: Saving plot-2_00170.png
+Time: 170 
+GnuPlotter: Saving plot-1_00175.png
+GnuPlotter: Saving plot-2_00175.png
+Time: 175 
+GnuPlotter: Saving plot-1_00180.png
+GnuPlotter: Saving plot-2_00180.png
+Time: 180 
+GnuPlotter: Saving plot-1_00185.png
+GnuPlotter: Saving plot-2_00185.png
+Time: 185 
+GnuPlotter: Saving plot-1_00190.png
+GnuPlotter: Saving plot-2_00190.png
+Time: 190 
+GnuPlotter: Saving plot-1_00195.png
+GnuPlotter: Saving plot-2_00195.png
+Time: 195 
+GnuPlotter: Saving plot-1_00200.png
+GnuPlotter: Saving plot-2_00200.png
+Time: 200 
+GnuPlotter: Saving plot-1_00205.png
+GnuPlotter: Saving plot-2_00205.png
+Time: 205 
+GnuPlotter: Saving plot-1_00210.png
+GnuPlotter: Saving plot-2_00210.png
+Time: 210 
+GnuPlotter: Saving plot-1_00215.png
+GnuPlotter: Saving plot-2_00215.png
+Time: 215 
+GnuPlotter: Saving plot-1_00220.png
+GnuPlotter: Saving plot-2_00220.png
+Time: 220 
+GnuPlotter: Saving plot-1_00225.png
+GnuPlotter: Saving plot-2_00225.png
+Time: 225 
+GnuPlotter: Saving plot-1_00230.png
+GnuPlotter: Saving plot-2_00230.png
+Time: 230 
+GnuPlotter: Saving plot-1_00235.png
+GnuPlotter: Saving plot-2_00235.png
+Time: 235 
+GnuPlotter: Saving plot-1_00240.png
+GnuPlotter: Saving plot-2_00240.png
+Time: 240 
+GnuPlotter: Saving plot-1_00245.png
+GnuPlotter: Saving plot-2_00245.png
+Time: 245 
+GnuPlotter: Saving plot-1_00250.png
+GnuPlotter: Saving plot-2_00250.png
+Time: 250 
+GnuPlotter: Saving plot-1_00255.png
+GnuPlotter: Saving plot-2_00255.png
+Time: 255 
+GnuPlotter: Saving plot-1_00260.png
+GnuPlotter: Saving plot-2_00260.png
+Time: 260 
+GnuPlotter: Saving plot-1_00265.png
+GnuPlotter: Saving plot-2_00265.png
+Time: 265 
+GnuPlotter: Saving plot-1_00270.png
+GnuPlotter: Saving plot-2_00270.png
+Time: 270 
+GnuPlotter: Saving plot-1_00275.png
+GnuPlotter: Saving plot-2_00275.png
+Time: 275 
+GnuPlotter: Saving plot-1_00280.png
+GnuPlotter: Saving plot-2_00280.png
+Time: 280 
+GnuPlotter: Saving plot-1_00285.png
+GnuPlotter: Saving plot-2_00285.png
+Time: 285 
+GnuPlotter: Saving plot-1_00290.png
+GnuPlotter: Saving plot-2_00290.png
+Time: 290 
+GnuPlotter: Saving plot-1_00295.png
+GnuPlotter: Saving plot-2_00295.png
+Time: 295 
+GnuPlotter: Saving plot-1_00300.png
+GnuPlotter: Saving plot-2_00300.png
+Time: 300 
+GnuPlotter: Saving plot-1_00305.png
+GnuPlotter: Saving plot-2_00305.png
+Time: 305 
+GnuPlotter: Saving plot-1_00310.png
+GnuPlotter: Saving plot-2_00310.png
+Time: 310 
+GnuPlotter: Saving plot-1_00315.png
+GnuPlotter: Saving plot-2_00315.png
+Time: 315 
+GnuPlotter: Saving plot-1_00320.png
+GnuPlotter: Saving plot-2_00320.png
+Time: 320 
+GnuPlotter: Saving plot-1_00325.png
+GnuPlotter: Saving plot-2_00325.png
+Time: 325 
+GnuPlotter: Saving plot-1_00330.png
+GnuPlotter: Saving plot-2_00330.png
+Time: 330 
+GnuPlotter: Saving plot-1_00335.png
+GnuPlotter: Saving plot-2_00335.png
+Time: 335 
+GnuPlotter: Saving plot-1_00340.png
+GnuPlotter: Saving plot-2_00340.png
+Time: 340 
+GnuPlotter: Saving plot-1_00345.png
+GnuPlotter: Saving plot-2_00345.png
+Time: 345 
+GnuPlotter: Saving plot-1_00350.png
+GnuPlotter: Saving plot-2_00350.png
+Time: 350 
+GnuPlotter: Saving plot-1_00355.png
+GnuPlotter: Saving plot-2_00355.png
+Time: 355 
+GnuPlotter: Saving plot-1_00360.png
+GnuPlotter: Saving plot-2_00360.png
+Time: 360 
+GnuPlotter: Saving plot-1_00365.png
+GnuPlotter: Saving plot-2_00365.png
+Time: 365 
+GnuPlotter: Saving plot-1_00370.png
+GnuPlotter: Saving plot-2_00370.png
+Time: 370 
+GnuPlotter: Saving plot-1_00375.png
+GnuPlotter: Saving plot-2_00375.png
+Time: 375 
+GnuPlotter: Saving plot-1_00380.png
+GnuPlotter: Saving plot-2_00380.png
+Time: 380 
+GnuPlotter: Saving plot-1_00385.png
+GnuPlotter: Saving plot-2_00385.png
+Time: 385 
+GnuPlotter: Saving plot-1_00390.png
+GnuPlotter: Saving plot-2_00390.png
+Time: 390 
+GnuPlotter: Saving plot-1_00395.png
+GnuPlotter: Saving plot-2_00395.png
+Time: 395 
+GnuPlotter: Saving plot-1_00400.png
+GnuPlotter: Saving plot-2_00400.png
+Time: 400 
+GnuPlotter: Saving plot-1_00405.png
+GnuPlotter: Saving plot-2_00405.png
+Time: 405 
+GnuPlotter: Saving plot-1_00410.png
+GnuPlotter: Saving plot-2_00410.png
+Time: 410 
+GnuPlotter: Saving plot-1_00415.png
+GnuPlotter: Saving plot-2_00415.png
+Time: 415 
+GnuPlotter: Saving plot-1_00420.png
+GnuPlotter: Saving plot-2_00420.png
+Time: 420 
+GnuPlotter: Saving plot-1_00425.png
+GnuPlotter: Saving plot-2_00425.png
+Time: 425 
+GnuPlotter: Saving plot-1_00430.png
+GnuPlotter: Saving plot-2_00430.png
+Time: 430 
+GnuPlotter: Saving plot-1_00435.png
+GnuPlotter: Saving plot-2_00435.png
+Time: 435 
+GnuPlotter: Saving plot-1_00440.png
+GnuPlotter: Saving plot-2_00440.png
+Time: 440 
+GnuPlotter: Saving plot-1_00445.png
+GnuPlotter: Saving plot-2_00445.png
+Time: 445 
+GnuPlotter: Saving plot-1_00450.png
+GnuPlotter: Saving plot-2_00450.png
+Time: 450 
+GnuPlotter: Saving plot-1_00455.png
+GnuPlotter: Saving plot-2_00455.png
+Time: 455 
+GnuPlotter: Saving plot-1_00460.png
+GnuPlotter: Saving plot-2_00460.png
+Time: 460 
+GnuPlotter: Saving plot-1_00465.png
+GnuPlotter: Saving plot-2_00465.png
+Time: 465 
+GnuPlotter: Saving plot-1_00470.png
+GnuPlotter: Saving plot-2_00470.png
+Time: 470 
+GnuPlotter: Saving plot-1_00475.png
+GnuPlotter: Saving plot-2_00475.png
+Time: 475 
+GnuPlotter: Saving plot-1_00480.png
+GnuPlotter: Saving plot-2_00480.png
+Time: 480 
+GnuPlotter: Saving plot-1_00485.png
+GnuPlotter: Saving plot-2_00485.png
+Time: 485 
+GnuPlotter: Saving plot-1_00490.png
+GnuPlotter: Saving plot-2_00490.png
+Time: 490 
+GnuPlotter: Saving plot-1_00495.png
+GnuPlotter: Saving plot-2_00495.png
+Time: 495 
+GnuPlotter: Saving plot-1_00500.png
+GnuPlotter: Saving plot-2_00500.png
+Time: 500 
+sampler 1 layer 10
+
+=======================================================
+    SCHEDULER PERFORMANCE STATISTICS
+=======================================================
+
+    +  45.5% = 1.6820s (0.0174)  | Initialisation []
+    +  45.2% = 1.6727s (0.0976)  | Gnuplotter [casp9_active]
+    +   1.0% = 0.0384s (0.1772)  | CPM [cell.center,cell.length,cell.surface,cell.type,cell.volume]
+    +   0.6% = 0.0232s (0.0232)  | Gnuplotter [cytc_released]
+    +   0.3% = 0.0098s (0.0096)  | Logger [casp9_active,casp9_inactive,cytc_released]
+    +   0.2% = 0.0093s (0.0323)  | System [cytc_released,k_act,k_deg -> casp9_active,casp9_inactive]
+    +   0.0% = 0.0009s (0.0039)  | Event [cell.center.x,cell.center.y,time -> cytc_released]
+    +   0.0% = 0.0004s (0.0004)  | ModelGraph []
+
+======================================================
+
+=== Simulation finished ===
+Wall Time   = 3s 698ms
+CPU Time    = 0s 366ms (10 threads)
+

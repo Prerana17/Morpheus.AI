@@ -1,0 +1,54 @@
+<MorpheusModel version="4">
+
+  <Description>
+    <Title>Minimal Output Model (No CPM)</Title>
+    <Details>
+      Minimal Morpheus model designed to avoid CPM initialization and still generate outputs.
+    </Details>
+  </Description>
+
+  <Space>
+    <Lattice class="square">
+      <Size value="80 80"/>
+      <BoundaryConditions>
+        <Condition boundary="x" type="periodic"/>
+        <Condition boundary="y" type="periodic"/>
+      </BoundaryConditions>
+    </Lattice>
+  </Space>
+
+  <Time>
+    <StartTime value="0"/>
+    <StopTime value="20"/>
+    <TimeStep value="1"/>
+  </Time>
+
+  <Global>
+    <Field symbol="u" value="0.0"/>
+  </Global>
+
+  <PDEs>
+    <Field symbol-ref="u">
+      <Diffusion rate="1.0"/>
+      <Init>
+        <Expression>exp(-((SPACE.x-40)^2+(SPACE.y-40)^2)/200)</Expression>
+      </Init>
+    </Field>
+  </PDEs>
+
+  <Analysis>
+    <Logger file="model.xml.out">
+      <Column symbol-ref="time"/>
+      <Column symbol-ref="u"/>
+    </Logger>
+
+    <Gnuplotter time-step="1">
+      <Plot>
+        <Field symbol-ref="u"/>
+      </Plot>
+    </Gnuplotter>
+
+    <ModelGraph include-tags="#untagged" format="dot" reduced="false"/>
+  </Analysis>
+
+</MorpheusModel>

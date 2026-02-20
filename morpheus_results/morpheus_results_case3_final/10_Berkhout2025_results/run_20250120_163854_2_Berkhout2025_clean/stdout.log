@@ -1,0 +1,852 @@
+Setting output directory /Users/prerana/Desktop/morpheus/run_20250120_163854_2_Berkhout2025_clean
+Initializing from file model.xml
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/System/DiffEqn/Expression to /MorpheusModel/Global/System/DiffEqn/Reaction
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion[@rate!=~0(?:\.0+)?]/@rate to /MorpheusModel/Global/System/DiffEqn[@symbol-ref=%1]/Diffusion/@text
+AutoFix: Moved 4 element(s)  matching /MorpheusModel/Global/Field[(@symbol)]/Diffusion to 
+Applied 12 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 0 with seed 1769707907
+Intitalize Thread Intitalize Thread 3 with seed 432140103
+4 with seed Intitalize Thread Intitalize Thread 8 with seed 304747882
+5 with seed 28250583981162384716
+
+Intitalize Thread 2 with seed 1759192292
+Intitalize Thread Intitalize Thread 97 with seed 2251391443
+ with seed 4165779044
+Intitalize Thread 6 with seed 1184469892
+Intitalize Thread 1 with seed 1086973816
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread 0 with seed 123
+Intitalize Thread Intitalize Thread Intitalize Thread 1 with seed 2256526400
+Intitalize Thread 4 with seed 1386903166
+Intitalize Thread Intitalize Thread 8Intitalize Thread 76 with seed  with seed  with seed 4226128334
+2342964264
+1320940964
+Intitalize Thread 3 with seed 4068791613
+2 with seed 256824811
+Intitalize Thread 5 with seed 3850189868
+9 with seed 2111863253
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 250, 100, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [6] Global Plugins
+getXMLAttribute: seeking for Field->symbol: SHH
+Registering Symbol SHH of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: BMP4
+Registering Symbol BMP4 of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: FGF8
+Registering Symbol FGF8 of linktype FieldLink in Scope root
+getXMLAttribute: seeking for Field->symbol: ATRA
+Registering Symbol ATRA of linktype FieldLink in Scope root
+getXMLAttribute: seeking for System->time-step: 0.1
+Creating subscope System in scope root
+getXMLAttribute: seeking for System->solver: runge-kutta
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: SHH
+getXMLAttribute: seeking for Reaction->text: -0.01 * SHH
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 10.0
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: BMP4
+getXMLAttribute: seeking for Reaction->text: -0.01 * BMP4
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 10.0
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: FGF8
+getXMLAttribute: seeking for Reaction->text: -0.01 * FGF8
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 8.0
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: ATRA
+getXMLAttribute: seeking for Reaction->text: -0.01 * ATRA
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text: 12.0
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Variable->name .. not found
+getXMLAttribute: seeking for Variable->symbol: total_cells
+getXMLAttribute: seeking for Variable->value: 0.0
+getXMLAttribute: seeking for Variable->notation .. not found
+Registering Symbol total_cells of linktype VariableLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[MFP] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[MFP]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[MFP]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[MFP]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[MFP]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[MFP]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[MFP]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[MFP]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol celltype.MFP.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.MFP.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[LFP] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[LFP]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[LFP]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[LFP]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[LFP]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[LFP]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[LFP]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[LFP]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol celltype.LFP.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.LFP.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[pMN] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[pMN]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[pMN]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[pMN]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[pMN]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[pMN]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[pMN]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[pMN]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol celltype.pMN.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.pMN.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[p3] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[p3]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[p3]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[p3]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[p3]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[p3]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[p3]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[p3]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol celltype.p3.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.p3.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[p2] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[p2]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[p2]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[p2]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[p2]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[p2]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[p2]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[p2]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol celltype.p2.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.p2.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[p1] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[p1]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[p1]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[p1]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[p1]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[p1]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[p1]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[p1]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol celltype.p1.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.p1.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[p0] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[p0]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[p0]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[p0]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[p0]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[p0]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[p0]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[p0]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol celltype.p0.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.p0.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[dorsal] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[dorsal]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[dorsal]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[dorsal]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[dorsal]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[dorsal]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[dorsal]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[dorsal]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol celltype.dorsal.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.dorsal.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[medium]
+Registering Symbol SHH_prod of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[medium]
+Registering Symbol BMP4_prod of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[medium]
+Registering Symbol FGF8_prod of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[medium]
+Registering Symbol ATRA_prod of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 5.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[MFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[MFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[MFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[MFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: NKX22
+getXMLAttribute: seeking for Property->value: 0.8
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NKX22 of linktype CellPropertyLink in Scope CellType[MFP]
+Registering Symbol NKX22 of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: OLIG2
+getXMLAttribute: seeking for Property->value: 0.1
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol OLIG2 of linktype CellPropertyLink in Scope CellType[MFP]
+Registering Symbol OLIG2 of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: PAX6
+getXMLAttribute: seeking for Property->value: 0.1
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX6 of linktype CellPropertyLink in Scope CellType[MFP]
+Registering Symbol PAX6 of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.3
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[MFP]
+Registering Symbol apical_constriction of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[MFP]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: NKX22
+getXMLAttribute: seeking for Expression->text: NKX22 + 0.01 * (1.0/(1.0 + exp(-5.0*(SHH - 3.0)))) - 0.02 * NKX22
+getXMLAttribute: seeking for PropertyVector->name .. not found
+getXMLAttribute: seeking for PropertyVector->symbol: polarity
+getXMLAttribute: seeking for PropertyVector->value: 0.0, 1.0, 0.0
+getXMLAttribute: seeking for PropertyVector->notation .. not found
+Registering Symbol polarity of linktype CellPropertyLink in Scope CellType[MFP]
+Registering Symbol polarity of linktype CompositeLink in Scope root
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope root
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope root
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope root
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope root
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope root
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope root
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope CellType[MFP]
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope CellType[MFP]
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 3.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[LFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[LFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[LFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[LFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: NKX22
+getXMLAttribute: seeking for Property->value: 0.6
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NKX22 of linktype CellPropertyLink in Scope CellType[LFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: OLIG2
+getXMLAttribute: seeking for Property->value: 0.2
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol OLIG2 of linktype CellPropertyLink in Scope CellType[LFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: PAX6
+getXMLAttribute: seeking for Property->value: 0.2
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX6 of linktype CellPropertyLink in Scope CellType[LFP]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.25
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[LFP]
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[LFP]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: OLIG2
+getXMLAttribute: seeking for Expression->text: OLIG2 + 0.01 * (1.0/(1.0 + exp(-5.0*(SHH - 2.0)))) - 0.02 * OLIG2
+getXMLAttribute: seeking for PropertyVector->name .. not found
+getXMLAttribute: seeking for PropertyVector->symbol: polarity
+getXMLAttribute: seeking for PropertyVector->value: 0.0, 1.0, 0.0
+getXMLAttribute: seeking for PropertyVector->notation .. not found
+Registering Symbol polarity of linktype CellPropertyLink in Scope CellType[LFP]
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope CellType[LFP]
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope CellType[LFP]
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[pMN]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[pMN]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[pMN]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[pMN]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: NKX22
+getXMLAttribute: seeking for Property->value: 0.3
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NKX22 of linktype CellPropertyLink in Scope CellType[pMN]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: OLIG2
+getXMLAttribute: seeking for Property->value: 0.7
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol OLIG2 of linktype CellPropertyLink in Scope CellType[pMN]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: PAX6
+getXMLAttribute: seeking for Property->value: 0.4
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX6 of linktype CellPropertyLink in Scope CellType[pMN]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.15
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[pMN]
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[pMN]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: OLIG2
+getXMLAttribute: seeking for Expression->text: OLIG2 + 0.01 * (1.0/(1.0 + exp(-5.0*(SHH - 1.5)))) - 0.02 * OLIG2
+getXMLAttribute: seeking for Rule->symbol-ref: PAX6
+getXMLAttribute: seeking for Expression->text: PAX6 + 0.01 * (1.0/(1.0 + exp(-5.0*(2.0 - SHH)))) - 0.02 * PAX6
+getXMLAttribute: seeking for PropertyVector->name .. not found
+getXMLAttribute: seeking for PropertyVector->symbol: polarity
+getXMLAttribute: seeking for PropertyVector->value: 0.0, 1.0, 0.0
+getXMLAttribute: seeking for PropertyVector->notation .. not found
+Registering Symbol polarity of linktype CellPropertyLink in Scope CellType[pMN]
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope CellType[pMN]
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope CellType[pMN]
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 0.3
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[p3]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[p3]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[p3]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[p3]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: NKX22
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NKX22 of linktype CellPropertyLink in Scope CellType[p3]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: OLIG2
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol OLIG2 of linktype CellPropertyLink in Scope CellType[p3]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: PAX6
+getXMLAttribute: seeking for Property->value: 0.3
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX6 of linktype CellPropertyLink in Scope CellType[p3]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.1
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[p3]
+getXMLAttribute: seeking for PropertyVector->name .. not found
+getXMLAttribute: seeking for PropertyVector->symbol: polarity
+getXMLAttribute: seeking for PropertyVector->value: 0.0, 1.0, 0.0
+getXMLAttribute: seeking for PropertyVector->notation .. not found
+Registering Symbol polarity of linktype CellPropertyLink in Scope CellType[p3]
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope CellType[p3]
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope CellType[p3]
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 0.1
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[p2]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[p2]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[p2]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[p2]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: NKX22
+getXMLAttribute: seeking for Property->value: 0.2
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NKX22 of linktype CellPropertyLink in Scope CellType[p2]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: OLIG2
+getXMLAttribute: seeking for Property->value: 0.3
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol OLIG2 of linktype CellPropertyLink in Scope CellType[p2]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: PAX6
+getXMLAttribute: seeking for Property->value: 0.6
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX6 of linktype CellPropertyLink in Scope CellType[p2]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.05
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[p2]
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[p2]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: PAX6
+getXMLAttribute: seeking for Expression->text: PAX6 + 0.01 * (1.0/(1.0 + exp(-5.0*(1.5 - SHH)))) - 0.02 * PAX6
+getXMLAttribute: seeking for PropertyVector->name .. not found
+getXMLAttribute: seeking for PropertyVector->symbol: polarity
+getXMLAttribute: seeking for PropertyVector->value: 0.0, 1.0, 0.0
+getXMLAttribute: seeking for PropertyVector->notation .. not found
+Registering Symbol polarity of linktype CellPropertyLink in Scope CellType[p2]
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope CellType[p2]
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope CellType[p2]
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[p1]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.2
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[p1]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 1.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[p1]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[p1]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: NKX22
+getXMLAttribute: seeking for Property->value: 0.1
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NKX22 of linktype CellPropertyLink in Scope CellType[p1]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: OLIG2
+getXMLAttribute: seeking for Property->value: 0.1
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol OLIG2 of linktype CellPropertyLink in Scope CellType[p1]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: PAX6
+getXMLAttribute: seeking for Property->value: 0.7
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX6 of linktype CellPropertyLink in Scope CellType[p1]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.02
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[p1]
+getXMLAttribute: seeking for PropertyVector->name .. not found
+getXMLAttribute: seeking for PropertyVector->symbol: polarity
+getXMLAttribute: seeking for PropertyVector->value: 0.0, 1.0, 0.0
+getXMLAttribute: seeking for PropertyVector->notation .. not found
+Registering Symbol polarity of linktype CellPropertyLink in Scope CellType[p1]
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope CellType[p1]
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope CellType[p1]
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[p0]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[p0]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 0.5
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[p0]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 0.3
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[p0]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: NKX22
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NKX22 of linktype CellPropertyLink in Scope CellType[p0]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: OLIG2
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol OLIG2 of linktype CellPropertyLink in Scope CellType[p0]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: PAX6
+getXMLAttribute: seeking for Property->value: 0.8
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX6 of linktype CellPropertyLink in Scope CellType[p0]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.01
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[p0]
+getXMLAttribute: seeking for PropertyVector->name .. not found
+getXMLAttribute: seeking for PropertyVector->symbol: polarity
+getXMLAttribute: seeking for PropertyVector->value: 0.0, 1.0, 0.0
+getXMLAttribute: seeking for PropertyVector->notation .. not found
+Registering Symbol polarity of linktype CellPropertyLink in Scope CellType[p0]
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope CellType[p0]
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope CellType[p0]
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.8
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: SHH_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol SHH_prod of linktype CellPropertyLink in Scope CellType[dorsal]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: BMP4_prod
+getXMLAttribute: seeking for Property->value: 3.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol BMP4_prod of linktype CellPropertyLink in Scope CellType[dorsal]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: FGF8_prod
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol FGF8_prod of linktype CellPropertyLink in Scope CellType[dorsal]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: ATRA_prod
+getXMLAttribute: seeking for Property->value: 1.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol ATRA_prod of linktype CellPropertyLink in Scope CellType[dorsal]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: NKX22
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol NKX22 of linktype CellPropertyLink in Scope CellType[dorsal]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: OLIG2
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol OLIG2 of linktype CellPropertyLink in Scope CellType[dorsal]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: PAX6
+getXMLAttribute: seeking for Property->value: 0.3
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol PAX6 of linktype CellPropertyLink in Scope CellType[dorsal]
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: apical_constriction
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol apical_constriction of linktype CellPropertyLink in Scope CellType[dorsal]
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[dorsal]
+getXMLAttribute: seeking for System->solver: euler
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: PAX6
+getXMLAttribute: seeking for Expression->text: PAX6 + 0.01 * (1.0/(1.0 + exp(-5.0*(BMP4 - 2.0)))) - 0.02 * PAX6
+getXMLAttribute: seeking for PropertyVector->name .. not found
+getXMLAttribute: seeking for PropertyVector->symbol: polarity
+getXMLAttribute: seeking for PropertyVector->value: 0.0, 1.0, 0.0
+getXMLAttribute: seeking for PropertyVector->notation .. not found
+Registering Symbol polarity of linktype CellPropertyLink in Scope CellType[dorsal]
+Registering Symbol polarity.x of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol polarity.y of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol polarity.z of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol polarity.phi of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol polarity.theta of linktype VectorComponentLink in Scope CellType[dorsal]
+Registering Symbol polarity.abs of linktype VectorComponentLink in Scope CellType[dorsal]
+CellTypes defined: 'LFP' 'MFP' 'dorsal' 'medium' 'p0' 'p1' 'p2' 'p3' 'pMN' 
+getXMLAttribute: seeking for MonteCarloSampler/MCSDuration->value: 1.0
+getXMLAttribute: seeking for MonteCarloSampler->stepper: edgelist
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->temperature: 3.0
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->yield .. not found
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 5
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 5
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 2
+Assigning Shape Neighborhood of size 3 -> 28 neighbors.
+Setting boundary neighborhood to order 6
+Creating cell layer of size 0.724609 MB
+with initial state set to CellType 'medium'
+getXMLAttribute: seeking for InitRectangle->number-of-cells: 8
+getXMLAttribute: seeking for InitRectangle->mode: random
+getXMLAttribute: seeking for InitRectangle->random-offset .. not found
+getXMLAttribute: seeking for Dimensions->origin .. not found

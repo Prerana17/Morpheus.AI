@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Germinal Center Response Model - Mu et al. 2024</Title>
+        <Details>
+Multiscale spatial model of germinal center B cell dynamics.
+Features:
+- Dark zone (DZ) and light zone (LZ) with polarized chemokine gradients
+- B cell chemotaxis, proliferation, and affinity maturation
+- Follicular dendritic cells (FDC) in LZ
+- CXC chemokine (C-X-C motif) ligand 12-expressing reticular cells (CRC) in DZ
+- T follicular helper (Tfh) cells in LZ
+- CXCL12 and CXCL13 chemokine gradients
+
+Reference: Mu, Scharer, Kaminski, Zhang (2024) Front Immunol 15:1377303
+        </Details>
+    </Description>
+    
+    <Global>
+        <Field symbol="CXCL12" name="chemokine_DZ" value="0">
+            <Diffusion rate="2.0"/>
+        </Field>
+        
+        <Field symbol="CXCL13" name="chemokine_LZ" value="0">
+            <Diffusion rate="2.0"/>
+        </Field>
+        
+        <System solver="Euler [fixed, O(1)]" time-step="1.0">
+            <DiffEqn symbol-ref="CXCL12">
+                <Expression>-0.001*CXCL12</Expression>
+            </DiffEqn>
+            
+            <DiffEqn symbol-ref="CXCL13">
+                <Expression>-0.001*CXCL13</Expression>
+            </DiffEqn>
+        </s>
+    </Global>
+    
+    <Space>
+        <Lattice class="cubic">
+            <Size symbol="size" value="250, 200, 11"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="noflux"/>
+                <Condition boundary="z" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="5000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="BCell" class="biological">
+            <Property symbol="affinity" value="5.0"/>
+            <Property symbol="generation" value="0"/>
+            <Property symbol="in_DZ" value="0"/>
+            <Property symbol="CXCL12_sense" value="0"/>
+            <Property symbol="CXCL13_sense" value="0"/>
+            
+            <VolumeConstraint target="50" strength="1.0"/>
+            <SurfaceConstraint target="1.0" strength="0.5" mode="aspherity"/>
+            
+            <Mapper name="sense_CXCL12">
+                <Input value="CXCL12"/>
+                <Output symbol-ref="CXCL12_sense" mapping="average"/>
+            </Mapper>
+            
+            <Mapper name="sense_CXCL13">
+                <Input value="CXCL13"/>
+                <Output symbol-ref="CXCL13_sense" mapping="average"/>
+            </Mapper>
+            
+            <Chemotaxis field="CXCL12" strength="50" contact-inhibition="false"/>
+            <Chemotaxis field="CXCL13" strength="50" contact-inhibition="false"/>
+            
+            <CellDivision division-plane="major">
+                <Condition>in_DZ > 0.5 and cell.volume > 45 and rand_uni(0,1) &lt; 0.01</Condition>
+                <Triggers>
+                    <Rule symbol-ref="generation">
+                        <Expression>generation + 0.5</Expression>
+                    </Rule>
+                    <Rule symbol-ref="affinity">
+                        <Expression>affinity + (rand_uni(0,1) - 0.5)</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <Event time-step="10">
+                <Condition>cell.center.x &lt; 125</Condition>
+                <Triggers>
+                    <Rule symbol-ref="in_DZ">
+                        <Expression>1</Expression>
+                    </Rule>
+                </Triggers>
+            </Event>
+            
+            <Event time-step="10">
+                <Condition>cell.center.x >= 125</Condition>
+                <Triggers>
+                    <Rule symbol-ref="in_DZ">
+                        <Expression>0</Expression>
+                    </Rule>
+                </Triggers>
+            </Event>
+        </CellType>
+        
+        <CellType name="FDC" class="biological">
+            <VolumeConstraint target="30" strength="10.0"/>
+            <FreezeMotion/>
+            <Property symbol="CXCL13_production" value="3.6"/>
+        </CellType>
+        
+        <CellType name="CRC" class="biological">
+            <VolumeConstraint target="30" strength="10.0"/>
+            <FreezeMotion/>
+            <Property symbol="CXCL12_production" value="3.6"/>
+        </CellType>
+        
+        <CellType name="TCell" class="biological">
+            <VolumeConstraint target="25" strength="10.0"/>
+            <FreezeMotion/>
+        </CellType>
+        
+        <CellType name="Medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="BCell" type2="BCell" value="5.0"/>
+            <Contact type1="BCell" type2="Medium" value="2.0"/>
+            <Contact type1="BCell" type2="FDC" value="3.0"/>
+            <Contact type1="BCell" type2="CRC" value="3.0"/>
+            <Contact type1="BCell" type2="TCell" value="3.0"/>
+            <Contact type1="FDC" type2="Medium" value="0"/>
+            <Contact type1="FDC" type2="FDC" value="0"/>
+            <Contact type1="CRC" type2="Medium" value="0"/>
+            <Contact type1="CRC" type2="CRC" value="0"/>
+            <Contact type1="CRC" type2="FDC" value="0"/>
+            <Contact type1="TCell" type2="Medium" value="0"/>
+            <Contact type1="TCell" type2="TCell" value="0"/>
+            <Contact type1="TCell" type2="FDC" value="0"/>
+            <Contact type1="TCell" type2="CRC" value="0"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="15.0"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="CRC" size="45">
+            <InitRectangle mode="random" number-of-cells="45">
+                <Dimensions size="125, 200, 11" origin="0, 0, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <Population type="FDC" size="45">
+            <InitRectangle mode="random" number-of-cells="45">
+                <Dimensions size="125, 200, 11" origin="125, 0, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <Population type="TCell" size="36">
+            <InitRectangle mode="random" number-of-cells="36">
+                <Dimensions size="125, 200, 11" origin="125, 0, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <Population type="BCell" size="50">
+            <InitRectangle mode="random" number-of-cells="50">
+                <Dimensions size="250, 200, 11" origin="0, 0, 0"/>
+            </InitRectangle>
+            <InitProperty symbol-ref="affinity">
+                <Expression>5.0</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="false">
+            <Terminal name="png"/>
+            <Plot slice="5">
+                <Cells value="cell.type" opacity="0.7">
+                    <ColorMap>
+                        <Color value="1" color="cyan"/>
+                        <Color value="2" color="red"/>
+                        <Color value="3" color="blue"/>
+                        <Color value="4" color="green"/>
+                    </ColorMap>
+                </Cells>
+                <Field symbol-ref="CXCL12" isolines="3" min="0">
+                    <ColorMap>
+                        <Color value="5" color="blue"/>
+                        <Color value="0" color="white"/>
+                    </ColorMap>
+                </Field>
+                <Field symbol-ref="CXCL13" isolines="3" min="0">
+                    <ColorMap>
+                        <Color value="5" color="red"/>
+                        <Color value="0" color="white"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="50">
+            <Input>
+                <Symbol symbol-ref="celltype.BCell.size"/>
+                <Symbol symbol-ref="cell.volume"/>
+            </Input>
+            <o>
+                <TextOutput file-format="csv"/>
+            </o>
+            <Plots>
+                <Plot time-step="200">
+                    <Style style="linespoints"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="celltype.BCell.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

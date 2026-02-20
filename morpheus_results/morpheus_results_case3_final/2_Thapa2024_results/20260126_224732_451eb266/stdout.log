@@ -1,0 +1,419 @@
+Setting output directory /Users/prerana/Desktop/morpheus/20260126_224732_451eb266
+Initializing from file model.xml
+Applied 0 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread Intitalize Thread 0 with seed 1769464374
+Intitalize Thread Intitalize Thread 7 with seed 2554071875
+Intitalize Thread 6 with seed 2039085529
+3 with seed 3937667169
+8 with seed 277699029
+Intitalize Thread 1 with seed 739256013Intitalize Thread 
+9 with seed 4012727170
+Intitalize Thread Intitalize Thread 24 with seed 322958001
+ with seed 2488846960
+Intitalize Thread 5 with seed 2613361018
+Registering Symbol time of linktype TimeLink in Scope root
+Intitalize Thread 8 with seed 3891735340
+Intitalize Thread Intitalize Thread 2 with seed 553599097
+4 with seed Intitalize Thread Intitalize Thread Intitalize Thread 69 with seed 3925872341
+13378368345
+ with seed Intitalize Thread 7 with seed 24062371253934633528
+
+Intitalize Thread Intitalize Thread 1 with seed 3793882298
+Intitalize Thread 0 with seed 12345
+3 with seed 4015327485
+ with seed 3604679076
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 200, 200, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [3] Global Plugins
+getXMLAttribute: seeking for Variable->name: Total area occupied by cancer cells
+getXMLAttribute: seeking for Variable->symbol: total_cancer_area
+getXMLAttribute: seeking for Variable->value: 0
+getXMLAttribute: seeking for Variable->notation .. not found
+Registering Symbol total_cancer_area of linktype VariableLink in Scope root
+getXMLAttribute: seeking for Variable->name: Area occupied by senescent cells
+getXMLAttribute: seeking for Variable->symbol: senescent_area
+getXMLAttribute: seeking for Variable->value: 0
+getXMLAttribute: seeking for Variable->notation .. not found
+Registering Symbol senescent_area of linktype VariableLink in Scope root
+getXMLAttribute: seeking for Variable->name: Number of extrusions
+getXMLAttribute: seeking for Variable->symbol: extrusion_count
+getXMLAttribute: seeking for Variable->value: 0
+getXMLAttribute: seeking for Variable->notation .. not found
+Registering Symbol extrusion_count of linktype VariableLink in Scope root
+Creating subscope CellType[senescent_mesothelia] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[senescent_mesothelia]
+Registering Symbol celltype.senescent_mesothelia.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.senescent_mesothelia.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[nonsenescent_mesothelia] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[nonsenescent_mesothelia]
+Registering Symbol celltype.nonsenescent_mesothelia.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.nonsenescent_mesothelia.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[cancer_cells] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[cancer_cells]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[cancer_cells]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[cancer_cells]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[cancer_cells]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[cancer_cells]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[cancer_cells]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[cancer_cells]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[cancer_cells]
+Registering Symbol celltype.cancer_cells.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.cancer_cells.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: 300
+getXMLAttribute: seeking for VolumeConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.2
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.5
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name: Age of senescent cell
+getXMLAttribute: seeking for Property->symbol: cell_age
+getXMLAttribute: seeking for Property->value: rand_uni(50,100)
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cell_age of linktype CellPropertyLink in Scope CellType[senescent_mesothelia]
+Registering Symbol cell_age of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Number of cancer cell neighbors
+getXMLAttribute: seeking for Property->symbol: neighbors_cancer
+getXMLAttribute: seeking for Property->value: 0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol neighbors_cancer of linktype CellPropertyLink in Scope CellType[senescent_mesothelia]
+Registering Symbol neighbors_cancer of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Input->scaling: cell
+getXMLAttribute: seeking for Input->value: cell.type == celltype.cancer_cells.id
+getXMLAttribute: seeking for Input->noflux-cell-medium .. not found
+getXMLAttribute: seeking for Output[0]->mapping: sum
+getXMLAttribute: seeking for Output[0]->symbol-ref: neighbors_cancer
+getXMLAttribute: seeking for Condition->text: neighbors_cancer >= 2 and cell.surface > 20
+getXMLAttribute: seeking for Shrinkage->target-volume .. not found
+getXMLAttribute: seeking for Shrinkage->remove-volume .. not found
+getXMLAttribute: seeking for Shrinkage->replace-with .. not found
+getXMLAttribute: seeking for VolumeConstraint->target: 200
+getXMLAttribute: seeking for VolumeConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.5
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name: Age of normal cell
+getXMLAttribute: seeking for Property->symbol: cell_age
+getXMLAttribute: seeking for Property->value: rand_uni(10,30)
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cell_age of linktype CellPropertyLink in Scope CellType[nonsenescent_mesothelia]
+getXMLAttribute: seeking for Property->name: Number of cancer cell neighbors
+getXMLAttribute: seeking for Property->symbol: neighbors_cancer
+getXMLAttribute: seeking for Property->value: 0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol neighbors_cancer of linktype CellPropertyLink in Scope CellType[nonsenescent_mesothelia]
+getXMLAttribute: seeking for Input->scaling: cell
+getXMLAttribute: seeking for Input->value: cell.type == celltype.cancer_cells.id
+getXMLAttribute: seeking for Input->noflux-cell-medium .. not found
+getXMLAttribute: seeking for Output[0]->mapping: sum
+getXMLAttribute: seeking for Output[0]->symbol-ref: neighbors_cancer
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1
+getXMLAttribute: seeking for SurfaceConstraint->target: 1.0
+getXMLAttribute: seeking for SurfaceConstraint->strength: 0.3
+getXMLAttribute: seeking for SurfaceConstraint->mode: aspherity
+getXMLAttribute: seeking for SurfaceConstraint->exponent .. not found
+getXMLAttribute: seeking for Property->name: Cancer cell division rate
+getXMLAttribute: seeking for Property->symbol: proliferation_rate
+getXMLAttribute: seeking for Property->value: 0.02
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol proliferation_rate of linktype CellPropertyLink in Scope CellType[cancer_cells]
+Registering Symbol proliferation_rate of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name: Contacts with senescent cells
+getXMLAttribute: seeking for Property->symbol: senescent_contacts
+getXMLAttribute: seeking for Property->value: 0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol senescent_contacts of linktype CellPropertyLink in Scope CellType[cancer_cells]
+Registering Symbol senescent_contacts of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Input->scaling: length
+getXMLAttribute: seeking for Input->value: cell.type == celltype.senescent_mesothelia.id
+getXMLAttribute: seeking for Input->noflux-cell-medium .. not found
+getXMLAttribute: seeking for Output[0]->mapping: sum
+getXMLAttribute: seeking for Output[0]->symbol-ref: senescent_contacts
+getXMLAttribute: seeking for Condition->text: cell.volume > 200 and rand_uni(0,1) < 0.008
+getXMLAttribute: seeking for CellDivision->division-plane: random
+getXMLAttribute: seeking for CellDivision->orientation .. not found
+getXMLAttribute: seeking for CellDivision->write-log .. not found
+getXMLAttribute: seeking for CellDivision->trigger .. not found
+getXMLAttribute: seeking for DirectedMotion->direction: rand_norm(0,1), rand_norm(0,1), 0
+getXMLAttribute: seeking for DirectedMotion->strength: 1.5
+getXMLAttribute: seeking for DirectedMotion->protrusion .. not found
+getXMLAttribute: seeking for DirectedMotion->retraction .. not found
+CellTypes defined: 'cancer_cells' 'medium' 'nonsenescent_mesothelia' 'senescent_mesothelia' 
+getXMLAttribute: seeking for MonteCarloSampler/MCSDuration->value: 1
+getXMLAttribute: seeking for MonteCarloSampler->stepper: edgelist
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->temperature: 3
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->yield: 0.1
+getXMLAttribute: seeking for Contact->value: 12
+getXMLAttribute: seeking for Contact->value: 10
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 8
+getXMLAttribute: seeking for Contact->value: 6
+getXMLAttribute: seeking for Contact->value: 4
+getXMLAttribute: seeking for Contact->value: 7
+getXMLAttribute: seeking for Contact->value: 10
+getXMLAttribute: seeking for Contact->value: 3
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 2
+Assigning Shape Neighborhood of size 3 -> 28 neighbors.
+Setting boundary neighborhood to order 6
+Creating cell layer of size 1.13281 MB
+with initial state set to CellType 'medium'
+Initializing celltype 'senescent_mesothelia'
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'celltype.cancer_cells.id' from Scope root
+Scope: Creating Accessor for symbol 'neighbors_cancer' from Scope CellType[senescent_mesothelia]
+Plugin NeighborhoodReporter: Registered input symbol dependencies cell.type [root] ,celltype.cancer_cells.id [root] ,
+PluginNeighborhoodReporter: Registered output symbol dependencies neighbors_cancer [CellType[senescent_mesothelia]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[senescent_mesothelia]
+noflux_cell_medium_interface.isDefined()
+Scope: Creating Accessor for symbol 'neighbors_cancer' from Scope CellType[senescent_mesothelia]
+Scope: Creating Accessor for symbol 'cell.surface' from Scope CellType[senescent_mesothelia]
+Plugin CellDeath: Registered input symbol dependencies cell.surface [CellType[senescent_mesothelia]] ,neighbors_cancer [CellType[senescent_mesothelia]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[senescent_mesothelia]
+Initializing celltype 'nonsenescent_mesothelia'
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'celltype.cancer_cells.id' from Scope root
+Scope: Creating Accessor for symbol 'neighbors_cancer' from Scope CellType[nonsenescent_mesothelia]
+Plugin NeighborhoodReporter: Registered input symbol dependencies cell.type [root] ,celltype.cancer_cells.id [root] ,
+PluginNeighborhoodReporter: Registered output symbol dependencies neighbors_cancer [CellType[nonsenescent_mesothelia]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[nonsenescent_mesothelia]
+noflux_cell_medium_interface.isDefined()
+Initializing celltype 'cancer_cells'
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'celltype.senescent_mesothelia.id' from Scope root
+Scope: Creating Accessor for symbol 'senescent_contacts' from Scope CellType[cancer_cells]
+Plugin NeighborhoodReporter: Registered input symbol dependencies cell.type [root] ,celltype.senescent_mesothelia.id [root] ,
+PluginNeighborhoodReporter: Registered output symbol dependencies senescent_contacts [CellType[cancer_cells]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[cancer_cells]
+noflux_cell_medium_interface.isDefined()
+Scope: Creating Accessor for symbol 'cell.volume' from Scope CellType[cancer_cells]
+Plugin CellDivision: Registered input symbol dependencies cell.volume [CellType[cancer_cells]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[cancer_cells]
+Initializing celltype 'medium'
+Scope: Creating Accessor for symbol 'cell.center' from Scope root
+Scope: Creating Accessor for symbol 'cell.volume' from Scope root
+Scope: Creating Accessor for symbol 'cell.surface' from Scope root
+Scope: Creating Accessor for symbol 'cell.length' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+CPM: InteractionEnergy has 28 neighbors
+CPM: InteractionEnergy was initialized with  IA_COLLAPSE 
+Loading Analysis tools [5]
+getXMLAttribute: seeking for Input->value: celltype.cancer_cells.volume
+getXMLAttribute: seeking for Polarity->symbol-ref .. not found
+getXMLAttribute: seeking for Output[0]->mapping: sum
+getXMLAttribute: seeking for Output[0]->symbol-ref: total_cancer_area
+getXMLAttribute: seeking for Input->value: celltype.senescent_mesothelia.volume
+getXMLAttribute: seeking for Polarity->symbol-ref .. not found
+getXMLAttribute: seeking for Output[0]->mapping: sum
+getXMLAttribute: seeking for Output[0]->symbol-ref: senescent_area
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size .. not found
+getXMLAttribute: seeking for Gnuplotter->time-step: 50
+getXMLAttribute: seeking for Cells->value: cell.type
+getXMLAttribute: seeking for Cells->value: senescent_contacts
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: time
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: celltype.senescent_mesothelia.size
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: celltype.nonsenescent_mesothelia.size
+getXMLAttribute: seeking for Input/Symbol[3]->symbol-ref: celltype.cancer_cells.size
+getXMLAttribute: seeking for Input/Symbol[4]->symbol-ref: extrusion_count
+getXMLAttribute: seeking for Input/Symbol[5]->symbol-ref: total_cancer_area
+getXMLAttribute: seeking for Input/Symbol[6]->symbol-ref: senescent_area
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Output/TextOutput->header .. not found
+getXMLAttribute: seeking for Output/TextOutput->header-guarding .. not found
+getXMLAttribute: seeking for Output/TextOutput->separator .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-name .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-numbering .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-separation .. not found
+getXMLAttribute: seeking for Output/TextOutput->file-format: csv
+getXMLAttribute: seeking for Plots/Plot[0]->time-step: 100
+getXMLAttribute: seeking for Plots/Plot[0]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->style: linespoints
+getXMLAttribute: seeking for Plots/Plot[0]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->line-width: 2
+getXMLAttribute: seeking for Plots/Plot[0]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[0]->symbol-ref: celltype.senescent_mesothelia.size
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[1]->symbol-ref: celltype.cancer_cells.size
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[2]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->time-step: 100
+getXMLAttribute: seeking for Plots/Plot[1]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[1]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[1]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->style: lines
+getXMLAttribute: seeking for Plots/Plot[1]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Style->line-width: 3
+getXMLAttribute: seeking for Plots/Plot[1]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[0]->symbol-ref: extrusion_count
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[1]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[2]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[1]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Logger->time-step: 25
+getXMLAttribute: seeking for ModelGraph->format .. not found
+getXMLAttribute: seeking for ModelGraph->reduced: false
+getXMLAttribute: seeking for ModelGraph->exclude-symbols .. not found
+getXMLAttribute: seeking for ModelGraph->include-tags: #untagged
+EvaluatorCache::registerSymbol(): Unknown symbol celltype.cancer_cells.volume
+Available is cell.center.abs,cell.center.phi,cell.center.theta,cell.center.x,cell.center.y,cell.center.z,cell.id,cell.type,cell.volume,celltype.cancer_cells.id,celltype.cancer_cells.size,celltype.medium.id,celltype.medium.size,celltype.nonsenescent_mesothelia.id,celltype.nonsenescent_mesothelia.size,celltype.senescent_mesothelia.id,celltype.senescent_mesothelia.size,extrusion_count,senescent_area,size.abs,size.phi,size.theta,size.x,size.y,size.z,space.abs,space.phi,space.theta,space.x,space.y,space.z,time,total_cancer_area,
+Generated symbol dependency graph. Exiting.

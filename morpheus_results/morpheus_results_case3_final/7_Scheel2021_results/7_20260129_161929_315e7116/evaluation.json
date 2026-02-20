@@ -1,0 +1,65 @@
+{
+  "run_id": "20260129_161929_315e7116",
+  "total_score": 7,
+  "max_possible_score": 7,
+  "score_percentage": 100.0,
+  "breakdown": {
+    "xml_error_count": 0,
+    "xml_error_penalty": 0,
+    "stderr_file_exists": true,
+    "model_graph_present": true,
+    "model_graph_files": [
+      "model_graph.dot"
+    ],
+    "model_graph_score": 1,
+    "time_lines_count": 101,
+    "time_score": 3,
+    "time_values_sample": [
+      0.0,
+      1.0,
+      2.0,
+      3.0,
+      4.0
+    ],
+    "last_time_value": 100.0,
+    "stdout_file_exists": true,
+    "stop_time": 100.0,
+    "last_simulation_time": 100.0,
+    "stop_time_match": true,
+    "stop_time_score": 1,
+    "results_generated": true,
+    "has_png_files": true,
+    "has_csv_files": true,
+    "png_files": [
+      "plot-3_00014.png",
+      "plot-3_00000.png",
+      "plot-3_00028.png",
+      "plot-4_00070.png",
+      "plot-4_00064.png",
+      "plot-4_00058.png",
+      "plot-1_00080.png",
+      "plot-1_00094.png",
+      "plot-2_00088.png",
+      "plot-2_00062.png",
+      "plot-2_00076.png",
+      "plot-1_00056.png",
+      "plot-1_00042.png",
+      "logger_2_plot_space.x_h_00050.png",
+      "plot-2_00100.png",
+      "plot-4_00098.png",
+      "plot-1_00068.png",
+      "plot-1_00054.png",
+      "plot-1_00040.png",
+      "plot-2_00048.png"
+    ],
+    "csv_files": [
+      "logger_1.csv",
+      "logger_2.csv"
+    ],
+    "png_count": 215,
+    "csv_count": 2,
+    "results_score": 1,
+    "bonus_many_results": 1
+  },
+  "timestamp": "2026-01-29T16:20:49.664393"
+}

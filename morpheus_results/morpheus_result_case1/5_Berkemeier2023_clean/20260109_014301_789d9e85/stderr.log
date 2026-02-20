@@ -1,0 +1,3 @@
+Error 'Invalid function-, variable- or constant name: "Symbol 'D' is only partially defined, i.e. not in all spatial scopes (CellTypes)!".' in expression "D" in root.
+
+XMLPath: MorpheusModel/CellTypes/CellType/NeighborhoodReporter[0]/Input

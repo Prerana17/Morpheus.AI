@@ -1,0 +1,700 @@
+RESEA RCH ARTICL E
+Physics-based tissue simulator to model
+multicellular systems: A study of liver
+regeneration and hepatocellular carcinoma
+recurrence
+Luciana Melina Luque
+ID
+1
+*, Carlos Manuel Carlevaro
+ID
+1,2
+*, Camilo Julio Llamoza
+Torres
+ID
+3
+, Enrique Lomba
+ID
+4
+1 Instituto de Fı ´ sica de Lı ´ quidos y Sistemas Biolo ´ gicos - CONICE T. La Plata, Argentina, 2 Departam ento de
+Ingenie rı ´ a Meca ´ nica, Universidad Tecnolo ´ gica Nacional, Facultad Regional La Plata, La Plata, Argentina,
+3 Hospital Clı ´ nico Univers itario Virgen de la Arrixaca. Murcia, España, 4 Instituto de Quı ´ mica Fı ´ sica
+Rocaso lano - CSIC. Madrid, España
+* lluque@i flysib.unlp.e du.ar (LML); manuel@ifl ysib.unlp.ed u.ar (CMC)
+Abstract
+We present a multiagent- based model that captures the interactions between different
+types of cells with their microenvironmen t, and enables the analysis of the emergent global
+behavior during tissue regeneration and tumor development. Using this model, we are able
+to reproduce the temporal dynamics of regular healthy cells and cancer cells, as well as the
+evolution of their three-dimensiona l spatial distributions. By tuning the system with the char-
+acteristics of the individual patients, our model reproduces a variety of spatial patterns of tis-
+sue regeneration and tumor growth, resembling those found in clinical imaging or biopsies.
+In order to calibrate and validate our model we study the process of liver regeneration after
+surgical hepatectomy in different degrees. In the clinical context, our model is able to predict
+the recurrence of a hepatocellular carcinoma after a 70% partial hepatectomy. The out-
+comes of our simulations are in agreement with experimental and clinical observations. By
+fitting the model parameters to specific patient factors, it might well become a useful plat-
+form for hypotheses testing in treatments protocols.
+Author summary
+We introduce an off-lattice agent-based model to simulate tissue-scale features that
+emerge from basic biological and biophysical cell processes. In order to calibrate and vali-
+date our model, we have considered the liver regeneration response after a 30% partial
+hepatectomy in which the liver recovers its original volume due to the hypertrophy of the
+hepatocytes. Subsequently, we have modeled the same process but after a 70% partial hep-
+atectomy, in which the liver recovers its original volume due to the hypertrophy and the
+proliferation of the hepatocytes. Unfortunately, the precise mechanisms of initiating, pro-
+moting and terminating regenerative responses remain unknown. As a consequence, we
+have proposed a modeling approach in which such processes are regulated by a
+PLOS COMP UTATIONAL  BIOLOGY
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 1 / 28
+a1111111111
+a1111111111
+a1111111111
+a1111111111
+a1111111111
+OPEN ACCESS
+Citation: Luque LM, Carlevaro CM, Llamoza Torres
+CJ, Lomba E (2023) Physics-based tissue
+simulator to model multicellular systems: A study
+of liver regener ation and hepatocellula r carcinoma
+recurrence. PLoS Comput Biol 19(3): e1010920.
+https://do i.org/10.1371/j ournal.pc bi.1010920
+Editor: Roeland M.H. Merks, Leiden Univers ity
+Faculty of Science: Univers iteit Leiden Faculteit der
+Wiskunde en Natuurwetens chappen,
+NETHERLA NDS
+Received: March 1, 2022
+Accepted: February 3, 2023
+Published: March 6, 2023
+Copyright: © 2023 Luque et al. This is an open
+access article distributed under the terms of the
+Creative Commons Attribution License, which
+permits unrestricte d use, distribu tion, and
+reproduction in any medium, provided the original
+author and source are credited.
+Data Availabilit y Statement: All relevant data are
+within the manuscript and its Support ing
+information files. The code used for running
+experimen ts is available at https://github. com/
+lmluque/abm .
+Funding: This work was supported by the
+European Union Horizon 2020 Research and
+Innovatio n Staff Exchange programme under the
+Marie Sklodow ska-Curie grant agreement No.
+
+hypothetical substrate that diffuses in the cell microenvironment. As a further test, we
+have, in one hand, implemented our model to predict the liver response after a 50% partial
+hepatectomy and, on the other hand, explored our model’s ability to account for the
+recurrence of a hepatocellular carcinoma. The outcomes of our simulations agree with
+experimental data and clinical observations, which comes to underline the significant
+descriptive and predictive power of this computational approach. Even though our model
+needs to be further extended to incorporate patient specific clinical data, these results are
+a promising step in the direction of a personalized estimation of tissue dynamics from a
+limited number of measurements carried out at diagnosis.
+1 Introduction
+Many significant multicellular system problems such as tissue engineering, evolution in bacte-
+rial colonies, and tumor metastasis can only be understood by studying how individual cells
+grow, divide, die, move, and interact. Tissue-scale dynamics emerges as cells are influenced by
+biochemical and biophysical signals in their microenvironment, bearing in mind that cells
+themselves continually remodel their own microenvironment. Thus, the ideal scenario to
+study a multicellular system’s biology must simultaneously address: tissue microenvironments
+with multiple diffusing chemical signals (e.g., oxygen, drugs, and signalling factors), and the
+dynamics of many mechanically and biochemically interacting cells.
+To that aim, mechanistic dynamical systems models described by ordinary differential
+equations have been developed [1–10] (cf. those reviewed in [11] and [12]). Even though these
+models are very useful, they lack the spatial resolution that would enable the examination of
+intratumoral heterogeneity and its correlation with treatment efficacy. This is a relevant fea-
+ture since intratumoral heterogeneity has become a central element for understanding impor-
+tant aspects of cancer treatment such as drug resistance and biomarkers [13, 14].
+A widely used modeling paradigm in the study of complex biological systems is the agent-
+based model (ABM) [15, 16]. ABMs are implemented mainly to simulate the actions, behaviors
+and interactions of autonomous individual or collective entities, with the aim of exploring the
+impact of an agent or a type of behavior in the system. Agents are independent units trying to
+accomplish a set of goals. The purpose of an ABM is to explore variations in the system behav-
+ior due to agent characteristics or rules. These attempt to emulate the general behavior of the
+system and predict the patterns of complex phenomena. Agents behave independently, but
+they react to the environment, modify system properties, and incorporate new agents. They
+also have the ability to “learn”, that is, to avoid previously unsuccessful decisions and favor suc-
+cessful ones, as well as to “adapt”, i.e. change their behavior in response to variations of the
+properties of the system. Their basic advantage is that they provide predictive power on a large
+scale [17].
+In many cases the system being modelled is usually comprised of millions of components.
+In those cases a great level of abstraction/simplification must be applied to the model to render
+it useful [18] (we refer the reader to [19] for as extensive discussion on the accuracy of compu-
+tational models). For that reason, once a preliminary model has been constructed it must be
+subjected to verification, calibration and validation. Verification is the process of determining
+how accurately prior knowledge and underlying assumptions have been translated into mathe-
+matical form. Calibration is the process by which parameters in a model are adjusted so as to
+match model performance to experimental data. Finally, model validation is the process of
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 2 / 28
+734276, which funded both the stays of E.L. at
+UNLP and C.M.C. and L.M.L. at IQFR-CSIC . L.M.L.
+is supporte d by CONICET postdoctoral fellowship
+(RESOL-2020- 134-APN- DIR#CONICET) . E.L. also
+acknowledge s funding from the Agencia Estatal de
+Investigac io ´ n under grant no. PID2020-115 722GB-
+C22. The funders had no role in study design, data
+collection and analysis , decision to publish, or
+preparation of the manuscript.
+Competing interests : The authors have declared
+that no competing interests exist.
+
+evaluating model performance against the primary design goal. In the case of biological mod-
+els, this usually aims at achieving a close match between model and experiment [20].
+In a medical context, ABMs should allow simulating clinical trials in sufficient detail to
+study the subject’s response to changes in therapy in simulations, rather than in patients. ABM
+have been used to study many different aspects of cancer, including tumor growth, cancer cell
+migration, metabolism, evolutionary dynamics, metastasis, angiogenesis and the role of cancer
+stem cells [21–34]. The reader is referred the extensive review by Norton and coworkers [35]
+for a more detailed presentation of the potential of ABMs in the context of cancer modeling.
+Here, we will present a mechanistic off-lattice agent-based model to simulate tissue-scale
+features that emerge from basic biological and biophysical cell processes. This ABM will be val-
+idated and put to test for modeling the unusual ability of the liver to regenerate [36]. Even
+when 70% of its mass is surgically removed, the remnant portion expands to compensate for
+the lost tissue and functions [37]. The multilobular structure of the liver allows the surgical
+resection of a lobe of choice to achieve different degrees by partial hepatectomy (PH). Because
+the resection of lobes does not induce damage to the remaining tissue, PH is a clean model.
+Therefore, liver regeneration after PH has long been an excellent experimental model for tissue
+regeneration. Furthermore, although the liver consists of various types of cells, hepatocytes
+account for about 80% of liver weight and about 70% of all liver cells [38]. Thus, hepatocytes
+provide an ideal starting point to study the relation of organ size with number and size of cells.
+It has been generally accepted that liver regeneration depends mainly on the proliferation
+of hepatocytes [37, 39, 40]. However, there are several reports showing hypertrophy of hepato-
+cytes in the regenerated liver [41–43]. Miyaoka et al. [44, 45] performed a series of experiments
+and found that although a number of studies indicated that almost all hepatocytes proliferate
+after 70% PH, cellular hypertrophy significantly contributes to liver regeneration as well. They
+showed that hepatocytes undergo cell division only about 0.7 times on average in the regenera-
+tion from 70% PH, and that at early stages, the regeneration totally depends on the hypertro-
+phy of hepatocytes. In contrast, liver regeneration after 30% PH is solely due to hypertrophy.
+Therefore, liver regeneration process is a perfect scenario to test and calibrate our model.
+On the other hand, post-hepatectomy liver failure is a serious complication after liver resection
+and its incidence varies from 1.2 to 32% [46–49]. It is defined as functional deterioration of the
+liver associated with an increased international normalized ratio (INR)—a measurement of
+how long it takes blood to form a clot-, and hyperbilirubinemia typically starting after the fifth
+postoperative day [46]. There are recommendations that post-hepatectomy liver failure could
+be prevented if the remnant liver size is above 20% of its original size in patients with normal
+liver function, and 30 − 40% in patients with steatohepatitis or cirrhosis [50, 51]. Nevertheless,
+even with adequate preoperative assessments, post-hepatectomy liver failure is a major con-
+tributor to mortality rates of up to 5% after liver resection [52, 53]. Various patient-related fac-
+tors (age, comorbidities such previous chemotherapy, cirrhosis, fibrosis, cholestasis, and
+steatosis), and surgery-related factors (extent of resection, blood loss, and ischemia reperfusion
+injury) affect the regenerative capacity of the remnant liver [54, 55]. Given all these numerous
+factors, estimating the adequate extent of the hepatectomy, and individual regenerative capac-
+ity, remain significant challenges for clinicians and scientists. It is to be stressed here that the
+regeneration process is controlled by different transcriptomic signatures depending on the
+intensity, duration and etiology of liver injury [56]. Consequently, different transcripts can
+modulate the results of the regeneration processes.
+In any case, according to the Barcelona Clinic Liver Cancer (BCLC) staging system [57],
+hepatic resection (partial hepatectomy) can be considered as a curative treatment for patients
+with stage 0-A uninodular hepatocellular carcinoma (HCC) who maintain preserved liver
+function and without portal hypertension. The prognosis of HCC patients has improved
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 3 / 28
+
+because of advances in radiologic assessment, patient selection, operative techniques, and peri-
+operative care [58, 59]. On the other hand, long-term prognosis of patients with HCC after
+liver resection is often affected by high tumor recurrence rates that reach 40 − 70% within 5
+years [60]. This is an issue that must urgently be addressed, and where we believe that a well
+calibrated computational model that succeeds on modeling the liver regeneration processes
+and HCC evolution, would complement the clinical trials, once fed-in with specific patient
+data. Moreover, liver regeneration is the basic element for the maintenance of liver function
+and size during homeostasis and liver injury (acute and chronic). Understanding the mecha-
+nisms of hepatic regeneration, from its cellular origins and signaling mechanisms, is essential
+to design specific regeneration models. Making these models available in a more “accessible”
+way that allows for a quicker evaluation of the influence of certain factors on regeneration pro-
+cesses, unlike the “classical” models, would then facilitate the optimization the different diag-
+nostic strategies (time intervals for hepatocarcinoma screening) and treatments (recurrence
+rate compared to ablative therapies, immunotherapy, response to sequential therapies). The
+approach here presented might well constitute a potential tool to evaluate biomarkers, such as
+circulating tumor cells (determined by liquid biopsy) and their correlation with the rate of
+tumor growth.
+The manuscript is organized as follows: After a brief description of the biological model,
+our agent-based model and the tumor growth model in section 2, we calibrate and validate our
+model against literature data [44, 45, 61–64], for two cases of liver regeneration: 30% PH and
+70% PH (Sections 3.1.1 and 3.1.2 respectively). Then we test our model for a 50% PH in section
+3.1.3. Finally, we have simulated the recurrence of a hepatocellular carcinoma after a PH and
+present our most significant results in section 3.2. Therein, all our results are commented and
+analyzed in the light of experimental (data obtained on mice) and clinical data. Discussion and
+future prospects are presented in section 4.
+2 Materials and methods
+2.1 Biological model
+The liver is a highly complex organ, which removes drugs and toxins from the blood. It is char-
+acterized by its multi-scale architecture (Fig 1) which consists of four lobes: the right lobe, the
+left lobe, the caudate lobe, and the quadrate lobe, which are further divided into eight segments
+based in the Couinaud system, also known as hepatic segments [65]. Each segment has its own
+vascular inflow, outflow and biliary drainage. The division of the liver into independent units
+means that segments can be resected without damaging the remaining segments. Hepatic
+parenchyma is organized in repetitive functional units called liver lobules. The lobules are
+roughly hexagonal prisms, and consist of plates of hepatocytes, and sinusoids radiating from a
+central vein towards an imaginary perimeter of interlobular portal triads. The portal triad is a
+distinctive component of a lobule, which can be found running along each of the lobule’s cor-
+ners. It consists of the hepatic artery, the portal vein and the common bile duct. The central
+vein joins the hepatic artery and the portal vein to carry blood out from the liver [66]. A recent
+work reported that this particular structures remain during the liver regeneration process [67].
+Even though hepatocytes (liver parenchymal cells) account for about 80% of liver weight and
+about 70% of all liver cells, the liver also has other type of cells named nonparenchymal cells:
+endothelial cells, Kupffer cells (macrophages resident in the liver), and biliary-duct cells [38].
+One of the main characteristics of the liver is its high regenerative capacity after injury.
+Even when 70% of its mass is surgically removed, the remnant portion expands to compensate
+for the lost tissue and functions [37, 68]. Liver resection is the most common liver surgery and
+consists of removal of liver tissue due to focal lesions, most often malignant tumors and living
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 4 / 28
+
+liver donation [69]. The multilobular structure of the liver not only allows the surgical resec-
+tion of a lobe of choice to achieve different degrees by partial hepatectomy but also the resec-
+tion of lobes does not induce damage to the remaining tissue. The extent of resection is
+determined by the size and location of the focal lesion and the estimated function of the future
+liver remnant [70]. Prior to liver resection, surgeons have to assess the patient’s individual risk
+for postoperative liver dysfunction. In case of malignant tumors, surgeons have to identify the
+surgical strategy best suited to allow radical oncological removal in order to avoid recurrence,
+without putting the patient at risk of postoperative liver failure due to excessive removal of
+liver mass [71–73].
+The liver regenerates in a highly organized fashion after surgery [68]. The human body
+responds to partial hepatectomy not by regenerating lost segments but by inducing hyperplasia
+in the remnant liver [36, 74, 75]. The anatomical structures of a liver that has undergone partial
+hepatectomy are therefore distinctly different from those of the original liver. The process of
+restoration of liver volume is initiated by the replication of various types of intrahepatic cells,
+followed by an increase in cell size. Nonparenchymal cells replicate in a delayed fashion. After
+replication has been completed, growth consisting of an increase in cell size occurs over several
+additional days. The initiation and synchronization of replication in different types of hepatic
+cells depend on the extent of the resection, tissue damage, or both. Low-grade tissue damage
+(e.g., toxic or ischemic injury) or a relatively small resection (removal of less than 30% of the
+liver) substantially reduces the replication rate, which also appears to be less synchronized
+than after a large resection (removal of 70% of the liver) [36, 68, 75].
+Fig 1. Schemat ic representa tion of the multi-s cale liver archite cture. The human liver is divided grossly into four parts or lobes. The four lobes are
+the right lobe, the left lobe, the caudate lobe, and the quadrat e lobe. Seen from the front the liver is divided into two lobes: the right lobe and the left
+lobe. It is further divided in eight functionally indepen dent segments based in the the Couinaud classificati on of liver anatomy. At the microscop ic
+(histological) scale, the liver is organized in repetitive functional units called liver lobules, which take the shape of polygonal prisms (typically hexagona l
+in cross section). Each lobule is mainly constituted by hepatocy tes and it is centered on a branch of the hepatic vein called the central vein which is
+interconnecte d with the interlobul ar portal triads: the hepatic artery (red), the portal vein (blue), bile duct (green).
+https://doi.o rg/10.1371/j ournal.pcbi. 1010920.g001
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 5 / 28
+
+Since all our results are compared with experimental data obtained from rodent models, it
+is important to mention that the process of hepatic regeneration in rodents and humans is
+similar, and the results obtained from rodents could be applicable to the human liver [76].
+Moreover, the rat liver architecture can be compared with the human liver segmentation
+defined by Couinaud [77].
+2.2 Computational model
+Our model is implemented resorting to an object oriented programming model, and to that
+aim we have used C++11 language. Simulation CPU time depends on model parameters such
+as domain (lattice) size, cell number and simulation length (in time); a typical simulation run
+takes approximately 6 h on a single core of an Intel i7–10510U CPU. Model visualization is
+performed with Ovito [78], Paraview [79] and Matplotlib [80].
+In order to reduce the computational burden of the simulations, an abstraction process was
+necessary to go from the biological to the computational model. First, we disregard the explicit
+liver geometry, instead we have chosen a reduced spherical model. This simplification is possi-
+ble because, as it was mentioned in section 2.1, after a PH the liver does not regenerate the lost
+segments, i.e. does not recover the original shape. Instead it just recovers its original volume
+by hyperplasia of the remaining lobes. Subsequently, we rather focus our attention on the liver
+parenchyma instead of liver lobes. In our computational model, hepatic lobules are hexagonal
+prisms delimited by an imaginary perimeter of interlobular portal triads. The central vein that
+carries the blood out from the liver as well as the liver sinusoids are not explicitly modeled as
+the portal triads are. We rather model this behavior by tuning the effective oxygen difussion
+and decay constants. A discussion on the implications of these simplifications on the results
+will be presented in section 4.
+In the following subsections we will describe the methods implemented to model diffusion
+and cellular mechanics, as well as the mathematical models to predict tissue growth kinetics.
+For further details, we refer the reader to the supplementary material S1 Text. A schematic
+representation of the inner workings of our model is depicted in Fig 2. The key elements of the
+model are described in what follows.
+2.2.1 Diffusion solver. We model the diffusion of chemical substrates in the tumor
+microenvironment as a vector of reaction-diffusion partial differential equations for a vector
+of chemical substrates, ρ. It is discretized over a Cartesian mesh for computational conve-
+nience, in such a way that each voxel (volumetric pixel) stores a vector of chemical substrates.
+Each substrate diffuses and decays, and can be secreted or uptaken by individual cells at their
+specific positions.
+We use a first order, implicit (and stable) operator splitting, allowing us to create separate,
+optimized solvers for the diffusion-decay, cell-based source/sinks [81]. The diffusion-decay
+terms are solved using the finite volume method [82], further accelerated by an additional
+first-order spatial splitting in the x−, y− and z−directions via the locally one-dimensional
+method (LOD) [81, 83]. For each dimension, we solve the resulting tridiagonal linear systems
+with the Thomas algorithm [84].
+We also implement the so-called Dirichlet nodes, so that substrate values at any voxel
+within the simulation domain can be overwritten to turn the voxel into a continuous source of
+substrates. This is particularly useful to model the effect of blood vessels, or when applying
+Dirichlet boundary conditions.
+For computational efficiency we use thread parallelization to relevant loops, e.g. in many
+instances of the Thomas solver when solving x−diffusion across multiple strips of the solution
+domain. This methods were already implemented and successfully tested by Ghaffarizade et al.
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 6 / 28
+
+[85], therefore, we have validated the numerical accuracy of our solver by comparing our
+results with those found in Reference [85]. For further details, please refer to the supplemen-
+tary material S1 Text.
+2.2.2 Cell agents. Since we are implementing an agent-based model programmed in the
+context of an object oriented approach, each cell is an agent implemented as a software object
+that acts independently. Like most classes in software it has attributes, i.e. its own internal
+Fig 2. Main loop flow diagram. Blue box represents the start of the program. Red box represent the diffusion processes. Green
+box and orange box describe the cell mechan ics and cycling processes respective ly. Finally, yellow boxes represent the data saving
+process. After initializing the microenvironm ent, the cells, and the curren t simulation time t = 0, our model tracks (internally) t
+mech
+(the next time at which cell mechanics methods are run), t
+cycle
+(the next time at which cell processes are run), and t
+save
+(the
+simulation data output time), with output frequency Δt
+save
+. % represents the modulo operation.
+https://doi. org/10.1371/j ournal.pcb i.1010920.g 002
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 7 / 28
+
+variables that each specific agent is allowed to manipulate on its own. It also has methods,
+which are functions that act upon the attributes. In the context of cell biology, relevant attri-
+butes might be: position, size, cell state regarding the cell cycle, etc. The cell cycle is an object
+with the aforementioned attributes. The cell class have methods that represent cellular pro-
+cesses such as, death, growth and volume change, and are coordinated by the cell cycle object.
+One of the main features of our model is that cells are off-lattice. Consequently, they are not
+confined to a particular lattice or spatial arrangement, they move in a continuous fashion
+through all space positions, and therefore underlying possible artifacts associated with the cho-
+sen lattice structure and spacing are removed.
+Based on previous cell-based models [33, 86, 87], we have modeled the cell behavior as
+follows:
+Cell cycle: We model the cell cycle as a directed graph, in which the nodes represent the
+phases and the edges the transition rates between them. These transition rates can take sto-
+chastic or constant values. Moreover, any of the cell cycle time scales can be adjusted at the
+beginning of the simulation to match different types of growth and they can also be adjusted at
+any time on an individual cell in order to reflect its microenvironme nt influences.
+Our model allows to implement different types of cell cycles based on different parameters.
+Following Miyaoka and coworkers [44, 45], we can base our cell cycle on a tracking of the
+expression of protein Ki-67, involved in cell proliferation. This tracking is performed thanks to
+a nuclear stain of Ki-67. We note in passing that Ki-67 protein expresses in the S, G2, and M
+phases [88], and to a lesser extent in the G1 phase [89]. It is seen in post-mitotic daughter cells
+[90], but it is not produced in these cells [88]. Instead, any remaining Ki-67 protein in post-
+mitotic cells is degraded quickly, with a half-life of 60 − 90 minutes [88]. We can base our cell
+cycle by setting the phase “Ki-67+ pre-mitotic” to be the combined duration of S, G2, and M
+phases, which are relatively fixed compared to the duration of G0/G1 [91, 92]. We can set the
+second phase “Ki-67+ post-mitotic” at the G1/G0 phase, to be on the order of two Ki-67 half-
+lives. Then, the remaining G1/G0 phase will be the “Ki-67-” phase. For further details, please
+refer to the supplementary material S1 Text.
+Finally, since at cell scale death is not an instantaneous event but a process, we model death
+cycles such as Necrosis and Apoptosis as we did with cell cycles, by using directed graphs,
+death is part of the cell cycle after all. The entry to the death cycles depends on the resources,
+for example oxygen, drugs, therapies, etc.
+Cell volume: To model cell volume variation, each cell tracks V (total volume), V
+F
+(total
+fluid volume), V
+S
+(total solid volume), V
+NS
+(nuclear solid volume), V
+CS
+(cytoplasmic solid vol-
+ume), V
+N
+(total nuclear volume), and V
+C
+(total cytoplasmic volume). Key parameters include
+nuclear solid, cytoplasmic solid, and fluid rate change parameters (r
+N
+, r
+C
+, and r
+F
+), the cell’s
+“target” fluid fraction f
+F
+, target solid volume V
+�
+NS
+, and target cytoplasmic to nuclear volume
+ratio f
+CN
+. For each cell, these volumes are modeled with a system of ordinary differential equa-
+tions that allow cells to grow or shrink towards a target volume. These parameters are updated
+as the cell progresses through its current cycle or death cycle.
+Cell mechanics: In our model, as in [33], we use the piecewise polynomial force which is
+constructed as the sum of a positive adhesive and a negative repulsive polynomial force contri-
+butions. It is important to note that repulsive forces are really an elastic resistance to deforma-
+tion. To compute these forces we use adhesive and repulsive interaction potentials functions.
+We assume that three types of forces act upon each cell. First we have a drag force, which
+represents dissipative drag-like forces such as fluid drag and cell-extra cellular matrix adhe-
+sion. We then have neighboring cell mechanical forces. In the simplest case these involve
+repulsive forces due to limited cell compressibility, but they usually also include cell-cell adhe-
+sion. We use interaction potentials that depend upon each cell’s size, maximum adhesion
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 8 / 28
+
+distance, adhesion and repulsion parameters and distance to other cells. Finally, the third force
+acting on the cells is the cell-basement membrane interaction.
+Since the cell microenvironment has a very low Reynolds number (the Reynolds number
+describes the ratio of inertial to viscous forces) [93], inertial effects such as acceleration are
+neglected. This is commonly known as the inertialess assumption, and implies that forces
+equilibrate at relatively fast time scales in contrast to the processes involved in cell cycling,
+death cycling, and volume variation.
+We finally use the Adams-Bashforth method [94] to solve the mechanics equation to
+enhance computational efficiency.
+We refer the reader to the supplementary material S1 Text for further details on the imple-
+mentation of the piecewise polynomial force model.
+Cell secretion and uptake: This is one of the most important data structures of the cell
+because it links the cell with its microenvironment. We solve a vector of partial differential
+equations, which reduce to the addition of a cellular secretion/uptake term to the diffusion
+equation described in section 2.2.1.
+This is very important since most of the cellular processes depend on the substrates that dif-
+fuse in the microenvironment. For example, it is well accepted that after a partial hepatectomy,
+the liver undergoes to cytokine- and growth factor- mediated regeneration processes [95].
+However, most of the mechanisms of initiating and promoting regenerative responses as well
+as the termination of liver regeneration remain unknown [44, 45]. In this work cellular prolif-
+eration is assumed to be controlled by a growth factor that diffuses through the microenviron-
+ment. This growth factor is only considered as an abstract parameter which encompasses all
+the underlying molecular mechanisms involved in the liver regeneration process. The cell
+cycle entry rate is proportional to this factor in the following way:
+r ¼
+1
+t
+K
+ 
+max
+GF   GF
+pro l
+GF
+�
+  GF
+pro l
+ !
+; 0
+( )
+ð1Þ
+where t
+K
+  is the mean time each cell spends in the non-proliferative phase (see section 2.2.2),
+which can be experimentally monitored using the Ki-67 cellular marker. GF is the current
+growth factor concentration value in the cell’s voxel, GF
+prol
+is the proliferation threshold, i.e.
+the growth factor value below which the proliferation ceases and GF
+�
+is the proliferation satu-
+ration value, above which the proliferation rate is maximized. Therefore, based on the growth
+factor concentration, the hepatocyte will enter either the hypertrophy phase or the prolifera-
+tion phase. A similar approach can be done based on the oxygen concentration, however,
+instead of influence on the decision about whether or not to proliferate, oxygen will accelerate
+the phase entry. Please refer to the supplementary material S1 Text for further information
+about how cell cycles and transition rates will be modified based on chemical substrates
+concentrations.
+2.3 Growth estimations
+To complement our model in the prediction of tumor growth and/or tissue regeneration we
+use a mathematical model known as the Gompertz model [96–99]. This model assumes initial
+exponential growth, but as the tumor grows the volume-doubling time increases due to lack of
+nutrients and subsequent cell death, by which the growth rate shifts towards linear regime,
+finally reaching a plateau [96]. This is given by:
+V ðt Þ ¼ K ex p log
+V
+0
+K
+� �
+exp   atð Þ
+� �
+ð2Þ
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 9 / 28
+
+where the parameter K is the carrying capacity of the tissue, which is the highest possible vol-
+ume, V
+0
+is the initial volume of the tissue and α is the specific growth rate [100, 101] which is
+defined by
+a ¼
+log
+V
+2
+V
+1
+� �
+t
+2
+  t
+1
+:
+ð3Þ
+Here V
+1
+and V
+2
+are tumor volumes at the measure times t
+1
+and t
+2
+respectively. This parame-
+ter α determines how fast the tumor reaches the carrying capacity K and its measured in
+(%/days).
+3 Results
+We first attempted to define a baseline scenario of the liver physiology. As it was mentioned
+before, we focus our attention in the liver parenchyma which, in our model, is made up of
+hepatic lobules which are hexagonal prisms delimited by an imaginary perimeter of interlobu-
+lar portal triads. We idealized this dynamic vasculature architecture (Fig 3a) by using the
+Dirichlet nodes as shown in Fig 3b and 3c, and defining the distance between triads on micro-
+graph analysis [66]. Fig 3b shows a transversal cut of our simulated liver in which we can
+observe the hepatic lobules architecture. Blue dotted lines were drawn just as a guide to the
+eye. Pink spheres represent the hepatocytes and the white squares represent the portal triads
+that oxygenate the tissue. Fig 3c shows the heat map of the oxygen diffusion in the liver
+micoenvironment. The oxygen diffuses from the portal triads (Dirichlet nodes), there is no dif-
+fusion from the boundaries of the simulation box.
+The grid we used to simulate liver regeneration is 1 mm
+3
+in total size, orders of magnitude
+smaller than an actual liver. While the model does not place limitations on the liver size, the
+implementation is obviously constrained by the size of the computer memory. However, this
+limitation can be to some extent circumvented by considering the sample region as representa-
+tive of a significant sub-region of the liver. Obviously size effects must be investigated in fur-
+ther detail to the extent that new algorithmic and hardware improvements become available
+(e.g. by exploiting massively parallel CUDA [102] cores and/or Tensor cores in new GPU/
+TPU architectures).
+Fig 3. Liver blood vessels architectur e. (a) Schematic representati on of the hepatic lobules. They consist of plates of hepatocytes, and sinusoids
+radiating from a central vein interconne cted with the interlobular portal triads: the hepatic artery (red), the portal vein (blue), and the common bile
+duct (green). (b) computa tional model of the liver parenchyma in which we can observe the blood vessel architectur e. (c) Heat map of the oxygen
+diffusion in the liver microenvironm ent. Blue dotted lines were drawn just as a guide to the eye.
+https://doi.o rg/10.1371/j ournal.pcbi. 1010920.g003
+PLOS COMP UTATIONAL  BIOLOGY
+Compu tational study of liver regenerati on and hepatoce llular carcinoma
+PLOS Computationa l Biology | https:/ /doi.org/10.13 71/journal.p cbi.1010920 March 6, 2023 10 / 28
+
+1.1 Input parameters
+Parameter Description Units
+Microenvironment Parameters
+Ωx, Ωy, Ωz Domain size µm
+∆x, ∆y, ∆z Microenvironment voxel size µm
+D Substrates diﬀusion coeﬃcients µm2/min
+λ Substrates decay rates min−1
+BC Set the boundary conditions dimensionless
+ρBC BC substrates concentration multiple
+Cell Parameters
+V Total cell volume µm3
+VN Total nuclear volume µm3
+fCN Target cytoplasmic:nuclear volume ratio dimensionless
+fF Target ﬂuid fraction dimensionless
+ρ∗ Substrates saturation value multiple
+ρthres Substrates threshold value multiple
+S Substrates release rate min−1
+U Substrates uptake rate min−1
+Cell Cycle Parameters
+TG1 Duration of G1 phase hs
+TS Duration of S phase hs
+TG2 Duration of G2 phase hs
+TM Duration of M phase hs
+divprob % of cells allowed to divide dimensionless
+Cell Mechanics Parameters
+nx, ny, nz Mechanics discretization voxel size µm
+RA Maximum cell adhesion distance µm
+Cccr/a Cell-cell “repulsive”/adhesion force constant µm/min
+Ccmr/a Cell-membrane “repulsive”/adhesion force constant µm/min
+p Division polarization dimensionless
+Table 1: Input parameters.
+8
+
+Parameter Description Units
+Time Parameters
+TTot Total simulation time min
+tsave Saving time min
+∆tcycle Cell processes time step min
+∆tmech Cell mechanics time step min
+∆tdiff Diﬀusion time step min
+tv Update voxel lists of particles time min
+Table 2: Time input parameters.
+1.2 Output parameters
+Every tsave the program saves the following information:
+Parameter Description Units
+Microenvironment Parameters
+Ωm Cell’s microenvironment voxel dimensionless
+ρO2 O2 concentration in cell’s voxel mmHg
+ρImm Immunostimulatory factor concentration in cell’s voxel dimensionless
+ρGF Growth factor concentration in cell’s voxel dimensionless
+Cell Parameters
+ID Cell’s ID dimensionless
+Ωmech Cell’s mechanical voxel dimensionless
+x, y, z Cell’s center position dimensionless
+r Cell’s radii µm
+op Cell’s oncoprotein expression dimensionless
+Type Cell type, i.e cancer, hepatocyte, etc dimensionless
+Cycle Cell or death cycle dimensionless
+Progenitor Cell progenitor’s ID dimensionless
+Table 3: Output parameters.
+2 Biochemical microenvironment
+Tissues are ﬁlled with various chemical compounds, including signaling and other factors that
+regulate how cells move, grow, and die, depending on the concentration and/or gradient of any
+and all of these compounds. In order for cells to survive and grow, they need to obtain oxygen
+and other nutrients released from blood vessels. In general, they need the interaction with the
+9
+
+4 Parameters for the main examples
+4.1 General
+Parameter Value Units Reference
+Microenvironment Parameters
+Ωx × Ωy × Ωz 1000 × 1000 × 1000 µm -
+∆x × ∆y × ∆z 20 × 20 × 20 µm -
+DO2 105 µm2/min [77]
+λO2 0.1 min−1 [37]
+DGF 106 µm2/min -
+λGF 0.5 min−1 -
+BC No ﬂux at the boundaries - -
+ρvessels,O2 38 mmHg [78]
+Cell Mechanics Parameters
+nx, ny, nz 30 × 30 × 30 µm -
+RA 1.25Rcell µm [40]
+Cccr 10.0ν µm/min [79]
+Ccmr Cccr µm/min -
+p 0 dimensionless -
+Table 4: Numerical values of the input parameters used in all the examples.
+Time Parameters
+Parameter Value Units Reference
+tTot 43200 min -
+tsave 1440 min -
+∆tcycle 6 min [36]
+∆tmech 0.1 min [36]
+∆tdiff 0.01 min [36]
+tv 20∆tmech min -
+Table 5: Times used in all the examples.
+43
+
+4.2 Liver regeneration
+Parameter Value Units Reference
+Cell Parameters
+V 8000 µm3 [80]
+VN 268 µm3 [81]
+O∗
+2 38 mmHg -
+O2,prol 10 mmHg -
+GFprol 0.25 dimensionless -
+SO2 0 min−1 -
+UO2 10 min−1 -
+Cell Cycle Parameters
+tG1 21.6 hs [82]
+tS 7.0 hs [82]
+tG2 3.4 hs [82]
+tM 1.6 hs [82]
+ndiv 1 dimensionless [16]
+divprob 0.7 dimensionless [16]
+Table 6: Numerical values used for liver regeneration
+4.3 Tumor growth
+Parameter Value Units Reference
+Cell Parameters
+V 8000 µm3 [80]
+VN 268 µm3 [81]
+O∗
+2 38 mmHg -
+O2,prol 10 mmHg -
+SO2 0 min−1 -
+UO2 10 min−1 -
+Cell Cycle Parameters
+tG1 20.4 hs [82]
+tS 13.6 hs [82]
+tG2 3.0 hs [82]
+tM 1.6 hs [82]
+ndiv ∞ dimensionless -
+Table 7: Numerical values used for Hepatocellular carcinoma recurrence
+44

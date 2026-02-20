@@ -1,0 +1,83 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+CPM_0_1 [shape=record, label="{CPM|1}", URL="morph://MorpheusModel/CPM" ]
+Gnuplotter_0_10[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>10</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[0]" ]
+Logger_0_10[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>10</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger" ]
+Gnuplotter_0_10[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>10</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[1]" ]
+Gnuplotter_0_10[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>10</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter[2]" ]
+alpha_0[label="alpha", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[2]"]
+beta_0[label="beta", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[3]"]
+cell_center_0[label="cell.center", fillcolor="#b5b426",peripheries=2]
+cell_type_0[label="cell.type", fillcolor="#d3d247",peripheries=2]
+delta_0[label="delta", fillcolor="#d3d247",peripheries=2]
+mu_0[label="mu", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[1]"]
+notch_0[label="notch", fillcolor="#d3d247",peripheries=2]
+rho_0[label="rho", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Constant[0]"]
+subgraph cluster_1 {
+label="CellType[medium]";
+}
+subgraph cluster_2 {
+label="CellType[cells]";
+cell_center_2[label="cell.center", fillcolor="#b5b426"]
+cell_type_2[label="cell.type", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]"]
+delta_2[label="delta", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[0]"]
+notch_2[label="notch", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[1]/Property[1]"]
+subgraph cluster_3 {
+label="";
+System_3_0_1[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<hr/>
+<tr><td>0.1</td></tr></table></font>>, URL="morph://MorpheusModel/CellTypes/CellType[1]/System" ]
+}
+}
+}
+CPM_0_1 -> cell_center_0 [penwidth=3, color="#8f100d"] 
+
+CPM_0_1 -> cell_type_0 [penwidth=3, color="#8f100d"] 
+
+System_3_0_1 -> delta_2 [penwidth=3, color="#8f100d"] 
+
+System_3_0_1 -> notch_2 [penwidth=3, color="#8f100d"] 
+
+alpha_0 -> System_3_0_1 [penwidth=2, color="#112c5f"] 
+
+beta_0 -> System_3_0_1 [penwidth=2, color="#112c5f"] 
+
+cell_center_2 -> cell_center_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+cell_type_0 -> Gnuplotter_0_10 [penwidth=2, color="#112c5f"] 
+
+cell_type_2 -> cell_type_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+delta_0 -> Gnuplotter_0_10 [penwidth=2, color="#112c5f"] 
+
+delta_2 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+delta_2 -> delta_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+mu_0 -> System_3_0_1 [penwidth=2, color="#112c5f"] 
+
+notch_0 -> Gnuplotter_0_10 [penwidth=2, color="#112c5f"] 
+
+notch_2 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+notch_2 -> notch_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+rho_0 -> System_3_0_1 [penwidth=2, color="#112c5f"] 
+
+}
