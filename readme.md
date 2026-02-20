@@ -56,13 +56,17 @@ The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is a standa
 │                                                                  │
 │       Loop repeats until "PAPER_COMPLETE" is signaled            │
 └─────────────────────────────────────────────────────────────────┘
-```
-```
-Complete Workflow can be seen here: 
-
-<img src="results/morpheus-tools-working.png" alt="Morpheus MCP Tools Workflow" width="400" />
 
 ```
+## Workflow
+
+<p align="center">
+  <img src="results/morpheus-tools-working.png" alt="Morpheus MCP Tools Workflow" width="600"/>
+</p>
+
+<p align="center"><em>Complete MCP tool orchestration workflow for autonomous model generation</em></p>
+
+---
 ---
 
 ## Features
@@ -247,7 +251,7 @@ The system was evaluated on **10 scientific papers** spanning diverse areas of m
 
 ### Iterations per Paper
 
-<img src="results/iteration_trend.png" alt="Iteration Trend" width="400" />
+<img src="results/itteration_trend.png" alt="Iteration Trend" width="400" />
 
 
 ### Biological Relevance
@@ -256,16 +260,23 @@ Generated simulations were compared against original paper figures to assess bio
 
 <table>
 <tr>
+<th>Original Output</th>
 <th>Generated Output</th>
-<th>Original Paper</th>
 </tr>
 <tr>
 <td><img src="results/paper2_op.png" alt="Generated Output" width="300" /></td>
 <td><img src="results/paper2_op_me.png" alt="Original Paper Output" width="300" /></td>
 </tr>
 <tr>
-<td colspan="2" align="center"><em>Cellular Pott Model (Thapa et al., 2024) : Differential adhesion driven segregation</em></td>
+<td colspan="2" align="center"><em>The senescent mesothelial matrix accentuates colonization by ovarian cancer cells (Thapa et al., 2024) : Differential adhesion driven segregation</em></td>
 </tr>
+<tr>
+<td><img src="results/paper8_op.png" alt="Generated Output" width="300" /></td>
+<td><img src="results/paper8_op_me.png" alt="Original Paper Output" width="300" /></td>
+</tr>
+<tr>
+<td colspan="2" align="center"><em>multiscale spatial modeling framework for the germinal center response (Mu et al., 2024) : Concentration gradients of chemoattractants</em></td>
+</tr>    
 </table>
 
 ### Model Comparison
@@ -279,15 +290,33 @@ Generated simulations were compared against original paper figures to assess bio
 > **Recommendation:** Sonnet 4.5 offers the best cost-performance balance.
 
 ---
-```
----
-
-### Workflow Videos can be seen here for detail understanding:
-
-- ** Single paper running on Claude Desktop using Morpheus MCP tools: https://youtu.be/zAx-x72KlNI
-- ** Benchmark 10 papers running directly using API and Morpheus MCP tools: https://youtu.be/Wa7bmkVPw7k
 
 ---
+
+## Demo Videos
+
+Detailed workflow demonstrations are available:
+
+<table>
+  <tr>
+    <th>Demo</th>
+    <th>Description</th>
+    <th>Link</th>
+  </tr>
+  <tr>
+    <td>🎬 <strong>Single Paper Processing</strong></td>
+    <td>Claude Desktop with Morpheus MCP tools</td>
+    <td><a href="https://youtu.be/zAx-x72KlNI" target="_blank">Watch on YouTube</a></td>
+  </tr>
+  <tr>
+    <td>🎬 <strong>10-Paper Benchmark</strong></td>
+    <td>Autonomous API execution with MCP tools</td>
+    <td><a href="https://youtu.be/Wa7bmkVPw7k" target="_blank">Watch on YouTube</a></td>
+  </tr>
+</table>
+
+---
+
 
 ## Acknowledgments
 
