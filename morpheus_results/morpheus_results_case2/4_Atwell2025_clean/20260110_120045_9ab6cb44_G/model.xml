@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>C. elegans Germline Development Model</Title>
+        <Details>
+        Based on Atwell et al. (2015) Development 142:3902-3911
+        
+        Mechano-logical model incorporating cell cycle, position-dependent fate decisions,
+        and mechanical feedback.
+        </Details>
+    </Description>
+    
+    <Global>
+        <Variable symbol="time_hph" value="18.5"/>
+        <Variable symbol="total_cells" value="0"/>
+        <Variable symbol="proliferative_cells" value="0"/>
+        <Constant symbol="DTC_x" value="50"/>
+        <Constant symbol="meiotic_entry_dist" value="70"/>
+        <Constant symbol="sperm_decision_dist" value="200"/>
+        <Constant symbol="sperm_switch_time" value="32.5"/>
+        <Constant symbol="larval_cycle" value="3.0"/>
+        <Constant symbol="adult_cycle" value="8.0"/>
+        <Constant symbol="adult_start" value="35.5"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="linear">
+            <Size symbol="size" value="600, 200, 0"/>
+            <BoundaryConditions>
+                <Condition type="constant" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="100"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="proliferative" class="biological">
+            <Property symbol="cell_phase" value="0"/>
+            <Property symbol="phase_time" value="0"/>
+            <Property symbol="cycle_length" value="3.0"/>
+            <Property symbol="dist_from_DTC" value="0"/>
+            <Property symbol="divisions" value="0"/>
+            
+            <VolumeConstraint strength="1" target="250"/>
+            <SurfaceConstraint mode="aspherity" strength="1" target="0.9"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="0.1">
+                <Rule symbol-ref="dist_from_DTC">
+                    <Expression>abs(cell.center.x - DTC_x)</Expression>
+                </Rule>
+                <Rule symbol-ref="cycle_length">
+                    <Expression>if(time_hph >= adult_start, adult_cycle, larval_cycle)</Expression>
+                </Rule>
+                <Rule symbol-ref="phase_time">
+                    <Expression>phase_time + 0.1</Expression>
+                </Rule>
+            </System>
+            
+            <CellDivision division-plane="random">
+                <Condition>phase_time >= cycle_length</Condition>
+                <Triggers>
+                    <Rule symbol-ref="phase_time">
+                        <Expression>0</Expression>
+                    </Rule>
+                    <Rule symbol-ref="divisions">
+                        <Expression>divisions + 0.5</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <ChangeCellType newCellType="meiotic">
+                <Condition>dist_from_DTC >= meiotic_entry_dist</Condition>
+            </ChangeCellType>
+        </CellType>
+        
+        <CellType name="meiotic" class="biological">
+            <Property symbol="dist_from_DTC" value="0"/>
+            <Property symbol="age" value="0"/>
+            
+            <VolumeConstraint strength="1" target="400"/>
+            <SurfaceConstraint mode="aspherity" strength="1" target="0.9"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="0.1">
+                <Rule symbol-ref="dist_from_DTC">
+                    <Expression>abs(cell.center.x - DTC_x)</Expression>
+                </Rule>
+                <Rule symbol-ref="age">
+                    <Expression>age + 0.1</Expression>
+                </Rule>
+            </System>
+            
+            <ChangeCellType newCellType="sperm">
+                <Condition>dist_from_DTC >= sperm_decision_dist and time_hph &lt; sperm_switch_time</Condition>
+            </ChangeCellType>
+            
+            <ChangeCellType newCellType="oocyte">
+                <Condition>dist_from_DTC >= sperm_decision_dist and time_hph >= sperm_switch_time</Condition>
+            </ChangeCellType>
+        </CellType>
+        
+        <CellType name="sperm" class="biological">
+            <VolumeConstraint strength="1" target="50"/>
+            <SurfaceConstraint mode="aspherity" strength="1" target="0.9"/>
+        </CellType>
+        
+        <CellType name="oocyte" class="biological">
+            <Property symbol="age" value="0"/>
+            <Property symbol="mature" value="0"/>
+            
+            <VolumeConstraint strength="1" target="800"/>
+            <SurfaceConstraint mode="aspherity" strength="1" target="0.9"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="0.1">
+                <Rule symbol-ref="age">
+                    <Expression>age + 0.1</Expression>
+                </Rule>
+                <Rule symbol-ref="mature">
+                    <Expression>if(cell.volume >= 700, 1, 0)</Expression>
+                </Rule>
+            </System>
+            
+            <CellDeath>
+                <Condition>age > 10 and rand_uni(0,1) &lt; 0.025</Condition>
+            </CellDeath>
+        </CellType>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="proliferative" type2="proliferative" value="-5"/>
+            <Contact type1="proliferative" type2="meiotic" value="-3"/>
+            <Contact type1="meiotic" type2="meiotic" value="-3"/>
+            <Contact type1="meiotic" type2="sperm" value="5"/>
+            <Contact type1="meiotic" type2="oocyte" value="-2"/>
+            <Contact type1="oocyte" type2="oocyte" value="-2"/>
+            <Contact type1="sperm" type2="sperm" value="-1"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="5" yield="0.1"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>3</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="proliferative" size="0">
+            <InitCircle mode="random" number-of-cells="16">
+                <Dimensions radius="30" center="80, 100, 0"/>
+            </InitCircle>
+            <InitProperty symbol-ref="phase_time">
+                <Expression>rand_uni(0, larval_cycle)</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Mapper time-step="1">
+            <Input value="1"/>
+            <Output symbol-ref="time_hph" mapping="sum"/>
+        </Mapper>
+        
+        <Mapper time-step="1">
+            <Input value="1"/>
+            <Output symbol-ref="total_cells" mapping="sum"/>
+            <Restriction>
+                <Celltype celltype="proliferative"/>
+                <Celltype celltype="meiotic"/>
+                <Celltype celltype="sperm"/>
+                <Celltype celltype="oocyte"/>
+            </Restriction>
+        </Mapper>
+        
+        <Mapper time-step="1">
+            <Input value="1"/>
+            <Output symbol-ref="proliferative_cells" mapping="sum"/>
+            <Restriction>
+                <Celltype celltype="proliferative"/>
+            </Restriction>
+        </Mapper>
+        
+        <Gnuplotter time-step="10" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="1" color="yellow"/>
+                        <Color value="2" color="green"/>
+                        <Color value="3" color="blue"/>
+                        <Color value="4" color="red"/>
+                    </ColorMap>
+                </Cells>
+                <CellLabels value="divisions" fontsize="6"/>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="1">
+            <Input>
+                <Symbol symbol-ref="time_hph"/>
+                <Symbol symbol-ref="total_cells"/>
+                <Symbol symbol-ref="proliferative_cells"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <Plot time-step="20">
+                    <Style style="lines" line-width="2"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time_hph"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="500">
+                        <Symbol symbol-ref="total_cells"/>
+                        <Symbol symbol-ref="proliferative_cells"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

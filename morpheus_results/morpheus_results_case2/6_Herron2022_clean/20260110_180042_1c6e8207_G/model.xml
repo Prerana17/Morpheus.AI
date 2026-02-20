@@ -1,0 +1,194 @@
+<MorpheusModel version="4">
+    <Description>
+        <Title>Phagocytosis Rosette Pattern Formation (WPGAP Model)</Title>
+        <Details>
+Wave-Pinning GAP model for podosome rosette formation during frustrated phagocytosis.
+Based on Herron et al. (2022) PLOS Computational Biology.
+
+Four-species reaction-diffusion system:
+- u: Active GTPase (membrane-bound, slow diffusion)
+- v: Inactive GTPase (cytosolic, fast diffusion)
+- G: Active GAP (cytosolic, fast diffusion)
+- g: Inactive GAP (cytosolic, fast diffusion)
+
+Key mechanisms:
+- Positive feedback through GTPase autoactivation
+- Negative feedback through GAP activation
+- Spatially-dependent rates to generate rosette pattern around IgG disk
+        </Details>
+    </Description>
+    <Global>
+        <!-- Active GTPase (membrane-bound, slow diffusion) -->
+        <Field name="Active_GTPase" symbol="u" value="10 + rand_uni(0,50)">
+            <Diffusion rate="0.04"/>
+        </Field>
+        
+        <!-- Inactive GTPase (cytosolic, fast diffusion) -->
+        <Field name="Inactive_GTPase" symbol="v" value="798 + rand_uni(0,50)">
+            <Diffusion rate="4.0"/>
+        </Field>
+        
+        <!-- Active GAP (cytosolic, fast diffusion) -->
+        <Field name="Active_GAP" symbol="G" value="0.1 + rand_uni(0,0.5)">
+            <Diffusion rate="4.0"/>
+        </Field>
+        
+        <!-- Inactive GAP (cytosolic, fast diffusion) -->
+        <Field name="Inactive_GAP" symbol="g" value="9.9 + rand_uni(0,0.5)">
+            <Diffusion rate="4.0"/>
+        </Field>
+        
+        <System name="WPGAP_Model" time-step="0.01" solver="Runge-Kutta [fixed, O(4)]">
+            <!-- Model Parameters (Table 2 from paper) -->
+            <Constant symbol="b" value="0.002" name="GTPase basal activation rate"/>
+            <Constant symbol="K" value="200" name="Half-maximal GTPase concentration"/>
+            <Constant symbol="n" value="2" name="Hill coefficient"/>
+            <Constant symbol="sigma" value="0.4" name="GTPase inactivation rate"/>
+            <Constant symbol="d" value="43.0" name="GAP inactivation rate"/>
+            <Constant symbol="e" value="31.3" name="GAP-mediated GTPase inactivation"/>
+            
+            <!-- Spatially-dependent parameters for rosette formation -->
+            <!-- IgG disk radius -->
+            <Constant symbol="mu_F" value="2.0" name="IgG disk radius (microns)"/>
+            
+            <!-- Self-positive feedback rate gamma(r) - logistic function -->
+            <Constant symbol="gamma_max" value="9.6" name="Max self-positive feedback"/>
+            <Constant symbol="gamma_alpha" value="0.005" name="Min self-positive feedback"/>
+            <Constant symbol="gamma_km" value="2.04" name="Feedback decay rate"/>
+            
+            <!-- GAP activation rate c(r) - logistic function -->
+            <Constant symbol="c_max" value="0.08" name="Max GAP activation"/>
+            <Constant symbol="c_alpha" value="0.005" name="Min GAP activation"/>
+            <Constant symbol="c_km" value="13.0" name="GAP activation decay rate"/>
+            
+            <!-- Radial distance from center -->
+            <Function symbol="r">
+                <Expression>sqrt(l.x^2 + l.y^2)</Expression>
+            </Function>
+            
+            <!-- Spatially-dependent positive feedback rate gamma(r) -->
+            <Function symbol="gamma">
+                <Expression>gamma_alpha + gamma_max / (1 + exp(gamma_km * (r - mu_F)))</Expression>
+            </Function>
+            
+            <!-- Spatially-dependent GAP activation rate c(r) -->
+            <Function symbol="c_rate">
+                <Expression>c_alpha + c_max / (1 + exp(c_km * (r - mu_F)))</Expression>
+            </Function>
+            
+            <!-- GTPase positive feedback term -->
+            <Function symbol="feedback">
+                <Expression>gamma * (u^n) / (K^n + u^n)</Expression>
+            </Function>
+            
+            <!-- Active GTPase (u) dynamics -->
+            <DiffEqn symbol-ref="u">
+                <Expression>b*v + feedback * v - sigma*u - e*G*u</Expression>
+            </DiffEqn>
+            
+            <!-- Inactive GTPase (v) dynamics -->
+            <DiffEqn symbol-ref="v">
+                <Expression>-b*v - feedback * v + sigma*u + e*G*u</Expression>
+            </DiffEqn>
+            
+            <!-- Active GAP (G) dynamics -->
+            <DiffEqn symbol-ref="G">
+                <Expression>c_rate*u*g - d*G</Expression>
+            </DiffEqn>
+            
+            <!-- Inactive GAP (g) dynamics -->
+            <DiffEqn symbol-ref="g">
+                <Expression>-c_rate*u*g + d*G</Expression>
+            </DiffEqn>
+        </System>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <!-- Circular domain with radius 4 microns, discretized on square lattice -->
+            <Size symbol="size" value="256, 256, 0"/>
+            <NodeLength value="0.03125"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="100"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="1"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <Analysis>
+        <!-- Visualize active GTPase pattern -->
+        <Gnuplotter time-step="5" decorate="false">
+            <Terminal name="png" size="800 800 0"/>
+            <Plot>
+                <Field symbol-ref="u" min="0" max="800">
+                    <ColorMap>
+                        <Color value="0.0" color="blue"/>
+                        <Color value="400.0" color="white"/>
+                        <Color value="800.0" color="red"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        
+        <!-- Log active GTPase concentrations -->
+        <Logger time-step="5">
+            <Input>
+                <Symbol symbol-ref="u"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Plots>
+                <SurfacePlot time-step="10">
+                    <Color-bar>
+                        <Symbol symbol-ref="u"/>
+                    </Color-bar>
+                    <Terminal terminal="png"/>
+                </SurfacePlot>
+            </Plots>
+        </Logger>
+        
+        <!-- Radial profile at final time -->
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="u"/>
+                <Symbol symbol-ref="G"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+            <Restriction>
+                <Slice axis="y" value="size.y/2"/>
+            </Restriction>
+            <Plots>
+                <Plot time-step="0">
+                    <Style style="lines" line-width="3.0"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="l.x"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="u"/>
+                    </Y-axis>
+                    <Color-bar>
+                        <Symbol symbol-ref="G"/>
+                    </Color-bar>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" include-tags="#untagged" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

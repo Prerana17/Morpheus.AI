@@ -1,0 +1,115 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+Gnuplotter_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Gnuplotter</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Gnuplotter" ]
+Logger_0_5[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>5</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger[0]" ]
+Logger_0_10[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>Logger</td></tr>
+<hr/>
+<tr><td>10</td></tr></table></font>>, URL="morph://MorpheusModel/Analysis/Logger[1]" ]
+G_0[label="G", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[2]"]
+g_0[label="g", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[3]"]
+l_0[label="l", fillcolor="#b5b426", URL="morph://MorpheusModel/Space/SpaceSymbol"]
+l_x_0[label="l.x", fillcolor="#d3d247"]
+l_y_0[label="l.y", fillcolor="#d3d247"]
+size_0[label="size", fillcolor="#b5b426"]
+size_y_0[label="size.y", fillcolor="#d3d247"]
+u_0[label="u", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[0]"]
+v_0[label="v", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/Field[1]"]
+subgraph cluster_1 {
+label="";
+System_1_16582008202029987738_0_01[ shape=plain, label=<<font face="times" point-size="15"><table cellborder="0" border="1" cellspacing="0" cellpadding="3" align="center">
+<tr><td>System</td></tr>
+<tr><td><i>'WPGAP_Model'</i></td></tr>
+<hr/>
+<tr><td>0.01</td></tr></table></font>>, URL="morph://MorpheusModel/Global/System" ]
+K_1[label="K", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[1]"]
+b_1[label="b", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[0]"]
+c_alpha_1[label="c_alpha", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[11]"]
+c_km_1[label="c_km", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[12]"]
+c_max_1[label="c_max", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[10]"]
+d_1[label="d", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[4]"]
+e_1[label="e", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[5]"]
+gamma_alpha_1[label="gamma_alpha", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[8]"]
+gamma_km_1[label="gamma_km", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[9]"]
+gamma_max_1[label="gamma_max", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[7]"]
+mu_F_1[label="mu_F", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[6]"]
+n_1[label="n", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[2]"]
+sigma_1[label="sigma", fillcolor="#d3d247", URL="morph://MorpheusModel/Global/System/Constant[3]"]
+subgraph cluster_2 {
+label="Function";
+}
+subgraph cluster_3 {
+label="Function";
+}
+subgraph cluster_4 {
+label="Function";
+}
+subgraph cluster_5 {
+label="Function";
+}
+}
+}
+G_0 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+K_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+System_1_16582008202029987738_0_01 -> G_0 [penwidth=3, color="#8f100d"] 
+
+System_1_16582008202029987738_0_01 -> g_0 [penwidth=3, color="#8f100d"] 
+
+System_1_16582008202029987738_0_01 -> u_0 [penwidth=3, color="#8f100d"] 
+
+System_1_16582008202029987738_0_01 -> v_0 [penwidth=3, color="#8f100d"] 
+
+b_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+c_alpha_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+c_km_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+c_max_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+d_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+e_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+gamma_alpha_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+gamma_km_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+gamma_max_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+l_0 -> l_x_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+l_0 -> l_y_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+l_x_0 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+l_y_0 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+mu_F_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+n_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+sigma_1 -> System_1_16582008202029987738_0_01 [penwidth=2, color="#112c5f"] 
+
+size_0 -> size_y_0 [dir=none, style="dashed", penwidth=1, color="#38568c"] 
+
+size_y_0 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+u_0 -> Gnuplotter_0_5 [penwidth=2, color="#112c5f"] 
+
+u_0 -> Logger_0_10 [penwidth=2, color="#112c5f"] 
+
+u_0 -> Logger_0_5 [penwidth=2, color="#112c5f"] 
+
+}

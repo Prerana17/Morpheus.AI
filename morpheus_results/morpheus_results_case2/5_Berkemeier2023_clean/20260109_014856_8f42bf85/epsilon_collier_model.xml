@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Epsilon-Collier Model: Long-range Notch-Delta Signalling</Title>
+        <Details>
+Implementation of the ε-Collier model from Berkemeier &amp; Page (2023):
+"Coupling dynamics of 2D Notch-Delta signalling"
+Mathematical Biosciences 360:109012
+
+The model extends the Collier et al. (1996) lateral inhibition model
+by introducing parameter ε ∈ [0,1] that weights juxtacrine signalling (ε=0)
+versus long-range protrusion-based signalling (ε=1).
+
+Key equations:
+dn_i/dt = f(⟨d_i⟩) - n_i
+dd_i/dt = ν(g(n_i) - d_i)
+
+where f(x) = x^k/(a + x^k) and g(x) = 1/(1 + b*x^h)
+with Hill coefficients h=k=6, a=10^-8, b=10^2, ν=1
+        </Details>
+    </Description>
+    <Global>
+        <Constant symbol="epsilon" value="0.2" name="Long-range signalling weight"/>
+        <Constant symbol="a" value="1e-8" name="Trans-activation parameter"/>
+        <Constant symbol="b" value="100" name="Ligand inhibition strength"/>
+        <Constant symbol="h" value="6" name="Hill coefficient (Notch)"/>
+        <Constant symbol="k" value="6" name="Hill coefficient (Delta)"/>
+        <Constant symbol="nu" value="1.0" name="Decay rate ratio"/>
+    </Global>
+    <Space>
+        <Lattice class="hexagonal">
+            <Size symbol="size" value="14, 14, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="periodic"/>
+                <Condition boundary="y" type="periodic"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="50"/>
+        <TimeSymbol symbol="t"/>
+        <RandomSeed value="42"/>
+    </Time>
+    <CellTypes>
+        <CellType class="biological" name="epithelial_cell">
+            <Property symbol="n" value="0.744" name="Notch activity"/>
+            <Property symbol="d" value="0.055" name="Delta activity"/>
+            <Property symbol="d_neighbors" value="0.055" name="Delta from nearest neighbors"/>
+            <Property symbol="d_second_neighbors" value="0.055" name="Delta from second neighbors"/>
+            <Property symbol="d_avg" value="0.055" name="Weighted average Delta"/>
+            <System solver="runge-kutta" time-step="0.01">
+                <DiffEqn symbol-ref="n">
+                    <Expression>
+                        (d_avg^k) / (a + d_avg^k) - n
+                    </Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="d">
+                    <Expression>
+                        nu * (1.0 / (1.0 + b * n^h) - d)
+                    </Expression>
+                </DiffEqn>
+                <Rule symbol-ref="d_avg">
+                    <Expression>
+                        (1.0 - epsilon) * d_neighbors + epsilon * d_second_neighbors
+                    </Expression>
+                </Rule>
+            </System>
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="d"/>
+                <Output symbol-ref="d_neighbors" mapping="average"/>
+                <Neighborhood>
+                    <Order>1</Order>
+                </Neighborhood>
+            </NeighborhoodReporter>
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="d"/>
+                <Output symbol-ref="d_second_neighbors" mapping="average"/>
+                <Neighborhood>
+                    <Order>2</Order>
+                </Neighborhood>
+            </NeighborhoodReporter>
+        </CellType>
+    </CellTypes>
+    <CellPopulations>
+        <Population size="0" type="epithelial_cell">
+            <InitCellLattice/>
+            <InitProperty symbol-ref="n">
+                <Expression>0.744 + rand_norm(0, 0.01)</Expression>
+            </InitProperty>
+            <InitProperty symbol-ref="d">
+                <Expression>0.055 + rand_norm(0, 0.01)</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    <Analysis>
+        <Gnuplotter time-step="2.5">
+            <Terminal name="png" size="800, 400, 0"/>
+            <Plot title="Delta activity (SOP cells = white/high)">
+                <Cells value="d" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="0.0" color="green"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="1.0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot title="Notch activity">
+                <Cells value="n" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="0.0" color="white"/>
+                        <Color value="0.5" color="blue"/>
+                        <Color value="1.0" color="dark-blue"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="0.5">
+            <Input>
+                <Symbol symbol-ref="n"/>
+                <Symbol symbol-ref="d"/>
+                <Symbol symbol-ref="d_avg"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="-1">
+                    <Style style="points" point-size="0.5"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="t"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="n"/>
+                        <Symbol symbol-ref="d"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <HistogramLogger time-step="5" normalized="true" number-of-bins="20" minimum="0.0" maximum="1.0">
+            <Plot terminal="png" minimum="0" maximum="1.0"/>
+            <Column celltype="epithelial_cell" symbol-ref="n"/>
+            <Column celltype="epithelial_cell" symbol-ref="d"/>
+        </HistogramLogger>
+        <ModelGraph format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

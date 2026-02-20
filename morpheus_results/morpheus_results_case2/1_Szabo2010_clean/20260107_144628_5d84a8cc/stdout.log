@@ -1,0 +1,489 @@
+Initializing from file model.xml
+Applied 0 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 8 with seed 3873942129
+Intitalize Thread 1 with seed 2561164026
+Intitalize Thread 6 with seed 3310822
+Intitalize Thread 4 with seed 4039641443
+Intitalize Thread 2 with seed 2306289027
+Intitalize Thread 7 with seed 3011628261
+Intitalize Thread Intitalize Thread 9 with seed 504254930
+Intitalize Thread 5 with seed 685905509
+0 with seed 1767793588
+Intitalize Thread 3 with seed 1013376003
+Registering Symbol time of linktype TimeLink in Scope root
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 0 with seed 1767793588
+Intitalize Thread Intitalize Thread Intitalize Thread 9 with seed Intitalize Thread 2Intitalize Thread 8 with seed 3873942129
+ with seed 2306289027
+1 with seed 2561164026
+Intitalize Thread 6 with seed 504254930
+3310822
+Intitalize Thread 37 with seed 3011628261
+Intitalize Thread  with seed 1013376003
+Intitalize Thread 4 with seed 4039641443
+5 with seed 685905509
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 200, 200, 0
+getXMLAttribute: seeking for Size->symbol: size
+Loading [2] Global Plugins
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: P_mot
+getXMLAttribute: seeking for Constant->value: 2.0
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol P_mot of linktype ConstantLink in Scope root
+getXMLAttribute: seeking for Constant->name .. not found
+getXMLAttribute: seeking for Constant->symbol: decay_r
+getXMLAttribute: seeking for Constant->value: 0.2
+getXMLAttribute: seeking for Constant->notation .. not found
+Registering Symbol decay_r of linktype ConstantLink in Scope root
+Creating subscope CellType[endo] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[endo]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[endo]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[endo]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[endo]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[endo]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[endo]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[endo]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[endo]
+Registering Symbol celltype.endo.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.endo.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: 50
+getXMLAttribute: seeking for VolumeConstraint->strength: 1.0
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: px
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol px of linktype CellPropertyLink in Scope CellType[endo]
+Registering Symbol px of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: py
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol py of linktype CellPropertyLink in Scope CellType[endo]
+Registering Symbol py of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: pmag
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol pmag of linktype CellPropertyLink in Scope CellType[endo]
+Registering Symbol pmag of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: dx
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol dx of linktype CellPropertyLink in Scope CellType[endo]
+Registering Symbol dx of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: dy
+getXMLAttribute: seeking for Property->value: 0.0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol dy of linktype CellPropertyLink in Scope CellType[endo]
+Registering Symbol dy of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: prevx
+getXMLAttribute: seeking for Property->value: 0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol prevx of linktype CellPropertyLink in Scope CellType[endo]
+Registering Symbol prevx of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: prevy
+getXMLAttribute: seeking for Property->value: 0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol prevy of linktype CellPropertyLink in Scope CellType[endo]
+Registering Symbol prevy of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[endo]
+getXMLAttribute: seeking for System->solver: Runge-Kutta [fixed, O(4)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: px
+getXMLAttribute: seeking for Reaction->text: -decay_r * px + dx * 0.1
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: py
+getXMLAttribute: seeking for Reaction->text: -decay_r * py + dy * 0.1
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for DiffEqn->symbol-ref: pmag
+getXMLAttribute: seeking for Reaction->text: sqrt(px^2 + py^2)
+getXMLAttribute: seeking for Advection->text .. not found
+getXMLAttribute: seeking for Diffusion->text .. not found
+getXMLAttribute: seeking for Diffusion->well-mixed .. not found
+getXMLAttribute: seeking for Event->delay .. not found
+getXMLAttribute: seeking for Event->compute-time .. not found
+getXMLAttribute: seeking for Event->trigger: when-true
+getXMLAttribute: seeking for Condition->history .. not found
+getXMLAttribute: seeking for Event->persistent .. not found
+getXMLAttribute: seeking for Event->time-step: 5
+Scope: Creating Accessor for symbol 'time' from Scope root
+Creating subscope System in scope CellType[endo]
+getXMLAttribute: seeking for Rule->symbol-ref: dx
+getXMLAttribute: seeking for Expression->text: cell.center.x - prevx
+getXMLAttribute: seeking for Rule->symbol-ref: dy
+getXMLAttribute: seeking for Expression->text: cell.center.y - prevy
+getXMLAttribute: seeking for Rule->symbol-ref: prevx
+getXMLAttribute: seeking for Expression->text: cell.center.x
+getXMLAttribute: seeking for Rule->symbol-ref: prevy
+getXMLAttribute: seeking for Expression->text: cell.center.y
+getXMLAttribute: seeking for DirectedMotion->direction: px, py, 0
+getXMLAttribute: seeking for DirectedMotion->strength: 2.0
+getXMLAttribute: seeking for DirectedMotion->protrusion .. not found
+getXMLAttribute: seeking for DirectedMotion->retraction .. not found
+CellTypes defined: 'endo' 'medium' 
+getXMLAttribute: seeking for MonteCarloSampler/MCSDuration->value: 1.0
+getXMLAttribute: seeking for MonteCarloSampler->stepper: edgelist
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->temperature: 2.0
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->yield .. not found
+getXMLAttribute: seeking for Contact->value: 2
+getXMLAttribute: seeking for Contact->value: 4
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 2
+Assigning Shape Neighborhood of size 1.41421 -> 8 neighbors.
+Setting boundary neighborhood to order 2
+Creating cell layer of size 1.13281 MB
+with initial state set to CellType 'medium'
+getXMLAttribute: seeking for InitCellObjects->mode: distance
+Initializing celltype 'endo'
+Scope: Creating Accessor for symbol 'px' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'py' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'pmag' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'decay_r' from Scope root
+Scope: Creating Accessor for symbol 'dx' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'dy' from Scope CellType[endo]
+System::init: Reordering Initializers ...
+Plugin Event: Registered input symbol dependencies time [root] ,
+Scope: Creating Accessor for symbol 'dx' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'dy' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'prevx' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'prevy' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'cell.center.x' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'cell.center.y' from Scope CellType[endo]
+System::init: Reordering Initializers ...
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'px' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'py' from Scope CellType[endo]
+Plugin DirectedMotion: Registered input symbol dependencies px [CellType[endo]] ,py [CellType[endo]] ,
+getXMLAttribute: seeking for Arrangement->repetitions: 18, 18, 1
+getXMLAttribute: seeking for Arrangement->displacements: 9, 9, 1
+getXMLAttribute: seeking for Arrangement->random_displacement .. not found
+InitCellObjects: Arrange: displacement: 9, 9, 1, repetitions: 18, 18, 1
+getXMLAttribute: seeking for Sphere->center: 4.5, 4.5, 0
+getXMLAttribute: seeking for Sphere->radius: 3.5
+InitCellObjects: Arranged 324 objects.
+InitCellObject: Added 324 cell(s), occupying 10368 nodes
+Cells 324 requested 0
+Initproperty refers to symbol 'prevx' of type CellPropertyLink
+Scope: Creating Accessor for symbol 'prevx' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'cell.center.x' from Scope CellType[endo]
+Initproperty refers to symbol 'prevy' of type CellPropertyLink
+Scope: Creating Accessor for symbol 'prevy' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'cell.center.y' from Scope CellType[endo]
+Initproperty refers to symbol 'px' of type CellPropertyLink
+Scope: Creating Accessor for symbol 'px' from Scope CellType[endo]
+Initproperty refers to symbol 'py' of type CellPropertyLink
+Scope: Creating Accessor for symbol 'py' from Scope CellType[endo]
+Initializing celltype 'medium'
+Scope: Creating Accessor for symbol 'cell.center' from Scope root
+Scope: Creating Accessor for symbol 'cell.volume' from Scope root
+Scope: Creating Accessor for symbol 'cell.surface' from Scope root
+Scope: Creating Accessor for symbol 'cell.length' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+creating Edge tracker 
+
+ thread_id = 0x2048fe240, register_thread_index = 0, shared_locks_array[cur_index].value = 1
+ thread_id = 0x16fe37000, register_thread_index = 1, shared_locks_array[cur_index].value = 1
+
+ thread_id = 0x17063f000, register_thread_index = 5, shared_locks_array[cur_index].value = 1
+
+ thread_id = 0x16ce07000, register_thread_index = 
+ thread_id = 
+ thread_id = 0x16f62f000, register_thread_index = 7, shared_locks_array[cur_index].value = 1
+
+ thread_id = 3, shared_locks_array[cur_index].value = 0x16c5ff00010x16d60f000
+ thread_id = 0x16ee27000, register_thread_index = 9, shared_locks_array[cur_index].value = 1
+
+ thread_id = 0x16de17000, register_thread_index = 6
+
+ thread_id = , shared_locks_array[cur_index].value = , register_thread_index = 0x16e61f000, register_thread_index = 1
+8, shared_locks_array[cur_index].value = 1, register_thread_index = 2, shared_locks_array[cur_index].value = 1
+
+4, shared_locks_array[cur_index].value = 1
+
+EdgeListTracker::init() : Created Tracker with Neighborhood size 8 of size 0.933594 MB
+EdgeListTracker::init() : Found 19440 initial edges, wherof 19440 can be modified.
+CPM: InteractionEnergy has 8 neighbors
+CPM: InteractionEnergy was initialized with  IA_COLLAPSE 
+Loading Analysis tools [2]
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: px
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: py
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: pmag
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype: endo
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Logger->time-step: 20
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name .. not found
+getXMLAttribute: seeking for Terminal->size .. not found
+getXMLAttribute: seeking for Gnuplotter->time-step: 50
+getXMLAttribute: seeking for Cells->value: pmag
+Scope: Creating Accessor for symbol 'px' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'py' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'pmag' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'px' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'py' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'pmag' from Scope CellType[endo]
+Plugin Logger: Registered input symbol dependencies px [CellType[endo]] ,py [CellType[endo]] ,pmag [CellType[endo]] ,
+Scope: Creating Accessor for symbol 'px' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'py' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'pmag' from Scope CellType[endo]
+Scope: Creating Accessor for symbol 'pmag' from Scope root
+System
+Event
+CPM
+Logger
+Gnuplotter
+
+ TimeStepListener "System" propagates its time step 1
+
+ TimeStepListener "Event" propagates its time step 5
+
+ TimeStepListener "CPM" propagates its time step 1
+
+ TimeStepListener "Logger" propagates its time step 20
+
+ TimeStepListener "Gnuplotter" propagates its time step 50
+TimeScheduler::init: Ordering instantaneous processes for sequential update ...
+ 
+======================================================
+ Time Schedule
+======================================================
+ Time precision patch is 0.001
+
+=====|    Phase I     |===============================
+-----. CPM .------------------------------------
+  + 1 => CPM [px,py] -> [cell.center,cell.length,cell.surface,cell.type,cell.volume]
+-----. Reactions .------------------------------------
+  + 1 => System [decay_r,dx,dy] -> [pmag,px,py]
+
+=====|    Phase II    |===============================
+-----. Reporters and Instantaneous Processes.---------
+  + 5 => Event [cell.center.x,cell.center.y,time] -> [dx,dy,prevx,prevy]
+
+=====|    Phase III   |===============================
+-----. Analysis .-------------------------------------
+  + 20 => Logger [pmag,px,py] 
+  + 50 => Gnuplotter [pmag] 
+------------------------------------------------------
+======================================================
+
+model is up
+GnuPlotter: Saving plot_00000.png
+Time: 0.00 atu
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+Time: 3 
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+Time: 6 
+Time: 9 
+Time: 12 
+Time: 15 
+Time: 18 
+Time: 21 
+Time: 24 
+Time: 27 
+Time: 30 
+Time: 33 
+Time: 36 
+Time: 39 
+Time: 42 
+Time: 45 
+Time: 48 
+GnuPlotter: Saving plot_00050.png
+Time: 51 
+Time: 54 
+Time: 57 
+Time: 60 
+Time: 63 
+Time: 66 
+Time: 69 
+Time: 72 
+Time: 75 
+Time: 78 
+Time: 81 
+Time: 84 
+Time: 87 
+Time: 90 
+Time: 93 
+Time: 96 
+Time: 99 
+GnuPlotter: Saving plot_00100.png
+Time: 102 
+Time: 105 
+Time: 108 
+Time: 111 
+Time: 114 
+Time: 117 
+Time: 120 
+Time: 123 
+Time: 126 
+Time: 129 
+Time: 132 
+Time: 135 
+Time: 138 
+Time: 141 
+Time: 144 
+Time: 147 
+GnuPlotter: Saving plot_00150.png
+Time: 150 
+Time: 153 
+Time: 156 
+Time: 159 
+Time: 162 
+Time: 165 
+Time: 168 
+Time: 171 
+Time: 174 
+Time: 177 
+Time: 180 
+Time: 183 
+Time: 186 
+Time: 189 
+Time: 192 
+Time: 195 
+Time: 198 
+GnuPlotter: Saving plot_00200.png
+Time: 201 
+Time: 204 
+Time: 207 
+Time: 210 
+Time: 213 
+Time: 216 
+Time: 219 
+Time: 222 
+Time: 225 
+Time: 228 
+Time: 231 
+Time: 234 
+Time: 237 
+Time: 240 
+Time: 243 
+Time: 246 
+Time: 249 
+GnuPlotter: Saving plot_00250.png
+Time: 252 
+Time: 255 
+Time: 258 
+Time: 261 
+Time: 264 
+Time: 267 
+Time: 270 
+Time: 273 
+Time: 276 
+Time: 279 
+Time: 282 
+Time: 285 
+Time: 288 
+Time: 291 
+Time: 294 
+Time: 297 
+GnuPlotter: Saving plot_00300.png
+Time: 300 
+sampler 1 layer 10
+
+=======================================================
+    SCHEDULER PERFORMANCE STATISTICS
+=======================================================
+
+    +  75.3% = 6.5917s (26.6173)  | CPM [px,py -> cell.center,cell.length,cell.surface,cell.type,cell.volume]
+    +  12.0% = 1.0485s (0.3665)  | Gnuplotter [pmag]
+    +  10.4% = 0.9096s (0.0777)  | Initialisation []
+    +   0.4% = 0.0361s (0.1230)  | System [decay_r,dx,dy -> pmag,px,py]
+    +   0.1% = 0.0068s (0.0265)  | Event [cell.center.x,cell.center.y,time -> dx,dy,prevx,prevy]
+    +   0.0% = 0.0000s (0.0000)  | Logger [pmag,px,py]
+
+======================================================
+
+=== Simulation finished ===
+Wall Time   = 8s 757ms
+CPU Time    = 50s 962ms (10 threads)
+

@@ -1,0 +1,8 @@
+Run ID: 20260107_215347_09dbb5c1
+Total Score: 2
+
+XML Errors: 0
+Model Graph Present: True
+Time Steps Detected: 0
+StopTime Match: False
+Results Generated: True

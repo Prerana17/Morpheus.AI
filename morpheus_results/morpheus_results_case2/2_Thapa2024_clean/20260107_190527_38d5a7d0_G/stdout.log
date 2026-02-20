@@ -1,0 +1,564 @@
+Initializing from file model.xml
+Applied 0 patches to update MorpheusML version to internal v5!
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread Intitalize Thread 8 with seed 0 with seed 5174455481767809127
+Intitalize Thread 1 with seed 3935711361
+
+Intitalize Thread 2Intitalize Thread Intitalize Thread Intitalize Thread 3 with seed 3875572500
+ with seed 3697731837
+Intitalize Thread 4 with seed Intitalize Thread Intitalize Thread 5 with seed 79 with seed 1594376329
+10493102406 with seed 
+193207983
+2481774105
+ with seed 3453887512
+Registering Symbol time of linktype TimeLink in Scope root
+Time/RandomSeed not specified, using arbitray seed (based on time).
+Intitalize Thread 3 with seed 3875572500
+Intitalize Thread Intitalize Thread Intitalize Thread 1 with seed 9 with seed 1594376329
+Intitalize Thread 3935711361Intitalize Thread Intitalize Thread 8 with seed 517445548
+Intitalize Thread Intitalize Thread 4 with seed 5 with seed 
+2481774105
+2 with seed 3697731837
+Intitalize Thread 1049310240
+0 with seed 1767809127
+6 with seed 7 with seed 3453887512
+193207983
+Registering Symbol space of linktype LocationLink in Scope root
+Registering Symbol space.x of linktype VectorComponentLink in Scope root
+Registering Symbol space.y of linktype VectorComponentLink in Scope root
+Registering Symbol space.z of linktype VectorComponentLink in Scope root
+Registering Symbol space.phi of linktype VectorComponentLink in Scope root
+Registering Symbol space.theta of linktype VectorComponentLink in Scope root
+Registering Symbol space.abs of linktype VectorComponentLink in Scope root
+Creating lattice
+getXMLAttribute: seeking for Lattice->class: square
+getXMLAttribute: seeking for Size->value: 140, 140, 0
+getXMLAttribute: seeking for Size->symbol: size
+Creating subscope CellType[SEN] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[SEN]
+Registering Symbol cell.type of linktype CompositeLink in Scope root
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[SEN]
+Registering Symbol cell.id of linktype CompositeLink in Scope root
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[SEN]
+Registering Symbol cell.center of linktype CompositeLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[SEN]
+Registering Symbol cell.volume of linktype CompositeLink in Scope root
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[SEN]
+Registering Symbol cell.length of linktype CompositeLink in Scope root
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[SEN]
+Registering Symbol cell.surface of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[SEN]
+Registering Symbol cell.orientation of linktype CompositeLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope root
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[SEN]
+Registering Symbol celltype.SEN.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.SEN.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[NON] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[NON]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[NON]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[NON]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[NON]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[NON]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[NON]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[NON]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[NON]
+Registering Symbol celltype.NON.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.NON.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[CAN] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[CAN]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[CAN]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[CAN]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[CAN]
+Registering Symbol cell.length of linktype CellLengthLink in Scope CellType[CAN]
+Registering Symbol cell.surface of linktype CellInterfaceLengthLink in Scope CellType[CAN]
+Registering Symbol cell.orientation of linktype CellOrientationLink in Scope CellType[CAN]
+Registering Symbol cell.orientation.x of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.orientation.y of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.orientation.z of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.orientation.phi of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.orientation.theta of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol cell.orientation.abs of linktype VectorComponentLink in Scope CellType[CAN]
+Registering Symbol celltype.CAN.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.CAN.size of linktype CellPopulationSizeLink in Scope root
+Creating subscope CellType[medium] in scope root
+Registering Symbol cell.type of linktype PrimitiveConstant in Scope CellType[medium]
+Registering Symbol cell.id of linktype CellIDLink in Scope CellType[medium]
+Registering Symbol cell.center of linktype CellCenterLink in Scope CellType[medium]
+Registering Symbol cell.center.x of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.y of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.z of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.phi of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.theta of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.center.abs of linktype VectorComponentLink in Scope CellType[medium]
+Registering Symbol cell.volume of linktype CellVolumeLink in Scope CellType[medium]
+Registering Symbol celltype.medium.id of linktype PrimitiveConstant in Scope root
+Registering Symbol celltype.medium.size of linktype CellPopulationSizeLink in Scope root
+getXMLAttribute: seeking for VolumeConstraint->target: 150
+getXMLAttribute: seeking for VolumeConstraint->strength: 1
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: cp
+getXMLAttribute: seeking for Property->value: 0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cp of linktype CellPropertyLink in Scope CellType[SEN]
+Registering Symbol cp of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: per
+getXMLAttribute: seeking for Property->value: 0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol per of linktype CellPropertyLink in Scope CellType[SEN]
+Registering Symbol per of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: cfrac
+getXMLAttribute: seeking for Property->value: 0
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol cfrac of linktype CellPropertyLink in Scope CellType[SEN]
+Registering Symbol cfrac of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Input->scaling: length
+getXMLAttribute: seeking for Input->value: cell.type == celltype.CAN.id
+getXMLAttribute: seeking for Input->noflux-cell-medium .. not found
+getXMLAttribute: seeking for Output[0]->mapping: sum
+getXMLAttribute: seeking for Output[0]->symbol-ref: cp
+getXMLAttribute: seeking for Input->scaling: length
+getXMLAttribute: seeking for Input->value: 1
+getXMLAttribute: seeking for Input->noflux-cell-medium .. not found
+getXMLAttribute: seeking for Output[0]->mapping: sum
+getXMLAttribute: seeking for Output[0]->symbol-ref: per
+getXMLAttribute: seeking for System->time-step: 1.0
+Creating subscope System in scope CellType[SEN]
+getXMLAttribute: seeking for System->solver: Euler [fixed, O(1)]
+getXMLAttribute: seeking for System->solver-eps .. not found
+getXMLAttribute: seeking for Rule->symbol-ref: cfrac
+getXMLAttribute: seeking for Expression->text: if(per > 0, cp / per, 0)
+getXMLAttribute: seeking for Condition->text: cfrac > 0.55
+getXMLAttribute: seeking for Shrinkage->target-volume .. not found
+getXMLAttribute: seeking for Shrinkage->remove-volume .. not found
+getXMLAttribute: seeking for Shrinkage->replace-with .. not found
+getXMLAttribute: seeking for VolumeConstraint->target: 100
+getXMLAttribute: seeking for VolumeConstraint->strength: 1
+getXMLAttribute: seeking for VolumeConstraint->target: 120
+getXMLAttribute: seeking for VolumeConstraint->strength: 1
+getXMLAttribute: seeking for Property->name .. not found
+getXMLAttribute: seeking for Property->symbol: dp
+getXMLAttribute: seeking for Property->value: 0.00133
+getXMLAttribute: seeking for Property->notation .. not found
+Registering Symbol dp of linktype CellPropertyLink in Scope CellType[CAN]
+Registering Symbol dp of linktype CompositeLink in Scope root
+getXMLAttribute: seeking for Condition->text: rand_uni(0,1) < dp
+getXMLAttribute: seeking for CellDivision->division-plane: random
+getXMLAttribute: seeking for CellDivision->orientation .. not found
+getXMLAttribute: seeking for CellDivision->write-log .. not found
+getXMLAttribute: seeking for CellDivision->trigger .. not found
+CellTypes defined: 'CAN' 'NON' 'SEN' 'medium' 
+getXMLAttribute: seeking for MonteCarloSampler/MCSDuration->value: 1
+getXMLAttribute: seeking for MonteCarloSampler->stepper: edgelist
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->temperature: 20
+getXMLAttribute: seeking for MonteCarloSampler/MetropolisKinetics->yield .. not found
+getXMLAttribute: seeking for Contact->value: 30
+getXMLAttribute: seeking for Contact->value: 30
+getXMLAttribute: seeking for Contact->value: 15
+getXMLAttribute: seeking for Contact->value: 30
+getXMLAttribute: seeking for Contact->value: 30
+getXMLAttribute: seeking for Contact->value: 30
+Registering Symbol size of linktype PrimitiveConstant in Scope root
+Registering Symbol size.x of linktype VectorComponentLink in Scope root
+Registering Symbol size.y of linktype VectorComponentLink in Scope root
+Registering Symbol size.z of linktype VectorComponentLink in Scope root
+Registering Symbol size.phi of linktype VectorComponentLink in Scope root
+Registering Symbol size.theta of linktype VectorComponentLink in Scope root
+Registering Symbol size.abs of linktype VectorComponentLink in Scope root
+Setting boundary neighborhood to order 1
+Assigning Shape Neighborhood of size 2.23607 -> 20 neighbors.
+Setting boundary neighborhood to order 4
+Creating cell layer of size 0.568359 MB
+with initial state set to CellType 'medium'
+getXMLAttribute: seeking for InitCircle->number-of-cells: 15
+getXMLAttribute: seeking for InitCircle->mode: random
+getXMLAttribute: seeking for Dimensions->center: 70, 70, 0
+getXMLAttribute: seeking for Dimensions->radius: 50
+getXMLAttribute: seeking for InitCircle->number-of-cells: 30
+getXMLAttribute: seeking for InitCircle->mode: random
+getXMLAttribute: seeking for Dimensions->center: 70, 70, 0
+getXMLAttribute: seeking for Dimensions->radius: 50
+getXMLAttribute: seeking for InitCircle->number-of-cells: 10
+getXMLAttribute: seeking for InitCircle->mode: random
+getXMLAttribute: seeking for Dimensions->center: 70, 70, 0
+getXMLAttribute: seeking for Dimensions->radius: 30
+Initializing celltype 'SEN'
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'celltype.CAN.id' from Scope root
+Scope: Creating Accessor for symbol 'cp' from Scope CellType[SEN]
+Plugin NeighborhoodReporter: Registered input symbol dependencies celltype.CAN.id [root] ,cell.type [root] ,
+PluginNeighborhoodReporter: Registered output symbol dependencies cp [CellType[SEN]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[SEN]
+noflux_cell_medium_interface.isDefined()
+Scope: Creating Accessor for symbol 'per' from Scope CellType[SEN]
+PluginNeighborhoodReporter: Registered output symbol dependencies per [CellType[SEN]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[SEN]
+noflux_cell_medium_interface.isDefined()
+Scope: Creating Accessor for symbol 'cfrac' from Scope CellType[SEN]
+Scope: Creating Accessor for symbol 'per' from Scope CellType[SEN]
+Scope: Creating Accessor for symbol 'cp' from Scope CellType[SEN]
+System::init: Reordering Initializers ...
+Scope: Creating Accessor for symbol 'cfrac' from Scope CellType[SEN]
+Plugin CellDeath: Registered input symbol dependencies cfrac [CellType[SEN]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[SEN]
+Cells 15 requested 0
+Initializing celltype 'NON'
+Cells 30 requested 0
+Initializing celltype 'CAN'
+Scope: Creating Accessor for symbol 'dp' from Scope CellType[CAN]
+Plugin CellDivision: Registered input symbol dependencies dp [CellType[CAN]] ,
+Scope: Creating Accessor for symbol 'cell.center' from Scope CellType[CAN]
+Cells 10 requested 0
+Initializing celltype 'medium'
+Scope: Creating Accessor for symbol 'cell.center' from Scope root
+Scope: Creating Accessor for symbol 'cell.volume' from Scope root
+Scope: Creating Accessor for symbol 'cell.surface' from Scope root
+Scope: Creating Accessor for symbol 'cell.length' from Scope root
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+creating Edge tracker 
+
+ thread_id = 0x16f59f000, register_thread_index = 0, shared_locks_array[cur_index].value = 
+ thread_id = 
+ thread_id = 0x16c56f000, register_thread_index = 2, shared_locks_array[cur_index].value = 1
+1
+0x20e3ee240
+ thread_id = 
+ thread_id = 0x16d57f000, register_thread_index = 4, shared_locks_array[cur_index].value = 0x16e58f000, register_thread_index = 
+ thread_id = 0x16dd87000, register_thread_index = 6, shared_locks_array[cur_index].value = 1
+5
+ thread_id = 0x16bd67000, register_thread_index = 8, shared_locks_array[cur_index].value = 1
+, register_thread_index = 1
+1, shared_locks_array[cur_index].value = 1
+
+ thread_id = 0x16fda7000, register_thread_index = 3, shared_locks_array[cur_index].value = 1
+
+ thread_id = 0x16ed97000, register_thread_index = , shared_locks_array[cur_index].value = 7, shared_locks_array[cur_index].value = 1
+
+ thread_id = 0x16cd77000, register_thread_index = 9, shared_locks_array[cur_index].value = 1
+1
+EdgeListTracker::init() : Created Tracker with Neighborhood size 8 of size 0.460938 MB
+EdgeListTracker::init() : Found 219 initial edges, wherof 219 can be modified.
+CPM: InteractionEnergy has 20 neighbors
+CPM: InteractionEnergy was initialized with  IA_COLLAPSE 
+Loading Analysis tools [2]
+getXMLAttribute: seeking for Gnuplotter->file-numbering .. not found
+getXMLAttribute: seeking for Terminal->name: png
+getXMLAttribute: seeking for Terminal->size .. not found
+getXMLAttribute: seeking for Gnuplotter->time-step: 200
+getXMLAttribute: seeking for Cells->value: cell.type
+getXMLAttribute: seeking for Input/Symbol[0]->symbol-ref: time
+getXMLAttribute: seeking for Input/Symbol[1]->symbol-ref: celltype.SEN.size
+getXMLAttribute: seeking for Input/Symbol[2]->symbol-ref: celltype.NON.size
+getXMLAttribute: seeking for Input/Symbol[3]->symbol-ref: celltype.CAN.size
+getXMLAttribute: seeking for Restriction/Slice->value .. not found
+getXMLAttribute: seeking for Restriction/Slice->axis .. not found
+getXMLAttribute: seeking for Restriction/Celltype->celltype .. not found
+getXMLAttribute: seeking for Restriction/Cells->cell-ids .. not found
+getXMLAttribute: seeking for Restriction->domain-only .. not found
+getXMLAttribute: seeking for Restriction->condition .. not found
+getXMLAttribute: seeking for Input->force-node-granularity .. not found
+getXMLAttribute: seeking for Input->include-boundary .. not found
+getXMLAttribute: seeking for Restriction->exclude-medium .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->time-step: 1000
+getXMLAttribute: seeking for Plots/Plot[0]->title .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->log-commands .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->terminal: png
+getXMLAttribute: seeking for Plots/Plot[0]/Terminal->plot-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]->file-numbering .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->mode .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Time->history .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->first-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->last-line .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Range/Data->increment .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->style: lines
+getXMLAttribute: seeking for Plots/Plot[0]/Style->decorate .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->point-size .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Style->line-width: 2
+getXMLAttribute: seeking for Plots/Plot[0]/Style->grid .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis/Symbol->symbol-ref: time
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/X-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[0]->symbol-ref: celltype.SEN.size
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[1]->symbol-ref: celltype.NON.size
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[2]->symbol-ref: celltype.CAN.size
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[3]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[4]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[5]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[6]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[7]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[8]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis/Symbol[9]->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Y-axis->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar/Symbol->symbol-ref .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->minimum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->maximum .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->logarithmic .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->palette .. not found
+getXMLAttribute: seeking for Plots/Plot[0]/Color-bar->reverse-palette .. not found
+getXMLAttribute: seeking for Logger->time-step: 50
+Scope: Creating Accessor for symbol 'cell.type' from Scope root
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'celltype.SEN.size' from Scope root
+Scope: Creating Accessor for symbol 'celltype.NON.size' from Scope root
+Scope: Creating Accessor for symbol 'celltype.CAN.size' from Scope root
+Plugin Logger: Registered input symbol dependencies celltype.SEN.size [root] ,celltype.NON.size [root] ,celltype.CAN.size [root] ,time [root] ,
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'celltype.SEN.size' from Scope root
+Scope: Creating Accessor for symbol 'celltype.NON.size' from Scope root
+Scope: Creating Accessor for symbol 'celltype.CAN.size' from Scope root
+Logger range:
+-> size 1
+-> dataAxes 
+-> data.sizes: 1, 
+-> file separation: None
+Scope: Creating Accessor for symbol 'time' from Scope root
+Scope: Creating Accessor for symbol 'time' from Scope root
+NeighborhoodReporter
+NeighborhoodReporter
+System
+CellDeath
+CellDivision
+CPM
+Gnuplotter
+Logger
+
+ TimeStepListener "System" propagates its time step 1
+
+ TimeStepListener "CellDeath" propagates its time step 1
+
+ TimeStepListener "CellDivision" propagates its time step 1
+
+ TimeStepListener "CPM" propagates its time step 1
+
+ TimeStepListener "Gnuplotter" propagates its time step 200
+
+ TimeStepListener "Logger" propagates its time step 50
+TimeScheduler::init: Ordering instantaneous processes for sequential update ...
+Trying to remove unregistered symbol "cell.center" from unresolved_symbols.Trying to remove unregistered symbol "cell.center" from unresolved_symbols. 
+======================================================
+ Time Schedule
+======================================================
+ Time precision patch is 0.001
+
+=====|    Phase I     |===============================
+-----. CPM .------------------------------------
+  + 1 => CPM [] -> [cell.center,cell.length,cell.surface,cell.type,cell.volume]
+-----. Reactions .------------------------------------
+  + 1 => System [cp,per] -> [cfrac]
+
+=====|    Phase II    |===============================
+-----. Reporters and Instantaneous Processes.---------
+  + 1 => NeighborhoodReporter [cell.center,cell.type,celltype.CAN.id] -> [cp]
+  + 1 => NeighborhoodReporter [cell.center] -> [per]
+  + 1 => CellDeath [cfrac] -> [cell.center]
+  + 1 => CellDivision [dp] -> [cell.center]
+
+=====|    Phase III   |===============================
+-----. Analysis .-------------------------------------
+  + 200 => Gnuplotter [cell.type] 
+  + 50 => Logger [celltype.CAN.size,celltype.NON.size,celltype.SEN.size,time] 
+------------------------------------------------------
+======================================================
+
+model is up
+GnuPlotter: Saving plot_00000.png
+Time: 0.00 atu
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+System::init: Reordering Initializers ...
+Time: 50 
+Time: 100 
+Time: 150 
+GnuPlotter: Saving plot_00200.png
+Time: 200 
+Time: 250 
+Time: 300 
+Time: 350 
+GnuPlotter: Saving plot_00400.png
+Time: 400 
+Time: 450 
+Time: 500 
+Time: 550 
+GnuPlotter: Saving plot_00600.png
+Time: 600 
+Time: 650 
+Time: 700 
+Time: 750 
+GnuPlotter: Saving plot_00800.png
+Time: 800 
+Time: 850 
+Time: 900 
+Time: 950 
+GnuPlotter: Saving plot_01000.png
+Time: 1000 
+Time: 1050 
+Time: 1100 
+Time: 1150 
+GnuPlotter: Saving plot_01200.png
+Time: 1200 
+Time: 1250 
+Time: 1300 
+Time: 1350 
+GnuPlotter: Saving plot_01400.png
+Time: 1400 
+Time: 1450 
+Time: 1500 
+Time: 1550 
+GnuPlotter: Saving plot_01600.png
+Time: 1600 
+Time: 1650 
+Time: 1700 
+Time: 1750 
+GnuPlotter: Saving plot_01800.png
+Time: 1800 
+Time: 1850 
+Time: 1900 
+Time: 1950 
+GnuPlotter: Saving plot_02000.png
+Time: 2000 
+Time: 2050 
+Time: 2100 
+Time: 2150 
+GnuPlotter: Saving plot_02200.png
+Time: 2200 
+Time: 2250 
+Time: 2300 
+Time: 2350 
+GnuPlotter: Saving plot_02400.png
+Time: 2400 
+Time: 2450 
+Time: 2500 
+Time: 2550 
+GnuPlotter: Saving plot_02600.png
+Time: 2600 
+Time: 2650 
+Time: 2700 
+Time: 2750 
+GnuPlotter: Saving plot_02800.png
+Time: 2800 
+Time: 2850 
+Time: 2900 
+Time: 2950 
+GnuPlotter: Saving plot_03000.png
+Time: 3000 
+Time: 3050 
+Time: 3100 
+Time: 3150 
+GnuPlotter: Saving plot_03200.png
+Time: 3200 
+Time: 3250 
+Time: 3300 
+Time: 3350 
+GnuPlotter: Saving plot_03400.png
+Time: 3400 
+Time: 3450 
+Time: 3500 
+Time: 3550 
+GnuPlotter: Saving plot_03600.png
+Time: 3600 
+Time: 3650 
+Time: 3700 
+Time: 3750 
+GnuPlotter: Saving plot_03800.png
+Time: 3800 
+Time: 3850 
+Time: 3900 
+Time: 3950 
+GnuPlotter: Saving plot_04000.png
+Time: 4000 
+Time: 4050 
+Time: 4100 
+Time: 4150 
+GnuPlotter: Saving plot_04200.png
+Time: 4200 
+Time: 4250 
+Time: 4300 
+Time: 4350 
+GnuPlotter: Saving plot_04400.png
+Time: 4400 
+Time: 4450 
+Time: 4500 
+Time: 4550 
+GnuPlotter: Saving plot_04600.png
+Time: 4600 
+Time: 4650 
+Time: 4700 
+Time: 4750 
+GnuPlotter: Saving plot_04800.png
+Time: 4800 
+Time: 4850 
+Time: 4900 
+Time: 4950 
+GnuPlotter: Saving plot_05000.png
+Time: 5000 
+sampler 1 layer 11
+
+=======================================================
+    SCHEDULER PERFORMANCE STATISTICS
+=======================================================
+
+    +  83.5% = 46.164s (245.589)  | CPM [cell.center,cell.length,cell.surface,cell.type,cell.volume]
+    +   7.2% = 3.974s (1.270)  | Gnuplotter [cell.type]
+    +   2.4% = 1.314s (0.012)  | Initialisation []
+    +   1.0% = 0.557s (0.553)  | CellDivision [dp -> cell.center]
+    +   0.6% = 0.327s (0.985)  | System [cp,per -> cfrac]
+    +   0.5% = 0.274s (0.871)  | NeighborhoodReporter [cell.center,cell.type,celltype.CAN.id -> cp]
+    +   0.5% = 0.266s (0.830)  | NeighborhoodReporter [cell.center -> per]
+    +   0.0% = 0.022s (0.022)  | Logger [celltype.CAN.size,celltype.NON.size,celltype.SEN.size,time]
+    +   0.0% = 0.016s (0.015)  | CellDeath [cfrac -> cell.center]
+
+======================================================
+
+=== Simulation finished ===
+Wall Time   = 55s 291ms
+CPU Time    = 6m 21s (10 threads)
+

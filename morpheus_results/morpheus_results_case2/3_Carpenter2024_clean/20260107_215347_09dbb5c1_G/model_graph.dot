@@ -1,0 +1,26 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+subgraph cluster_1 {
+label="CellType[epithelial]";
+subgraph cluster_cpm1 {
+label="CPM components";
+VolumeConstraint_1[ shape=Mrecord, label=" VolumeConstraint", URL="morph://MorpheusModel/CellTypes/CellType[0]/VolumeConstraint"];
+}
+V_target_1[label="V_target", fillcolor="#d3d247", URL="morph://MorpheusModel/CellTypes/CellType[0]/Property[0]"]
+subgraph cluster_3 {
+label="";
+}
+subgraph cluster_4 {
+label="";
+}
+}
+subgraph cluster_2 {
+label="CellType[medium]";
+}
+}
+V_target_1 -> VolumeConstraint_1 [penwidth=2, color="#112c5f"] 
+
+}

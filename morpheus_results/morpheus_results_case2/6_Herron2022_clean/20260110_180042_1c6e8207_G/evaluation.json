@@ -1,0 +1,17 @@
+{
+  "run_id": "20260110_180042_1c6e8207",
+  "total_score": 1,
+  "breakdown": {
+    "xml_error_count": 0,
+    "xml_error_penalty": 0,
+    "model_graph_present": true,
+    "model_graph_files": [
+      "model_graph.dot"
+    ],
+    "time_steps_detected": 0,
+    "time_step_score": 0,
+    "evaluation_exception": "'list' object has no attribute 'exists'",
+    "evaluation_failed": true
+  },
+  "timestamp": "2026-01-10T18:14:25.114184"
+}

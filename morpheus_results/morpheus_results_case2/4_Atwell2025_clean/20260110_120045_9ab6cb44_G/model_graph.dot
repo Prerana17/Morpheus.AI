@@ -1,0 +1,34 @@
+digraph {
+compound=true;
+subgraph cluster{
+labelloc="t";label="Global";bgcolor="#2341782f"
+node[style=filled,fillcolor="#fffea3"]
+subgraph cluster_1 {
+label="CellType[proliferative]";
+subgraph cluster_5 {
+label="";
+}
+subgraph cluster_6 {
+label="";
+}
+}
+subgraph cluster_2 {
+label="CellType[meiotic]";
+subgraph cluster_7 {
+label="";
+}
+}
+subgraph cluster_3 {
+label="CellType[sperm]";
+}
+subgraph cluster_4 {
+label="CellType[oocyte]";
+subgraph cluster_8 {
+label="";
+}
+}
+subgraph cluster_9 {
+label="CellType[Medium]";
+}
+}
+}

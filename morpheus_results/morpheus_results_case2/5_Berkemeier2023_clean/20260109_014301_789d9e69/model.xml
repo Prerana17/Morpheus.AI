@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Epsilon-Collier Model: Long-Range Notch-Delta Signalling</Title>
+        <Details>
+        Based on Berkemeier &amp; Page (2023) Mathematical Biosciences 360:109012
+        
+        Implements the ε-Collier model which extends the original Collier model
+        of Notch-Delta lateral inhibition to include long-range signalling via
+        cell protrusions.
+        
+        Key features:
+        - Hexagonal lattice representing epithelial tissue
+        - Notch (N) and Delta (D) dynamics with lateral inhibition
+        - Parameter ε controls relative weighting between:
+          * Juxtacrine signalling (nearest neighbors, ε=0)
+          * Long-range signalling via protrusions (second neighbors, ε=1)
+        - Hill function feedback with cooperativity h=k=6
+        
+        ODEs:
+        dN/dt = f(&lt;D&gt;) - N  where f(x) = x^k / (a + x^k)
+        dD/dt = ν(g(N) - D)  where g(x) = 1 / (1 + b*N^h)
+        
+        Coupling: &lt;D&gt; = (1-ε)*D_nn + ε*D_2nn
+        where D_nn is average Delta from nearest neighbors
+        and D_2nn is average Delta from second neighbors only
+        </Details>
+    </Description>
+    
+    <Global>
+        <Constant symbol="epsilon" value="0.6" name="Long-range signalling weight"/>
+        <Constant symbol="h" value="6" name="Hill coefficient for Notch inhibition"/>
+        <Constant symbol="k" value="6" name="Hill coefficient for Delta activation"/>
+        <Constant symbol="a" value="1e-8" name="Half-maximal Notch activation"/>
+        <Constant symbol="b" value="100" name="Notch inhibition strength"/>
+        <Constant symbol="nu" value="1.0" name="Delta/Notch decay rate ratio"/>
+        <Variable symbol="N_steady" value="0.744" name="Homogeneous steady state Notch"/>
+        <Variable symbol="D_steady" value="0.055" name="Homogeneous steady state Delta"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="hexagonal">
+            <Size symbol="size" value="14, 14, 0"/>
+            <BoundaryConditions>
+                <Condition type="periodic" boundary="x"/>
+                <Condition type="periodic" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="30"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="42"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="epithelial" class="biological">
+            <Property symbol="N" value="0.744" name="Notch activity"/>
+            <Property symbol="D" value="0.055" name="Delta activity"/>
+            <Property symbol="D_nn" value="0.0" name="Delta from nearest neighbors"/>
+            <Property symbol="D_all" value="0.0" name="Delta from all neighbors (order 2)"/>
+            <Property symbol="D_2nn" value="0.0" name="Delta from second neighbors only"/>
+            <Property symbol="D_coupled" value="0.0" name="Epsilon-weighted Delta coupling"/>
+            
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="D"/>
+                <Output symbol-ref="D_nn" mapping="average"/>
+                <Neighborhood>
+                    <Order>1</Order>
+                </Neighborhood>
+            </NeighborhoodReporter>
+            
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="D"/>
+                <Output symbol-ref="D_all" mapping="average"/>
+                <Neighborhood>
+                    <Order>2</Order>
+                </Neighborhood>
+            </NeighborhoodReporter>
+            
+            <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.02">
+                <Rule symbol-ref="D_2nn">
+                    <Expression>(18.0 * D_all - 6.0 * D_nn) / 12.0</Expression>
+                </Rule>
+                <Rule symbol-ref="D_coupled">
+                    <Expression>(1.0 - epsilon) * D_nn + epsilon * D_2nn</Expression>
+                </Rule>
+                <DiffEqn symbol-ref="N">
+                    <Expression>(D_coupled^k) / (a + D_coupled^k) - N</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="D">
+                    <Expression>nu * (1.0 / (1.0 + b * N^h) - D)</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+    </CellTypes>
+    
+    <CellPopulations>
+        <Population type="epithelial" size="0">
+            <InitCellLattice/>
+            <InitProperty symbol-ref="N">
+                <Expression>N_steady + rand_norm(0, 0.01)</Expression>
+            </InitProperty>
+            <InitProperty symbol-ref="D">
+                <Expression>D_steady + rand_norm(0, 0.01)</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="1.0" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="D" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="1.0" color="white"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="0.0" color="green"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot>
+                <Cells value="N" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="1.0" color="red"/>
+                        <Color value="0.5" color="orange"/>
+                        <Color value="0.0" color="blue"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot>
+                <Cells value="D_coupled" min="0.0" max="1.0">
+                    <ColorMap>
+                        <Color value="1.0" color="magenta"/>
+                        <Color value="0.5" color="cyan"/>
+                        <Color value="0.0" color="black"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        <Logger time-step="0.1">
+            <Input>
+                <Symbol symbol-ref="N"/>
+                <Symbol symbol-ref="D"/>
+            </Input>
+            <o>
+                <TextOutput file-format="csv"/>
+            </o>
+            <Plots>
+                <Plot time-step="5">
+                    <Style style="lines" line-width="2"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="1">
+                        <Symbol symbol-ref="N"/>
+                        <Symbol symbol-ref="D"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        <HistogramLogger time-step="5" minimum="0.0" maximum="1.0" number-of-bins="20" normalized="true">
+            <Plot terminal="png"/>
+            <Column celltype="epithelial" symbol-ref="D"/>
+            <Column celltype="epithelial" symbol-ref="N"/>
+        </HistogramLogger>
+        <ModelGraph format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>

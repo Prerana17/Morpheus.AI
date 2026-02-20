@@ -1,0 +1,35 @@
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 0: unrecognized option - see 'help set'.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 8747: unrecognized option - see 'help set'.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 31591: unrecognized option - see 'help set'.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 53424: unrecognized option - see 'help set'.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 74999: unrecognized option - see 'help set'.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 96383: unrecognized option - see 'help set'.
+
+
+multiplot> set colorbox; set cbtics; set clabel;
+                                         ^
+           line 118056: unrecognized option - see 'help set'.
+

@@ -1,0 +1,4 @@
+Error while initializing Plugin System
+System: Fatal Error! Output symbols in System of differential equations have non-uniform granularity!
+
+XMLPath: MorpheusModel/CellTypes/CellType[2]/System

@@ -1,0 +1,41 @@
+{
+  "run_id": "20260110_120045_9ab6cb44",
+  "total_score": 2,
+  "breakdown": {
+    "xml_error_count": 0,
+    "xml_error_penalty": 0,
+    "model_graph_present": true,
+    "model_graph_files": [
+      "model_graph.dot"
+    ],
+    "time_steps_detected": 0,
+    "time_step_score": 0,
+    "stop_time": null,
+    "last_simulation_time": null,
+    "stop_time_match": false,
+    "results_generated": true,
+    "png_files": [
+      "logger_plot_time_hph_total_cells_00000.png",
+      "logger_plot_time_hph_total_cells_00020.png",
+      "logger_plot_time_hph_total_cells_00040.png",
+      "logger_plot_time_hph_total_cells_00060.png",
+      "logger_plot_time_hph_total_cells_00080.png",
+      "logger_plot_time_hph_total_cells_00100.png",
+      "plot_00000.png",
+      "plot_00010.png",
+      "plot_00020.png",
+      "plot_00030.png",
+      "plot_00040.png",
+      "plot_00050.png",
+      "plot_00060.png",
+      "plot_00070.png",
+      "plot_00080.png",
+      "plot_00090.png",
+      "plot_00100.png"
+    ],
+    "csv_files": [
+      "logger.csv"
+    ]
+  },
+  "timestamp": "2026-01-10T12:04:24.667763"
+}

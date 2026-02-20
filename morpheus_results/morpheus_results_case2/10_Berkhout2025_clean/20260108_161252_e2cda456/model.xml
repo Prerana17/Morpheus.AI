@@ -1,0 +1,455 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Neural Tube Closure - Computational Model</Title>
+        <Details>
+Agent-based model of mammalian neural tube closure based on Berkhout et al. 2025.
+Models morphogenetic events including:
+- Floor plate formation
+- Dorsolateral hinge point (DLHP) formation  
+- Neural crest cell delamination
+- Apical constriction
+- Somitogenesis
+
+Simplified from CompuCell3D version to work within Morpheus framework.
+        </Details>
+    </Description>
+
+    <Global>
+        <!-- Morphogen Fields -->
+        <Field symbol="BMP4" value="0.0" name="Bone Morphogenetic Protein 4">
+            <Diffusion rate="3.6"/>
+        </Field>
+        
+        <Field symbol="SHH" value="0.0" name="Sonic Hedgehog">
+            <Diffusion rate="3.6"/>
+        </Field>
+        
+        <Field symbol="WNT" value="0.0" name="WNT Signaling">
+            <Diffusion rate="3.6"/>
+        </Field>
+        
+        <Field symbol="NOG" value="0.0" name="Noggin">
+            <Diffusion rate="3.6"/>
+        </Field>
+
+        <!-- Time-varying rostro-caudal gradients -->
+        <Variable symbol="ATRA" value="0.0" name="All-trans Retinoic Acid"/>
+        <Variable symbol="FGF8" value="1.0" name="Fibroblast Growth Factor 8"/>
+        
+        <System solver="Euler [fixed, O(1)]" time-step="1.0">
+            <!-- ATRA increases over time, FGF decreases -->
+            <DiffEqn symbol-ref="ATRA">
+                <Expression>0.0035 * (1.0 - ATRA)</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="FGF8">
+                <Expression>-0.0035 * FGF8</Expression>
+            </DiffEqn>
+            
+            <!-- Field decay in medium -->
+            <DiffEqn symbol-ref="BMP4">
+                <Expression>-0.00050 * BMP4</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="SHH">
+                <Expression>-0.00050 * SHH</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="WNT">
+                <Expression>-0.00050 * WNT</Expression>
+            </DiffEqn>
+            <DiffEqn symbol-ref="NOG">
+                <Expression>-0.00050 * NOG</Expression>
+            </DiffEqn>
+        </System>
+
+        <!-- Hill function constants -->
+        <Constant symbol="K_hill" value="0.5" name="Half-maximal constant"/>
+        <Constant symbol="n_hill" value="8" name="Hill coefficient"/>
+        
+        <!-- Helper functions -->
+        <Function symbol="hill_activate">
+            <Parameter symbol="x" name="activator level"/>
+            <Expression>x^n_hill / (K_hill^n_hill + x^n_hill)</Expression>
+        </Function>
+        
+        <Function symbol="hill_inhibit">
+            <Parameter symbol="x" name="inhibitor level"/>
+            <Expression>K_hill^n_hill / (K_hill^n_hill + x^n_hill)</Expression>
+        </Function>
+    </Global>
+
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="252, 200, 0"/>
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="12000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="0"/>
+    </Time>
+
+    <CellTypes>
+        <!-- Medium -->
+        <CellType class="medium" name="medium"/>
+        
+        <!-- Notochord - secretes SHH, induces floor plate -->
+        <CellType class="biological" name="notochord">
+            <Property symbol="SHH_prod" value="0.007" name="SHH production"/>
+            <VolumeConstraint target="49" strength="2.0"/>
+            <Chemotaxis field="SHH" strength="-0.1" retraction="false"/>
+            
+            <!-- Secrete SHH -->
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <DiffEqn symbol-ref="SHH">
+                    <Expression>SHH_prod</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+
+        <!-- Surface Ectoderm - secretes BMP4 and WNT -->
+        <CellType class="biological" name="surface_ectoderm">
+            <Property symbol="BMP4_prod" value="0.015" name="BMP4 production"/>
+            <Property symbol="WNT_prod" value="0.007" name="WNT production"/>
+            <Property symbol="target_vol" value="49" name="Target volume"/>
+            
+            <VolumeConstraint target="target_vol" strength="2.0"/>
+            
+            <!-- Growth -->
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <DiffEqn symbol-ref="target_vol">
+                    <Expression>0.003 * target_vol</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="BMP4">
+                    <Expression>BMP4_prod * hill_inhibit(FGF8)</Expression>
+                </DiffEqn>
+                <DiffEqn symbol-ref="WNT">
+                    <Expression>WNT_prod * (ATRA + FGF8) / 2.0</Expression>
+                </DiffEqn>
+            </System>
+            
+            <!-- Midline migration force -->
+            <Property symbol="force_x" value="0.0"/>
+            <DirectedMotion strength="1.0" direction="force_x, 0, 0"/>
+        </CellType>
+
+        <!-- Neuroectoderm - can form floor plate or DLHPs, secretes NOG -->
+        <CellType class="biological" name="neuroectoderm">
+            <!-- Gene regulatory network -->
+            <Property symbol="PTCH1" value="0.0" name="Patched receptor"/>
+            <Property symbol="ZIC" value="0.5" name="Zinc finger protein"/>
+            <Property symbol="GLI2" value="0.0" name="GLI2 transcription factor"/>
+            <Property symbol="BMPR" value="0.0" name="BMP receptor"/>
+            <Property symbol="NOG_int" value="0.5" name="Internal Noggin"/>
+            <Property symbol="apical_constriction" value="0.0" name="Apical constriction state"/>
+            <Property symbol="is_floor_plate" value="0.0" name="Floor plate marker"/>
+            <Property symbol="target_vol" value="49" name="Target volume"/>
+            
+            <VolumeConstraint target="target_vol" strength="2.0"/>
+            <SurfaceConstraint target="1.0" strength="0.5" mode="aspherity"/>
+            
+            <!-- Gene regulatory network and behaviors -->
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <!-- Sample local morphogen concentrations -->
+                <Constant symbol="SHH_local" value="0.0"/>
+                <Constant symbol="BMP4_local" value="0.0"/>
+                
+                <!-- PTCH1 activated by SHH -->
+                <DiffEqn symbol-ref="PTCH1">
+                    <Expression>0.1 * (hill_activate(SHH.cell) - PTCH1)</Expression>
+                </DiffEqn>
+                
+                <!-- ZIC inhibited by PTCH1 and GLI2 -->
+                <DiffEqn symbol-ref="ZIC">
+                    <Expression>0.1 * (hill_inhibit(PTCH1) * hill_inhibit(GLI2) - ZIC)</Expression>
+                </DiffEqn>
+                
+                <!-- GLI2 activated by PTCH1 -->
+                <DiffEqn symbol-ref="GLI2">
+                    <Expression>0.1 * (hill_activate(PTCH1) - GLI2)</Expression>
+                </DiffEqn>
+                
+                <!-- BMPR activated by BMP4 -->
+                <DiffEqn symbol-ref="BMPR">
+                    <Expression>0.1 * (hill_activate(BMP4.cell) * hill_inhibit(NOG_int) - BMPR)</Expression>
+                </DiffEqn>
+                
+                <!-- NOG induced by FGF8 and BMP4 -->
+                <DiffEqn symbol-ref="NOG_int">
+                    <Expression>0.006 * (hill_activate(FGF8) + hill_activate(BMPR)) - 0.001 * NOG_int</Expression>
+                </DiffEqn>
+                
+                <!-- Floor plate formation when in contact with notochord and high SHH -->
+                <Rule symbol-ref="is_floor_plate">
+                    <Expression>if(SHH.cell > 0.7 and time > 2000, 1.0, is_floor_plate)</Expression>
+                </Rule>
+                
+                <!-- Apical constriction for DLHP formation -->
+                <!-- High when intermediate BMP4 and low SHH -->
+                <Intermediate symbol="bmp_effect" value="4.0 * BMP4.cell^n_hill / (K_hill^n_hill + BMP4.cell^n_hill) * K_hill^n_hill / (K_hill^n_hill + BMP4.cell^n_hill)"/>
+                <Intermediate symbol="shh_inhib" value="hill_inhibit(SHH.cell)"/>
+                <Rule symbol-ref="apical_constriction">
+                    <Expression>bmp_effect * shh_inhib</Expression>
+                </Rule>
+                
+                <!-- Secrete NOG -->
+                <DiffEqn symbol-ref="NOG">
+                    <Expression>0.00025 * NOG_int</Expression>
+                </DiffEqn>
+                
+                <!-- Secrete SHH if floor plate -->
+                <DiffEqn symbol-ref="SHH">
+                    <Expression>is_floor_plate * 0.007 * hill_activate(PTCH1)</Expression>
+                </DiffEqn>
+            </System>
+            
+            <!-- Cell reporter to sample fields -->
+            <Mapper name="Sample BMP4">
+                <Input value="BMP4"/>
+                <Output symbol-ref="BMP4.cell" mapping="average"/>
+            </Mapper>
+            <Property symbol="BMP4.cell" value="0.0"/>
+            
+            <Mapper name="Sample SHH">
+                <Input value="SHH"/>
+                <Output symbol-ref="SHH.cell" mapping="average"/>
+            </Mapper>
+            <Property symbol="SHH.cell" value="0.0"/>
+        </CellType>
+
+        <!-- Mesoderm - can differentiate to somites, secretes NOG -->
+        <CellType class="biological" name="mesoderm">
+            <Property symbol="BMPR" value="0.0" name="BMP receptor"/>
+            <Property symbol="NOG_int" value="0.5" name="Internal Noggin"/>
+            <Property symbol="target_vol" value="49" name="Target volume"/>
+            <Property symbol="somite_prob" value="0.0" name="Somitogenesis probability"/>
+            
+            <VolumeConstraint target="target_vol" strength="2.0"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <!-- Growth -->
+                <DiffEqn symbol-ref="target_vol">
+                    <Expression>0.02 * (200 - target_vol) / 200</Expression>
+                </DiffEqn>
+                
+                <!-- BMPR activated by BMP4 -->
+                <DiffEqn symbol-ref="BMPR">
+                    <Expression>0.1 * (hill_activate(BMP4.cell) - BMPR)</Expression>
+                </DiffEqn>
+                
+                <!-- NOG production -->
+                <DiffEqn symbol-ref="NOG_int">
+                    <Expression>0.006 * hill_activate(BMPR) - 0.001 * NOG_int</Expression>
+                </DiffEqn>
+                
+                <!-- Secrete NOG -->
+                <DiffEqn symbol-ref="NOG">
+                    <Expression>0.00025 * NOG_int</Expression>
+                </DiffEqn>
+            </System>
+            
+            <Mapper name="Sample BMP4">
+                <Input value="BMP4"/>
+                <Output symbol-ref="BMP4.cell" mapping="average"/>
+            </Mapper>
+            <Property symbol="BMP4.cell" value="0.0"/>
+            
+            <!-- Somitogenesis after time 4000 -->
+            <ChangeCellType newCellType="somite" name="Differentiate to somite">
+                <Condition>time > 4000 and rand_uni(0,1) &lt; 0.0004</Condition>
+            </ChangeCellType>
+        </CellType>
+
+        <!-- Somite - differentiated from mesoderm -->
+        <CellType class="biological" name="somite">
+            <Property symbol="target_vol" value="49" name="Target volume"/>
+            <VolumeConstraint target="target_vol" strength="2.0"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <DiffEqn symbol-ref="target_vol">
+                    <Expression>0.001 * target_vol</Expression>
+                </DiffEqn>
+            </System>
+        </CellType>
+
+        <!-- Neural Crest Cells -->
+        <CellType class="biological" name="neural_crest">
+            <Property symbol="FZD" value="0.0" name="Frizzled receptor"/>
+            <Property symbol="PAX3" value="0.0" name="PAX3"/>
+            <Property symbol="SNAI1" value="0.0" name="SNAIL1"/>
+            <Property symbol="CAD" value="1.0" name="Cadherin (1=E-cad, 0=N-cad)"/>
+            <Property symbol="delaminated" value="0.0" name="Delamination state"/>
+            <Property symbol="target_vol" value="49" name="Target volume"/>
+            
+            <VolumeConstraint target="target_vol" strength="2.0"/>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <!-- Growth -->
+                <DiffEqn symbol-ref="target_vol">
+                    <Expression>0.003 * target_vol</Expression>
+                </DiffEqn>
+                
+                <!-- FZD activated by WNT -->
+                <DiffEqn symbol-ref="FZD">
+                    <Expression>0.1 * (hill_activate(WNT.cell) - FZD)</Expression>
+                </DiffEqn>
+                
+                <!-- PAX3 and SNAI1 increase with ATRA and FZD -->
+                <DiffEqn symbol-ref="PAX3">
+                    <Expression>0.05 * (hill_activate(ATRA) * hill_activate(FZD) - PAX3)</Expression>
+                </DiffEqn>
+                
+                <DiffEqn symbol-ref="SNAI1">
+                    <Expression>0.05 * (hill_activate(PAX3) - SNAI1)</Expression>
+                </DiffEqn>
+                
+                <!-- Cadherin switch (E to N) when SNAI1 high and FGF8 low -->
+                <DiffEqn symbol-ref="CAD">
+                    <Expression>-0.01 * hill_activate(SNAI1) * hill_inhibit(FGF8)</Expression>
+                </DiffEqn>
+                
+                <!-- Delamination when cadherin switched -->
+                <Rule symbol-ref="delaminated">
+                    <Expression>if(CAD &lt; 0.3, 1.0, delaminated)</Expression>
+                </Rule>
+            </System>
+            
+            <Mapper name="Sample WNT">
+                <Input value="WNT"/>
+                <Output symbol-ref="WNT.cell" mapping="average"/>
+            </Mapper>
+            <Property symbol="WNT.cell" value="0.0"/>
+        </CellType>
+    </CellTypes>
+
+    <CPM>
+        <Interaction default="0.0">
+            <!-- Medium interactions -->
+            <Contact type1="medium" type2="notochord" value="20"/>
+            <Contact type1="medium" type2="surface_ectoderm" value="5"/>
+            <Contact type1="medium" type2="neuroectoderm" value="10"/>
+            <Contact type1="medium" type2="mesoderm" value="20"/>
+            <Contact type1="medium" type2="somite" value="20"/>
+            <Contact type1="medium" type2="neural_crest" value="5"/>
+            
+            <!-- Self interactions -->
+            <Contact type1="notochord" type2="notochord" value="5"/>
+            <Contact type1="surface_ectoderm" type2="surface_ectoderm" value="5"/>
+            <Contact type1="neuroectoderm" type2="neuroectoderm" value="3"/>
+            <Contact type1="mesoderm" type2="mesoderm" value="3"/>
+            <Contact type1="somite" type2="somite" value="3"/>
+            <Contact type1="neural_crest" type2="neural_crest" value="5"/>
+            
+            <!-- Tissue interactions -->
+            <Contact type1="notochord" type2="neuroectoderm" value="5"/>
+            <Contact type1="notochord" type2="mesoderm" value="25"/>
+            <Contact type1="surface_ectoderm" type2="neuroectoderm" value="10"/>
+            <Contact type1="surface_ectoderm" type2="neural_crest" value="5"/>
+            <Contact type1="neuroectoderm" type2="mesoderm" value="15"/>
+            <Contact type1="neuroectoderm" type2="neural_crest" value="8"/>
+            <Contact type1="mesoderm" type2="somite" value="7"/>
+            <Contact type1="somite" type2="neuroectoderm" value="20"/>
+        </Interaction>
+
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="10" yield="0.1"/>
+        </MonteCarloSampler>
+
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+
+    <CellPopulations>
+        <!-- Initialize notochord at ventral midline -->
+        <Population size="0" type="notochord">
+            <InitRectangle mode="regular" number-of-cells="30">
+                <Dimensions origin="91, 40, 0" size="70, 14, 0"/>
+            </InitRectangle>
+        </Population>
+
+        <!-- Initialize neuroectoderm layer -->
+        <Population size="0" type="neuroectoderm">
+            <InitRectangle mode="regular" number-of-cells="180">
+                <Dimensions origin="28, 60, 0" size="196, 42, 0"/>
+            </InitRectangle>
+        </Population>
+
+        <!-- Initialize surface ectoderm on sides -->
+        <Population size="0" type="surface_ectoderm">
+            <InitRectangle mode="regular" number-of-cells="24">
+                <Dimensions origin="0, 60, 0" size="28, 42, 0"/>
+            </InitRectangle>
+        </Population>
+        
+        <Population size="0" type="surface_ectoderm">
+            <InitRectangle mode="regular" number-of-cells="24">
+                <Dimensions origin="224, 60, 0" size="28, 42, 0"/>
+            </InitRectangle>
+        </Population>
+
+        <!-- Initialize mesoderm -->
+        <Population size="0" type="mesoderm">
+            <InitRectangle mode="regular" number-of-cells="200">
+                <Dimensions origin="0, 40, 0" size="252, 20, 0"/>
+            </InitRectangle>
+        </Population>
+
+        <!-- Initialize neural crest cells -->
+        <Population size="0" type="neural_crest">
+            <InitRectangle mode="regular" number-of-cells="40">
+                <Dimensions origin="28, 102, 0" size="196, 14, 0"/>
+            </InitRectangle>
+        </Population>
+    </CellPopulations>
+
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="true">
+            <Terminal name="png"/>
+            <Plot title="Cell Types">
+                <Cells value="cell.type" opacity="0.9"/>
+                <Field symbol-ref="SHH" max="1.0" isolines="5"/>
+            </Plot>
+            <Plot title="BMP4 Gradient">
+                <Field symbol-ref="BMP4" max="1.0"/>
+                <Cells value="cell.type" opacity="0.5"/>
+            </Plot>
+            <Plot title="Neuroectoderm Genes">
+                <Cells value="apical_constriction" opacity="0.9">
+                    <ColorMap>
+                        <Color value="1.0" color="red"/>
+                        <Color value="0.5" color="yellow"/>
+                        <Color value="0.0" color="white"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+
+        <Logger time-step="100">
+            <Input>
+                <Symbol symbol-ref="ATRA"/>
+                <Symbol symbol-ref="FGF8"/>
+                <Symbol symbol-ref="BMP4"/>
+                <Symbol symbol-ref="SHH"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+        </Logger>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Collective Cell Motion</Title>
+        <Details>Szabo 2010</Details>
+    </Description>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="200, 200, 0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="300"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <Global>
+        <Constant symbol="P_mot" value="2.0"/>
+        <Constant symbol="decay_r" value="0.2"/>
+    </Global>
+    
+    <CellTypes>
+        <CellType name="endo" class="biological">
+            <VolumeConstraint target="50" strength="1.0"/>
+            
+            <Property symbol="px" value="0.0"/>
+            <Property symbol="py" value="0.0"/>
+            <Property symbol="pmag" value="0.0"/>
+            <Property symbol="dx" value="0.0"/>
+            <Property symbol="dy" value="0.0"/>
+            <Property symbol="prevx" value="0"/>
+            <Property symbol="prevy" value="0"/>
+            
+            <System solver="Runge-Kutta [fixed, O(4)]" time-step="1.0">
+                <DiffEqn symbol-ref="px">
+                    <Reaction>-decay_r * px + dx * 0.1</Reaction>
+                </DiffEqn>
+                <DiffEqn symbol-ref="py">
+                    <Reaction>-decay_r * py + dy * 0.1</Reaction>
+                </DiffEqn>
+                <DiffEqn symbol-ref="pmag">
+                    <Reaction>sqrt(px^2 + py^2)</Reaction>
+                </DiffEqn>
+            </System>
+            
+            <Event trigger="when-true" time-step="5">
+                <Condition>time &gt; 0</Condition>
+                <Rule symbol-ref="dx">
+                    <Expression>cell.center.x - prevx</Expression>
+                </Rule>
+                <Rule symbol-ref="dy">
+                    <Expression>cell.center.y - prevy</Expression>
+                </Rule>
+                <Rule symbol-ref="prevx">
+                    <Expression>cell.center.x</Expression>
+                </Rule>
+                <Rule symbol-ref="prevy">
+                    <Expression>cell.center.y</Expression>
+                </Rule>
+            </Event>
+            
+            <DirectedMotion strength="2.0" direction="px, py, 0"/>
+        </CellType>
+        
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="0">
+            <Contact type1="endo" type2="endo" value="2"/>
+            <Contact type1="endo" type2="medium" value="4"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="2.0"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="endo" size="0">
+            <InitCellObjects mode="distance">
+                <Arrangement repetitions="18, 18, 1" displacements="9, 9, 1">
+                    <Sphere radius="3.5" center="4.5, 4.5, 0"/>
+                </Arrangement>
+            </InitCellObjects>
+            
+            <InitProperty symbol-ref="prevx">
+                <Expression>cell.center.x</Expression>
+            </InitProperty>
+            
+            <InitProperty symbol-ref="prevy">
+                <Expression>cell.center.y</Expression>
+            </InitProperty>
+            
+            <InitProperty symbol-ref="px">
+                <Expression>rand_norm(0, 0.5)</Expression>
+            </InitProperty>
+            
+            <InitProperty symbol-ref="py">
+                <Expression>rand_norm(0, 0.5)</Expression>
+            </InitProperty>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Logger time-step="20">
+            <Input>
+                <Symbol symbol-ref="px"/>
+                <Symbol symbol-ref="py"/>
+                <Symbol symbol-ref="pmag"/>
+            </Input>
+            <Restriction>
+                <Celltype celltype="endo"/>
+            </Restriction>
+            <o>
+                <TextOutput file-format="csv"/>
+            </o>
+        </Logger>
+        
+        <Gnuplotter time-step="50">
+            <Terminal terminal="png"/>
+            <Plot>
+                <Cells value="pmag">
+                    <ColorMap>
+                        <Color value="0" color="blue"/>
+                        <Color value="1.0" color="cyan"/>
+                        <Color value="2.0" color="green"/>
+                        <Color value="3.0" color="yellow"/>
+                        <Color value="4.0" color="red"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+    </Analysis>
+</MorpheusModel>

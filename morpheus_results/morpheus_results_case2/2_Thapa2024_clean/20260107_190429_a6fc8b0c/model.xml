@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Ovarian Cancer Colonization on Senescent Mesothelia</Title>
+        <Details>Thapa 2024</Details>
+    </Description>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="140, 140, 0"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="6000"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="SEN" class="biological">
+            <VolumeConstraint target="150" strength="1"/>
+            <Property symbol="cp" value="0"/>
+            <Property symbol="per" value="0"/>
+            <Property symbol="cfrac" value="0"/>
+            
+            <NeighborhoodReporter>
+                <Input scaling="length" value="cell.type == celltype.CANCER.id"/>
+                <Output symbol-ref="cp" mapping="sum"/>
+            </NeighborhoodReporter>
+            
+            <NeighborhoodReporter>
+                <Input scaling="length" value="1"/>
+                <Output symbol-ref="per" mapping="sum"/>
+            </NeighborhoodReporter>
+            
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <Rule symbol-ref="cfrac">
+                    <Expression>if(per &gt; 0, cp / per, 0)</Expression>
+                </Rule>
+            </s>
+            
+            <CellDeath>
+                <Condition>cfrac &gt; 0.55</Condition>
+            </CellDeath>
+        </CellType>
+        
+        <CellType name="NON" class="biological">
+            <VolumeConstraint target="100" strength="1"/>
+        </CellType>
+        
+        <CellType name="CAN" class="biological">
+            <VolumeConstraint target="120" strength="1"/>
+            <Property symbol="dp" value="0.00133"/>
+            
+            <CellDivision division-plane="random">
+                <Condition>rand_uni(0,1) &lt; dp</Condition>
+            </CellDivision>
+        </CellType>
+        
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <Interaction default="10">
+            <Contact type1="SEN" type2="SEN" value="30"/>
+            <Contact type1="SEN" type2="NON" value="30"/>
+            <Contact type1="SEN" type2="CAN" value="15"/>
+            <Contact type1="NON" type2="NON" value="30"/>
+            <Contact type1="NON" type2="CAN" value="30"/>
+            <Contact type1="CAN" type2="CAN" value="30"/>
+        </Interaction>
+        
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1"/>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="20"/>
+        </MonteCarloSampler>
+        
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>4</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="SEN" size="0">
+            <InitCircle mode="random" number-of-cells="15">
+                <Dimensions radius="50" center="70, 70, 0"/>
+            </InitCircle>
+        </Population>
+        
+        <Population type="NON" size="0">
+            <InitCircle mode="random" number-of-cells="30">
+                <Dimensions radius="50" center="70, 70, 0"/>
+            </InitCircle>
+        </Population>
+        
+        <Population type="CAN" size="0">
+            <InitCircle mode="random" number-of-cells="10">
+                <Dimensions radius="30" center="70, 70, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="200" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="cell.type">
+                    <ColorMap>
+                        <Color value="1" color="red"/>
+                        <Color value="2" color="blue"/>
+                        <Color value="3" color="green"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="50">
+            <Input>
+                <Symbol symbol-ref="time"/>
+                <Symbol symbol-ref="celltype.SEN.size"/>
+                <Symbol symbol-ref="celltype.NON.size"/>
+                <Symbol symbol-ref="celltype.CAN.size"/>
+            </Input>
+            <o>
+                <TextOutput file-format="csv"/>
+            </o>
+            <Plots>
+                <Plot time-step="1000">
+                    <Style style="lines" line-width="2"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis>
+                        <Symbol symbol-ref="celltype.SEN.size"/>
+                        <Symbol symbol-ref="celltype.NON.size"/>
+                        <Symbol symbol-ref="celltype.CAN.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+    </Analysis>
+</MorpheusModel>

@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Phagocytosis Rosette Pattern Formation - WPGAP Model</Title>
+        <Details>
+Reaction-diffusion model for podosome rosette formation during frustrated phagocytosis.
+Based on Herron et al. (2022) PLOS Computational Biology.
+
+Wave-Pinning GAP (WPGAP) model with spatially-dependent positive feedback (gamma) 
+and negative feedback (GAP activation c) rates to generate rosette patterns around 
+an IgG disk.
+
+Species:
+- u: active GTPase (Cdc42, membrane-bound, slow diffusion)
+- v: inactive GTPase (cytosolic, fast diffusion)
+- G: active GAP (cytosolic, fast diffusion)
+- g: inactive GAP (cytosolic, fast diffusion)
+
+Key mechanisms:
+1. Positive feedback: GTPase autoactivation
+2. Negative feedback: GAP activation by active GTPase
+3. Spatial gradients: gamma(r) and c(r) modulated by distance from disk center
+        </Details>
+    </Description>
+    
+    <Global>
+        <!-- Active GTPase (u) - membrane-bound, slow diffusion -->
+        <Field symbol="u" value="808.0 * (0.05 + rand_uni(0,0.05))" name="active_GTPase">
+            <Diffusion rate="0.04"/>
+        </Field>
+        
+        <!-- Inactive GTPase (v) - cytosolic, fast diffusion -->
+        <Field symbol="v" value="808.0 * (0.95 + rand_uni(0,0.05))" name="inactive_GTPase">
+            <Diffusion rate="4.0"/>
+        </Field>
+        
+        <!-- Active GAP (G) - cytosolic, fast diffusion -->
+        <Field symbol="G" value="10.0 * (0.05 + rand_uni(0,0.05))" name="active_GAP">
+            <Diffusion rate="4.0"/>
+        </Field>
+        
+        <!-- Inactive GAP (g) - cytosolic, fast diffusion -->
+        <Field symbol="g" value="10.0 * (0.95 + rand_uni(0,0.05))" name="inactive_GAP">
+            <Diffusion rate="4.0"/>
+        </Field>
+        
+        <System solver="Runge-Kutta [fixed, O(4)]" time-step="0.01" name="WPGAP">
+            <!-- Fixed parameters from Table 1 -->
+            <Constant symbol="beta" value="0.002"/>  <!-- basal GTPase activation, s^-1 -->
+            <Constant symbol="K" value="200.0"/>     <!-- half-max response, molecules/μm^2 -->
+            <Constant symbol="n" value="2"/>         <!-- Hill coefficient -->
+            <Constant symbol="sigma" value="0.4"/>   <!-- GTPase inactivation, s^-1 -->
+            
+            <!-- Parameters from Table 2 (MCMC mean values) -->
+            <Constant symbol="gamma_max" value="9.6"/>    <!-- max self-positive feedback, s^-1 -->
+            <Constant symbol="gamma_km" value="2.04"/>    <!-- gamma decay rate -->
+            <Constant symbol="gamma_alpha" value="0.005"/> <!-- min gamma, s^-1 -->
+            
+            <Constant symbol="c_max" value="0.08"/>       <!-- max GAP activation, μm^2·s^-1 -->
+            <Constant symbol="c_km" value="13.0"/>        <!-- c decay rate -->
+            <Constant symbol="c_alpha" value="0.005"/>    <!-- min c, μm^2·s^-1 -->
+            
+            <Constant symbol="d" value="43.0"/>           <!-- GAP inactivation, s^-1 -->
+            <Constant symbol="epsilon" value="31.3"/>     <!-- GAP-mediated GTPase inactivation, μm^2·s^-1 -->
+            
+            <!-- IgG disk geometry -->
+            <Constant symbol="disk_radius" value="2.0"/>  <!-- IgG disk radius, μm -->
+            <Constant symbol="r0" value="2.0"/>           <!-- logistic function center, μm -->
+            
+            <!-- Spatially-dependent rates using logistic functions -->
+            <!-- gamma(r) = gamma_alpha + gamma_max / (1 + exp(gamma_km * (r - r0))) -->
+            <Function symbol="r">
+                <Expression>sqrt(l.x^2 + l.y^2)</Expression>
+            </Function>
+            
+            <Function symbol="gamma">
+                <Expression>gamma_alpha + gamma_max / (1.0 + exp(gamma_km * (r - r0)))</Expression>
+            </Function>
+            
+            <!-- c(r) = c_alpha + c_max / (1 + exp(c_km * (r - r0))) -->
+            <Function symbol="c">
+                <Expression>c_alpha + c_max / (1.0 + exp(c_km * (r - r0)))</Expression>
+            </Function>
+            
+            <!-- Hill function for positive feedback -->
+            <Function symbol="feedback">
+                <Expression>gamma * (u^n) / (K^n + u^n)</Expression>
+            </Function>
+            
+            <!-- WPGAP reaction-diffusion equations -->
+            
+            <!-- du/dt = beta*v + feedback - sigma*u - epsilon*G*u -->
+            <DiffEqn symbol-ref="u">
+                <Expression>beta*v + feedback - sigma*u - epsilon*G*u</Expression>
+            </DiffEqn>
+            
+            <!-- dv/dt = -beta*v - feedback + sigma*u + epsilon*G*u -->
+            <DiffEqn symbol-ref="v">
+                <Expression>-beta*v - feedback + sigma*u + epsilon*G*u</Expression>
+            </DiffEqn>
+            
+            <!-- dG/dt = c*u*g - d*G -->
+            <DiffEqn symbol-ref="G">
+                <Expression>c*u*g - d*G</Expression>
+            </DiffEqn>
+            
+            <!-- dg/dt = -c*u*g + d*G -->
+            <DiffEqn symbol-ref="g">
+                <Expression>-c*u*g + d*G</Expression>
+            </DiffEqn>
+        </System>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="256, 256, 0"/>
+            <NodeLength value="0.03125"/>  <!-- 8 μm / 256 = 0.03125 μm per node -->
+            <BoundaryConditions>
+                <Condition boundary="x" type="noflux"/>
+                <Condition boundary="y" type="noflux"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>1</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="l"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="100"/>
+        <SaveInterval value="0"/>
+        <RandomSeed value="1"/>
+        <TimeSymbol symbol="time"/>
+    </Time>
+    
+    <Analysis>
+        <Gnuplotter time-step="2.0" decorate="false">
+            <Terminal name="png" size="800 800 0"/>
+            <Plot title="Active GTPase (u) - Rosette Pattern">
+                <Field symbol-ref="u" min="0">
+                    <ColorMap>
+                        <Color value="0" color="blue"/>
+                        <Color value="400" color="cyan"/>
+                        <Color value="800" color="yellow"/>
+                        <Color value="1200" color="red"/>
+                    </ColorMap>
+                </Field>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="1.0">
+            <Input>
+                <Symbol symbol-ref="u"/>
+                <Symbol symbol-ref="v"/>
+                <Symbol symbol-ref="G"/>
+                <Symbol symbol-ref="g"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="csv"/>
+            </Output>
+        </Logger>
+        
+        <Logger time-step="5.0">
+            <Input>
+                <Symbol symbol-ref="u"/>
+            </Input>
+            <Output>
+                <TextOutput file-format="matrix"/>
+            </Output>
+            <Plots>
+                <SurfacePlot time-step="5.0">
+                    <Color-bar>
+                        <Symbol symbol-ref="u"/>
+                    </Color-bar>
+                    <Terminal terminal="png"/>
+                </SurfacePlot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" reduced="false" include-tags="#untagged"/>
+    </Analysis>
+</MorpheusModel>

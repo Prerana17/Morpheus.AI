@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MorpheusModel version="4">
+    <Description>
+        <Title>Epithelial Monolayer Growth with Contact Inhibition</Title>
+        <Details>
+        Model based on Carpenter et al. (2024) Biophysical Journal
+        
+        Implements:
+        - Cellular Potts Model for cell mechanics
+        - G1 sizer + S/G2/M timer cell cycle
+        - Contact inhibition via crowding-dependent growth suppression
+        - Density-dependent apoptosis
+        - Cell extrusion when area too small
+        - Cell-cell and cell-medium adhesion
+        
+        Key features:
+        - Growth rate decreases with crowding (area deviation from target)
+        - Cells divide when area exceeds G1/S threshold AS
+        - Fixed S/G2/M timer duration t0
+        - Apoptosis probability increases with local cell density
+        </Details>
+    </Description>
+    
+    <Global>
+        <Variable symbol="mean_area" value="0.0" name="Mean cell area"/>
+        <Constant symbol="G0" value="5.16" name="Baseline growth rate"/>
+        <Constant symbol="k_crowding" value="0.0001" name="Sensitivity to crowding"/>
+        <Constant symbol="AS" value="1377" name="G1/S size threshold"/>
+        <Constant symbol="t0" value="225" name="S/G2/M timer duration"/>
+        <Constant symbol="papo_max" value="0.0015" name="Max apoptosis probability"/>
+        <Constant symbol="rho_half" value="0.00067" name="Density at half-max apoptosis"/>
+        <Constant symbol="alpha_apo" value="1031" name="Apoptosis sensitivity"/>
+    </Global>
+    
+    <Space>
+        <Lattice class="square">
+            <Size symbol="size" value="400, 400, 0"/>
+            <BoundaryConditions>
+                <Condition type="constant" boundary="x"/>
+                <Condition type="constant" boundary="y"/>
+            </BoundaryConditions>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+        </Lattice>
+        <SpaceSymbol symbol="space"/>
+    </Space>
+    
+    <Time>
+        <StartTime value="0"/>
+        <StopTime value="10000"/>
+        <TimeSymbol symbol="time"/>
+        <RandomSeed value="123"/>
+    </Time>
+    
+    <CellTypes>
+        <CellType name="epithelial" class="biological">
+            <!-- Cell properties -->
+            <Property symbol="V_target" value="1377" name="Target area"/>
+            <Property symbol="V_current" value="1377" name="Current area"/>
+            <Property symbol="in_G1" value="1" name="In G1 phase"/>
+            <Property symbol="t_enter_SG2M" value="-1" name="Time entered S/G2/M"/>
+            <Property symbol="local_density" value="0.0" name="Local cell density"/>
+            <Property symbol="growth_rate" value="5.16" name="Current growth rate"/>
+            <Property symbol="divisions" value="0" name="Number of divisions"/>
+            
+            <!-- Volume constraint -->
+            <VolumeConstraint strength="1.0" target="V_target"/>
+            
+            <!-- Surface constraint for cell shape -->
+            <SurfaceConstraint mode="aspherity" strength="1.0" target="0.9"/>
+            
+            <!-- Calculate local density -->
+            <NeighborhoodReporter>
+                <Input scaling="cell" value="1.0/cell.volume"/>
+                <Output symbol-ref="local_density" mapping="sum"/>
+            </NeighborhoodReporter>
+            
+            <!-- Cell growth and cycle dynamics -->
+            <System solver="Euler [fixed, O(1)]" time-step="1.0">
+                <!-- Update current area -->
+                <Rule symbol-ref="V_current">
+                    <Expression>cell.volume</Expression>
+                </Rule>
+                
+                <!-- Calculate growth rate with contact inhibition -->
+                <Rule symbol-ref="growth_rate">
+                    <Expression>G0 * exp(-k_crowding * (V_current - V_target)^2)</Expression>
+                </Rule>
+                
+                <!-- Grow target area -->
+                <Rule symbol-ref="V_target">
+                    <Expression>V_target + growth_rate</Expression>
+                </Rule>
+                
+                <!-- G1/S transition -->
+                <Rule symbol-ref="in_G1">
+                    <Expression>if(V_current >= AS and in_G1 == 1, 0, in_G1)</Expression>
+                </Rule>
+                
+                <!-- Record time of S/G2/M entry -->
+                <Rule symbol-ref="t_enter_SG2M">
+                    <Expression>if(in_G1 == 0 and t_enter_SG2M &lt; 0, time, t_enter_SG2M)</Expression>
+                </Rule>
+            </System>
+            
+            <!-- Cell division (after S/G2/M timer) -->
+            <CellDivision division-plane="random">
+                <Condition>in_G1 == 0 and t_enter_SG2M > 0 and (time - t_enter_SG2M) >= t0</Condition>
+                <Triggers>
+                    <Rule symbol-ref="V_target">
+                        <Expression>V_current / 2</Expression>
+                    </Rule>
+                    <Rule symbol-ref="in_G1">
+                        <Expression>1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="t_enter_SG2M">
+                        <Expression>-1</Expression>
+                    </Rule>
+                    <Rule symbol-ref="divisions">
+                        <Expression>divisions + 0.5</Expression>
+                    </Rule>
+                </Triggers>
+            </CellDivision>
+            
+            <!-- Density-dependent apoptosis -->
+            <CellDeath>
+                <Condition>rand_uni(0,1) &lt; (papo_max / (1 + exp(-alpha_apo * (local_density - rho_half))))</Condition>
+            </CellDeath>
+            
+            <!-- Cell extrusion when too small -->
+            <CellDeath>
+                <Condition>V_current &lt; mean_area / 4 and mean_area > 0</Condition>
+            </CellDeath>
+            
+            <!-- Track mean area for extrusion criterion -->
+            <Mapper>
+                <Input value="cell.volume"/>
+                <Output symbol-ref="mean_area" mapping="average"/>
+            </Mapper>
+        </CellType>
+        
+        <CellType name="medium" class="medium"/>
+    </CellTypes>
+    
+    <CPM>
+        <!-- Contact energies -->
+        <Interaction default="0">
+            <Contact type1="epithelial" type2="epithelial" value="6"/>
+            <Contact type1="epithelial" type2="medium" value="10"/>
+        </Interaction>
+        
+        <!-- Monte Carlo sampler -->
+        <MonteCarloSampler stepper="edgelist">
+            <MCSDuration value="1.0"/>
+            <Neighborhood>
+                <Order>2</Order>
+            </Neighborhood>
+            <MetropolisKinetics temperature="3" yield="0.1"/>
+        </MonteCarloSampler>
+        
+        <!-- Shape surface for better cell shape -->
+        <ShapeSurface scaling="norm">
+            <Neighborhood>
+                <Order>6</Order>
+            </Neighborhood>
+        </ShapeSurface>
+    </CPM>
+    
+    <CellPopulations>
+        <Population type="epithelial" size="0">
+            <InitCircle mode="regular" number-of-cells="1">
+                <Dimensions radius="20" center="200, 200, 0"/>
+            </InitCircle>
+        </Population>
+    </CellPopulations>
+    
+    <Analysis>
+        <Gnuplotter time-step="100" decorate="false">
+            <Terminal name="png"/>
+            <Plot>
+                <Cells value="growth_rate" min="0" max="6">
+                    <ColorMap>
+                        <Color value="6" color="red"/>
+                        <Color value="3" color="yellow"/>
+                        <Color value="0" color="blue"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+            <Plot>
+                <Cells value="in_G1">
+                    <ColorMap>
+                        <Color value="1" color="blue"/>
+                        <Color value="0" color="magenta"/>
+                    </ColorMap>
+                </Cells>
+            </Plot>
+        </Gnuplotter>
+        
+        <Logger time-step="10">
+            <Input>
+                <Symbol symbol-ref="celltype.epithelial.size"/>
+                <Symbol symbol-ref="mean_area"/>
+            </Input>
+            <Output>
+                <TextOutput/>
+            </Output>
+            <Plots>
+                <Plot time-step="500">
+                    <Style style="linespoints" grid="true"/>
+                    <Terminal terminal="png"/>
+                    <X-axis>
+                        <Symbol symbol-ref="time"/>
+                    </X-axis>
+                    <Y-axis minimum="0" maximum="100">
+                        <Symbol symbol-ref="celltype.epithelial.size"/>
+                    </Y-axis>
+                </Plot>
+            </Plots>
+        </Logger>
+        
+        <ModelGraph format="svg" reduced="false"/>
+    </Analysis>
+</MorpheusModel>
